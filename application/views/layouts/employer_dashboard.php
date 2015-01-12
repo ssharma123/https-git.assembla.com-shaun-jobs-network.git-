@@ -63,7 +63,7 @@
 
                                 <button type="button" class="navbar-toggle"></button>
 
-                                <a class="brand" href="http://www.medmatch.us/#/employers">
+                                <a class="brand" href="<?php echo site_url(); ?>">
                                     <?php echo load_img("logo.png", "MedMatch", "32", "234"); ?>
                                 </a>
 
@@ -75,7 +75,7 @@
                                 </ul>
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="http://www.medmatch.us/#/loginEmployer">Sign in</a></span>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url(); ?>">Sign in</a></span>
                                     </form>
                                 </div>	
 
