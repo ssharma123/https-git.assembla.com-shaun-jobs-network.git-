@@ -14,7 +14,12 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/medmatch/';
+if($_SERVER['HTTP_HOST'] == '104.236.98.239'){
+    $config['base_url']	= 'http://104.236.98.239/';
+}
+else{
+    $config['base_url']	= 'http://localhost/medmatch/';
+}
 
 /*
 |--------------------------------------------------------------------------

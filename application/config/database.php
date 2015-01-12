@@ -44,8 +44,13 @@
 | The $active_record variables lets you determine whether or not to load
 | the active record class
 */
-
-$active_group = 'default';
+if($_SERVER['HTTP_HOST'] == '104.236.98.239'){
+    $active_group = 'LIVE';
+}
+else{
+    
+    $active_group = 'default';
+}
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
@@ -63,6 +68,22 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
+
+$db['LIVE']['hostname'] = 'localhost';
+$db['LIVE']['username'] = 'root';
+$db['LIVE']['password'] = '';
+$db['LIVE']['database'] = 'medmatch';
+$db['LIVE']['dbdriver'] = 'mysql';
+$db['LIVE']['dbprefix'] = '';
+$db['LIVE']['pconnect'] = TRUE;
+$db['LIVE']['db_debug'] = TRUE;
+$db['LIVE']['cache_on'] = FALSE;
+$db['LIVE']['cachedir'] = '';
+$db['LIVE']['char_set'] = 'utf8';
+$db['LIVE']['dbcollat'] = 'utf8_general_ci';
+$db['LIVE']['swap_pre'] = '';
+$db['LIVE']['autoinit'] = TRUE;
+$db['LIVE']['stricton'] = FALSE;
 
 
 /* End of file database.php */
