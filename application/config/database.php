@@ -71,7 +71,7 @@ $db['default']['stricton'] = FALSE;
 
 $db['LIVE']['hostname'] = 'localhost';
 $db['LIVE']['username'] = 'root';
-$db['LIVE']['password'] = '';
+$db['LIVE']['password'] = 'Purelogics@123';
 $db['LIVE']['database'] = 'medmatch';
 $db['LIVE']['dbdriver'] = 'mysql';
 $db['LIVE']['dbprefix'] = '';
