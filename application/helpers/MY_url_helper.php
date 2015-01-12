@@ -12,8 +12,23 @@ function load_css($file)
 	return '<link href="'.base_url('assets/css/'.$file.'?v='.time()).'" type="text/css" rel="stylesheet" />'."\n";
 }
 
-function load_img($file)
+function load_img($src, $alt = "" , $height ="", $width="", $style = "")
 {
 	$CI =& get_instance();
-	return '<img src="'.base_url('assets/img/'.$file.'?v='.time()).'" style="'.$style.'" />'."\n";
+        $img = '<img src="'.base_url('assets/img/'.$src.'?v='.time());
+        
+        if($alt != ""){
+            $img = $img. ' alt="'.$alt.'" ';
+        }
+        if($height != ""){
+            $img = $img. ' height="'.$height.'" ';
+        }
+        if($width != ""){
+            $img = $img. ' width="'.$width.'" ';
+        }
+        if($style != ""){
+            $img = $img. ' style="'.$style.'" ';
+        }
+        $img =  $img . ' />';
+	return $img."\n";
 }

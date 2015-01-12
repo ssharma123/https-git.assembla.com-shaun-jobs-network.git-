@@ -43,7 +43,7 @@
         <!--End Typekit-->
 
 
-
+        <?php echo load_js("jquery-1.10.2.min.js"); ?>  
     </head>
 
     <body>
@@ -63,7 +63,7 @@
 
                                 <button type="button" class="navbar-toggle"></button>
 
-                                <a class="brand" href="<?php echo site_url(); ?>">
+                                <a class="brand" href="http://www.medmatch.us/#/employers">
                                     <?php echo load_img("logo.png", "MedMatch", "32", "234"); ?>
                                 </a>
 
@@ -75,8 +75,7 @@
                                 </ul>
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-inverse" href="<?php echo site_url(); ?>">Job seekers</a></span> 
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url(); ?>">Sign in</a></span>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="http://www.medmatch.us/#/loginEmployer">Sign in</a></span>
                                     </form>
                                 </div>	
 
@@ -134,7 +133,7 @@
 <!--            FOOTER END -->
 
             <!-- Placed at the end of the document so the pages load faster --> 
-            <?php echo load_js("jquery-1.10.2.min.js"); ?>
+            
             <?php echo load_js("jquery.bxslider.min.js"); ?>
             <?php echo load_js("jquery.scrollTo-1.4.3.1-min.js"); ?>
             <?php echo load_js("jquery.sharrre.min.js"); ?>
