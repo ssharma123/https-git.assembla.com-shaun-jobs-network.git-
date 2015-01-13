@@ -202,7 +202,7 @@
         </form>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <a class="btn btn-embossed btn-info btn-block" data-href="<?php echo site_url('employee_dashboard'); ?>" id="form12-btn">Complete your free job post!<span class="fui-arrow-right pull-right"></span></a>
+            <a class="btn btn-embossed btn-info btn-block" href="<?php echo site_url('employee_dashboard'); ?>" id="form12-btn">Complete your free job post!<span class="fui-arrow-right pull-right"></span></a>
         </div>
 
     </div>
