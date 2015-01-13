@@ -19,11 +19,40 @@ class Employer extends MY_EmployerController {
 	 */
 	public function index()
 	{
-            
-                $this->layout = "employer";
-                
-		$this->load->view('home');
+            $this->layout = "employer";
+            $this->load->view('employer/home');
 	}
+        
+        public function signin()
+	{
+            $this->layout = "employer";
+            $this->load->view('employer/signin');
+	}
+        public function signup($step = 1)
+	{
+            $this->layout = "employer";
+            if($step == 1){
+                $this->load->view('employer/signup_1');
+            }
+            else if($step == 2){
+                $this->load->view('employer/signup_2');
+            }
+            else{
+                redirect('employer');
+            }
+	}
+        
+        function employer_popup(){
+            $this->layout = "blank";
+            $html = $this->load->view('employer/signup_popup',array(),TRUE);
+            
+            $array = array(
+              "html" => $html
+            );
+            echo json_encode($array); die;
+        }
+        
+        
 }
 
 /* End of file welcome.php */

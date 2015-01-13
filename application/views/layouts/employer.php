@@ -42,7 +42,10 @@
         }</script>
         <!--End Typekit-->
 
-
+        <script>
+        var SITE_URL = '<?php echo site_url();?>';
+        var BASE_URL = '<?php echo base_url();?>';
+        </script>
 
     </head>
 
@@ -76,7 +79,7 @@
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
                                         <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-inverse" href="<?php echo site_url(); ?>">Job seekers</a></span> 
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url(); ?>">Sign in</a></span>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url('employer/signin'); ?>">Sign in</a></span>
                                     </form>
                                 </div>	
 

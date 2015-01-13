@@ -1,3 +1,19 @@
+
+<?php echo load_js("jquery-1.10.2.min.js"); ?>
+
+<?php 
+    echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
+    echo load_css('jquery.fancybox-buttons.css?v=1.0.5','assets/js/fancybox/helpers/');
+    echo load_css('jquery.fancybox-thumbs.css?v=1.0.7','assets/js/fancybox/helpers/');
+?>
+<?php 
+    // fancybox JS files
+    echo load_js("jquery.fancybox.js?v=2.1.4","assets/js/fancybox/");
+    echo load_js("jquery.fancybox-buttons.js?v=1.0.5","assets/js/fancybox/helpers/");
+    echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
+    echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
+?>
+<?php echo load_js("employee.js"); ?>
 <section class="header-11-sub bg-midnight-blue">
     <div class="background">&nbsp;</div>
     <div class="container">
@@ -47,7 +63,7 @@
     <div class="container">
         <div class="popbox">
             <span>Sign up and post your first job today</span>
-            <a class="open btn btn-embossed btn-wide btn-success" href="http://www.medmatch.us/#/loginEmployer">IT'S FREE</a>	
+            <a class="open btn btn-embossed btn-wide btn-success" href="javascript:void(0)" id="employee_siginup_lnk">IT'S FREE</a>	
             <div class="collapse">
                 <div class="box">
                     <div class="arrow">
@@ -99,6 +115,7 @@
     <div class="container">
         <h2>Get Started</h2>
         
+        <div id="employer-form1">
         <form>
             <div class="col-2">
                 <label for"firstname">Full Name
@@ -126,8 +143,10 @@
                 </label>
             </div>
         </form>
-
-        <form class="ng-pristine ng-valid" style="display: none;">
+        </div>
+            
+        <div id="employer-form2" style="display: none;">
+            <form class="ng-pristine ng-valid" >
             <div class="col-2">
                 <label >Name
                        <input type="text" placeholder="" id="name" class="form-control ng-pristine ng-valid" ng-model="facilityInfo.name">
@@ -181,9 +200,12 @@
             </div>		
 
         </form>
+        </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <a class="btn btn-embossed btn-info btn-block" href="<?php echo site_url('employee_dashboard'); ?>">Complete your free job post!<span class="fui-arrow-right pull-right"></span></a>
+            <a class="btn btn-embossed btn-info btn-block" data-href="<?php echo site_url('employee_dashboard'); ?>" id="form12-btn">Complete your free job post!<span class="fui-arrow-right pull-right"></span></a>
         </div>
 
     </div>
 </section>
+
+    

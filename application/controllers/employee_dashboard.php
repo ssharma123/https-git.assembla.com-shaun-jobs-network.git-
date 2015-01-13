@@ -22,7 +22,7 @@ class Employee_dashboard extends MY_EmployerController {
             
                 $this->layout = "employer_dashboard";
                 
-		$this->load->view('employer_dashboard');
+		$this->load->view('employer/employer_dashboard');
 	}
 }
 
