@@ -15,8 +15,6 @@ class MY_SiteController extends CI_Controller {
     var $meta_description = 'Med Match';
     var $meta_keyword = 'Med Match';
     var $google_analytics = '';
-    var $availableColors = NULL;
-    var $availableSizes = NULL;
 
     function __construct() {
         parent::__construct();
@@ -31,6 +29,10 @@ class MY_SiteController extends CI_Controller {
         if (!$this->session->userdata('id')) {
             redirect('/');
         }
+    }
+    
+    public function get_facilities_name(){
+        
     }
 
 }

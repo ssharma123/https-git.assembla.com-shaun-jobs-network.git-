@@ -31,18 +31,15 @@ class Employer extends MY_EmployerController {
         public function signup($step = 1)
 	{
             $this->layout = "employer";
-            if($step == 1){
-                $this->load->view('employer/signup_1');
-            }
-            else if($step == 2){
-                $this->load->view('employer/signup_2');
+            if($step >= 1 && $step <= 2){
+                $this->load->view('employer/signup_'.$step);
             }
             else{
                 redirect('employer');
             }
 	}
         
-        function employer_popup(){
+        public function employer_popup(){
             $this->layout = "blank";
             $html = $this->load->view('employer/signup_popup',array(),TRUE);
             
@@ -50,6 +47,12 @@ class Employer extends MY_EmployerController {
               "html" => $html
             );
             echo json_encode($array); die;
+        }
+        
+        public function get_facilities(){
+            $this->layout = "blank";
+            $this->get_facilities();
+            
         }
         
         

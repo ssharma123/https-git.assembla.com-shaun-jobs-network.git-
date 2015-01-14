@@ -2,11 +2,29 @@
     <div class="col col-sm-8 col-sm-offset-2 ng-hide" ng-show="state === 'facility'">
     <h2 class="text-center" style="border-bottom: 2px solid black; padding-bottom: 20px">Please Verify Facility Information</h2>
 
-    <div class="alert alert-danger ng-binding ng-hide" ng-show="err">
-            
-    </div>
-
+    <br>
+    
     <form class="form-horizontal ng-pristine ng-valid" role="form">
+        
+        <?php 
+        $no_pass = $this->input->post('no_password');
+        if($no_pass) { ?>
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="name">Password</label>
+          <div class="col-sm-8">
+              <input type="password" ng-disabled="parseFacility" ng-model="facilityInfo.name" class="form-control ng-pristine ng-valid" id="name" placeholder="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="name">Confirm Password</label>
+          <div class="col-sm-8">
+            <input type="password" ng-disabled="parseFacility" ng-model="facilityInfo.name" class="form-control ng-pristine ng-valid" id="name" placeholder="">
+          </div>
+        </div>
+        <br><br>
+        <?php 
+        } ?>
+        
         <div class="form-group">
           <label class="col-sm-4 control-label" for="name">Name</label>
           <div class="col-sm-8">

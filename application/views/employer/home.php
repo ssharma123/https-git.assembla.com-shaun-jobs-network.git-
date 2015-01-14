@@ -22,7 +22,8 @@
                 <h3>Medical Staffing. Redefined.</h3>
                 <p>Providing direct-access to top talent–MedMatch is streamlining the application process. Sign up and post your first job. It's free!</p>
                 <div class="signup-form">
-                    <form>
+                    <form action="<?php echo site_url('employer/signup/2'); ?>" method="post">
+                        
                         <div class="form-group">
                             <input class="form-control" type="text" placeholder="Full Name" ng-model="name">
                         </div>
@@ -37,6 +38,7 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-embossed btn-block btn-info">Sign Up</button>
                         </div>
+                        <input type="hidden" name="no_password" value="yes">
                     </form>
                 </div>
                 <div class="additional-links">By signing up you agree to <a href="#">Terms of Use</a> and <a href="#">Privacy</a></div>
