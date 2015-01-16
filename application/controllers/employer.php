@@ -150,7 +150,9 @@ class Employer extends MY_EmployerController {
                             $save_data['billing_name'] = $this->db->escape_str( $this->input->post('billing_name') );
                             $save_data['billing_phone'] = $this->db->escape_str( $this->input->post('billing_phone') );
                             $save_data['billing_email'] = $this->db->escape_str( $this->input->post('billing_email') );
-                            
+                            $save_data['created_at'] = time();
+                            $save_data['updated_at'] = time();
+                                
                             $employer_id = $this->employer->employers_add($save_data);
                             
                             $save_data_fac['employer_id'] = $employer_id;
