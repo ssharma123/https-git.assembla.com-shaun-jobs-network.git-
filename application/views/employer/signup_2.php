@@ -1,7 +1,3 @@
-<?php 
-echo "<pre>"; print_r($_POST); echo "</pre>"; 
-?>
-
 <div style="padding: 50px; min-height: 400px; background-color: #f7f7f7" ng-controller="DashboardCtrl" class="container ng-scope">
     <div class="col col-sm-8 col-sm-offset-2 ng-hide" ng-show="state === 'facility'">
     <h2 class="text-center" style="border-bottom: 2px solid black; padding-bottom: 20px">Please Verify Facility Information</h2>
