@@ -65,6 +65,12 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-4 control-label" for="city">State</label>
+          <div class="col-sm-8">
+              <input type="text" class="form-control ng-pristine ng-valid" name="facility_state" id="facility_state" required placeholder="">
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-sm-4 control-label" for="numEmployees">Number of Employees</label>
           <div class="col-sm-8">
               <input type="number" min="0" class="form-control ng-pristine ng-valid ng-valid-number" name="facility_num_of_employee" id="facility_num_of_employee" required placeholder="">
