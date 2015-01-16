@@ -15,8 +15,6 @@ class MY_EmployerController extends MY_SiteController {
     var $meta_description = 'Med Match';
     var $meta_keyword = 'Med Match';
     var $google_analytics = '';
-    var $availableColors = NULL;
-    var $availableSizes = NULL;
 
     function __construct() {
         

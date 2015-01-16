@@ -30,6 +30,7 @@
         <?php echo load_css("icon-font.css"); ?>
         <?php echo load_css("animations.css"); ?>
         <?php echo load_css("style.css"); ?>
+        <?php echo load_css("employer.css","assets/css/employer/"); ?>
         <!--Google Fonts-->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,300,600,400' rel='stylesheet' type='text/css'>
         <!--End Google Fonts-->
@@ -46,6 +47,7 @@
         var SITE_URL = '<?php echo site_url();?>';
         var BASE_URL = '<?php echo base_url();?>';
         </script>
+        <?php echo load_js("jquery-1.10.2.min.js"); ?>
 
     </head>
 
@@ -79,7 +81,15 @@
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
                                         <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-inverse" href="<?php echo site_url(); ?>">Job seekers</a></span> 
+                                        <?php
+                                        $session = $this->session->all_userdata();
+                                        if( isset($session['employer']) ){ ?>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-info" href="<?php echo site_url('employee_dashboard'); ?>">Dashboard</a></span>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-danger" href="<?php echo site_url('employer/signout'); ?>">Sign out</a></span>
+                                        <?php } 
+                                        else { ?>
                                         <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url('employer/signin'); ?>">Sign in</a></span>
+                                        <?php } ?>
                                     </form>
                                 </div>	
 
@@ -137,11 +147,12 @@
 <!--            FOOTER END -->
 
             <!-- Placed at the end of the document so the pages load faster --> 
-            <?php echo load_js("jquery-1.10.2.min.js"); ?>
+            <?php echo load_js("jquery.mask.min.js"); ?>
             <?php echo load_js("jquery.bxslider.min.js"); ?>
             <?php echo load_js("jquery.scrollTo-1.4.3.1-min.js"); ?>
             <?php echo load_js("jquery.sharrre.min.js"); ?>
             <?php echo load_js("bootstrap.min.js"); ?>
+            <?php echo load_js("bootstrap-typeahead.js"); ?>
             <?php echo load_js("masonry.pkgd.min.js"); ?>
             <?php echo load_js("modernizr.custom.js"); ?>
             <?php echo load_js("page-transitions.js"); ?>
@@ -150,6 +161,11 @@
             <?php echo load_js("jquery.svganim.js"); ?>
             <?php //echo load_js("froogaloop.min.js"); ?>
             <?php echo load_js("startup-kit.js"); ?>
+<!--            Validation Plugin-->
+            <?php echo load_js("jquery.validate.js",'assets/js/jquery-validation/'); ?>
+            <?php echo load_js("additional-methods.js",'assets/js/jquery-validation/'); ?>
+<!--            Validation Plugin END -->
+            <?php echo load_js("employee.js"); ?>
             
         </div>
     </body>

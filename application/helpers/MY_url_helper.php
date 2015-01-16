@@ -27,7 +27,7 @@ function load_css($file , $path_to_file = '')
 function load_img($src, $alt = "" , $height ="", $width="", $style = "")
 {
 	$CI =& get_instance();
-        $img = '<img src="'.base_url('assets/img/'.$src.'?v='.time());
+        $img = '<img src="'.base_url('assets/img/'.$src).'"';
         
         if($alt != ""){
             $img = $img. ' alt="'.$alt.'" ';

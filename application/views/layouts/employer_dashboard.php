@@ -75,7 +75,14 @@
                                 </ul>
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url(); ?>">Sign in</a></span>
+                                        <?php
+                                        $session = $this->session->all_userdata();
+                                        if( isset($session['employer']) ){ ?>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-danger" href="<?php echo site_url('employer/signout'); ?>">Sign out</a></span>
+                                        <?php } 
+                                        else { ?>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url('employer/signin'); ?>">Sign in</a></span>
+                                        <?php } ?>
                                     </form>
                                 </div>	
 

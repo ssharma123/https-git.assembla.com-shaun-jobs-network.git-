@@ -1,4 +1,6 @@
-
+<script>
+var facilities = <?php echo $facilities; ?>;
+</script>
 <?php echo load_js("jquery-1.10.2.min.js"); ?>
 
 <?php 
@@ -13,7 +15,7 @@
     echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
     echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
 ?>
-<?php echo load_js("employee.js"); ?>
+<?php echo load_js("home.js"); ?>
 <section class="header-11-sub bg-midnight-blue">
     <div class="background">&nbsp;</div>
     <div class="container">
@@ -22,22 +24,24 @@
                 <h3>Medical Staffing. Redefined.</h3>
                 <p>Providing direct-access to top talent–MedMatch is streamlining the application process. Sign up and post your first job. It's free!</p>
                 <div class="signup-form">
-                    <form action="<?php echo site_url('employer/signup/2'); ?>" method="post">
+                    <div id="signupForm1_rsp" style="display: none;"></div>
+                    <form action="<?php echo site_url('employer/signup/2'); ?>" method="post" id="signupForm1">
                         
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Full Name" ng-model="name">
+                            <input class="form-control" type="text" placeholder="Full Name" id="signup1-name" name="signup1-name" required>
                         </div>
                         <div class="form-group">
                             <div>
-                                <input type="text" class="form-control" placeholder="Email" ng-model="email">
+                                <input type="email" class="form-control" placeholder="Email" required id="signup1-email" name="signup1-email">
                             </div>
                             <div>
-                                <input type="text" class="form-control ng-valid ng-dirty" id="facilityName" placeholder="Facility" ng-model="employerNameInput" typeahead="employer.name for employer in employers | filter:{name:$viewValue} | limitTo:8" aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-00O-1287">
+                                <input type="text" class="form-control ng-valid ng-dirty facilities-auto" id="signup1-facility" name="signup1-facility" placeholder="Facility" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-embossed btn-block btn-info">Sign Up</button>
                         </div>
+                        <input type="hidden" name="signup1-facility_id" id="signup1-facility_id" value="0">
                         <input type="hidden" name="no_password" value="yes">
                     </form>
                 </div>
@@ -118,90 +122,92 @@
         <h2>Get Started</h2>
         
         <div id="employer-form1">
-        <form>
+            <div id="signupForm_btm1_rsp" style="display: none;"></div>
+            
+            <form id="home-signup-btm-step1" method="post" action="">
             <div class="col-2">
-                <label for"firstname">Full Name
-                       <input placeholder="Please provide your first and last name." ng-model="firstName lastName" class="ng-pristine ng-valid" id="firstName lastName" tabindex="1" />
+                <label for="signup2-name">Full Name
+                    <input placeholder="Please provide your first and last name." class="ng-pristine ng-valid" id="signup2-name" name="signup2-name" required />
                 </label>
             </div>
             <div class="col-2">
                 <label for="email">EMAIL
-                    <input placeholder="Please enter your email address." type="email" ng-model="email" class="ng-pristine ng-valid ng-valid-email" id="email" tabindex="2" />
+                    <input placeholder="Please enter your email address." type="email" class="ng-pristine ng-valid ng-valid-email" id="signup2-email" name="signup2-email" required />
                 </label>
             </div>
             <div class="col-3">
                 <label for="password">PASSWORD
-                    <input placeholder="Please choose a password." ng-model"password" class="ng-pristine ng-valid" id="password" tabindex="3" />
+                    <input type="password" placeholder="Please choose a password." class="ng-pristine ng-valid" id="signup2-password" name="signup2-password" required />
                 </label>
             </div>
             <div class="col-3">
                 <label for="confirmpassword">CONFIRM PASSWORD
-                    <input placeholder="Please confirm your password." ng-model="confirmpassword" type="password" class="ng-pristine ng-valid" id="confirmpassword" tabindex="4" />
+                    <input placeholder="Please confirm your password." type="password" class="ng-pristine ng-valid" id="signup2_confirm_password" name="signup2_confirm_password" required />
                 </label>
             </div>
             <div class="col-3">
                 <label class="control-label" >Facility Name
-                    <input placeholder="What is the facility's name?" class="ng-valid ng-dirty" id="facilityName"  aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-00O-1287"><!-- ngIf: isOpen() -->
+                    <input placeholder="What is the facility's name?" class="ng-valid ng-dirty facilities-auto2" id="signup2-facility" name="signup2-facility" required autocomplete="off">
+                    <input type="hidden" id="signup1-facility_id_2" name="signup1-facility_id_2" value="0">
                 </label>
             </div>
-        </form>
+            </form>
         </div>
             
         <div id="employer-form2" style="display: none;">
-            <form class="ng-pristine ng-valid" >
+            <div id="signupForm_btm2_rsp" style="display: none;"></div>
+            
+            <form id="home-signup-btm-step2" method="post">
             <div class="col-2">
                 <label >Name
-                       <input type="text" placeholder="" id="name" class="form-control ng-pristine ng-valid" ng-model="facilityInfo.name">
+                       <input type="text" placeholder="Name" class="form-control ng-pristine ng-valid" id="facility_name" name="facility_name" required >
                 </label>
             </div>
             <div class="col-2">
-                <label for"streetaddress"="">Street Address
-                       <input type="text" placeholder="" id="streetAddress" class="form-control ng-pristine ng-valid" ng-model="facilityInfo.streetAddress">
+                <label >Street Address
+                       <input type="text" placeholder="Street Address" class="form-control ng-pristine ng-valid" id="facility_address" name="facility_address" required>
                 </label>
             </div>
             <div class="col-2">
-                <label for"zipcode"="">Zip Code
-                       <input type="text" placeholder="" id="zipCode" class="form-control ng-pristine ng-valid" ng-model="facilityInfo.zipCode">
+                <label >Zip Code
+                       <input type="text" placeholder="Zip Code" class="form-control ng-pristine ng-valid" id="facility_zipCode" name="facility_zipCode" required >
                 </label>
             </div>
             <div class="col-2">
-                <label for"city"="">City
-                       <input type="text" placeholder="" id="city" class="form-control ng-pristine ng-valid" ng-model="facilityInfo.city">
+                <label >City
+                       <input type="text" placeholder="City" class="form-control ng-pristine ng-valid" id="facility_city" name="facility_city" required >
                 </label>
             </div>
             <div class="col-2">
-                <label for"numemployees"="">Number of Employees
-                       <input type="text" placeholder="" id="numEmployees" class="form-control intMask ng-pristine ng-valid" ng-model="facilityInfo.numEmployees">
+                <label >Number of Employees
+                    <input type="number" min="0" placeholder="Number of Employees" class="form-control intMask ng-pristine ng-valid" id="facility_num_of_employee" name="facility_num_of_employee" required >
                 </label>
             </div>
             <div class="col-2">
-                <label for"numbeds"="">Number of Beds
-                       <input type="text" placeholder="" id="numBeds" class="form-control intMask ng-pristine ng-valid" ng-model="facilityInfo.numBeds">
+                <label >Number of Beds
+                    <input type="number" min="0" placeholder="Number of Beds" class="form-control intMask ng-pristine ng-valid" id="facility_num_of_bed" name="facility_num_of_bed" required >
                 </label>
             </div>
             <hr>
             <h4>Billing Personnel</h4>
 
             <div style="box-shadow: none; margin-bottom: 5px;" class="col-3">
-                <label for="billingName">Name
-
-                    <input type="text" placeholder="" id="billingName" class="form-control ng-pristine ng-valid" ng-model="facilityInfo.billingName">
+                <label >Name
+                    <input type="text" placeholder="" class="form-control ng-pristine ng-valid" required name="billing_name" id="billing_name" > 
                 </label>
             </div>
             <div style="box-shadow: none; margin-bottom: 5px;" class="col-3">
-                <label for="billingPhone">Phone
-
-                    <input type="text" placeholder="" id="billingPhone" class="form-control phoneNumberMask ng-pristine ng-valid" ng-model="facilityInfo.billingPhone">
+                <label >Phone
+                    <input type="text" placeholder="" class="form-control phoneNumberMask ng-pristine ng-valid" required name="billing_phone" id="billing_phone">
                 </label>
             </div>
             <div style="box-shadow: none; margin-bottom: 5px;" class="col-3">
-                <label for="billingEmail">Email
-
-                    <input type="text" placeholder="" id="billingEmail" class="form-control ng-pristine ng-valid" ng-model="facilityInfo.billingEmail">
+                <label >Email
+                    <input type="email" placeholder="" class="form-control ng-pristine ng-valid" required name="billing_email" id="billing_email">
                 </label>
-            </div>		
+            </div>	
 
-        </form>
+            </form>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
             <a class="btn btn-embossed btn-info btn-block" href="<?php echo site_url('employee_dashboard'); ?>" id="form12-btn">Complete your free job post!<span class="fui-arrow-right pull-right"></span></a>

@@ -8,12 +8,12 @@ class MY_SiteController extends CI_Controller {
     var $js = array();
     var $js_top = array();
     var $css = array();
-    var $globalSettings = NULL;
+    var $site_setting = array();
     var $pageLoadScript = '';
-    var $title = 'Med Match';
-    var $meta_title = 'Med Match';
-    var $meta_description = 'Med Match';
-    var $meta_keyword = 'Med Match';
+    var $title = '';
+    var $meta_title = '';
+    var $meta_description = '';
+    var $meta_keyword = '';
     var $google_analytics = '';
 
     function __construct() {
@@ -21,7 +21,14 @@ class MY_SiteController extends CI_Controller {
         $params = $this->router->fetch_method();
         $excluded_auth = array();
 
-        $this->globalSettings = $this->config->item('global_settings');
+        $this->config->load('site_setting',TRUE);
+        $settings = $this->config->item('site_setting');
+        $site = $settings['site'];
+        $this->title = $site['title'];
+        $this->meta_title = $site['meta_title'];
+        $this->meta_description = $site['meta_description'];
+        $this->meta_keyword = $site['meta_keyword'];
+        
         $this->load->helper('common');
     }
 
@@ -32,6 +39,19 @@ class MY_SiteController extends CI_Controller {
     }
     
     public function get_facilities_name(){
+        $this->load->model('facility_model','facility');
+        $facilities = $this->facility->facilities_get();
+        $output = array();
+        if($facilities){
+            foreach ($facilities as $val){
+                $temp = array();
+                $temp['id'] = $val['id'];
+                $temp['name'] = $val['name'];
+                $output[] = $temp;
+            }
+        }
+
+        return json_encode($output);
         
     }
 

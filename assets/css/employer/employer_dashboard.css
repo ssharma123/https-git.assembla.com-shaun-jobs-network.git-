@@ -1,0 +1,184 @@
+.wrap {
+    width: 1170px !important;
+}
+.imageContainer {
+    float: left;
+    height: 0;
+    margin-bottom: 20px;
+    padding-bottom: 120%;
+    position: relative;
+    width: 100%;
+}
+.containedImage {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+.lowerBG {
+    background: none repeat scroll 0 0 #aaa;
+    border: 1px solid rgba(150, 150, 150, 0.35);
+    border-radius: 0;
+}
+.lowerBG h2.text-center {
+    margin-top: 5px;
+}
+.formBG {
+    background: none repeat scroll 0 0 #eee;
+    border: medium none;
+    margin: -1px;
+    min-height: 300px;
+    padding: 20px;
+}
+.formLighterBG {
+    background: none repeat scroll 0 0 #eee;
+    border: 1px solid rgba(150, 150, 150, 0.35);
+}
+.progressDotGroup {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.progressDot {
+    background-color: #ddd;
+    border-radius: 100%;
+    display: inline-block;
+    height: 12px;
+    margin-left: 4px;
+    margin-right: 4px;
+    width: 12px;
+}
+.progressActive {
+    background-color: #f00;
+}
+.dashedBorder {
+    border-bottom: 2px dashed #999;
+    margin: 10px auto 0;
+    width: 50%;
+}
+.formButton {
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 20%;
+}
+.inlineControl {
+    display: inline;
+    margin-right: 20px;
+}
+.inlineControlLabel {
+    font-weight: 500;
+    margin-right: 10px;
+}
+.btn-purple {
+    background-color: #af78e0;
+    color: white;
+}
+.btn-purple:hover {
+    background-color: #af70d0;
+    color: white;
+}
+.btn-purple:active {
+    background-color: #af70d0;
+    color: white;
+}
+.btn-blue {
+    background-color: #79a7dd;
+    color: white;
+}
+.btn-blue:hover {
+    background-color: #79a0d0;
+    color: white;
+}
+.btn-blue:active {
+    background-color: #79a0d0;
+    color: white;
+}
+.well-blue {
+    background-color: #b3d2e0;
+    border-color: #555;
+}
+.well-yellow {
+    background-color: #fbfbdb;
+    border-color: #555;
+}
+.well-purple {
+    background-color: #d6c2e8;
+    border-color: #555;
+}
+.containedImage {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+.sec_row {
+    border-bottom: 1px solid #a4a4a4;
+    font-size: 16px;
+    padding: 15px 2px 2px;
+    width: 100%;
+}
+.sec1 {
+    float: left;
+    width: 80%;
+}
+.sec2 {
+    float: left;
+    width: 10%;
+}
+.sec3 {
+    float: left;
+    width: 10%;
+}
+
+/*  NEW FORM STYLE */
+.wrap {
+    width: 1170px !important;
+}
+.imageContainer {
+    position: relative;
+    width: 100%;
+    padding-bottom: 120%;
+    float: left;
+    height: 0;
+    margin-bottom: 20px;
+}
+
+.containedImage {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+}
+.form-wrap {
+    width: 100%;
+    max-width: 1100px;
+}
+.form-section form input[type="text"], .form-section form input[type="password"], .form-section form input[type="date"] {
+    width: 60%;
+    border: 1px solid #9a9b9f;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+    display: inline-block
+}
+.employerForm label {
+    font-weight: normal;
+    width: 25%;
+    text-align: right;
+}
+.form-section form {
+    text-align: left;
+}
+.form-section form fieldset select {
+    width: 60%;
+    display: inline-block;
+    padding: 0 1px;
+}
+
+.form-section form fieldset select {
+    border: 1px solid #9a9b9f;
+    border-radius: 5px;
+    color: #9a9b9f;
+    height: 30px;
+    margin: 10px;
+    width: 45%;
+}
