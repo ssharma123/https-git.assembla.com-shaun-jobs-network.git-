@@ -176,6 +176,12 @@ class Employer extends MY_EmployerController {
                             $this->employer_facility->employers_facility_add($save_data_fac);
                             
                             if($employer_id > 0){
+                                
+                                unset($save_data['password']);
+                    
+                                $this->session->set_userdata('user_id',$save_data['id']);
+                                $this->session->set_userdata('user_type','employer');
+                                $this->session->set_userdata('employer',$save_data);
                                 redirect('employee_dashboard');
                             }
                             
@@ -300,6 +306,9 @@ class Employer extends MY_EmployerController {
                 if($employer_id > 0){
                     $status = 'ok';
                     $msg = 'Signup successfully';
+                    $this->session->set_userdata('user_id',$save_data['id']);
+                    $this->session->set_userdata('user_type','employer');
+                    $this->session->set_userdata('employer',$save_data);
                 }
 
             }
