@@ -22,6 +22,12 @@ class Employer extends MY_EmployerController {
             $msg = '';
             $status = '';
             
+            // check already login
+            $session = $this->session->all_userdata();
+            if(isset($session['employer'])){
+                redirect('employee_dashboard');
+            }
+            
             if($this->input->post()){
                 $email = $this->input->post("signin_email");
                 $password = $this->input->post("signin_password");
@@ -56,6 +62,12 @@ class Employer extends MY_EmployerController {
         }
         public function signup($step = 1)
 	{
+            // check already login
+            $session = $this->session->all_userdata();
+            if(isset($session['employer'])){
+                redirect('employee_dashboard');
+            }
+            
             $this->layout = "employer";
             $data = array();
             $status = "";
@@ -222,6 +234,14 @@ class Employer extends MY_EmployerController {
         }
         
         public function employer_signup_btm_form(){
+            
+            // check already login
+            $session = $this->session->all_userdata();
+            if(isset($session['employer'])){
+                redirect('employee_dashboard');
+            }
+            
+            
             $this->layout = "blank";
             $msg = "";
             $status = "";
