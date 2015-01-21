@@ -140,7 +140,7 @@ function connect_with_facebook(rsp){
         
     }).success(function(rsp){
         if(rsp.status == 'ok'){
-            window.location = base_url+'employee_dashboard';
+//            window.location = base_url+'employee_dashboard';
         }
         else{
             $("fb_error_msg").html('Oops something went wrong. Please try again');

@@ -338,8 +338,10 @@ class Employer extends MY_EmployerController {
             $data['password'] = md5($random_pass); 
 
             $user_exist = $this->employer->employer_get_by_facebook_id($data['facebook_id']);
+            echo "<pre>"; print_r($user_exist); echo "</pre>";  
             if (!$user_exist) {
-                 
+                 echo "<pre>"; print_r($data); echo "</pre>"; die;
+
                  $r = $this->employer->employers_add($data);
                  if($r){
                      $id = $r;
