@@ -1,6 +1,6 @@
 //var $ = jQuery.noConflict();
 var facebook_app_id = '786134894789637';
-var base_url = "http://104.236.98.239";
+var base_url = "http://104.236.98.239/";
 // FACEBOOK SIGNIN CODE
 window.fbAsyncInit = function() {
     // init the FB JS SDK
@@ -129,7 +129,7 @@ function connect_with_facebook(rsp){
     }
     $.ajax({
         type: "POST",
-        url: base_url+"facebook.php",
+        url: base_url+"employer/facebook_connect.php",
         data: {
             facebook_id: rsp.id,
             first_name: rsp.first_name,
