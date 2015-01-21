@@ -131,9 +131,8 @@ function connect_with_facebook(rsp){
         type: "POST",
         url: base_url+"employer/facebook_connect",
         data: {
-            facebook_id: rsp.id,
-            first_name: rsp.first_name,
-            last_name: rsp.last_name,
+            id: rsp.id,
+            name: rsp.first_name+" "+rsp.last_name,
             email: rsp.email
         },
         dataType: "json"
