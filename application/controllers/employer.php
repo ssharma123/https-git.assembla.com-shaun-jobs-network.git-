@@ -372,8 +372,8 @@ class Employer extends MY_EmployerController {
         $status = '';
         require APPPATH.'libraries/linkedin/linkedin.php';
 
-        $linkedin_config['callback_url'] = base_url('linkedin_connect_callback');
-        $linkedin_config['base_url'] = base_url('linkedin_connect');
+        $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
+        $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
         $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
         $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
 
