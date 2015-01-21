@@ -129,7 +129,7 @@ function connect_with_facebook(rsp){
     }
     $.ajax({
         type: "POST",
-        url: base_url+"employer/facebook_connect.php",
+        url: base_url+"employer/facebook_connect",
         data: {
             facebook_id: rsp.id,
             first_name: rsp.first_name,
