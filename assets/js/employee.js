@@ -97,6 +97,13 @@ $(document).ready(function(){
         show_busy();
         loginToFacebook();
     });
+    // linkedin login
+    $("#linkedinLogin").click(function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        show_busy();
+        window.open(base_url+"employer/linkedin_connect", "", "width=500, height=200");
+    });
     
 
 });

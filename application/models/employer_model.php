@@ -33,6 +33,7 @@ class Employer_model extends CI_Model {
     {
         $this->db->where('id' , $id);
         $this->db->update($this->table_name,$data);
+        return $id;
     }
     
     function employer_get_by_email($email){
