@@ -333,7 +333,7 @@ class Employer extends MY_EmployerController {
             $freez_time = time();
             $data['created_at'] = $freez_time;
             $data['updated_at'] = $freez_time;
-            $data['is_active'] = 1;
+            $data['active'] = 1;
             $random_pass = random_string('alnum', 10);
             $data['password'] = md5($random_pass); 
 
