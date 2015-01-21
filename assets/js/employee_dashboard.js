@@ -31,4 +31,30 @@ $(document).ready(function(){
         $("#post-job-step"+step_to).fadeIn();
         
     });
+    
+    $("#signup_sigin_form").validate({
+        rules: {
+            signin_confirm_password: {
+                equalTo: "#signin_password"
+            }
+        },
+        errorPlacement: function(error, element) {
+            element.attr("placeholder",error.text());
+        },
+        submitHandler: function(form) {
+            $("#signup_signin_form_rsp").hide();
+            $("#signup_signin_form_rsp").removeClass("error_rsp");
+            var email = $("#signin_signup_email").val();
+            if( employer_email_exist(email) === true){
+                $("#signup_signin_form_rsp").addClass("error_rsp");
+                $("#signup_signin_form_rsp").html("Email already Exist").show();
+            }
+            else{
+                form.submit();    
+            }
+            
+            return false;
+        }
+        
+    });
 });

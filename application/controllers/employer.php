@@ -19,6 +19,7 @@ class Employer extends MY_EmployerController {
         
         public function signin()
 	{
+            $data["facilities"] = $this->get_facilities_name();
             $msg = '';
             $status = '';
             
@@ -322,6 +323,20 @@ class Employer extends MY_EmployerController {
             $output = array("status" => $status, "msg" => $msg);
             echo json_encode($output); die;
         }
+        
+        
+        public function faq(){
+            $this->layout = "employer";
+            $this->title .= " - FAQ" ;
+            $this->load->view("employer/faq");
+        }
+        
+        public function how_it_works(){
+            $this->layout = "employer";
+            $this->title .= " - Who it works" ;
+            $this->load->view("employer/how_it_works");
+        }
+        
         
         
 }

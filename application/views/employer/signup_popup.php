@@ -75,7 +75,7 @@
     });
     $("#signup_popup_form").validate({
         rules: {
-            confirm_password: {
+            popup_confirm_password: {
                 equalTo: "#popup_password"
             }
         },

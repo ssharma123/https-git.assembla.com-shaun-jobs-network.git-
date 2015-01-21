@@ -52,6 +52,7 @@
     </head>
 
     <body>
+        <div id="fb-root"></div>
         <div class="page-wrapper">
 
             <!-- header-11 -->
@@ -125,11 +126,11 @@
                             </div>
                             <div class="col-sm-4 col-sm-offset-1 box">
                                 <h6>Questions</h6>
-                                <p>We want to hear from you. Email us directly at <a href="mailto:jobs@medmatchjobs.com">info@medmatchjobs.com</a> you may also call or text us as 1-312-635-4633. Please review our <a href="#">FAQ</a> and <a href="#">How it Works</a> pages for additional information about MedMatch Jobs.</p>
+                                <p>We want to hear from you. Email us directly at <a href="mailto:jobs@medmatchjobs.com">info@medmatchjobs.com</a> you may also call or text us as 1-312-635-4633. Please review our <a href="<?php echo site_url('employer/faq'); ?>">FAQ</a> and <a href="<?php echo site_url('employer/how_it_works'); ?>">How it Works</a> pages for additional information about MedMatch Jobs.</p>
                             </div>
                             <div class="col-sm-3 col-sm-offset-1 box">
                                 <h6>Matching Guidelines</h6>
-                                <p>MedMatch Jobs is committed to transparency and efficiency. By using MedMatch Jobs, you are signifying your acceptance of the <a href="#">terms</a> and <a href="#">conditions</a> of this site.</p>
+                                <p>MedMatch Jobs is committed to transparency and efficiency. By using MedMatch Jobs, you are signifying your acceptance of the <a href="<?php echo site_url('employer/terms_of_use'); ?>">terms</a> and <a href="<?php echo site_url('employer/terms_condition'); ?>">conditions</a> of this site.</p>
                             </div>
                         </div>
                     </div>

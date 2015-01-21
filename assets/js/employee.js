@@ -1,4 +1,29 @@
 //var $ = jQuery.noConflict();
+var facebook_app_id = '734064846676276';
+var base_url = "http://104.236.98.239";
+// FACEBOOK SIGNIN CODE
+window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+        appId: facebook_app_id, // App ID from the app dashboard
+        status: true, // Check Facebook Login status
+        xfbml: true,                                  // Look for social plugins on the page
+        cookie:true,    
+        oauth : true
+    });
+};
+// Load the SDK asynchronously
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
 if(typeof facilities == "undefined"){
     facilities = [];
 }
@@ -65,9 +90,73 @@ $(document).ready(function(){
     });
     
     
+    // facebook login
+    $("#facebookLogin").click(function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        show_busy();
+        loginToFacebook();
+    });
+    
 
 });
-
+function loginToFacebook(){
+    $("fb_error_div").hide();
+    $("fb_error_msg").html('');
+    FB.login(function(response) {
+            if (response.authResponse && response.status == "connected") {
+                    
+                    FB.api('/me', {fields: 'id,first_name,last_name,email'}, function(rsp) {
+                        connect_with_facebook(rsp);
+                    });
+            }
+            else if (response.status === "unknown" || response.status === "not_authorized") {
+                $("fb_error_msg").html('Login Error '+response.status+' user');
+                $("fb_error_div").show();
+                hide_busy();
+            }
+            else{
+                $("fb_error_msg").html('Oops something went wrong. Please try again');
+                $("fb_error_div").show();
+                hide_busy();
+            }
+    },{scope: 'email'});
+}
+function connect_with_facebook(rsp){
+    var hometown = "";
+    if(typeof rsp.hometown != 'undefined'){
+        hometown = rsp.hometown.name;
+    }
+    $.ajax({
+        type: "POST",
+        url: base_url+"facebook.php",
+        data: {
+            facebook_id: rsp.id,
+            first_name: rsp.first_name,
+            last_name: rsp.last_name,
+            email: rsp.email
+        },
+        dataType: "json"
+        
+    }).success(function(rsp){
+        if(rsp.status == 'ok'){
+            window.location = base_url+'employee_dashboard';
+        }
+        else{
+            $("fb_error_msg").html('Oops something went wrong. Please try again');
+            $("fb_error_div").show();
+        }
+    }).always(function(){
+        hide_busy();
+    });
+        
+}
+function show_busy(){
+    $("#connect_btn_busy").show();
+}
+function hide_busy(){
+    $("#connect_btn_busy").hide();
+}
 function employer_email_exist(email){
     var flag = false;
     $.ajax({
