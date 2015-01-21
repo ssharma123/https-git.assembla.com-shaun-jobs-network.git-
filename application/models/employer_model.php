@@ -46,6 +46,8 @@ class Employer_model extends CI_Model {
     function employer_get_by_facebook_id($facebook_id){
         $this->db->where('facebook_id',$facebook_id);
         $r = $this->db->get($this->table_name);
+        echo $this->db->last_query();
+        die;
         if ($r->num_rows() > 0) {
             return $r->row_array();
         }
