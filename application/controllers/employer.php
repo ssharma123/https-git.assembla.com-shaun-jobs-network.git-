@@ -430,7 +430,7 @@ class Employer extends MY_EmployerController {
         
         
         $linkedin_user = get_object_vars($xml);
-        $linkedin_id = ( isset($linkedin_user['id']) ) ? $linkedin_user['id'] : 0 ;
+        $linkedin_id = ( isset($linkedin_user['id']) ) ? $linkedin_user['id'] : "" ;
         $name = ( isset($linkedin_user['first-name']) ) ? $linkedin_user['first-name'] : "" ;
         $name .= ( isset($linkedin_user['last-name']) ) ? " ".$linkedin_user['last-name'] : "" ;
         $email = ( isset($linkedin_user['email-address']) ) ? $linkedin_user['email-address'] : "" ;
@@ -439,7 +439,7 @@ class Employer extends MY_EmployerController {
         echo "<pre>"; print_r($name); echo "</pre>";
         echo "<pre>"; print_r($email); echo "</pre>";
 
-        if($linkedin_id != 0 && $name != "" && $email != "") {
+        if( $linkedin_id != "" && $name != "" && $email != "") {
             echo "here"; die;
             $html = '<script type="text/javascript">
                 var linkedin_id = "' . $linkedin_id . '" ;
