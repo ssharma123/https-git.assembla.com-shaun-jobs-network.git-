@@ -333,7 +333,7 @@ class Employer extends MY_EmployerController {
 
             $user_exist_email = $this->employer->employer_get_by_email($data['email']);
             if ($user_exist_email) {
-                $update_data = $data['facebook_id'];
+                $update_data['facebook_id'] = $data['facebook_id'];
                 $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
             } else {
                 $r = $this->employer->employers_add($data);
@@ -469,7 +469,7 @@ class Employer extends MY_EmployerController {
 
             $user_exist_email = $this->employer->employer_get_by_email($data['email']);
             if ($user_exist_email) {
-                $update_data = $data['linkedin_id'];
+                $update_data['linkedin_id'] = $data['linkedin_id'];
                 $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
             } else {
                 $r = $this->employer->employers_add($data);
