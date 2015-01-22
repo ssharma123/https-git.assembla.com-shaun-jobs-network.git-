@@ -403,23 +403,28 @@ class Employer extends MY_EmployerController {
         $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
         $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
         $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
+        $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
+        
+        $oauth_state = $this->session->userdata('oauth_state');
+        $requestToken = $this->session->userdata('requestToken');
+        $linkedin_post_id = $this->session->userdata('linkedin_post_id');
+        $oauth_access_token = $this->session->userdata('oauth_access_token');
         
         if (isset($_GET['oauth_verifier'])) {
-            $_SESSION['oauth_verifier'] = $_GET['oauth_verifier'];
-            $linkedin->request_token = unserialize($_SESSION['requestToken']);
-            $linkedin->oauth_verifier = $_SESSION['oauth_verifier'];
-            $tocken = $linkedin->getAccessToken($_GET['oauth_verifier']);
-            $_SESSION['oauth_access_token'] = serialize($linkedin->access_token);
+            $this->session->set_userdata('oauth_verifier',$_GET['oauth_verifier']);
+            $linkedin->request_token = unserialize($requestToken);
+            $linkedin->oauth_verifier = $this->session->userdata('oauth_verifier');
+            $token = $linkedin->getAccessToken($_GET['oauth_verifier']);
+            $this->session->set_userdata('oauth_access_token') = serialize($linkedin->access_token);
             header("Location: " . $linkedin_config['callback_url']);
             exit();
         } else {
             $linkedin->request_token = unserialize($_SESSION['requestToken']);
-            $linkedin->oauth_verifier = $_SESSION['oauth_verifier'];
-            $linkedin->access_token = unserialize($_SESSION['oauth_access_token']);
+            $linkedin->oauth_verifier = $this->session->userdata('oauth_verifier');
+            $linkedin->access_token = unserialize($oauth_access_token);
         }
         
-        $oauth_state = $this->session->userdata('oauth_state');
-        $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
+        
         
         $xml_response = $linkedin->getProfile("~:(id)");
         
