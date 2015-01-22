@@ -384,9 +384,9 @@ class Employer extends MY_EmployerController {
         $mobile_user_id = isset($_REQUEST["post_id"]) ? $_REQUEST["post_id"] : '';
         # Now we retrieve a request token. It will be set as $linkedin->request_token
         $linkedin->getRequestToken();
-        $this->session->set_userdata('requestToken') = serialize($linkedin->request_token);
-        $this->session->set_userdata('oauth_state') = $state;
-        $this->session->set_userdata('linkedin_post_id') = $mobile_user_id;
+        $this->session->set_userdata('requestToken',serialize($linkedin->request_token));  
+        $this->session->set_userdata('oauth_state',$state);
+        $this->session->set_userdata('linkedin_post_id',$mobile_user_id);
         header("Location: " . $linkedin->generateAuthorizeUrl());
         
         echo json_encode(array('status' => $status));
