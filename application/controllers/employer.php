@@ -411,7 +411,6 @@ class Employer extends MY_EmployerController {
         $oauth_access_token = $this->session->userdata('oauth_access_token');
         
         if (isset($_GET['oauth_verifier'])) {
-            echo "yes";
             $this->session->set_userdata('oauth_verifier',$_GET['oauth_verifier']);
             $linkedin->request_token = unserialize($requestToken);
             $linkedin->oauth_verifier = $this->session->userdata('oauth_verifier');
@@ -420,19 +419,14 @@ class Employer extends MY_EmployerController {
             header("Location: " . $linkedin_config['callback_url']);
             exit();
         } else {
-            echo "no";
             $linkedin->request_token = unserialize($requestToken);
             $linkedin->oauth_verifier = $this->session->userdata('oauth_verifier');
             $linkedin->access_token = unserialize($oauth_access_token);
         }
         
         
-        
-        $xml_response = $linkedin->getProfile("~:(id)");
-        
-//        $xml_response = $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
+        $xml_response = $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
         $xml_response = new SimpleXmlElement($xml_response);
-        
         
         echo "<pre>"; print_r($oauth_state); echo "</pre>"; 
         echo "<hr>";
