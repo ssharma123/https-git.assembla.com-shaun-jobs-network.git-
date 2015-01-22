@@ -384,9 +384,9 @@ class Employer extends MY_EmployerController {
         $mobile_user_id = isset($_REQUEST["post_id"]) ? $_REQUEST["post_id"] : '';
         # Now we retrieve a request token. It will be set as $linkedin->request_token
         $linkedin->getRequestToken();
-        $_SESSION['requestToken'] = serialize($linkedin->request_token);
-        $_SESSION['oauth_state'] = $state;
-        $_SESSION['linkedin_post_id'] = $mobile_user_id;
+        $this->session->set_userdata('requestToken') = serialize($linkedin->request_token);
+        $this->session->set_userdata('oauth_state') = $state;
+        $this->session->set_userdata('linkedin_post_id') = $mobile_user_id;
         header("Location: " . $linkedin->generateAuthorizeUrl());
         
         echo json_encode(array('status' => $status));
@@ -397,6 +397,21 @@ class Employer extends MY_EmployerController {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         
+        $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
+        $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
+        $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
+        $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
+        
+        $oauth_state = $this->session->userdata('oauth_state');
+        
+        $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
+        
+        $linkedin_user = $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
+        
+        echo "<pre>"; print_r($oauth_state); echo "</pre>"; 
+        echo "<hr>";
+        echo "<pre>"; print_r($linkedin_user); echo "</pre>"; die;
+        echo "<hr>";
         echo "<pre>"; print_r($_SERVER); echo "</pre>"; die;
     }
 
