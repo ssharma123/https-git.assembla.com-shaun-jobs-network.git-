@@ -416,7 +416,7 @@ class Employer extends MY_EmployerController {
             $linkedin->request_token = unserialize($requestToken);
             $linkedin->oauth_verifier = $this->session->userdata('oauth_verifier');
             $token = $linkedin->getAccessToken($_GET['oauth_verifier']);
-            $this->session->set_userdata('oauth_access_token') = serialize($linkedin->access_token);
+            $this->session->set_userdata( 'oauth_access_token',serialize($linkedin->access_token) );
             header("Location: " . $linkedin_config['callback_url']);
             exit();
         } else {
