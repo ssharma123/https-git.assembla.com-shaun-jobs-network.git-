@@ -437,7 +437,7 @@ class Employer extends MY_EmployerController {
         $email = ( isset($linkedin_user['email-address']) ) ? $linkedin_user['email-address'] : "" ;
         
         if( $linkedin_id != "" && $name != "" && $email != "") {
-            $html = '<script type="text/javascript">
+            $html = '<!DOCTYPE html><script>
                 var linkedin_id = "' . $linkedin_id . '" ;
                 var name = "' . $name . '" ;
                 var email = "' . $email . '" ;
