@@ -408,8 +408,8 @@ class Employer extends MY_EmployerController {
         $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
         
         $xml_response = $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
-        $xml_response = simplexml_load_string($xml_response);
-        $xml_response = object2array($xml_response);
+        $xml_response = new SimpleXmlElement($xml_response);
+        
         
         echo "<pre>"; print_r($oauth_state); echo "</pre>"; 
         echo "<hr>";
