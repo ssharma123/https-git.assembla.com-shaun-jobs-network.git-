@@ -428,18 +428,74 @@ class Employer extends MY_EmployerController {
         $xml= $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
         $xml= new SimpleXmlElement($xml);
         
-        echo "<hr>";
-        echo "<pre>"; print_r($xml); echo "</pre>"; 
-        echo "<hr>";
-        $xml = get_object_vars($xml);
-        echo "<pre>"; print_r($xml); echo "</pre>"; 
+        
+        $linkedin_user = get_object_vars($xml);
+        $linkedin_id = ( isset($linkedin_user['id']) ) ? $linkedin_user['id'] : 0 ;
+        $name = ( isset($linkedin_user['first-name']) ) ? $linkedin_user['first-name'] : "" ;
+        $name .= ( isset($linkedin_user['last-name']) ) ? $linkedin_user['first-name'] : "" ;
+        $email = ( isset($linkedin_user['email-address']) ) ? $linkedin_user['email-address'] : "" ;
+        
+        if($linkedin_id != 0 && $name != "" && $email != "") {
+            $html = '<script type="text/javascript">
+                var linkedin_id = "' . $linkedin_id . '" ;
+                var name = "' . $name . '" ;
+                var email = "' . $email . '" ;
+            self.opener.save_user_linkedin(linkedin_id, name, email);
+            self.close();
+            </script>';
+            echo $html;
+        }
+        
         die;
         
-//        $id = ( isset($xml->id) ) ? $xml->id : 0 ; 
-//        $name = ( isset($xml->first-name) ) ? $xml->first-name : "" ; 
-//        $name .= ( isset($xml->last-name) ) ? " ".$xml->first-name : "" ; 
-//        $email = ( isset($xml->email-address) ) ? $xml->email-address : 0 ; 
-        
+    }
+    public function linkedin_connect_save(){
+        $this->layout = 'blank';
+        $status = '';
+        $data['linkedin_id'] = $this->input->post('id');
+        $data['name'] = $this->input->post('name');
+        $data['email'] = $this->input->post('email');
+        $freez_time = time();
+        $data['created_at'] = $freez_time;
+        $data['updated_at'] = $freez_time;
+        $data['active'] = 1;
+        $random_pass = random_string('alnum', 10);
+        $data['password'] = md5($random_pass);
+
+        $user_exist = $this->employer->employer_get_by_linkedin_id($data['linkedin_id']);
+        if (!$user_exist) {
+
+            $user_exist_email = $this->employer->employer_get_by_email($data['email']);
+            if ($user_exist_email) {
+                $update_data = $data['linkedin_id'];
+                $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
+            } else {
+                $r = $this->employer->employers_add($data);
+            }
+
+            if ($r) {
+                $id = $r;
+                $employer = $this->employer->employers_get($id);
+                unset($employer['password']);
+                $this->session->set_userdata('user_id', $employer['id']);
+                $this->session->set_userdata('user_type', 'employer');
+                $this->session->set_userdata('employer', $employer);
+                $status = 'ok';
+                // send email Create account  
+            } else {
+                $status = 'error';
+            }
+        } else {
+            $employer = $user_exist;
+            unset($employer['password']);
+            $this->session->set_userdata('user_id', $employer['id']);
+            $this->session->set_userdata('user_type', 'employer');
+            $this->session->set_userdata('employer', $employer);
+            $status = 'ok';
+        }
+
+        echo json_encode(array('status' => $status));
+        die;
     }
 
     public function faq() {

@@ -52,6 +52,14 @@ class Employer_model extends CI_Model {
         }
         return false;
     }
+    function employer_get_by_linkedin_id($linkedin_id){
+        $this->db->where('linkedin_id',$linkedin_id);
+        $r = $this->db->get($this->table_name);
+        if ($r->num_rows() > 0) {
+            return $r->row_array();
+        }
+        return false;
+    }
     function employers_get_by_email_pass($email , $pass){
         $this->db->where('email',$this->db->escape_str($email));
         $this->db->where('password',md5( $this->db->escape_str($pass) ));

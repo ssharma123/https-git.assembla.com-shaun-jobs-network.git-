@@ -130,10 +130,6 @@ function loginToFacebook(){
     },{scope: 'email'});
 }
 function connect_with_facebook(rsp){
-    var hometown = "";
-    if(typeof rsp.hometown != 'undefined'){
-        hometown = rsp.hometown.name;
-    }
     $.ajax({
         type: "POST",
         url: base_url+"employer/facebook_connect",
@@ -146,7 +142,33 @@ function connect_with_facebook(rsp){
         
     }).success(function(rsp){
         if(rsp.status == 'ok'){
-//            window.location = base_url+'employee_dashboard';
+            window.location = base_url+'employee_dashboard';
+        }
+        else{
+            $("fb_error_msg").html('Oops something went wrong. Please try again');
+            $("fb_error_div").show();
+        }
+    }).always(function(){
+        hide_busy();
+    });
+        
+}
+
+function connect_with_linkedin(linkedin_id , name, email){
+     
+    $.ajax({
+        type: "POST",
+        url: base_url+"employer/linkedin_connect_save",
+        data: {
+            id: linkedin_id,
+            name: name,
+            email: email
+        },
+        dataType: "json"
+        
+    }).success(function(rsp){
+        if(rsp.status == 'ok'){
+            window.location = base_url+'employee_dashboard';
         }
         else{
             $("fb_error_msg").html('Oops something went wrong. Please try again');
