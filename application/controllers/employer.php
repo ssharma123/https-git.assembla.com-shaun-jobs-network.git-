@@ -441,7 +441,7 @@ class Employer extends MY_EmployerController {
                 var linkedin_id = "' . $linkedin_id . '" ;
                 var name = "' . $name . '" ;
                 var email = "' . $email . '" ;
-                self.opener.save_user_linkedin(linkedin_id, name, email);
+                self.opener.connect_with_linkedin(linkedin_id, name, email);
                 self.close();
                 </script>';
             echo $html;
