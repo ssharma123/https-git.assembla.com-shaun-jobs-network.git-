@@ -425,14 +425,21 @@ class Employer extends MY_EmployerController {
         }
         
         
-        $xml_response = $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
-        $xml_response = new SimpleXmlElement($xml_response);
+        $xml= $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
+        $xml= new SimpleXmlElement($xml);
         
-        echo "<pre>"; print_r($oauth_state); echo "</pre>"; 
         echo "<hr>";
-        echo "<pre>"; print_r($xml_response); echo "</pre>"; 
+        echo "<pre>"; print_r($xml); echo "</pre>"; 
         echo "<hr>";
-        echo "<pre>"; print_r($_SERVER); echo "</pre>"; die;
+        $xml = get_object_vars($xml);
+        echo "<pre>"; print_r($xml); echo "</pre>"; 
+        die;
+        
+//        $id = ( isset($xml->id) ) ? $xml->id : 0 ; 
+//        $name = ( isset($xml->first-name) ) ? $xml->first-name : "" ; 
+//        $name .= ( isset($xml->last-name) ) ? " ".$xml->first-name : "" ; 
+//        $email = ( isset($xml->email-address) ) ? $xml->email-address : 0 ; 
+        
     }
 
     public function faq() {
