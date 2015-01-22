@@ -394,6 +394,7 @@ class Employer extends MY_EmployerController {
     }
     
     public function linkedin_connect_callback(){
+        $this->layout = 'blank';
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         
@@ -435,10 +436,6 @@ class Employer extends MY_EmployerController {
         $name .= ( isset($linkedin_user['last-name']) ) ? " ".$linkedin_user['last-name'] : "" ;
         $email = ( isset($linkedin_user['email-address']) ) ? $linkedin_user['email-address'] : "" ;
         
-        echo "<pre>"; print_r($linkedin_id); echo "</pre>";
-        echo "<pre>"; print_r($name); echo "</pre>";
-        echo "<pre>"; print_r($email); echo "</pre>";
-
         if( $linkedin_id != "" && $name != "" && $email != "") {
             $html = '<script type="text/javascript">
                 var linkedin_id = "' . $linkedin_id . '" ;
