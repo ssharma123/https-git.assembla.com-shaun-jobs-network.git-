@@ -450,6 +450,9 @@ class Employer extends MY_EmployerController {
                 </script>';
             echo $html;
         }
+        else{
+            echo "else"; die;
+        }
         die;
     }
     public function linkedin_connect_save(){
