@@ -440,7 +440,6 @@ class Employer extends MY_EmployerController {
         echo "<pre>"; print_r($email); echo "</pre>";
 
         if( $linkedin_id != "" && $name != "" && $email != "") {
-            echo "here"; die;
             $html = '<script type="text/javascript">
                 var linkedin_id = "' . $linkedin_id . '" ;
                 var name = "' . $name . '" ;
@@ -451,7 +450,7 @@ class Employer extends MY_EmployerController {
             echo $html;
         }
         else{
-            echo "else"; die;
+            echo "Error: something went wrong please try again";
         }
         die;
     }
