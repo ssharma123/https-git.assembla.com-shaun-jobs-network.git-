@@ -75,8 +75,16 @@
     });
     $("#signup_popup_form").validate({
         rules: {
-            popup_confirm_password: {
+            'confirm_password': {
                 equalTo: "#popup_password"
+            },
+            'password': {
+                minlength: 6,
+                required: true
+            },
+            'signup_phone': {
+                minlength: 10,
+                required: true
             }
         },
         errorPlacement: function(error, element) {

@@ -62,7 +62,7 @@ var facilities = <?php echo $facilities; ?>;
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="password">Choose a Password</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control ng-pristine ng-valid" placeholder="Password" required id="signin_password" name="password" >
+                            <input type="password" class="form-control ng-pristine ng-valid" placeholder="Password" required id="signin_password_2" name="password" >
                         </div>
                     </div>
                     <div class="form-group">

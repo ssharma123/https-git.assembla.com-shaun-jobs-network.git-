@@ -198,7 +198,7 @@ var facilities = <?php echo $facilities; ?>;
             </div>
             <div style="box-shadow: none; margin-bottom: 5px;" class="col-3">
                 <label >Phone
-                    <input type="text" placeholder="" class="form-control phoneNumberMask ng-pristine ng-valid" required name="billing_phone" id="billing_phone">
+                    <input type="text" placeholder="" class="form-control phoneNumberMask ng-pristine ng-valid is_phone_number" required name="billing_phone" id="billing_phone">
                 </label>
             </div>
             <div style="box-shadow: none; margin-bottom: 5px;" class="col-3">

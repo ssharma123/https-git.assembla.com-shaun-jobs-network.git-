@@ -43,7 +43,7 @@
         <div class="form-group">
           <label class="col-sm-4 control-label" for="name">Name</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control ng-pristine ng-valid" name="facility_name" id="facility_name" readonly="true" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
+              <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid" name="facility_name" id="facility_name" readonly="true" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
           </div>
         </div>
         <div class="form-group">
@@ -93,7 +93,7 @@
       <div class="form-group">
           <label class="col-sm-4 control-label" for="billingPhone">Phone</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control ng-pristine ng-valid" id="billing_phone" name="billing_phone" required placeholder="" value="<?php echo (isset($signup_phone)) ? $signup_phone : '' ; ?>">
+              <input type="text" class="form-control ng-pristine ng-valid is_phone_number" id="billing_phone" name="billing_phone" required placeholder="" value="<?php echo (isset($signup_phone)) ? $signup_phone : '' ; ?>">
           </div>
         </div>
         <div class="form-group">

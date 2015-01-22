@@ -61,12 +61,20 @@ $(document).ready(function(){
         $("#signup1-facility_id_2").val('0');
     });
     
-    
+        
     
     $("#signupForm2").validate({
         rules: {
             confirm_password: {
                 equalTo: "#password"
+            },
+            'password': {
+                minlength: 6,
+                required: true
+            },
+            'billing_phone': {
+                minlength: 10,
+                required: true
             }
         },
         errorPlacement: function(error, element) {

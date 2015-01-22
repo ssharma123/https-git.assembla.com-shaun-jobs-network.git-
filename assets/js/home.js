@@ -100,8 +100,13 @@ $(document).ready(function(){
     });
     
     $("#signupForm1").validate({
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
+        messages: {
+            'signup1-name': "Please specify your name",
+            'signup1-email': {
+                required: "Email is required",
+                email: "Valid Email is required",
+            },
+            'signup1-facility':"Please specify your facility name"
         },
         submitHandler: function(form) {
             // do other things for a valid form
@@ -124,6 +129,10 @@ $(document).ready(function(){
         rules: {
             signup2_confirm_password: {
                 equalTo: "#signup2-password"
+            },
+            'signup2-password': {
+                minlength: 6,
+                required: true
             }
         },
         errorPlacement: function(error, element) {
@@ -131,9 +140,17 @@ $(document).ready(function(){
         },
         submitHandler: function(form) {
         }
-        ,debug: true
     });
     $("#home-signup-btm-step2").validate({
+        rules: {
+            signup2_confirm_password: {
+                equalTo: "#signup2-password"
+            },
+            'billing_phone': {
+                minlength: 10,
+                required: true
+            }
+        },
         errorPlacement: function(error, element) {
             element.attr("placeholder",error.text());
         },
