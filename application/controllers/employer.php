@@ -396,6 +396,7 @@ class Employer extends MY_EmployerController {
     public function linkedin_connect_callback(){
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
+        require APPPATH.'libraries/linkedin/linkedin.php';
         
         $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
         $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
