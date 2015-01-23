@@ -5,21 +5,13 @@ if (!defined('BASEPATH'))
 
 class Employee_dashboard extends MY_EmployerController {
 
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     * 		http://example.com/index.php/welcome
-     * 	- or -  
-     * 		http://example.com/index.php/welcome/index
-     * 	- or -
-     * Since this controller is set as the default controller in 
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see http://codeigniter.com/user_guide/general/urls.html
-     */
+    
+    function __construct() {
+        parent::__construct();
+        $this->load->model('employer_model', 'employer');
+        $this->load->model('employers_subscription_model', 'employers_subscription');
+    }
+    
     public function index() {
 
         $this->layout = "employer_dashboard";
@@ -30,6 +22,9 @@ class Employee_dashboard extends MY_EmployerController {
         }
         
         $data['employer'] = $session['employer'];
+        
+        $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
+        $data['sub_data'] = $sub_data;
         
         $this->load->view('employer/employer_dashboard', $data);
     }

@@ -113,6 +113,22 @@ $(document).ready(function(){
         window.open(base_url+"employer/linkedin_connect", "", "width=500, height=200");
     });
     
+    
+    
+    if( $("#paypal_checkout_form").length > 0){
+        $("#paypal_checkout_form").validate({
+             
+            errorPlacement: function(error, element) {
+                element.attr("placeholder",error.text());
+            },
+            submitHandler: function(form) {
+                 
+                    form.submit();    
+
+                return false;
+            }
+        });
+    }
 
 });
 function loginToFacebook(){

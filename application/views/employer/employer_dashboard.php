@@ -26,7 +26,13 @@
 
                 <div class="text-left" style="margin: 0px">
                     <h3 class="ng-binding"><?php echo $employer['name']; ?></h3>
+                    <?php
+                    if($sub_data){
+                        echo "( Pro member )<br><br>";
+                    }
+                    ?>
                     <a class="btn btn-lg btn-primary" ng-click="" id="new-job-post-btn">New Job Post</a>
+                    
                     <input type="hidden" id="selectedApplicant" value="">
                 </div>
 
@@ -112,7 +118,13 @@
                                 
                                 
                                 <div ng-show="job.applicants.length &gt; 0" style="background: none repeat scroll 0% 0% rgb(255, 255, 255); padding: 5px;" class="leftBarMain" id="">
-                                    <a href="javascript:void(0)" class="paynow_temp">
+                                    <?php
+                                    $class_popup = 'paynow_temp';
+                                        if($sub_data){
+                                            $class_popup = '';
+                                        }
+                                    ?>
+                                    <a href="javascript:void(0)" class="<?php echo $class_popup; ?>">
                                         <div class="leftBar ng-scope" ng-repeat="applicant in job.applicants" style="padding-left: 30px;">
                                                 <div style="border: 1px solid #e4e4e4; border-left: none;">
                                                         <div style="float: left; width: 60px; height: 60px;">
