@@ -52,7 +52,7 @@ class Employers_subscription_model extends CI_Model {
     }
     public function subscription_log_save($data)
     {
-        $this->db->insert($this->table_name,$data);
+        $this->db->insert('employers_subscription_logs',$data);
         return $this->db->insert_id();
     }
 }

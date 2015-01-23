@@ -92,7 +92,7 @@ class Employer_checkout extends MY_EmployerController {
                         $id = $this->employers_subscription->subscription_add($save_data);
                         if($id){
                             $status = 'ok';
-                            $msg = "You have subscribed successfully";
+                            $msg = "You have subscribed successfully, your subscription will be activated soon";
                         }
                     }
                     else{
