@@ -239,10 +239,10 @@ class Employer extends MY_EmployerController {
     public function employer_signup_btm_form() {
 
         // check already login
-        $session = $this->session->all_userdata();
-        if (isset($session['employer'])) {
-            redirect('employee_dashboard');
-        }
+//        $session = $this->session->all_userdata();
+//        if (isset($session['employer'])) {
+//            redirect('employee_dashboard');
+//        }
 
 
         $this->layout = "blank";
@@ -304,8 +304,9 @@ class Employer extends MY_EmployerController {
             if ($employer_id > 0) {
                 $status = 'ok';
                 $msg = 'Signup successfully';
-                $this->session->set_userdata('user_id', $save_data['id']);
+                $this->session->set_userdata('user_id', $employer_id);
                 $this->session->set_userdata('user_type', 'employer');
+                unset($save_data['password']);
                 $this->session->set_userdata('employer', $save_data);
             }
         } else {

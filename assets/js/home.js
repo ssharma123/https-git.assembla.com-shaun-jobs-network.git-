@@ -50,7 +50,7 @@ $(document).ready(function(){
     $("#form12-btn").click(function(){
         
         
-        if(form_step == 2){
+        if(form_step >= 2){
             var form_step2 = $("#home-signup-btm-step2");
             var v2 = form_step2.valid();
             if(v2 == true){
@@ -61,13 +61,12 @@ $(document).ready(function(){
                 form_step++;
                 // sign up user form
                 var signup = signup_employer_btm_form();
-                console.log(signup)
                 if(signup.status == "ok"){
                     window.location.href = SITE_URL+'employee_dashboard';
                 }
                 else{
-                    $("#signupForm_btm1_rsp").addClass("error_rsp");
-                    $("#signupForm_btm1_rsp").html("oops something went wrong please try again").show();
+                    $("#signupForm_btm2_rsp").addClass("error_rsp");
+                    $("#signupForm_btm2_rsp").html("oops something went wrong please try again").show();
                 }
             }
             return false;
@@ -89,6 +88,17 @@ $(document).ready(function(){
                     form_step++;
                     $("#employer-form1").hide();
                     $("#employer-form2").show();
+                    
+                    $("#facility_name").val("");
+                    $("#facility_address").val("");
+                    $("#facility_zipCode").val("");
+                    $("#facility_city").val("");
+                    $("#facility_num_of_employee").val("");
+                    $("#facility_num_of_bed").val("");
+                    $("#billing_name").val("");
+                    $("#billing_phone").val("");
+                    $("#billing_email").val("");
+                    
                 }
                 return false;
             }   
@@ -162,5 +172,5 @@ $(document).ready(function(){
     
     
     
-
+    
 });
