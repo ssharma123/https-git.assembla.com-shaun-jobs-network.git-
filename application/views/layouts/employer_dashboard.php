@@ -158,6 +158,11 @@
             <?php //echo load_js("froogaloop.min.js"); ?>
             <?php echo load_js("startup-kit.js"); ?>
             
+            <!--            Validation Plugin-->
+            <?php echo load_js("jquery.validate.js",'assets/js/jquery-validation/'); ?>
+            <?php echo load_js("additional-methods.js",'assets/js/jquery-validation/'); ?>
+<!--            Validation Plugin END -->
+            
         </div>
     </body>
 </html>

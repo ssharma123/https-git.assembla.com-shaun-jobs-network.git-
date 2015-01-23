@@ -528,6 +528,17 @@ class Employer extends MY_EmployerController {
         $this->title .= " - Who it works";
         $this->load->view("employer/how_it_works");
     }
+    
+    public function terms_of_use(){
+        $this->layout = "employer";
+        $this->title .= " - Terms of use";
+        $this->load->view("employer/terms_of_use");
+    }
+    public function terms_condition(){
+        $this->layout = "employer";
+        $this->title .= " - Terms & Condition";
+        $this->load->view("employer/terms_condition");
+    }
 
 }
 

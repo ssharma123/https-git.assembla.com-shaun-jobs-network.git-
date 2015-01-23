@@ -35,7 +35,7 @@
             <div class="col-sm-10">
 
                 <ul class="nav nav-pills nav-justified" style="cursor: auto">
-                    <li class="active"><a class="employerdashbordTabs" href="javascript:void(0)" id="tabJobPost">Job Post</a></li>
+                    <li><a class="employerdashbordTabs" href="javascript:void(0)" id="tabJobPost">Job Post</a></li>
                     <li><a class="employerdashbordTabs" href="javascript:void(0)" id="tabStatus">Status</a></li>
                     <li><a class="employerdashbordTabs" href="javascript:void(0)" id="tabMatches">Matches</a></li>
                     <li><a class="employerdashbordTabs" href="javascript:void(0)" id="tabSetting">Settings</a></li>
