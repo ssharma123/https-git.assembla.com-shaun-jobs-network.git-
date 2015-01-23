@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Employee_dashboard extends MY_EmployerController {
+class Employer_chekout extends MY_EmployerController {
 
     /**
      * Index Page for this controller.
@@ -22,7 +22,7 @@ class Employee_dashboard extends MY_EmployerController {
      */
     public function index() {
 
-        $this->layout = "employer_dashboard";
+        $this->layout = "employer";
         
         $session = $this->session->all_userdata();
         if(!isset($session['employer'])){
@@ -31,31 +31,8 @@ class Employee_dashboard extends MY_EmployerController {
         
         $data['employer'] = $session['employer'];
         
-        $this->load->view('employer/employer_dashboard', $data);
-    }
-    
-    public function payment_popup(){
-        $this->layout = "blank";
-        
-        $html = $this->load->view('employer/payment_popup', array(), TRUE);
-
-        $array = array(
-            "html" => $html
-        );
-        echo json_encode($array);
-        die;
-    }
-    public function welcome_popup(){
-        $this->layout = "blank";
-        
-        $html = $this->load->view('employer/welcome_popup', array(), TRUE);
-
-        $array = array(
-            "html" => $html
-        );
-        echo json_encode($array);
-        die;
-    }
+        $this->load->view('employer/checkout', $data);
+    } 
 
 }
 

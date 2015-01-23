@@ -12,8 +12,15 @@ $(document).ready(function(){
     
     $("#new-job-post-btn").click(function(){
         var tab_id = $(this).attr('id');
+        console.log(tab_id);
         $(".employerdashbordTabs-items").hide();
         $("#"+tab_id+"-item").show();
+        $(".post-job-steps").hide();
+        $("#post-job-step1").fadeIn();
+    });
+    $("#new-job-post-btn2").click(function(){
+        $(".employerdashbordTabs-items").hide();
+        $(".new-job-post-div").show();
         $(".post-job-steps").hide();
         $("#post-job-step1").fadeIn();
     });
@@ -86,23 +93,6 @@ $(document).ready(function(){
                 padding: 0,
                 closeBtn: false,
                 type: 'inline',
-//                openEffect: 'fade',
-//                openSpeed: 150,
-//                closeEffect: 'fade',
-//                closeSpeed: 150,
-//                width: '800',
-//                margin: [0, 0, 0, 0],
-//                afterClose: function() {
-//                },
-//                afterShow: function() {
-//                },
-//                autoCenter: true,
-//                helpers: {
-//                    overlay: {
-//                        closeClick : true,
-//                        locked : false
-//                    }
-//                }
             });
         })
         .always(function(){
@@ -111,3 +101,25 @@ $(document).ready(function(){
         
     });
 });
+
+function show_welcome_popup(){
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/welcome_popup",
+        data: {
+
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline',
+        });
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+}

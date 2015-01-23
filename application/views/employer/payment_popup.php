@@ -3,7 +3,7 @@
     <br>
     
     <div style="width: 100%; padding-left: 17%;" class="">
-        <form id="payment_popup_form" method="post" action="<?php echo site_url("employer/chekout"); ?>">
+        <form id="payment_popup_form" method="post" action="<?php echo site_url("employer_chekout"); ?>">
             <label> Options Payment Button</label>    
         <select>
             <option value="">Choose...</option>
