@@ -29,7 +29,21 @@ class Employee_dashboard extends MY_EmployerController {
             redirect('employer/signin');
         }
         
-        $this->load->view('employer/employer_dashboard');
+        $data['employer'] = $session['employer'];
+        
+        $this->load->view('employer/employer_dashboard', $data);
+    }
+    
+    public function payment_popup(){
+        $this->layout = "blank";
+        
+        $html = $this->load->view('employer/payment_popup', array(), TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
     }
 
 }

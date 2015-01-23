@@ -42,7 +42,10 @@
         }</script>
         <!--End Typekit-->
 
-
+        <script>
+        var SITE_URL = '<?php echo site_url();?>';
+        var BASE_URL = '<?php echo base_url();?>';
+        </script>
         <?php echo load_js("jquery-1.10.2.min.js"); ?>  
     </head>
 

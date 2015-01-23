@@ -30,6 +30,8 @@ class Employer extends MY_EmployerController {
         }
 
         if ($this->input->post()) {
+            
+            $data = $this->input->post();
             $email = $this->input->post("signin_email");
             $password = $this->input->post("signin_password");
 

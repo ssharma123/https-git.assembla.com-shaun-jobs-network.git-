@@ -1,3 +1,4 @@
+var FB = jQuery.noConflict();
 var $ = jQuery.noConflict();
 $(document).ready(function(){
     $(".employerdashbordTabs").click(function(){
@@ -66,4 +67,47 @@ $(document).ready(function(){
             }
         });
     }
+    
+    
+    $(".paynow_temp").click(function(){
+        
+        
+        FB.fancybox.showLoading();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"employee_dashboard/payment_popup",
+            data: {
+                
+            },
+            dataType: "json"
+        }).success(function(rsp){
+            FB.fancybox({
+                content: rsp.html,
+                padding: 0,
+                closeBtn: false,
+                type: 'inline',
+//                openEffect: 'fade',
+//                openSpeed: 150,
+//                closeEffect: 'fade',
+//                closeSpeed: 150,
+//                width: '800',
+//                margin: [0, 0, 0, 0],
+//                afterClose: function() {
+//                },
+//                afterShow: function() {
+//                },
+//                autoCenter: true,
+//                helpers: {
+//                    overlay: {
+//                        closeClick : true,
+//                        locked : false
+//                    }
+//                }
+            });
+        })
+        .always(function(){
+            FB.fancybox.hideLoading();
+        });
+        
+    });
 });

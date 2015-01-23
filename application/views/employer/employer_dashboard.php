@@ -1,3 +1,18 @@
+<?php echo load_js("jquery-1.10.2.min.js"); ?>
+
+<?php 
+    echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
+    echo load_css('jquery.fancybox-buttons.css?v=1.0.5','assets/js/fancybox/helpers/');
+    echo load_css('jquery.fancybox-thumbs.css?v=1.0.7','assets/js/fancybox/helpers/');
+?>
+<?php 
+    // fancybox JS files
+    echo load_js("jquery.fancybox.js?v=2.1.4","assets/js/fancybox/");
+    echo load_js("jquery.fancybox-buttons.js?v=1.0.5","assets/js/fancybox/helpers/");
+    echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
+    echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
+?>
+
 <?php echo load_css("employer_dashboard.css","assets/css/employer/"); ?>
 <?php echo load_js("employee_dashboard.js"); ?>
 <div class="container ng-scope" ng-controller="DashboardCtrl" style="padding: 50px; min-height: 400px; background-color: #f7f7f7">
@@ -10,7 +25,7 @@
                 </div>
 
                 <div class="text-left" style="margin: 0px">
-                    <h3 class="ng-binding">Numan Hassan</h3>
+                    <h3 class="ng-binding"><?php echo $employer['name']; ?></h3>
                     <a class="btn btn-lg btn-primary" ng-click="" id="new-job-post-btn">New Job Post</a>
                     <input type="hidden" id="selectedApplicant" value="">
                 </div>
@@ -70,9 +85,30 @@
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div ng-show="job.applicants.length & gt; 0" style="background: #FFF; padding: 5px; display: none;" class="leftBarMain ng-hide" id="jobCDol3WdIH7L">
-                                    <!-- ngRepeat: applicant in job.applicants -->
+                                
+                                
+                                <div ng-show="job.applicants.length &gt; 0" style="background: none repeat scroll 0% 0% rgb(255, 255, 255); padding: 5px;" class="leftBarMain" id="">
+                                    <a href="javascript:void(0)" class="paynow_temp">
+                                        <div class="leftBar ng-scope" ng-repeat="applicant in job.applicants" style="padding-left: 30px;">
+                                                <div style="border: 1px solid #e4e4e4; border-left: none;">
+                                                        <div style="float: left; width: 60px; height: 60px;">
+                                                                <img src="http://files.parsetfss.com/ed8c4e67-ce56-4481-9e90-04e2faab9f96/tfss-e1d18eef-f7ad-4dc6-add1-6b7eea6ca9ec-01.png" ng-src="http://files.parsetfss.com/ed8c4e67-ce56-4481-9e90-04e2faab9f96/tfss-e1d18eef-f7ad-4dc6-add1-6b7eea6ca9ec-01.png">
+                                                        </div>
+                                                        <div class="ng-binding" style="float: left; width: 150px; vertical-align: top; font-size: 12px; padding-left: 5px; padding-top: 5px;">
+                                                                <span class="ng-binding" style="color: #5298fc">Dr. Farhan</span><br>Emergency Medicine<br>Lahore, FL										
+                                                        </div>
+                                                        <div style="float: left; padding-top: 14px;">
+                                                                <span class="btn btn-sm btn-success">Applied</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-sm btn-success" ng-click="buttonPressed(job.job.id, applicant, 'matched')">Matched</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-sm btn-success" ng-click="buttonPressed(job.job.id, applicant, 'interview', $index, job.job.get('rivsJobID'))">Interview</span>&nbsp;&nbsp;&nbsp;
+                                                                <span class="btn btn-sm btn-success" ng-click="buttonPressed(job.job.id, applicant, 'interviewc')">Interview Complete</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-sm btn-success" ng-click="buttonPressed(job.job.id, applicant, 'face')">Face 2 Face</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-sm btn-danger" ng-click="buttonPressed(job.job.id, applicant, 'job')">Job Offer</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-xs btn-danger" ng-click="rejectApplication(applicant.id, applicant)"><i class="fa fa-times">&nbsp;</i></span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                </div>
+
+                                        </div><!-- end ngRepeat: applicant in job.applicants -->
+                                    </a>
                                 </div>
+                                
+                                
                             </div>
 
                         </div>
