@@ -163,7 +163,14 @@ class Employer extends MY_EmployerController {
                             $facility_data['object_id'] = '';
                             $facility_data['created_at'] = time();
                             $facility_data['updated_at'] = time();
-                            $this->facility->facilities_add($facility_data);
+                            
+                            $exist_facility = $this->facility->facilities_get_by_name($facility_data['name']);
+                            if($exist_facility){
+                                $facility_id = $exist_facility['id'];
+                            }
+                            else{
+                                $facility_id = $this->facility->facilities_add($facility_data);
+                            }
                         }
 
                         $save_data_fac['facility_id'] = $facility_id;
@@ -288,7 +295,14 @@ class Employer extends MY_EmployerController {
                 $facility_data['object_id'] = '';
                 $facility_data['created_at'] = time();
                 $facility_data['updated_at'] = time();
-                $this->facility->facilities_add($facility_data);
+                
+                $exist_facility = $this->facility->facilities_get_by_name($facility_data['name']);
+                if($exist_facility){
+                    $facility_id = $exist_facility['id'];
+                }
+                else{
+                    $facility_id = $this->facility->facilities_add($facility_data);
+                }
             }
 
             $save_data_fac['facility_id'] = $facility_id;

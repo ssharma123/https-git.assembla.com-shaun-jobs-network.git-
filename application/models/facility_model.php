@@ -34,4 +34,12 @@ class Facility_model extends CI_Model {
         $this->db->where('id' , $id);
         $this->db->update($this->table_name,$data);
     }
+    function facilities_get_by_name($name){
+        $this->db->where('name',$name);
+        $r = $this->db->get($this->table_name);
+        if ($r->num_rows() > 0) {
+            return $r->row_array();
+        }
+        return false;
+    }
 }
