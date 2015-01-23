@@ -1,4 +1,4 @@
-var FB = jQuery.noConflict();
+var FBox = jQuery.noConflict();
 var $ = jQuery.noConflict();
 $(document).ready(function(){
     $(".employerdashbordTabs").click(function(){
@@ -72,7 +72,7 @@ $(document).ready(function(){
     $(".paynow_temp").click(function(){
         
         
-        FB.fancybox.showLoading();
+        FBox.fancybox.showLoading();
         $.ajax({
             type: "POST",
             url: SITE_URL+"employee_dashboard/payment_popup",
@@ -81,7 +81,7 @@ $(document).ready(function(){
             },
             dataType: "json"
         }).success(function(rsp){
-            FB.fancybox({
+            FBox.fancybox({
                 content: rsp.html,
                 padding: 0,
                 closeBtn: false,
@@ -106,7 +106,7 @@ $(document).ready(function(){
             });
         })
         .always(function(){
-            FB.fancybox.hideLoading();
+            FBox.fancybox.hideLoading();
         });
         
     });

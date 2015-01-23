@@ -1,4 +1,4 @@
-var FB = jQuery.noConflict();
+var FBox = jQuery.noConflict();
 var $ = jQuery.noConflict();
 
 var form_step = 1;
@@ -8,7 +8,7 @@ $(document).ready(function(){
     $("#employee_siginup_lnk").click(function(){
         
         
-        FB.fancybox.showLoading();
+        FBox.fancybox.showLoading();
         $.ajax({
             type: "POST",
             url: SITE_URL+"employer/employer_popup",
@@ -17,7 +17,7 @@ $(document).ready(function(){
             },
             dataType: "json"
         }).success(function(rsp){
-            FB.fancybox({
+            FBox.fancybox({
                 content: rsp.html,
                 padding: 0,
                 closeBtn: false,
@@ -42,7 +42,7 @@ $(document).ready(function(){
             });
         })
         .always(function(){
-            FB.fancybox.hideLoading();
+            FBox.fancybox.hideLoading();
         });
         
     });
