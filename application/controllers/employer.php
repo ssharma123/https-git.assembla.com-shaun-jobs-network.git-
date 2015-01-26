@@ -337,44 +337,49 @@ class Employer extends MY_EmployerController {
         $status = '';
         $data['facebook_id'] = $this->input->post('id');
         $data['name'] = $this->input->post('name');
-        $data['email'] = $this->input->post('email');
+        $data['email'] = ($this->input->post('email')) ? $this->input->post('email') : '';
         $freez_time = time();
         $data['created_at'] = $freez_time;
         $data['updated_at'] = $freez_time;
         $data['active'] = 1;
         $random_pass = random_string('alnum', 10);
         $data['password'] = md5($random_pass);
+        
+        if($data['email'] != ""){
+            $user_exist = $this->employer->employer_get_by_facebook_id($data['facebook_id']);
+            if (!$user_exist) {
 
-        $user_exist = $this->employer->employer_get_by_facebook_id($data['facebook_id']);
-        if (!$user_exist) {
+                $user_exist_email = $this->employer->employer_get_by_email($data['email']);
+                if ($user_exist_email) {
+                    $update_data['facebook_id'] = $data['facebook_id'];
+                    $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
+                } else {
+                    $r = $this->employer->employers_add($data);
+                }
 
-            $user_exist_email = $this->employer->employer_get_by_email($data['email']);
-            if ($user_exist_email) {
-                $update_data['facebook_id'] = $data['facebook_id'];
-                $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
+                if ($r) {
+                    $id = $r;
+                    $employer = $this->employer->employers_get($id);
+                    unset($employer['password']);
+                    $this->session->set_userdata('user_id', $employer['id']);
+                    $this->session->set_userdata('user_type', 'employer');
+                    $this->session->set_userdata('employer', $employer);
+                    $status = 'ok';
+                    // send email Create account  
+                } else {
+                    $status = 'error';
+                }
             } else {
-                $r = $this->employer->employers_add($data);
-            }
-
-            if ($r) {
-                $id = $r;
-                $employer = $this->employer->employers_get($id);
+                $employer = $user_exist;
                 unset($employer['password']);
                 $this->session->set_userdata('user_id', $employer['id']);
                 $this->session->set_userdata('user_type', 'employer');
                 $this->session->set_userdata('employer', $employer);
                 $status = 'ok';
-                // send email Create account  
-            } else {
-                $status = 'error';
             }
-        } else {
-            $employer = $user_exist;
-            unset($employer['password']);
-            $this->session->set_userdata('user_id', $employer['id']);
-            $this->session->set_userdata('user_type', 'employer');
-            $this->session->set_userdata('employer', $employer);
-            $status = 'ok';
+        }
+        else{
+            $status = 'error';
         }
 
         echo json_encode(array('status' => $status));
