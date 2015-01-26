@@ -132,8 +132,8 @@ $(document).ready(function(){
 
 });
 function loginToFacebook(){
-    $("fb_error_div").hide();
-    $("fb_error_msg").html('');
+    $("#fb_error_msg").hide();
+    $("#fb_error_msg").html('');
     FB.login(function(response) {
             if (response.authResponse && response.status == "connected") {
                     
@@ -142,20 +142,20 @@ function loginToFacebook(){
                     });
             }
             else if (response.status === "unknown" || response.status === "not_authorized") {
-                $("fb_error_msg").html('Login Error '+response.status+' user');
-                $("fb_error_div").show();
+                $("#fb_error_msg").html('Login Error '+response.status+' user');
+                $("#fb_error_msg").show();
                 hide_busy();
             }
             else{
-                $("fb_error_msg").html('Oops something went wrong. Please try again');
-                $("fb_error_div").show();
+                $("#fb_error_msg").html('Oops something went wrong. Please try again');
+                $("#fb_error_msg").show();
                 hide_busy();
             }
     },{scope: 'email'});
 }
 function connect_with_facebook(rsp){
     $("#fb_error_msg").html('').removeClass();
-    $("#fb_error_div").hide();
+    $("#fb_error_msg").hide();
     $.ajax({
         type: "POST",
         url: base_url+"employer/facebook_connect",
@@ -172,7 +172,7 @@ function connect_with_facebook(rsp){
         }
         else{
             $("#fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');
-            $("#fb_error_div").show();
+            $("#fb_error_msg").show();
         }
     }).always(function(){
         hide_busy();
@@ -197,8 +197,8 @@ function connect_with_linkedin(linkedin_id , name, email){
             window.location = base_url+'employee_dashboard';
         }
         else{
-            $("fb_error_msg").html('Oops something went wrong. Please try again');
-            $("fb_error_div").show();
+            $("#fb_error_msg").html('Oops something went wrong. Please try again');
+            $("#fb_error_msg").show();
         }
     }).always(function(){
         hide_busy();
