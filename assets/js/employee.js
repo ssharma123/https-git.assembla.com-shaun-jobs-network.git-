@@ -132,8 +132,8 @@ $(document).ready(function(){
 
 });
 function loginToFacebook(){
+    $("#fb_error_msg").html('').removeClass();
     $("#fb_error_msg").hide();
-    $("#fb_error_msg").html('');
     FB.login(function(response) {
             if (response.authResponse && response.status == "connected") {
                     
@@ -147,7 +147,7 @@ function loginToFacebook(){
                 hide_busy();
             }
             else{
-                $("#fb_error_msg").html('Oops something went wrong. Please try again');
+                $("#fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');
                 $("#fb_error_msg").show();
                 hide_busy();
             }
