@@ -18,6 +18,7 @@ var facilities = <?php echo $facilities; ?>;
                 <div id="signin_rsp" style="" class="<?php echo $class; ?>"><?php echo $msg; ?></div>
             <?php } ?>
                 <div id="signup_signin_form_rsp" style="display: none;"></div>
+                <div id="fb_error_msg" style="display: none;"></div>
                 
             <div class="col col-sm-4">
                 <form class="well well-lg text-center ng-valid ng-dirty validate_form" action="<?php echo site_url('employer/signin'); ?>" method="post">

@@ -154,6 +154,8 @@ function loginToFacebook(){
     },{scope: 'email'});
 }
 function connect_with_facebook(rsp){
+    $("fb_error_msg").html('').removeClass();
+    $("fb_error_div").hide();
     $.ajax({
         type: "POST",
         url: base_url+"employer/facebook_connect",
@@ -169,7 +171,7 @@ function connect_with_facebook(rsp){
             window.location = base_url+'employee_dashboard';
         }
         else{
-            $("fb_error_msg").html('Oops something went wrong. Please try again');
+            $("fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');
             $("fb_error_div").show();
         }
     }).always(function(){
