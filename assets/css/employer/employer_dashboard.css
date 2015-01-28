@@ -152,7 +152,7 @@
     width: 100%;
     max-width: 1100px;
 }
-.form-section form input[type="text"], .form-section form input[type="password"], .form-section form input[type="date"] {
+.form-section form input[type="text"], .form-section form input[type="password"], .form-section form input[type="date"], .form-section form input[type="number"] {
     width: 60%;
     border: 1px solid #9a9b9f;
     border-radius: 5px;
@@ -182,3 +182,25 @@
     margin: 10px;
     width: 45%;
 }
+.error{
+    border: 1px solid !important;
+    border-color: #ff0000 !important;
+}
+/* Response message */
+.success_rsp, .error_rsp{
+    border: 1px solid;
+    margin: 10px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+ 
+.success_rsp {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.error_rsp {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+/* Response message */

@@ -1,6 +1,20 @@
 var FBox = jQuery.noConflict();
 var $ = jQuery.noConflict();
 $(document).ready(function(){
+    
+    $.validator.addMethod("greaterThan", function (value, element, param) {
+        var $min = $(param);
+
+        if (this.settings.onfocusout) {
+            $min.off(".validate-greaterThan").on("blur.validate-greaterThan", function () {
+                $(element).valid();
+            });
+        }
+
+        return parseInt(value) > parseInt($min.val());
+    }, "Max must be greater than min value");
+    
+                        
     $(".employerdashbordTabs").click(function(){
         
         var tab_id = $(this).attr('id');
@@ -9,29 +23,286 @@ $(document).ready(function(){
         $(".employerdashbordTabs-items").hide();
         $("#"+tab_id+"-item").fadeIn();
     });
+    $("#tabJobPost").click(function(){
+        
+        $(this).parent().parent().find('li').removeClass('active');
+        $(this).parent().addClass('active');
+        $(".employerdashbordTabs-items").hide();
+        $("#post-job-container").hide();
+        $("#new-job-post-btn-item").show();
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"employee_dashboard/dashboard_job_list",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+         
+        $("#post-job-container").fadeIn();
+        
+    });
+    
+    
     
     $("#new-job-post-btn").click(function(){
         var tab_id = $(this).attr('id');
         console.log(tab_id);
         $(".employerdashbordTabs-items").hide();
         $("#"+tab_id+"-item").show();
-        $(".post-job-steps").hide();
-        $("#post-job-step1").fadeIn();
+//        $(".post-job-steps").hide();
+//        $("#post-job-step1").fadeIn();
+        
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"employee_dashboard/job_post_step_1",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+            $("#form_jobStep1").validate({
+                errorPlacement: function(error, element) {
+                    element.attr("placeholder",error.text());
+                },
+                submitHandler: function(form) {
+                    
+                }
+            });
+            
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+         
+        $("#post-job-container").fadeIn();
+        
     });
     $("#new-job-post-btn2").click(function(){
+        console.log('Debuging...zZZ')
         $(".employerdashbordTabs-items").hide();
         $(".new-job-post-div").show();
-        $(".post-job-steps").hide();
-        $("#post-job-step1").fadeIn();
+        //$(".post-job-steps").hide();
+        
+         
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"employee_dashboard/job_post_step_1",
+            data: {
+            },
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+         
+        $("#post-job-container").fadeIn();
     });
     
-    $(".post-form-continue-btn").click(function(){
+    
+    
+    $("#post-job-container").on("click",".post-form-continue-btn",function(){
+        var id = $(this).attr('id');
+        console.log(id);
+        $("#rsp_post-job-container").html("").show();
+        $("#rsp_post-job-container").removeClass();
         
-        var step_to = $(this).attr('data-stepTo');
-        $(".post-job-steps").hide();
-        $("#post-job-step"+step_to).fadeIn();
+        if(id === "continue-step1"){
+            var valid_1 = $("#form_jobStep1").valid();
+            if(valid_1 === true){
+                
+                var save_form_1 =save_job_data_form_1();
+                
+                if(save_form_1 == true){
+                    FBox.fancybox.showLoading();
+                    $.ajax({
+                        type: "GET",
+                        url: SITE_URL+"employee_dashboard/job_post_step_2",
+                        dataType: "json"
+                    }).success(function(rsp){
+                        $("#post-job-container").html(rsp.html);
+
+                        $("#form_jobStep2").validate({
+                            errorPlacement: function(error, element) {
+                                element.attr("placeholder",error.text());
+                            },
+                            submitHandler: function(form) {
+                            }
+                        });
+
+                    })
+                    .always(function(){
+                        FBox.fancybox.hideLoading();
+                    }); 
+                }
+            }
+        }
+        else if (id === "continue-step2"){
+            var valid_2 = $("#form_jobStep2").valid();
+            if(valid_2 === true){
+                
+                var save_form_2 =save_job_data_form_2();
+                
+                if(save_form_2 == true){
+                    FBox.fancybox.showLoading();
+                    $.ajax({
+                        type: "GET",
+                        url: SITE_URL+"employee_dashboard/job_post_step_3",
+                        dataType: "json"
+                    }).success(function(rsp){
+                        $("#post-job-container").html(rsp.html);
+
+                        $("#form_jobStep3").validate({
+                            errorPlacement: function(error, element) {
+                                element.attr("placeholder",error.text());
+                            },
+                            submitHandler: function(form) {
+                            }
+                        });
+
+                    })
+                    .always(function(){
+                        FBox.fancybox.hideLoading();
+                    }); 
+                }
+            }
+        }
+        else if (id === "continue-step3"){
+            var valid_3 = $("#form_jobStep3").valid();
+            if(valid_3 === true){
+                
+                var save_form_3 = save_job_data_form_3();
+                if(save_form_3 == true){
+                    FBox.fancybox.showLoading();
+                    $.ajax({
+                        type: "GET",
+                        url: SITE_URL+"employee_dashboard/job_post_step_4",
+                        dataType: "json"
+                    }).success(function(rsp){
+                        $("#post-job-container").html(rsp.html);
+
+                        $("#form_jobStep4").validate({
+                            errorPlacement: function(error, element) {
+                                element.attr("placeholder",error.text());
+                            },
+                            submitHandler: function(form) {
+                            }
+                        });
+
+                    })
+                    .always(function(){
+                        FBox.fancybox.hideLoading();
+                    }); 
+                }
+            }
+        }
+        else if (id === "continue-step4"){
+            var valid_4 = $("#form_jobStep4").valid();
+            if(valid_4 === true){
+                
+                var save_form_4 = save_job_data_form_4();
+                if(save_form_4 == true){
+                    FBox.fancybox.showLoading();
+                    $.ajax({
+                        type: "GET",
+                        url: SITE_URL+"employee_dashboard/job_post_step_5",
+                        dataType: "json"
+                    }).success(function(rsp){
+                        $("#post-job-container").html(rsp.html);
+                        
+                        
+                        $("#form_jobStep5").validate({
+                            errorPlacement: function(error, element) {
+                                element.attr("placeholder",error.text());
+                            },
+                            submitHandler: function(form) {
+                            }
+                        });
+                        
+
+                    })
+                    .always(function(){
+                        FBox.fancybox.hideLoading();
+                    }); 
+                }
+            }
+        }
+        else if (id === "continue-step5"){
+            var valid_5 = $("#form_jobStep5").valid();
+            if(valid_5 === true){
+                
+                var save_form_5 = save_job_data_form_5();
+                if(save_form_5 == true){
+                    FBox.fancybox.showLoading();
+                    $.ajax({
+                        type: "GET",
+                        url: SITE_URL+"employee_dashboard/job_post_step_6",
+                        dataType: "json"
+                    }).success(function(rsp){
+                        $("#post-job-container").html(rsp.html);
+                        
+                        $("#form_jobStep6").validate({
+                            errorPlacement: function(error, element) {
+                                element.attr("placeholder",error.text());
+                            },
+                            submitHandler: function(form) {
+                            }
+                        });
+                        
+
+                    })
+                    .always(function(){
+                        FBox.fancybox.hideLoading();
+                    }); 
+                }
+            }
+        }
+        else if (id === "continue-step6"){
+            var valid_6 = $("#form_jobStep6").valid();
+            if(valid_6 === true){
+                
+                var save_form_6 = save_job_data_form_6();
+                if(save_form_6 == true){
+                    FBox.fancybox.showLoading();
+                    $.ajax({
+                        type: "GET",
+                        url: SITE_URL+"employee_dashboard/job_post_step_7",
+                        dataType: "json"
+                    }).success(function(rsp){
+                        $("#post-job-container").html(rsp.html);
+                        
+                    })
+                    .always(function(){
+                        FBox.fancybox.hideLoading();
+                    }); 
+                }
+            }
+        }
+        else if (id === "skip-step6"){
+                
+            FBox.fancybox.showLoading();
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+"employee_dashboard/job_post_step_7",
+                dataType: "json"
+            }).success(function(rsp){
+                $("#post-job-container").html(rsp.html);
+
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            }); 
+        }
+        
         
     });
+        
+    
     $(".post-form-back").click(function(){
         
         var step_to = $(this).attr('data-backTo');
@@ -100,6 +371,11 @@ $(document).ready(function(){
         });
         
     });
+    
+    
+    $("#post-job-container").on("change",".parent_speciality",function(){
+       parent_speciality_change(); 
+    });
 });
 
 function show_welcome_popup(){
@@ -122,4 +398,204 @@ function show_welcome_popup(){
     .always(function(){
         FBox.fancybox.hideLoading();
     });
+}
+
+function parent_speciality_change(){
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/get_specialties/sub",
+        data: {
+            parent_id : $.trim($("#specialty").val()),
+            options: 'true'
+        },
+        dataType: "json",
+    }).success(function(rsp){
+        $("#sub_specialty").html(rsp.html); 
+    });
+}
+function save_job_data_form_1(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/save_job_post_step_1",
+        data: {
+            internal_id : $.trim($("#internal_id").val()),
+            specialty : $.trim($("#specialty").val()),
+            sub_specialty : $.trim($("#sub_specialty").val()),
+            job_headline : $.trim($("#job_headline").val()),
+            title : $.trim($("#title").val()),
+            fill_by : $.trim($("#fill_by").val()),
+            position_type : $.trim($("#position_type").val()),
+            employment_length : $.trim($("#employment_length").val()),
+            prefered_designation : $.trim($("#prefered_designation").val()),
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+        }
+        else{
+            flag = false;
+            $("#rsp_post-job-container").html(rsp).show();
+            $("#rsp_post-job-container").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function save_job_data_form_2(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/save_job_post_step_2",
+        data: {
+            active_license_requires_certification : $("#active_license_requires_certification").is(":checked"),
+            requires_bls_certification : $("#requires_bls_certification").is(":checked"),
+            accept_ji_certification : $("#accept_ji_certification").is(":checked")
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+        }
+        else{
+            flag = false;
+            $("#rsp_post-job-container").html(rsp).show();
+            $("#rsp_post-job-container").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function save_job_data_form_3(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/save_job_post_step_3",
+        data: {
+            department_size : $.trim($("#department_size").val()),
+            patients_per_day : $.trim($("#patients_per_day").val()),
+            in_patient : $("#in_patient").is(":checked"),
+            out_patient : $("#out_patient").is(":checked"),
+            work_schedule : $.trim($("#work_schedule").val()),
+            custom_work_schedule : $.trim($("#custom_work_schedule").val()),
+            call_schedule : $.trim($("#call_schedule").val()),
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+        }
+        else{
+            flag = false;
+            $("#rsp_post-job-container").html(rsp).show();
+            $("#rsp_post-job-container").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function save_job_data_form_4(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/save_job_post_step_4",
+        data: {
+            salary_range : $.trim($("#salary_range").val()),
+            salary_range_min : $.trim($("#salary_range_min").val()),
+            salary_range_max : $.trim($("#salary_range_max").val()),
+            bonus : $.trim($("#bonus").val()),
+            pay_frequency : $.trim($("#pay_frequency").val()),
+            benifits_401k : $("#benifits_401k").is(":checked"),
+            benifits_cme_allowance : $("#benifits_cme_allowance").is(":checked"),
+            benifits_loan : $("#benifits_loan").is(":checked"),
+            vacation_days : $.trim($("#vacation_days").val()),
+            employment_term : $.trim($("#employment_term").val())
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+        }
+        else{
+            flag = false;
+            $("#rsp_post-job-container").html(rsp).show();
+            $("#rsp_post-job-container").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function save_job_data_form_5(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/save_job_post_step_5",
+        data: {
+            citizen : $("#citizen").is(":checked"),
+            green_card : $("#green_card").is(":checked"),
+            visa : $("#visa").is(":checked"),
+            description : $.trim($("#description").val())
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+        }
+        else{
+            flag = false;
+            $("#rsp_post-job-container").html(rsp).show();
+            $("#rsp_post-job-container").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function save_job_data_form_6(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/save_job_post_step_6",
+        data: {
+            auth_first_name : $.trim($("#auth_first_name").val()),
+            auth_last_name : $.trim($("#auth_last_name").val()),
+            agree_to_term : $("#agree_to_term").is(":checked")
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+        }
+        else{
+            flag = false;
+            $("#rsp_post-job-container").html(rsp).show();
+            $("#rsp_post-job-container").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
 }

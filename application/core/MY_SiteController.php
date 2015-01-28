@@ -54,5 +54,30 @@ class MY_SiteController extends CI_Controller {
         return json_encode($output);
         
     }
+    public function get_specialties($type = 'all'){
+        $this->load->model('specialty_model','specialty');
+        
+        $parent_id = ( $this->input->post('parent_id') ) ? $this->input->post('parent_id') : 0 ;
+        $specialties = $this->specialty->specialties_get_by_type($type, $parent_id);
+        
+        $options = $this->input->post("options");
+        if($options){
+            $html = "";
+            foreach($specialties as $row){
+                $html .= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+            }
+            $array = array(
+                "status" => "ok",
+                "html" => $html
+            );
+            echo json_encode($array);
+            die;
+        }
+        else{
+            return $specialties;
+        }
+        
+        
+    }
 
 }
