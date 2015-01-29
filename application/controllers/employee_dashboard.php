@@ -448,7 +448,7 @@ class Employee_dashboard extends MY_EmployerController {
         
         $id = $this->session->userdata("job_recent_id");
         $data['job_recent_id'] = $id;
-        $job = $this->jobs->jobs_get(7); 
+        $job = $this->jobs->jobs_get($id); 
         $data['job'] = $job;
         $data["employer"] = $this->employer->employers_get($job['employer_id']);
         

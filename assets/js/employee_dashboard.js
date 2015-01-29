@@ -80,7 +80,7 @@ $(document).ready(function(){
         FBox.fancybox.showLoading();
         $.ajax({
             type: "GET",
-            url: SITE_URL+"employee_dashboard/job_post_step_7",
+            url: SITE_URL+"employee_dashboard/job_post_step_1",
             dataType: "json"
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);
