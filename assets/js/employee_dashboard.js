@@ -37,13 +37,34 @@ $(document).ready(function(){
             dataType: "json"
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);
+            $("#post-job-container").fadeIn();
         })
         .always(function(){
             FBox.fancybox.hideLoading();
         }); 
          
-        $("#post-job-container").fadeIn();
         
+        
+    });
+    
+    $("#tabSetting").click(function(){
+        $(this).parent().parent().find('li').removeClass('active');
+        $(this).parent().addClass('active');
+        $(".employerdashbordTabs-items").hide();
+        $("#post-job-container").hide();
+        $("#new-job-post-btn-item").show();
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"employee_dashboard/dashboard_settings",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+            $("#post-job-container").fadeIn();
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
     });
     
     
@@ -59,7 +80,7 @@ $(document).ready(function(){
         FBox.fancybox.showLoading();
         $.ajax({
             type: "GET",
-            url: SITE_URL+"employee_dashboard/job_post_step_1",
+            url: SITE_URL+"employee_dashboard/job_post_step_7",
             dataType: "json"
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);

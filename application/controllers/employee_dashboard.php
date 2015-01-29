@@ -22,7 +22,7 @@ class Employee_dashboard extends MY_EmployerController {
             redirect('employer/signin');
         }
         
-        $data['employer'] = $session['employer'];
+        $data['employer'] = $this->employer->employers_get($session['employer']['id']);
         
         $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
         $data['sub_data'] = $sub_data;
@@ -52,6 +52,35 @@ class Employee_dashboard extends MY_EmployerController {
         $data['total_jobs'] = $total_jobs;
         
         $html = $this->load->view('employer/dashboard/job_list', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    public function dashboard_settings(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        
+        $data['employer'] = $session['employer'];
+        
+        $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
+        $data['sub_data'] = $sub_data;
+        
+        $data['jobs'] = $this->jobs->jobs_get_by_employer($data['employer']['id']);
+        $total_jobs = 0;
+        if($data['jobs']){
+            $total_jobs = count($data['jobs']);
+        }
+        $data['total_jobs'] = $total_jobs;
+        
+        $html = $this->load->view('employer/dashboard/settings', $data, TRUE);
 
         $array = array(
             "html" => $html
@@ -419,7 +448,7 @@ class Employee_dashboard extends MY_EmployerController {
         
         $id = $this->session->userdata("job_recent_id");
         $data['job_recent_id'] = $id;
-        $job = $this->jobs->jobs_get($id); 
+        $job = $this->jobs->jobs_get(7); 
         $data['job'] = $job;
         $data["employer"] = $this->employer->employers_get($job['employer_id']);
         
@@ -445,46 +474,44 @@ class Employee_dashboard extends MY_EmployerController {
     function upload_profile_image(){
         $this->layout = "blank";
         
+        $employer_id = ( $this->input->post("employer_id") ) ? $this->input->post("employer_id") : 0 ;
+        
+        $status = '';
+        $msg = '';
         $this->load->library('custom_image_lib');
         $lib_config['create_thumb'] = true;
         $lib_config['thumb_sizes'] = array(
-           array('width' => 50, 'height' => 50),
-           array('width' => 215, 'height' => 215),
-           array('width' => 300, 'height' => 200)
+           array('width' => 150, 'height' => 185)
         );
         $this->custom_image_lib->config($lib_config);
         
         $profile_images = $this->custom_image_lib->upload($_FILES['profile_image'], 'uploads/employers/profiles/');
-        echo "zzzZZZZZZz"; die;
-//        $file_dir = "vehicle_images/";
-//
-//        $config['upload_path'] = './vehicle_images/';
-//        $config['allowed_types'] = 'gif|jpg|png';
-//        $config['max_size'] = '1000000';
-//        $config['overwrite'] = TRUE;
-//        $config['remove_spaces'] = TRUE;
-//        $config['encrypt_name'] = FALSE;
-//
-//        $this->load->library('upload', $config);
-//
-//        if (!$this->upload->do_upload('Filedata')) {
-//            echo $this->upload->display_errors();
-//        } else {
-//
-//            $errors = $this->upload->display_errors();
-//
-//            $upload_info = $this->upload->data();
-//
-//            // Insert file information into database
-//            $insert_data = array(
-//                'vImg_vehicle_id_fk' => $this->input->post('vehicleID'),
-//                'vImg_filename' => $upload_info['file_name'],
-//                'vImg_filepath' => $upload_info['file_path'],
-//                'vImg_primary' => 1,
-//                'vImg_directory' => $file_dir
-//            );
-//            $this->db->insert('vehicle_images', $insert_data);
-//        }
+        
+        if($profile_images){
+            $file = pathinfo($profile_images[0], PATHINFO_FILENAME);
+            $ext = pathinfo($profile_images[0], PATHINFO_EXTENSION);
+            $thumbnail_name =  $file."_".$lib_config['thumb_sizes'][0]["width"]."_".$lib_config['thumb_sizes'][0]["height"].".".$ext;
+            $thumbnail_name = $thumbnail_name."?v=".time();
+            $status = "ok";
+            $msg = "success";
+            
+            $save_data['profile_image'] = $profile_images[0];
+            $this->employer->employers_update($employer_id, $save_data);
+        }
+        else{
+            $status = "error";
+            $msg = "oops something went wrong";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "thumbnail_name" => $thumbnail_name,
+            "image_name" => $profile_images[0],
+            "msg" => $msg
+        );
+        
+        echo json_encode($rsp); die;
+        
     }
 
 }

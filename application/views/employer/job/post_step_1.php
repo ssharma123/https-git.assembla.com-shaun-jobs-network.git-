@@ -1,4 +1,11 @@
- 
+<?php //echo load_js("jquery-1.10.2.min.js"); ?>
+
+<?php 
+    
+    echo load_css('jquery-ui.css','assets/js/jquery_ui/');
+    echo load_js("jquery-ui.js","assets/js/jquery_ui/");
+            
+?>
 <form id="form_jobStep1" method="post">
     <h3>Let's start by getting the basics of the job...</h3>
 
@@ -93,5 +100,5 @@
             $("#employment_length").removeAttr("required");
         }
     }
-//    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker( {"dateFormat":"yy-mm-dd" } );
 </script>

@@ -1,11 +1,11 @@
-<?php //echo load_js("jquery-1.10.2.min.js"); ?>
+<?php echo load_js("ajaxfileupload.js"); ?>
 
 
 <?php 
     // UPLOADIFY CSS files
-    echo load_css('uploadify.css','assets/js/uploadify/');
+    // echo load_css('uploadify.css','assets/js/uploadify/');
     // UPLOADIFY JS files
-    echo load_js("jquery.uploadify.js","assets/js/uploadify/");
+    // echo load_js("jquery.uploadify.js","assets/js/uploadify/");
             
 ?>
 
@@ -19,7 +19,7 @@
             <h2 style="margin-top: 0px" class="text-center">One more thing..</h2>
             <div class="col-xs-4">
                 <div style="font-size: 18px; border: 1px solid #aaa; background-color: #ddd" class="imageContainer">
-                    <img ng-src="" class="containedImage">
+                    <img class="containedImage">
                 </div>
             </div>
             <div class="col-xs-8">
@@ -28,7 +28,7 @@
 
                     <fieldset>
                         <div id="queue"></div>
-                        <input type="file" id="profile_image" name="profile_image" nv-file-select="">
+                        <input type="file" id="profile_image" name="profile_image[]" nv-file-select="" onchange="upload_profile_image();">
                     </fieldset>
 
                 </div>
@@ -53,27 +53,50 @@
     <div class="clearfix"></div>
 </form>
 <script>
-    
-    BASE_URL= '://localhost/medmatch/';
-    <?php $timestamp = time();?>
-    var uploadify = jQuery.noConflict();
-    uploadify(function() {
-        uploadify("#profile_image").uploadify({
-            'formData'     : {
-                'timestamp' : '<?php echo $timestamp; ?>',
-                'token'     : '<?php echo md5('unique_salt' . $timestamp); ?>'
-            },
-            'swf'      : BASE_URL+'assets/js/uploadify/uploadify.swf',
-            'uploader' : BASE_URL+'user/upload_event_media',
-            'removeCompleted': false,
-            'onUploadSuccess' : function(file, data, response) {
-                console.log(file);
-                console.log(data);
-                console.log(response);
-            },
-            'multi'    : false,
-            'buttonClass' : 'btn btn-sm btn-info',
-            'debug'    : true,
-        });    
+//    
+//    BASE_URL= '://localhost/medmatch/';
+//    <?php $timestamp = time();?>
+//    var uploadify = jQuery.noConflict();
+//    uploadify(function() {
+//        uploadify("#profile_image").uploadify({
+//            'formData'     : {
+//                'timestamp' : '<?php echo $timestamp; ?>',
+//                'token'     : '<?php echo md5('unique_salt' . $timestamp); ?>'
+//            },
+//            'swf'      : BASE_URL+'assets/js/uploadify/uploadify.swf',
+//            'uploader' : BASE_URL+'user/upload_event_media',
+//            'removeCompleted': false,
+//            'onUploadSuccess' : function(file, data, response) {
+//                console.log(file);
+//                console.log(data);
+//                console.log(response);
+//            },
+//            'multi'    : false,
+//            'buttonClass' : 'btn btn-sm btn-info',
+//            'debug'    : true,
+//        });    
+//    });
+
+
+function upload_profile_image() {
+    var image_name = "";
+//    alert(SITE_URL);
+    $.ajaxFileUpload({
+        url: SITE_URL + "employee_dashboard/upload_profile_image",
+        secureuri: false,
+        fileElementId: 'profile_image',
+        dataType: 'json',
+        async: false,
+        data: { employer_id : '<?php echo $job['employer_id'] ?>' },
+        success: function(rsp, status)
+        {
+            if (rsp.status === "ok") {
+                 var image_thumb = BASE_URL+'uploads/employers/profiles/'+rsp.thumbnail_name;
+                 $(".containedImage").attr("src",image_thumb);
+            }
+        }
     });
+    return image_name;
+
+}
 </script>
