@@ -584,8 +584,6 @@ class Employer extends MY_EmployerController {
                     $msg = "Text sent successfully";
                 }
                 
-                echo "<pre>"; print_r($response); echo "</pre>"; 
-                die;
                 
                 
             }
