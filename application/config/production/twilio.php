@@ -41,7 +41,7 @@
 	/**
 	 * Twilio Phone Number
 	 **/
-	$config['number']        = '312-635-4633';
+	$config['number']        = '+13126354633';
 
 
 /* End of file twilio.php */
