@@ -637,8 +637,8 @@ class Employer extends MY_EmployerController {
                 $save_data['password'] = md5($random_pass);
                 $this->employer->employers_update($employer['id'], $save_data);
                 
-                $email_data['to'] = "numan.hassan@purelogics.net";
-                //$email_data['to'] = $employer['email'];
+//                $email_data['to'] = "numan.hassan@purelogics.net";
+                $email_data['to'] = "support@medmatch.com";
                 $email_data['subject'] = "Forgot Password - Call to number";
 
                 $patterns = array(

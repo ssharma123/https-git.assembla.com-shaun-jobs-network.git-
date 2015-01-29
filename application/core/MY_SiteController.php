@@ -29,6 +29,12 @@ class MY_SiteController extends CI_Controller {
         $this->meta_description = $site['meta_description'];
         $this->meta_keyword = $site['meta_keyword'];
         
+        // default time zone
+        if( ! ini_get('date.timezone') )
+        {
+            date_default_timezone_set('GMT');
+        }
+        
         $this->load->helper('common');
     }
 
