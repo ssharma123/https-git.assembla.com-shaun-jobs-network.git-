@@ -13,3 +13,6 @@ $config['paypal']['password'] = '1366296068';
 $config['paypal']['signature'] = 'AQU0e5vuZCvSg-XJploSa.sGUDlpA13VmPICgFpjf1x3es9V29IQ9br0';
 
 $config['facebook']['app_id'] = '786134894789637';
+
+
+$config['email_template']['from_email'] = "support@medmatch.com";

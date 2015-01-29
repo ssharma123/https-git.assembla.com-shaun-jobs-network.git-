@@ -26,8 +26,7 @@ var facilities = <?php echo $facilities; ?>;
                     <input type="email" placeholder="Your Email" class="form-control ng-valid ng-dirty" required id="signin_email" name="signin_email" value="<?php echo isset($signin_email) ? $signin_email : '' ; ?>">
                     <br>
                     <input type="password" placeholder="Your Password" class="form-control ng-valid ng-dirty" required id="signin_password" name="signin_password" value="<?php echo isset($signin_password) ? $signin_password : '' ; ?>">
-                    <br>
-
+                    <a style="float:left;clear:left; margin:5px 0 10px 5px;" href="<?php echo site_url("employer/forget_password"); ?>">Forget password</a>
                     <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                     <br>
                     <div class="row">

@@ -45,6 +45,12 @@ class Employee_dashboard extends MY_EmployerController {
         $data['sub_data'] = $sub_data;
         
         $data['jobs'] = $this->jobs->jobs_get_by_employer($data['employer']['id']);
+        $total_jobs = 0;
+        if($data['jobs']){
+            $total_jobs = count($data['jobs']);
+        }
+        $data['total_jobs'] = $total_jobs;
+        
         $html = $this->load->view('employer/dashboard/job_list', $data, TRUE);
 
         $array = array(

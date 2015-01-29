@@ -387,8 +387,7 @@ class Employer extends MY_EmployerController {
     }
 
     public function linkedin_connect() {
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+         
         
         $this->layout = 'blank';
         $status = '';
@@ -417,8 +416,7 @@ class Employer extends MY_EmployerController {
     
     public function linkedin_connect_callback(){
         $this->layout = 'blank';
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+         
         
         require APPPATH.'libraries/linkedin/linkedin.php';
         
@@ -520,6 +518,157 @@ class Employer extends MY_EmployerController {
 
         echo json_encode(array('status' => $status));
         die;
+    }
+    
+    public function forget_password(){
+        // check already login
+        $session = $this->session->all_userdata();
+        if (isset($session['employer'])) {
+            redirect('employee_dashboard');
+        }
+        
+        
+        $this->layout = "employer";
+        $this->title .= " - Recover Passwrd";
+        
+        $status = $this->session->flashdata("status");
+        $msg = $this->session->flashdata("msg");
+        $type_form = $this->session->flashdata("type_form");
+        $post_data = $this->session->flashdata("post_data");
+        
+        $data = $post_data;
+        $data['status'] = $status;
+        $data['msg'] = $msg;
+        $data['type_form'] = $type_form;
+        
+        $this->load->view("employer/forget_password", $data);
+        
+    }
+    public function forget_password_process($type){
+        $status = '';
+        $msg = '';
+        $post_data = '';
+        
+        if($this->input->post()){
+            $post_data = $this->input->post();
+        }
+        
+        if($type == "sms"){
+            
+            
+            $email = $this->input->post("forgot_email");
+            $employer = $this->employer->employer_get_by_email($email);
+            if($employer){
+                
+                
+            
+                $random_pass = random_string('alnum', 10);
+                
+                $save_data['password'] = md5($random_pass);
+                $this->employer->employers_update($employer['id'], $save_data);
+                
+                $this->load->library('twilio');
+                $from = '+15005550006';
+                $to = '+15005550006';
+                $message = "Email : ".$employer['email']." Password: ".$random_pass;
+                $response = $this->twilio->sms($from, $to, $message);
+
+                if($response->IsError){
+//                    echo 'Error: ' . $response->ErrorMessage;
+                    $status = 'error';
+                    $msg = $response->ErrorMessage;
+                }
+                else{
+                    $status = 'ok';
+                    $msg = "Text sent successfully";
+                }
+                
+//                echo "<pre>"; print_r($response); echo "</pre>"; 
+//                die;
+                
+                
+            }
+            else{
+                $status = 'error';
+                $msg = "Email does not exist";
+            }
+            
+        }
+        else if($type == "email"){
+            
+            $email = $this->input->post("forgot_email");
+            $employer = $this->employer->employer_get_by_email($email);
+            if($employer){
+            
+                $random_pass = random_string('alnum', 10);
+                
+                $save_data['password'] = md5($random_pass);
+                $this->employer->employers_update($employer['id'], $save_data);
+                
+                $email_data['to'] = "numan.hassan@purelogics.net";
+                //$email_data['to'] = $employer['email'];
+                $email_data['subject'] = "Forgot Password";
+
+                $patterns = array(
+                    '{EMAIL}' => $employer['email'],
+                    '{PASSWORD}' => $random_pass
+                );
+
+                send_template_email("employer/forget_password",$email_data, $patterns);
+                
+                $status = 'ok';
+                $msg = "Email sent successfully";
+                
+            }
+            else{
+                $status = 'error';
+                $msg = "Email does not exist";
+            }
+            
+        }
+        else if($type == "call"){
+            
+            $email = $this->input->post("forgot_email");
+            $call_phone = $this->input->post("call_phone");
+            $employer = $this->employer->employer_get_by_email($email);
+            if($employer){
+            
+                $random_pass = random_string('alnum', 10);
+                
+                $save_data['password'] = md5($random_pass);
+                $this->employer->employers_update($employer['id'], $save_data);
+                
+                $email_data['to'] = "numan.hassan@purelogics.net";
+                //$email_data['to'] = $employer['email'];
+                $email_data['subject'] = "Forgot Password - Call to number";
+
+                $patterns = array(
+                    '{EMAIL}' => $employer['email'],
+                    '{PASSWORD}' => $random_pass,
+                    '{CALL_PHONE}' => $call_phone
+                );
+
+                send_template_email("employer/call_password",$email_data, $patterns);
+                
+                $status = 'ok';
+                $msg = "Email sent successfully";
+                
+            }
+            else{
+                $status = 'error';
+                $msg = "Email does not exist";
+            }
+            
+        }
+        
+        
+        $this->session->set_flashdata("status",$status);
+        $this->session->set_flashdata("msg",$msg);
+        $this->session->set_flashdata("type_form",$type);
+        $this->session->set_flashdata("post_data",$post_data);
+        
+        redirect("employer/forget_password");
+        
     }
 
     public function faq() {

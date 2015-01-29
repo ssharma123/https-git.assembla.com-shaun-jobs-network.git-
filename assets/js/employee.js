@@ -129,6 +129,62 @@ $(document).ready(function(){
             }
         });
     }
+    
+    $(".recover_opt").click(function(){
+       $(".recover_opt").removeClass("selected");
+       $(this).addClass("selected");
+       var div_id = $(this).attr('data-value'); 
+       $(".recover_opt_forms").hide();
+       $("#"+div_id).show();
+    });
+    
+    if( $("#forget_password_email_form").length > 0){
+        $("#forget_password_email_form").validate({
+             
+            errorPlacement: function(error, element) {
+                element.attr("placeholder",error.text());
+            },
+            submitHandler: function(form) {
+                 
+                form.submit();    
+
+                return false;
+            }
+        });
+    }
+    if( $("#forget_password_sms_form").length > 0){
+        $("#forget_password_sms_form").validate({
+             
+            errorPlacement: function(error, element) {
+                element.attr("placeholder",error.text());
+            },
+            submitHandler: function(form) {
+                 
+                form.submit();    
+
+                return false;
+            }
+        });
+    }
+    if( $("#forget_password_call_form").length > 0){
+        $("#forget_password_call_form").validate({
+            rules: {
+                'call_phone': {
+                    minlength: 10,
+                    required: true
+                }
+            },
+            errorPlacement: function(error, element) {
+                element.attr("placeholder",error.text());
+            },
+            submitHandler: function(form) {
+                 
+                form.submit();    
+
+                return false;
+            }
+        });
+    }
 
 });
 function loginToFacebook(){
