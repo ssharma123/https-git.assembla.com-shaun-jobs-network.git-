@@ -26,9 +26,7 @@ if(! function_exists('send_template_email'))
                         $body = replace_body_patters($body , $patterns);
                     }
                 }
-                var_dump($email_data);
-                echo $body;
-                die;
+                
                 
                 $email_from_title = (isset($email_data['email_from_title'])) ? $email_data['email_from_title'] : "" ;
             
