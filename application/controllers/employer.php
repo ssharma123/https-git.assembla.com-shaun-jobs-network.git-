@@ -557,6 +557,7 @@ class Employer extends MY_EmployerController {
             
             
             $email = $this->input->post("forgot_email");
+            $sms_phone = $this->input->post("sms_phone");
             $employer = $this->employer->employer_get_by_email($email);
             if($employer){
                 
@@ -568,8 +569,8 @@ class Employer extends MY_EmployerController {
                 $this->employer->employers_update($employer['id'], $save_data);
                 
                 $this->load->library('twilio');
-                $from = '+15005550006';
-                $to = '+15005550006';
+                $from = '312-635-4633';
+                $to = $sms_phone;
                 $message = "Email : ".$employer['email']." Password: ".$random_pass;
                 $response = $this->twilio->sms($from, $to, $message);
 
