@@ -24,6 +24,7 @@
                 <div style="float: left; width: 48%">
                     <label>Specialty<sup>*</sup></label> 
                     <select id="specialty" name="specialty" class="ng-pristine ng-valid parent_speciality" required>
+                        <option value="">Select</option>
                         <?php 
                         foreach($specialties as $val){ ?>
                             <option value="<?php echo $val['id']; ?>"><?php echo strip_slashes($val['name']); ?></option>
