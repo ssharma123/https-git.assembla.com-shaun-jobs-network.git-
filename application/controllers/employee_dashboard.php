@@ -421,7 +421,7 @@ class Employee_dashboard extends MY_EmployerController {
         $data['job_recent_id'] = $id;
         $job = $this->jobs->jobs_get($id); 
         $data['job'] = $job;
-        $data["employer"] = $this->employer->employers_get(7);
+        $data["employer"] = $this->employer->employers_get($job['employer_id']);
         
         $html = $this->load->view('employer/job/post_step_7', $data, TRUE);
         
