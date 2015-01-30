@@ -69,7 +69,49 @@ $(document).ready(function(){
             FBox.fancybox.hideLoading();
         }); 
     });
+    $("#tabStatus").click(function(){
+        $("#rsp_post-job-container").hide();
+        
+        $(this).parent().parent().find('li').removeClass('active');
+        $(this).parent().addClass('active');
+        $(".employerdashbordTabs-items").hide();
+        $("#post-job-container").hide();
+        $("#new-job-post-btn-item").show();
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"employee_dashboard/dashboard_status",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+            $("#post-job-container").fadeIn();
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+    });
     
+    $("#tabMatches").click(function(){
+        $("#rsp_post-job-container").hide();
+        
+        $(this).parent().parent().find('li').removeClass('active');
+        $(this).parent().addClass('active');
+        $(".employerdashbordTabs-items").hide();
+        $("#post-job-container").hide();
+        $("#new-job-post-btn-item").show();
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"employee_dashboard/dashboard_matches",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+            $("#post-job-container").fadeIn();
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+    });
     
     
     $("#new-job-post-btn").click(function(){

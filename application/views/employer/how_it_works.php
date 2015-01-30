@@ -1,7 +1,7 @@
 
 <div style="padding: 50px; min-height: 400px; background-color: #f7f7f7" class="container ng-scope">
     <div>
-        <h3>Who it works</h3><br>
+        <h3>How it works</h3><br>
         <div class="row">
             
                         

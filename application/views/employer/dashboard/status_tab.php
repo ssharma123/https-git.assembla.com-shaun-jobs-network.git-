@@ -1,22 +1,25 @@
+<style>
+    .job_status_btn{
+        margin: 5px;
+    }
+</style>
 <div >
     
     <h2 class="text-center" style="padding: 20px">
-        Your Job Posts <span class="label label-primary ng-binding orange_bg"><?php echo $total_jobs; ?></span>
+        Your Applicants  
     </h2>
     <div style="padding: 20px; border-bottom: #ddd; background-color: #353333; font-size: 1.2em; font-weight: bold; border-radius: 0" class="text-center">
         <div class="row">
             <div class="col col-sm-2">
-                Job ID
+                Applicant
             </div>
             <div class="col col-sm-4">
-                Headline
+                Job ID
             </div>
             <div class="col col-sm-2">
-                Specialty
+                Status
             </div>
-            <div class="col col-sm-2">
-                Created At
-            </div>
+             
         </div>
     </div>
     <div style="" class="ng-scope">
@@ -24,22 +27,36 @@
             <div class="col col-lg-12">
             <?php foreach ($jobs as $key=>$row) { ?>
 
-                <div class="job-list-item">
-                    <div class="col col-sm-2 text-center ng-binding">
-                        <?php echo $row["internal_id"]; ?>
-                        <div class="ng-hide" style="text-align: left; padding-left: 16px; ">
-                            <a style="color: #FFF"><i class="fa fa-plus-square"></i> Matches</a>
+                <div class="status-list-item">
+                    
+                    <div class="col col-sm-2 ">
+                        <div style="float: left; width: 150px; vertical-align: top; font-size: 12px; padding-left: 5px; padding-top: 5px;" class="">
+                            <span style="color: #5298fc" class="">Dr. Farhan</span>
+                            <br>Emergency Medicine<br>Lahore, FL										
                         </div>
                     </div>
-                    <div class="col col-sm-4 ng-binding">
-                        <?php echo $row["job_headline"]; ?>
+                    <div class="col col-sm-2 text-center ">
+                        <?php echo $row["internal_id"]; ?>
                     </div>
-                    <div class="col col-sm-2 ng-binding">
-                        <?php echo $row["specialties_name"]; ?>
+                    <div class="col col-sm-6">
+                        <div style="float: left; padding-top: 14px;">
+                            <?php
+                            $matched_class = ($row['matched'] == 1 ) ? " btn-success " : "btn-danger" ;
+                            $interview_class = ($row['interview'] == 1 ) ? " btn-success " : "btn-danger" ;
+                            $interview_complete_class = ($row['interview_complete'] == 1 ) ? " btn-success " : "btn-danger" ;
+                            $face_2_face_class = ($row['face_2_face'] == 1 ) ? " btn-success " : "btn-danger" ;
+                            $job_offer_class = ($row['job_offer'] == 1 ) ? " btn-success " : "btn-danger" ;
+
+                            ?>
+                            <span class="btn btn-sm btn-success job_status_btn">Applied</span>
+                            <span  class="btn btn-sm <?php echo $matched_class; ?> job_status_btn">Matched</span>
+                            <span class="btn btn-sm <?php echo $interview_class; ?> job_status_btn">Interview</span>
+                            <span class="btn btn-sm <?php echo $interview_complete_class; ?> job_status_btn">Interview Complete</span>
+                            <span class="btn btn-sm <?php echo $face_2_face_class; ?> job_status_btn">Face 2 Face</span>
+                            <span  class="btn btn-sm <?php echo $job_offer_class; ?> job_status_btn">Job Offer</span>
+                        </div>
                     </div>
-                    <div class="col col-sm-2 ng-binding">
-                        <?php echo formate_date($row["created_at"]); ?>
-                    </div>
+                     
                     <div class="col col-sm-2 text-right">
                         <a href="javascript:void(0)">
                             <span class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-pencil"></span></span>
@@ -51,37 +68,7 @@
                     <div class="clearfix"></div>
                 </div>
                 
-                
-                <?php if($key == 0){ ?>
-                <div style="background: none repeat scroll 0% 0% rgb(255, 255, 255); padding: 5px;" >
-                    <div >
-                        <div style="border: 1px solid #e4e4e4; border-left: none;">
-                            <div style="float: left; width: 60px; height: 60px;">
-                                <img ng-src="">
-                            </div>
-                            <div style="float: left; width: 150px; vertical-align: top; font-size: 12px; padding-left: 5px; padding-top: 5px;" class="ng-binding">
-                                <span style="color: #5298fc" class="ng-binding">Dr. Farhan</span>
-                                <br>Emergency Medicine<br>Lahore, FL										
-                            </div>
-                            <div style="float: left; padding-top: 14px;">
-
-                                <span class="btn btn-sm btn-success">Applied</span>
-                                <span  class="btn btn-sm btn-danger">Matched</span>
-                                <span class="btn btn-sm btn-danger">Interview</span>
-                                <span class="btn btn-sm btn-danger">Interview Complete</span>
-                                <span class="btn btn-sm btn-danger">Face 2 Face</span>
-                                <span  class="btn btn-sm btn-danger">Job Offer</span>
-                                <span class="btn btn-xs btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </span>
-
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-
-                    </div><!-- end ngRepeat: applicant in job.applicants -->
-                </div>
-                <?php } ?>
+                 
              
             <?php } ?>
 

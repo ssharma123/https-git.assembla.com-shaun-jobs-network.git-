@@ -46,8 +46,8 @@
 
                 <ul class="nav nav-pills nav-justified" style="cursor: auto">
                     <li><a class="" href="javascript:void(0)" id="tabJobPost">Job Post</a></li>
-                    <li><a class="employerdashbordTabs" href="javascript:void(0)" id="tabStatus">Status</a></li>
-                    <li><a class="employerdashbordTabs" href="javascript:void(0)" id="tabMatches">Matches</a></li>
+                    <li><a class="" href="javascript:void(0)" id="tabStatus">Status</a></li>
+                    <li><a class="" href="javascript:void(0)" id="tabMatches">Matches</a></li>
                     <li><a class="" href="javascript:void(0)" id="tabSetting">Settings</a></li>
                 </ul>
                 <div class="clearfix"></div>

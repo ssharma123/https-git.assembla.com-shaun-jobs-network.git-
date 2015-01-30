@@ -113,6 +113,53 @@ class Employee_dashboard extends MY_EmployerController {
         echo json_encode($array);
         die;
     }
+    public function dashboard_status(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        
+        $data['employer'] = $session['employer'];
+        
+        $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
+        $data['sub_data'] = $sub_data;
+        
+        $data['jobs'] = $this->jobs->jobs_applied_by_employer($data['employer']['id']);
+        $html = $this->load->view('employer/dashboard/status_tab', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    public function dashboard_matches(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        
+        $data['employer'] = $session['employer'];
+        
+        $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
+        $data['sub_data'] = $sub_data;
+        
+        $data["setting"] = $this->settings->employers_setttings_get_by_employer($data['employer']['id']);
+        
+        $html = $this->load->view('employer/dashboard/matches_tab', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
     public function update_settings(){
         $this->layout = "blank";
         

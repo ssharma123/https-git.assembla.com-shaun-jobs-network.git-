@@ -53,8 +53,14 @@ class Jobs_model extends CI_Model {
         return false;
     }
     
-    public function jobs_applied_by_users(){
-        
+    public function jobs_applied_by_employer($employer_id){
+        $this->db->where('jobs_applied.employer_id',$employer_id);
+        $this->db->join("jobs","jobs_applied.job_id = jobs.id");
+        $r = $this->db->get("jobs_applied");
+        if ($r->num_rows() > 0) {
+            return $r->result_array();
+        }
+        return false;
     }
     
 }
