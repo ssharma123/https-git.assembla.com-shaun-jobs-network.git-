@@ -24,6 +24,7 @@ $(document).ready(function(){
         $("#"+tab_id+"-item").fadeIn();
     });
     $("#tabJobPost").click(function(){
+        $("#rsp_post-job-container").hide();
         
         $(this).parent().parent().find('li').removeClass('active');
         $(this).parent().addClass('active');
@@ -48,6 +49,8 @@ $(document).ready(function(){
     });
     
     $("#tabSetting").click(function(){
+        $("#rsp_post-job-container").hide();
+        
         $(this).parent().parent().find('li').removeClass('active');
         $(this).parent().addClass('active');
         $(".employerdashbordTabs-items").hide();
@@ -102,7 +105,6 @@ $(document).ready(function(){
         
     });
     $("#new-job-post-btn2").click(function(){
-        console.log('Debuging...zZZ')
         $(".employerdashbordTabs-items").hide();
         $(".new-job-post-div").show();
         //$(".post-job-steps").hide();
@@ -117,6 +119,14 @@ $(document).ready(function(){
             dataType: "json"
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);
+            $("#form_jobStep1").validate({
+                errorPlacement: function(error, element) {
+                    element.attr("placeholder",error.text());
+                },
+                submitHandler: function(form) {
+                    
+                }
+            });
         })
         .always(function(){
             FBox.fancybox.hideLoading();
@@ -397,6 +407,15 @@ $(document).ready(function(){
     $("#post-job-container").on("change",".parent_speciality",function(){
        parent_speciality_change(); 
     });
+    
+    $("#post-job-container").on("click","#change_email_link",function(){
+       $("#change_email_div").toggle();
+    });
+    $("#post-job-container").on("click","#change_pass_link",function(){
+       $("#change_passwrod_div").toggle();
+    });
+    
+     
 });
 
 function show_welcome_popup(){

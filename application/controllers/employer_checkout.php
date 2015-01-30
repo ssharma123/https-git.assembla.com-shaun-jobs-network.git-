@@ -53,7 +53,7 @@ class Employer_checkout extends MY_EmployerController {
             $paypal->setOption("METHOD","CreateRecurringPaymentsProfile");
             $paypal->setOption("AMT",$data_array['amount']);
             $paypal->setOption("PROFILESTARTDATE",$profile_start_date);
-            $paypal->setOption("BILLINGPERIOD",("Month")); // Day
+            $paypal->setOption("BILLINGPERIOD",("Day")); // Day
             $paypal->setOption("BILLINGFREQUENCY",("1"));
 
             $paypal->setOption("CREDITCARDTYPE",$data_array['ccType']);

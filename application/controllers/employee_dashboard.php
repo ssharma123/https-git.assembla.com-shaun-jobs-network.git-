@@ -10,6 +10,7 @@ class Employee_dashboard extends MY_EmployerController {
         parent::__construct();
         $this->load->model('jobs_model', 'jobs');
         $this->load->model('employer_model', 'employer');
+        $this->load->model('employers_settings_model', 'settings');
         $this->load->model('employers_subscription_model', 'employers_subscription');
     }
     
@@ -59,7 +60,7 @@ class Employee_dashboard extends MY_EmployerController {
         echo json_encode($array);
         die;
     }
-    public function dashboard_settings(){
+    public function dashboard_status_tab(){
         $this->layout = "blank";
         $data = array();
         
@@ -80,6 +81,30 @@ class Employee_dashboard extends MY_EmployerController {
         }
         $data['total_jobs'] = $total_jobs;
         
+        $html = $this->load->view('employer/dashboard/job_list', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    public function dashboard_settings(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        
+        $data['employer'] = $session['employer'];
+        
+        $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
+        $data['sub_data'] = $sub_data;
+        
+        $data["setting"] = $this->settings->employers_setttings_get_by_employer($data['employer']['id']);
+        
         $html = $this->load->view('employer/dashboard/settings', $data, TRUE);
 
         $array = array(
@@ -87,6 +112,157 @@ class Employee_dashboard extends MY_EmployerController {
         );
         echo json_encode($array);
         die;
+    }
+    public function update_settings(){
+        $this->layout = "blank";
+        
+        $status = "error";
+        $msg = "oops something went wrong, please try again";
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        
+        $employer = $session['employer'];
+        
+        $save_data['employer_id'] = $employer['id'];
+        
+        $save_data["when_match_email"] = ($this->input->post("when_match_email") == "true") ?  1 : 0 ;
+        $save_data["when_match_phone"] = ($this->input->post("when_match_phone") == "true") ?  1 : 0 ;
+        $save_data["when_interview_offer_email"] = ($this->input->post("when_interview_offer_email") == "true") ?  1 : 0 ;
+        $save_data["when_interview_offer_phone"] = ($this->input->post("when_interview_offer_phone") == "true") ?  1 : 0 ;
+        $save_data["when_face_2_face_offer_email"] = ($this->input->post("when_face_2_face_offer_email") == "true") ?  1 : 0 ;
+        $save_data["when_face_2_face_offer_phone"] = ($this->input->post("when_face_2_face_offer_phone") == "true") ?  1 : 0 ;
+        $save_data["when_job_offer_email"] = ($this->input->post("when_job_offer_email") == "true") ?  1 : 0 ;
+        $save_data["when_job_offer_phone"] = ($this->input->post("when_job_offer_phone") == "true") ?  1 : 0 ;
+        $save_data["when_status_update_email"] = ($this->input->post("when_status_update_email") == "true") ?  1 : 0 ;
+        $save_data["when_status_update_phone"] = ($this->input->post("when_status_update_phone") == "true") ?  1 : 0 ;
+        
+        
+
+        $setting = $this->settings->employers_setttings_get_by_employer($save_data['employer_id']);
+
+        if($setting){
+            $save_data['updated_at'] = time();
+            unset($save_data['employer_id']);
+            $this->settings->employers_setttings_update($setting['id'], $save_data);
+            $status = "ok";
+            $msg = "saved successfully";
+        }
+        else{
+            $save_data['created_at'] = time();
+            $this->settings->employers_setttings_add($save_data);
+            $status = "ok";
+            $msg = "saved successfully";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
+    
+    public function update_employer_emails(){
+        $this->layout = "blank";
+        
+        $status = "error";
+        $msg = "oops something went wrong, please try again";
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        
+        $employer = $session['employer'];
+        
+        $employer_id = $employer['id'];
+        
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'change_email', 'label' => 'Email', 'rules' => 'trim|required|valid_email|xss_clean')
+        );
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+        
+            $save_data["email"] = $this->input->post("change_email");
+
+            $email_exist = $this->employer->get_employer_email_for_edit($employer_id, $save_data["email"]);
+            if(!$email_exist){
+                
+                $this->employer->employers_update($employer_id , $save_data);
+                $status = "ok";
+                $msg = "saved successfully";
+                
+            }
+            else{
+                $status = "error";
+                $msg = "email already exist";
+            }
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
+    public function update_employer_password(){
+        $this->layout = "blank";
+        
+        $status = "error";
+        $msg = "oops something went wrong, please try again";
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        
+        $employer = $session['employer'];
+        
+        $employer_id = $employer['id'];
+        
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'change_password', 'label' => 'Email', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'confirm_change_password', 'label' => 'Email', 'rules' => 'trim|required|xss_clean')
+        );
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+        
+            $save_data["email"] = $this->input->post("change_email");
+            $save_data["email"] = $this->input->post("change_email");
+
+            $email_exist = $this->employer->get_employer_email_for_edit($employer_id, $save_data["email"]);
+            if(!$email_exist){
+                
+                $this->employer->employers_update($employer_id , $save_data);
+                $status = "ok";
+                $msg = "saved successfully";
+                
+            }
+            else{
+                $status = "error";
+                $msg = "email already exist";
+            }
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
     }
     
     public function payment_popup(){

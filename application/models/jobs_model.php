@@ -53,4 +53,8 @@ class Jobs_model extends CI_Model {
         return false;
     }
     
+    public function jobs_applied_by_users(){
+        
+    }
+    
 }

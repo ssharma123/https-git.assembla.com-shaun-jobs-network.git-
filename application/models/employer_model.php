@@ -69,4 +69,14 @@ class Employer_model extends CI_Model {
         }
         return false;
     }
+    
+    function get_employer_email_for_edit($id , $email){
+        $this->db->where('email',$this->db->escape_str($email));
+        $this->db->where('id != ', $this->db->escape_str($id) );
+        $r = $this->db->get($this->table_name);
+        if ($r->num_rows() > 0) {
+            return $r->row_array();
+        }
+        return false;
+    }
 }
