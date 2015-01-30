@@ -237,11 +237,10 @@ class Employee_dashboard extends MY_EmployerController {
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run() === TRUE) {
         
-            $save_data["email"] = $this->input->post("change_email");
-            $save_data["email"] = $this->input->post("change_email");
+            $save_data["password"] = md5($this->input->post("change_password"));
 
-            $email_exist = $this->employer->get_employer_email_for_edit($employer_id, $save_data["email"]);
-            if(!$email_exist){
+            $employer_exist = $this->employer->employers_get($employer_id);
+            if($employer_exist){
                 
                 $this->employer->employers_update($employer_id , $save_data);
                 $status = "ok";
@@ -250,7 +249,7 @@ class Employee_dashboard extends MY_EmployerController {
             }
             else{
                 $status = "error";
-                $msg = "email already exist";
+                $msg = "Unable to save password";
             }
             
         } else {

@@ -48,7 +48,7 @@
                 <br>
                 <div id="change_email_div" style="display: none;">
                     <form id="change_email_form" method="post" action="">
-                    <input type="email" name="change_email" id="change_email" required >
+                        <input type="email" name="change_email" id="change_email" required style="border: 1px solid #9a9b9f;border-radius: 5px;display: inline-block;margin: 10px;padding: 5px;width: 25%;" >
                     <a href="javascript:void(0)" id="save_email_change" class="btn btn-sm btn-info">Change</a>
                     <div id="save_email_change_busy" style="display: none;"><?php echo load_img("busy.gif"); ?></div>
                     </form>
@@ -61,8 +61,8 @@
             </div>
             <div id="change_passwrod_div" style="display: none;">
                 <form id="change_password_form" method="post" action="">
-                <input type="password" placeholder="Password" id="change_password" name="change_password" > 
-                <input type="password" placeholder="Confirm Password" id="confirm_change_password" name="confirm_change_password" > 
+                <input type="password" placeholder="Password" id="change_password" name="change_password" style="width: 25%;" > 
+                <input type="password" placeholder="Confirm Password" id="confirm_change_password" name="confirm_change_password" style="width: 25%;"> 
                 <a href="javascript:void(0)" id="save_password_change" class="btn btn-sm btn-info">Change</a>
                 <div id="save_password_change_busy" style="display: none;"><?php echo load_img("busy.gif"); ?></div>
                 </form>
@@ -166,6 +166,9 @@
             if(rsp.status === "ok"){
                 $("#rsp_post-job-container").addClass("success_rsp");
                 $("#rsp_post-job-container").html(rsp.msg).show();
+                
+                $("#change_email_div").hide();
+                $("#change_email").val("");
             }
             else{
                 $("#rsp_post-job-container").addClass("error_rsp");
@@ -204,6 +207,11 @@
             if(rsp.status === "ok"){
                 $("#rsp_post-job-container").addClass("success_rsp");
                 $("#rsp_post-job-container").html(rsp.msg).show();
+                
+                $("#change_passwrod_div").hide();
+                $("#change_password").val("");
+                $("#confirm_change_password").val("");
+                
             }
             else{
                 $("#rsp_post-job-container").addClass("error_rsp");
