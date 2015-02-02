@@ -38,7 +38,7 @@
                     <div class="col col-sm-2 text-center ">
                         <?php echo $row["internal_id"]; ?>
                     </div>
-                    <div class="col col-sm-6">
+                    <div class="col col-sm-7">
                         <div style="float: left; padding-top: 14px;">
                             <?php
                             $matched_class = ($row['matched'] == 1 ) ? " btn-success " : "btn-danger" ;
@@ -57,10 +57,8 @@
                         </div>
                     </div>
                      
-                    <div class="col col-sm-2 text-right">
-                        <a href="javascript:void(0)">
-                            <span class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-pencil"></span></span>
-                        </a>
+                    <div class="col col-sm-1 text-right">
+                         
                         <a href="javascript:void(0)">
                             <span class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></span>
                         </a>

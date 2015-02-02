@@ -310,28 +310,33 @@ $(document).ready(function(){
             if(valid_5 === true){
                 
                 var save_form_5 = save_job_data_form_5();
-                if(save_form_5 == true){
-                    FBox.fancybox.showLoading();
-                    $.ajax({
-                        type: "GET",
-                        url: SITE_URL+"employee_dashboard/job_post_step_6",
-                        dataType: "json"
-                    }).success(function(rsp){
-                        $("#post-job-container").html(rsp.html);
-                        
-                        $("#form_jobStep6").validate({
-                            errorPlacement: function(error, element) {
-                                element.attr("placeholder",error.text());
-                            },
-                            submitHandler: function(form) {
-                            }
-                        });
-                        
+                if(save_form_5 !== false){
+                    if(save_form_5.mode == "update" ){
+                        $("#tabJobPost").click();
+                    }
+                    else{
+                        FBox.fancybox.showLoading();
+                        $.ajax({
+                            type: "GET",
+                            url: SITE_URL+"employee_dashboard/job_post_step_6",
+                            dataType: "json"
+                        }).success(function(rsp){
+                            $("#post-job-container").html(rsp.html);
 
-                    })
-                    .always(function(){
-                        FBox.fancybox.hideLoading();
-                    }); 
+                            $("#form_jobStep6").validate({
+                                errorPlacement: function(error, element) {
+                                    element.attr("placeholder",error.text());
+                                },
+                                submitHandler: function(form) {
+                                }
+                            });
+
+
+                        })
+                        .always(function(){
+                            FBox.fancybox.hideLoading();
+                        }); 
+                    }
                 }
             }
         }
@@ -457,6 +462,83 @@ $(document).ready(function(){
        $("#change_passwrod_div").toggle();
     });
     
+    
+    $("#post-job-container").on("click",".delete_job_dashboard",function(){
+        var job_id = $(this).attr("data-value");
+        
+        $("#rsp_post-job-container").html("");
+        $("#rsp_post-job-container").removeClass().hide();
+        
+        bootbox.confirm("Are you sure?", function(result) {
+            if(result === true){
+                var rsp = delete_job(job_id);
+                if(rsp !== false){
+                    $("#rsp_post-job-container").html(rsp.msg);
+                    $("#rsp_post-job-container").addClass("success_rsp").show();
+                }
+            }
+        }); 
+         
+    });
+    
+    
+    
+    $("#post-job-container").on("click",".edit_job_dashboard",function(){
+        
+        var job_id = $(this).attr("data-value");
+        
+        $("#rsp_post-job-container").html("");
+        $("#rsp_post-job-container").removeClass().hide();
+        
+        $(".employerdashbordTabs-items").hide();
+        $(".new-job-post-div").show();
+        //$(".post-job-steps").hide();
+        
+         
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"employee_dashboard/job_post_step_1",
+            data: {
+                recent_job_id: job_id
+            },
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+            $("#form_jobStep1").validate({
+                errorPlacement: function(error, element) {
+                    element.attr("placeholder",error.text());
+                },
+                submitHandler: function(form) {
+                    
+                }
+            });
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+         
+        $("#post-job-container").fadeIn();
+         
+    });
+    
+    $("#post-job-container").on("click",".matches_link",function(){
+        
+        var applied_job_div = $(this).parent().parent().parent().next();
+        if(applied_job_div.hasClass("applied_jobs_div")){
+            $(applied_job_div).toggle();
+        }
+        var plus = $(this).find(".glyphicon");
+        
+        if( plus.hasClass("glyphicon-plus-sign") ){
+            plus.removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
+        }
+        else{
+            plus.removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+        }
+        
+        
+    });
      
 });
 
@@ -641,6 +723,7 @@ function save_job_data_form_5(){
     }).success(function(rsp){
         if(rsp.status == "ok"){
             // continue then
+            flag = rsp;
         }
         else{
             flag = false;
@@ -681,3 +764,23 @@ function save_job_data_form_6(){
     });
     return flag;
 }
+
+function delete_job(job_id){
+    var flag = false;
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/delete_job/",
+        data: {
+            job_id : $.trim(job_id)
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+         if(rsp.status === "ok"){
+             $("#job-list-item_"+job_id).remove();
+             flag = rsp;
+         }
+    });
+    return flag;
+}
+

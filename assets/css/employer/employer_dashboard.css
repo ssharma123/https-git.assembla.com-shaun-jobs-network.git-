@@ -219,3 +219,10 @@
     background-color: #FFBABA;
 }
 /* Response message */
+
+.top-link{
+    color: #2C3E50;
+}
+.top-link:hover{
+    color: #4D5C6B;
+}

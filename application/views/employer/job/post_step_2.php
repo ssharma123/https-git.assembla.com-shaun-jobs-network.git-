@@ -4,16 +4,25 @@
         <fieldset style="float: none; margin: 0 auto; padding: 0; width: 100%; padding-left: 100px;">
             <div class="filter">
                 <label>Active License Required?</label> 
-                <input type="checkbox" id="active_license_requires_certification" name="active_license_requires_certification" class="ng-pristine ng-valid" >
+                <?php
+                $selected = (isset($job['active_license_requires_certification']) && $job['active_license_requires_certification'] == "yes" ) ? ' checked="checked" ' : "" ;
+                ?>
+                <input type="checkbox" id="active_license_requires_certification" name="active_license_requires_certification" class="ng-pristine ng-valid" <?php echo $selected; ?>  >
                 
             </div>
             <div class="filter">
                 <label>Requires BLS Certification?</label>
-                <input type="checkbox" id="requires_bls_certification" name="requires_bls_certification" class="ng-pristine ng-valid">
+                <?php
+                $selected = (isset($job['requires_bls_certification']) && $job['requires_bls_certification'] == "yes" ) ? ' checked="checked" ' : "" ;
+                ?>
+                <input type="checkbox" id="requires_bls_certification" name="requires_bls_certification" class="ng-pristine ng-valid" <?php echo $selected; ?> >
             </div>
             <div class="filter">
                 <label>Accept J1?</label> 
-                <input type="checkbox" id="accept_ji_certification" name="accept_ji_certification" class="ng-pristine ng-valid">
+                <?php
+                $selected = (isset($job['accept_ji_certification']) && $job['accept_ji_certification'] == "yes" ) ? ' checked="checked" ' : "" ;
+                ?>
+                <input type="checkbox" id="accept_ji_certification" name="accept_ji_certification" class="ng-pristine ng-valid" <?php echo $selected; ?> >
             </div>
         </fieldset>
     </div>

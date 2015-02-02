@@ -79,6 +79,13 @@
                                 </ul>
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
+                                        
+                                        <a href="javascript:void(0);" class="btn btn-wide paynow_temp top-link">Membership</a>
+                                        <a href="javascript:void(0);" class="btn btn-wide top-link">Blog</a>
+                                        <a href="<?php echo site_url('employer/faq'); ?>" class="btn btn-wide top-link">FAQ</a>
+                                         
+                                        
+                                        
                                         <?php
                                         $session = $this->session->all_userdata();
                                         if( isset($session['employer']) ){ ?>
@@ -116,8 +123,21 @@
                                 </div>
                                 <br class="hidden-xs">
                                 <div class="box">
-                                    <h6>Chicago, IL</h6>
-                                    <p>222 W. Merchandise Mart Plaza, 12th Floor Chicago, IL 60654</p>
+                                    
+                                    <a href="javascript:void(0);" class="contact_us_text_lnk">
+                                        <span class="glyphicon glyphicon-phone" style=""></span> 
+                                        +1 (312) 635-4633
+                                    </a>
+                                    <br><br>
+                                    <a href="javascript:void(0);" class="contact_us_email_lnk">
+                                        <span class="glyphicon glyphicon-map-marker" style=""></span>
+                                        222 W. Merchandise Mart Plaza, 12th Floor Chicago, IL 60654
+                                    </a>
+                                    <br><br>
+                                    <a href="javascript:void(0);" class="btn btn-embossed btn-wide btn-inverse contact_us_email_lnk" style="color: #FFF;">
+                                        <span class="glyphicon glyphicon-comment" style="font-size: 15px; margin-right: 10px;"></span>
+                                        Contact Us
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-sm-offset-1 box">
@@ -149,6 +169,7 @@
             <?php echo load_js("jquery.scrollTo-1.4.3.1-min.js"); ?>
             <?php echo load_js("jquery.sharrre.min.js"); ?>
             <?php echo load_js("bootstrap.min.js"); ?>
+            <?php echo load_js("bootbox.min.js"); ?>
             <?php echo load_js("masonry.pkgd.min.js"); ?>
             <?php echo load_js("modernizr.custom.js"); ?>
             <?php echo load_js("page-transitions.js"); ?>

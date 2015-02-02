@@ -692,6 +692,27 @@ class Employer extends MY_EmployerController {
         $this->title .= " - Terms & Condition";
         $this->load->view("employer/terms_condition");
     }
+    
+    public function contact_us_text_popup(){
+        $this->layout = "blank";
+        $html = $this->load->view('employer/contact_us_email_popup', array(), TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    public function contact_us_email_popup(){
+        $this->layout = "blank";
+        $html = $this->load->view('employer/contact_us_text_popup', array(), TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
 
 }
 

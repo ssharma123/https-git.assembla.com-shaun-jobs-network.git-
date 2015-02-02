@@ -185,8 +185,58 @@ $(document).ready(function(){
             }
         });
     }
+    
+    $(".contact_us_text_lnk").click(function(){
+        popupContactUsText();
+    });
+    $(".contact_us_email_lnk").click(function(){
+        
+    });
 
 });
+function popupContactUsText(){
+    FBox.fancybox.showLoading();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"employer/contact_us_text_popup",
+            data: {
+                
+            },
+            dataType: "json"
+        }).success(function(rsp){
+            FBox.fancybox({
+                content: rsp.html,
+                padding: 0,
+                closeBtn: false,
+                type: 'inline'
+            });
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+}
+function popupContactUsEmail(){
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employer/contact_us_email_popup",
+        data: {
+
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline'
+        });
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+}
+
 function loginToFacebook(){
     $("#fb_error_msg").html('').removeClass();
     $("#fb_error_msg").hide();

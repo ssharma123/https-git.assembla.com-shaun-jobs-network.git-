@@ -12,6 +12,7 @@ class Employee_dashboard extends MY_EmployerController {
         $this->load->model('employer_model', 'employer');
         $this->load->model('employers_settings_model', 'settings');
         $this->load->model('employers_subscription_model', 'employers_subscription');
+        $this->load->model('specialty_model', 'specialty');
     }
     
     public function index() {
@@ -46,6 +47,17 @@ class Employee_dashboard extends MY_EmployerController {
         $data['sub_data'] = $sub_data;
         
         $data['jobs'] = $this->jobs->jobs_get_by_employer($data['employer']['id']);
+        
+        $job_applied = array();
+        if($data['jobs']){
+            foreach($data['jobs'] as $row){
+                $applied = $this->jobs->jobs_applied_by_employer($data['employer']['id'] , $row['id']);
+                if($applied){
+                    $job_applied[$row['id']] = $applied;
+                }
+            }
+        }
+        $data["job_applied"] = $job_applied;
         $total_jobs = 0;
         if($data['jobs']){
             $total_jobs = count($data['jobs']);
@@ -335,9 +347,24 @@ class Employee_dashboard extends MY_EmployerController {
     }
     public function job_post_step_1(){
         $this->layout = "blank";
+        $this->session->unset_userdata("job_mode_type");
+        $this->session->unset_userdata("job_recent_id");
+        
+        $job_id = ($this->input->post("recent_job_id")) ? $this->input->post("recent_job_id") : 0;
         
         $data["specialties"] = $this->get_specialties('parent');
-         
+        
+        if($job_id != 0){
+            $data["job"] = $this->jobs->jobs_get($job_id);
+            $this->session->set_userdata("job_recent_id",$job_id);
+            
+            $data['sub_specialty'] = $this->specialty->specialties_get_by_type("sub" , $data['job']["specialty"]);
+            $this->session->set_userdata("job_mode_type","update");
+        }
+        else{
+            $this->session->set_userdata("job_mode_type","add");
+        }
+        
         $html = $this->load->view('employer/job/post_step_1', $data, TRUE);
 
         $array = array(
@@ -379,7 +406,16 @@ class Employee_dashboard extends MY_EmployerController {
             $save_data['step'] = 1;
             $save_data['created_at'] = time();
             
-            $id = $this->jobs->jobs_add($save_data);
+            $id = $this->session->userdata("job_recent_id");
+            if($id){
+                unset($save_data['step']);
+                unset($save_data['created_at']);
+                $save_data['updated_at'] = time();
+                $this->jobs->jobs_update($id , $save_data);
+            }
+            else{
+                $id = $this->jobs->jobs_add($save_data);
+            }
             if($id > 0){
                 $status = "ok";
                 $this->session->set_userdata("job_recent_id",$id);
@@ -406,7 +442,12 @@ class Employee_dashboard extends MY_EmployerController {
     public function job_post_step_2(){
         $this->layout = "blank";
         $data = array();
-         
+        
+        $id = $this->session->userdata("job_recent_id");
+        if($id){
+            $data["job"] = $this->jobs->jobs_get($id);
+        }
+        
         $html = $this->load->view('employer/job/post_step_2', $data, TRUE);
 
         $array = array(
@@ -428,6 +469,13 @@ class Employee_dashboard extends MY_EmployerController {
         $save_data["accept_ji_certification"] = ($this->input->post("accept_ji_certification") == "true") ?  "yes" : "no" ;
         $save_data['step'] = 2;
         $id = $this->session->userdata("job_recent_id");
+        $mode_type = $this->session->userdata("job_mode_type");
+        
+        if($mode_type == "update"){
+            unset($save_data['step']);
+            $mode = "update";
+        }
+        
         $id = $this->jobs->jobs_update($id , $save_data);
         
         if($id > 0){
@@ -449,7 +497,12 @@ class Employee_dashboard extends MY_EmployerController {
     public function job_post_step_3(){
         $this->layout = "blank";
         $data = array();
-         
+        
+        $id = $this->session->userdata("job_recent_id");
+        if($id){
+            $data["job"] = $this->jobs->jobs_get($id);
+        }
+        
         $html = $this->load->view('employer/job/post_step_3', $data, TRUE);
 
         $array = array(
@@ -489,6 +542,13 @@ class Employee_dashboard extends MY_EmployerController {
             $save_data['step'] = 3;
             
             $id = $this->session->userdata("job_recent_id");
+            
+            $mode_type = $this->session->userdata("job_mode_type");
+            if($mode_type == "update"){
+                unset($save_data['step']);
+                $mode = "update";
+            }
+            
             $id = $this->jobs->jobs_update($id , $save_data);
 
             if($id > 0){
@@ -513,6 +573,12 @@ class Employee_dashboard extends MY_EmployerController {
     public function job_post_step_4(){
         $this->layout = "blank";
         $data = array();
+        
+        $id = $this->session->userdata("job_recent_id");
+        if($id){
+            $data["job"] = $this->jobs->jobs_get($id);
+        }
+        
         $html = $this->load->view('employer/job/post_step_4', $data, TRUE);
         $array = array(
             "status" => "ok",
@@ -556,6 +622,13 @@ class Employee_dashboard extends MY_EmployerController {
             $save_data['step'] = 4;
             
             $id = $this->session->userdata("job_recent_id");
+            
+            $mode_type = $this->session->userdata("job_mode_type");
+            if($mode_type == "update"){
+                unset($save_data['step']);
+                $mode = "update";
+            }
+        
             $id = $this->jobs->jobs_update($id , $save_data);
 
             if($id > 0){
@@ -580,6 +653,12 @@ class Employee_dashboard extends MY_EmployerController {
     public function job_post_step_5(){
         $this->layout = "blank";
         $data = array();
+        
+        $id = $this->session->userdata("job_recent_id");
+        if($id){
+            $data["job"] = $this->jobs->jobs_get($id);
+        }
+        
         $html = $this->load->view('employer/job/post_step_5', $data, TRUE);
         $array = array(
             "status" => "ok",
@@ -593,7 +672,7 @@ class Employee_dashboard extends MY_EmployerController {
         $this->layout = "blank";
         $msg = "";
         $status = "";
-                
+        $mode = "";                
             
              
         $save_data["citizen"] = ($this->input->post("citizen") == "true") ?  "yes" : "no" ;
@@ -604,6 +683,12 @@ class Employee_dashboard extends MY_EmployerController {
         
 
         $id = $this->session->userdata("job_recent_id");
+        
+        $mode_type = $this->session->userdata("job_mode_type");
+        if($mode_type == "update"){
+            unset($save_data['step']);
+            $mode = "update";
+        }
         $id = $this->jobs->jobs_update($id , $save_data);
 
         if($id > 0){
@@ -616,7 +701,8 @@ class Employee_dashboard extends MY_EmployerController {
             
         $array = array(
             "status" => $status,
-            "msg" => $msg
+            "msg" => $msg,
+            "mode" => $mode
         );
         echo json_encode($array); die;
     }
@@ -624,6 +710,12 @@ class Employee_dashboard extends MY_EmployerController {
     public function job_post_step_6(){
         $this->layout = "blank";
         $data = array();
+        
+        $id = $this->session->userdata("job_recent_id");
+        if($id){
+            $data["job"] = $this->jobs->jobs_get($id);
+        }
+        
         $html = $this->load->view('employer/job/post_step_6', $data, TRUE);
         $array = array(
             "status" => "ok",
@@ -734,6 +826,30 @@ class Employee_dashboard extends MY_EmployerController {
         
         echo json_encode($rsp); die;
         
+    }
+    public function delete_job(){
+        $this->layout = "blank";
+        $msg = "";
+        $status = "";
+        
+        $id = ($this->input->post("job_id")) ? $this->input->post("job_id") : 0 ;
+        $r = $this->jobs->jobs_get($id);
+        
+        if($r){
+            $r = $this->jobs->jobs_delete($id);
+            $status = "ok";
+            $msg = "Deleted successfully";
+        }
+        else{
+            $status = "error";
+            $msg = "Data not found";
+        }
+            
+        $array = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($array); die;
     }
 
 }

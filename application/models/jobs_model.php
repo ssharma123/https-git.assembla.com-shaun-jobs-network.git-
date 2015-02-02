@@ -40,12 +40,17 @@ class Jobs_model extends CI_Model {
         $this->db->where('id' , $id);
         $this->db->update($this->table_name,$data);
         return $id;
-    } 
+    }
+    public function jobs_delete($id){
+        $this->db->where('id',$id);
+        $this->db->delete($this->table_name);
+    }
     public function jobs_get_by_employer($employer_id){
         $this->db->where('employer_id',$employer_id);
         $this->db->where('active',"1");
         $this->db->join("specialties","specialties.id = jobs.specialty");
         $this->db->select($this->table_name.".*,specialties.name as specialties_name");
+        $this->db->order_by($this->table_name.".id","DESC");
         $r = $this->db->get($this->table_name);
         if ($r->num_rows() > 0) {
             return $r->result_array();
@@ -53,7 +58,10 @@ class Jobs_model extends CI_Model {
         return false;
     }
     
-    public function jobs_applied_by_employer($employer_id){
+    public function jobs_applied_by_employer($employer_id , $job_id = 0){
+        if($job_id != 0){
+            $this->db->where('jobs_applied.job_id',$job_id);
+        }
         $this->db->where('jobs_applied.employer_id',$employer_id);
         $this->db->join("jobs","jobs_applied.job_id = jobs.id");
         $r = $this->db->get("jobs_applied");
