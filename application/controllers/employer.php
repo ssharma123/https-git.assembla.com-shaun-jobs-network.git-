@@ -788,7 +788,7 @@ class Employer extends MY_EmployerController {
                 $email_data['to'] = "numan.hassan@purelogics.net";
 //                $email_data['to'] = "support@medmatch.com";
                 $email_data['subject'] = "Contact Us";
-
+                $email_data['from'] = $email;
                 $patterns = array(
                     '{NAME}' => $name,
                     '{EMAIL}' => $email,
