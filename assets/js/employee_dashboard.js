@@ -116,6 +116,9 @@ $(document).ready(function(){
     
     
     $("#new-job-post-btn").click(function(){
+        // Fix date picker issue 
+        $("#ui-datepicker-div").remove();
+        
         var tab_id = $(this).attr('id');
         console.log(tab_id);
         $(".employerdashbordTabs-items").hide();
@@ -148,6 +151,9 @@ $(document).ready(function(){
         
     });
     $("#new-job-post-btn2").click(function(){
+        // Fix date picker issue 
+        $("#ui-datepicker-div").remove();
+        
         $(".employerdashbordTabs-items").hide();
         $(".new-job-post-div").show();
         //$(".post-job-steps").hide();

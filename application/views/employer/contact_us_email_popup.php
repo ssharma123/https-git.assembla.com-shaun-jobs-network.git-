@@ -71,11 +71,11 @@
 
             }).success(function(rsp){
                 if(rsp.status === "ok"){
-                    $("#rsp_contact_us_email").html(rsp.msg).addClass('error_rsp');
+                    $("#rsp_contact_us_email").html(rsp.msg).addClass('success_rsp');
                     $("#rsp_contact_us_email").show();
                 }
                 else{
-                    $("#rsp_contact_us_email").html(rsp.msg).addClass('success_rsp');
+                    $("#rsp_contact_us_email").html(rsp.msg).addClass('error_rsp');
                     $("#rsp_contact_us_email").show();
                 }
             });

@@ -138,5 +138,6 @@
             $("#employment_length").removeAttr("required");
         }
     }
-    $(".datepicker").datepicker( {"dateFormat":"yy-mm-dd" } );
+    
+    $("#fill_by").datepicker( {"dateFormat":"yy-mm-dd" } );
 </script>
