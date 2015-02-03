@@ -184,7 +184,9 @@ $(document).ready(function(){
         $("#post-job-container").fadeIn();
     });
     
-    
+    $("#post-job-container").on("click","#go_to_jobs_dashboard_btn",function(){
+        $("#tabJobPost").click();
+    });
     
     $("#post-job-container").on("click",".post-form-continue-btn",function(){
         var id = $(this).attr('id');
@@ -329,12 +331,18 @@ $(document).ready(function(){
                             dataType: "json"
                         }).success(function(rsp){
                             $("#post-job-container").html(rsp.html);
-
+                            
+                            
+                            
                             $("#form_jobStep6").validate({
                                 errorPlacement: function(error, element) {
+                                    if(element.attr("id") == "agree_to_term"){
+                                        $("#agree_to_term").parent().css("color","#FF0000");
+                                    }
                                     element.attr("placeholder",error.text());
                                 },
                                 submitHandler: function(form) {
+                                    $("#agree_to_term").parent().css("color","");
                                 }
                             });
 

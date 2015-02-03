@@ -1,19 +1,19 @@
 <script>
 var facilities = <?php echo $facilities; ?>;
 </script>
-<?php echo load_js("jquery-1.10.2.min.js"); ?>
+<?php //echo load_js("jquery-1.10.2.min.js"); ?>
 
 <?php 
-    echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
-    echo load_css('jquery.fancybox-buttons.css?v=1.0.5','assets/js/fancybox/helpers/');
-    echo load_css('jquery.fancybox-thumbs.css?v=1.0.7','assets/js/fancybox/helpers/');
+//    echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
+//    echo load_css('jquery.fancybox-buttons.css?v=1.0.5','assets/js/fancybox/helpers/');
+//    echo load_css('jquery.fancybox-thumbs.css?v=1.0.7','assets/js/fancybox/helpers/');
 ?>
 <?php 
     // fancybox JS files
-    echo load_js("jquery.fancybox.js?v=2.1.4","assets/js/fancybox/");
-    echo load_js("jquery.fancybox-buttons.js?v=1.0.5","assets/js/fancybox/helpers/");
-    echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
-    echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
+//    echo load_js("jquery.fancybox.js?v=2.1.4","assets/js/fancybox/");
+//    echo load_js("jquery.fancybox-buttons.js?v=1.0.5","assets/js/fancybox/helpers/");
+//    echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
+//    echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
 ?>
 <?php echo load_js("home.js"); ?>
 <section class="header-11-sub bg-midnight-blue">
@@ -45,7 +45,7 @@ var facilities = <?php echo $facilities; ?>;
                         <input type="hidden" name="no_password" value="yes">
                     </form>
                 </div>
-                <div class="additional-links">By signing up you agree to <a href="#">Terms of Use</a> and <a href="#">Privacy</a></div>
+                <div class="additional-links">By signing up you agree to <a href="<?php echo site_url("employer/terms_of_use/"); ?>">Terms of Use</a> and <a href="<?php echo site_url("employer/terms_condition/"); ?>">Privacy</a></div>
             </div>
             <div class="col-sm-7 col-sm-offset-1 player-wrapper"></div>
         </div>

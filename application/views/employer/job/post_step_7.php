@@ -19,7 +19,11 @@
             <h2 style="margin-top: 0px" class="text-center">One more thing..</h2>
             <div class="col-xs-4">
                 <div style="font-size: 18px; border: 1px solid #aaa; background-color: #ddd" class="imageContainer">
-                    <img class="containedImage">
+                    <?php
+//                    var_dump($employer['profile_image']);
+                    $src = (isset($employer['profile_image']) && $employer['profile_image'] != "")  ? " src='".base_url("uploads/employers/profiles/".upload_img_thumb($employer['profile_image'],150,185))."' " : "" ;
+                    ?>
+                    <img class="containedImage" <?php echo $src; ?> >
                 </div>
             </div>
             <div class="col-xs-8">
@@ -37,7 +41,7 @@
 
         </div>
         <div class="text-center">
-            <a style="width: 60%; font-size: 22px" class="btn btn-lg btn-primary" href="javacript:void(0)">Go to Jobs Dashboard</a>
+            <a id="go_to_jobs_dashboard_btn" style="width: 60%; font-size: 22px" class="btn btn-lg btn-primary" href="javascript:void(0)">Go to Jobs Dashboard</a>
         </div>
 
     </div>
