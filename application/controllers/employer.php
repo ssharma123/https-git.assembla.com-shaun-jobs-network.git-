@@ -695,7 +695,7 @@ class Employer extends MY_EmployerController {
     
     public function contact_us_map_popup(){
         $this->layout = "blank";
-        $html = $this->load->view('employer/contact_us_text_popup', array(), TRUE);
+        $html = $this->load->view('employer/contact_us_map_popup', array(), TRUE);
 
         $array = array(
             "html" => $html
