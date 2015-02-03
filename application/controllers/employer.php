@@ -796,7 +796,7 @@ class Employer extends MY_EmployerController {
                     '{MESSAGE}' => $message
                 );
 
-                send_template_email("employer/contact_us/",$email_data, $patterns);
+                send_template_email("employer/contact_us",$email_data, $patterns);
                 
                 $status = 'ok';
                 $msg = "Email sent successfully";
