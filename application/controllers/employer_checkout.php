@@ -74,7 +74,8 @@ class Employer_checkout extends MY_EmployerController {
             $paypal->setOption("DESC",'MedMatchMembership');
         
             if($rData = $paypal->startTransection()) {
-                
+                echo "<pre>"; print_r($rData); echo "</pre>"; die;
+
                 if(isset($rData['ACK']) && $rData['ACK']=="Success") {
                     
                     $employer = $session['employer'];
