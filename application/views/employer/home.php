@@ -216,6 +216,12 @@ var facilities = <?php echo $facilities; ?>;
     </div>
 </section>
 
+<script>
+    $(window).load(function(){
+        $("#employee_siginup_lnk").click();
+    });
+</script>
+
 <!--Start of Zopim Live Chat Script-->
 <script type="text/javascript">
 window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=

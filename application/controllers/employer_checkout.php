@@ -53,7 +53,7 @@ class Employer_checkout extends MY_EmployerController {
             $paypal->setOption("METHOD","CreateRecurringPaymentsProfile");
             $paypal->setOption("AMT",$data_array['amount']);
             $paypal->setOption("PROFILESTARTDATE",$profile_start_date);
-            $paypal->setOption("BILLINGPERIOD",("Day")); // Day
+            $paypal->setOption("BILLINGPERIOD",("Day")); // Day , Month
             $paypal->setOption("BILLINGFREQUENCY",("1"));
 
             $paypal->setOption("CREDITCARDTYPE",$data_array['ccType']);
@@ -74,7 +74,7 @@ class Employer_checkout extends MY_EmployerController {
             $paypal->setOption("DESC",'MedMatchMembership');
         
             if($rData = $paypal->startTransection()) {
-                echo "<pre>"; print_r($rData); echo "</pre>"; die;
+//                echo "<pre>"; print_r($rData); echo "</pre>"; die;
 
                 if(isset($rData['ACK']) && $rData['ACK']=="Success") {
                     

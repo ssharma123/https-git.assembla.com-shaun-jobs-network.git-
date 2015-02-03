@@ -6,7 +6,11 @@
 </style>
 <div style="padding: 50px; min-height: 400px; background-color: #f7f7f7; width: 500px;" ng-controller="DashboardCtrl" class="container ng-scope">
     <div class="col col-sm-12 " >
-    <h2 class="text-center" style="border-bottom: 2px solid black; padding-bottom: 20px">New Employer Account</h2>
+        <div class="text-center">
+            <a class="btn btn-info btn-lg" >Post Your Job. It's free!</a>
+        </div> 
+
+    <h4 class="text-center" style="border-bottom: 2px solid black; padding-bottom: 20px; font-size: 13px;font-weight: bold;font-style: italic;">Looking for the physician? We'll match you with the best!</h4>
     <div id="signup_popup_form_rsp" style="display: none;"></div>
     <br>
     <form class="form-horizontal ng-pristine ng-valid" id="signup_popup_form" method="post" action="<?php echo site_url('employer/signup/2'); ?>">
