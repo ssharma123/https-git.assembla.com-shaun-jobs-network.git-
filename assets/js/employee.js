@@ -186,19 +186,20 @@ $(document).ready(function(){
         });
     }
     
-    $(".contact_us_text_lnk").click(function(){
-        popupContactUsText();
+    $(".contact_us_map_lnk").click(function(){
+        popupContactUsMap();
     });
+    
     $(".contact_us_email_lnk").click(function(){
-        
+        popupContactUsEmail();
     });
 
 });
-function popupContactUsText(){
+function popupContactUsMap(){
     FBox.fancybox.showLoading();
         $.ajax({
             type: "POST",
-            url: SITE_URL+"employer/contact_us_text_popup",
+            url: SITE_URL+"employer/contact_us_map_popup",
             data: {
                 
             },

@@ -772,7 +772,7 @@ class Employee_dashboard extends MY_EmployerController {
             $save_data['step'] = 7;
             $save_data['active'] = 1;
             $save_data['created_at'] = time();
-            $id = $this->jobs->jobs_update(0 , $save_data);
+            $id = $this->jobs->jobs_update($id , $save_data);
         }
         
         

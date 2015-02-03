@@ -1,17 +1,3 @@
-<?php echo load_js("jquery-1.10.2.min.js"); ?>
-
-<?php 
-    echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
-    echo load_css('jquery.fancybox-buttons.css?v=1.0.5','assets/js/fancybox/helpers/');
-    echo load_css('jquery.fancybox-thumbs.css?v=1.0.7','assets/js/fancybox/helpers/');
-?>
-<?php 
-    // fancybox JS files
-    echo load_js("jquery.fancybox.js?v=2.1.4","assets/js/fancybox/");
-    echo load_js("jquery.fancybox-buttons.js?v=1.0.5","assets/js/fancybox/helpers/");
-    echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
-    echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
-?>
 
 <?php echo load_css("employer_dashboard.css","assets/css/employer/"); ?>
 <?php echo load_js("employee_dashboard.js"); ?>
@@ -23,7 +9,7 @@
                 <div class="imageContainer" style="font-size: 18px; border: 1px solid black; background-color: #aaa">
                     <?php
 //                    var_dump($employer['profile_image']);
-                    $src = (isset($employer['profile_image']) && $employer['profile_image'] != "")  ? " src='".base_url("uploads/employers/profiles/".$employer['profile_image'])."' " : "" ;
+                    $src = (isset($employer['profile_image']) && $employer['profile_image'] != "")  ? " src='".base_url("uploads/employers/profiles/".upload_img_thumb($employer['profile_image'],150,185))."' " : "" ;
                     ?>
                     <img class="containedImage" <?php echo $src; ?> >
                 </div>
@@ -102,32 +88,6 @@
 
                 </div>
 
-                <!--                <div class="ng-hide" ng-show="state == 'jobDetails'">
-                                    <h2 class="text-center ng-binding">Job Posting:  </h2>
-                
-                                    <div class="row" >
-                                        <h3>Pending Applications <span class="label label-info ng-binding"></span></h3> <hr>
-                                         ngRepeat: application in selectedJob.get('pendingApplications') 
-                                    </div>
-                
-                                    <div class="row">
-                                        <h3>Current Applications <span class="label label-warning ng-binding"></span></h3> <hr>
-                                         ngRepeat: application in selectedJob.get('applications') 
-                                    </div>
-                
-                                    <div class="text-center" style="padding-bottom: 80px">
-                                        <a class="btn btn-primary btn-lg" href="" ng-click="state = 'jobs'">Back to Jobs</a>
-                                    </div>
-                
-                                </div>-->
-
-                <!--				<div>
-                                                        <h3>RIVS INFO</h3>
-                                                        <hr />
-                                                        <div ng-repeat="rivsJob in rivsJobs.aaOutput.aaJobs">
-                                                                {{rivsJob.sName}} <br />
-                                                        </div>
-                                                </div>-->
 
             </div>
         </div>

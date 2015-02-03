@@ -2,6 +2,7 @@ var FBox = jQuery.noConflict();
 var $ = jQuery.noConflict();
 $(document).ready(function(){
     
+    $(".is_phone_number").mask('000-000-0000');
     $.validator.addMethod("greaterThan", function (value, element, param) {
         var $min = $(param);
 
@@ -540,7 +541,58 @@ $(document).ready(function(){
         
     });
      
+    $(".contact_us_map_lnk").click(function(){
+        popupContactUsMap();
+    });
+    
+    $(".contact_us_email_lnk").click(function(){
+        popupContactUsEmail();
+    });
+    
 });
+
+function popupContactUsMap(){
+    FBox.fancybox.showLoading();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"employer/contact_us_map_popup",
+            data: {
+                
+            },
+            dataType: "json"
+        }).success(function(rsp){
+            FBox.fancybox({
+                content: rsp.html,
+                padding: 0,
+                closeBtn: false,
+                type: 'inline'
+            });
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+}
+function popupContactUsEmail(){
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employer/contact_us_email_popup",
+        data: {
+
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline'
+        });
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+}
 
 function show_welcome_popup(){
     FBox.fancybox.showLoading();

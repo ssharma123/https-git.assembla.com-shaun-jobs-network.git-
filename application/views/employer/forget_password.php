@@ -31,7 +31,7 @@
             <div class="col col-sm-4">
                 <div class="recover_opt" data-value="forget_password_email_form_div">
                     <h4>Get a Email</h4>
-                    <span class="glyphicon glyphicon-envelope" style="font-size: 40px;"></span>`
+                    <span class="glyphicon glyphicon-envelope" style="font-size: 40px;"></span>
                     <br>
                     <span>
                         We'll send an email with login information <br>
@@ -43,7 +43,7 @@
             <div class="col col-sm-4">
                 <div class="recover_opt" data-value="forget_password_sms_form_div">
                     <h4>Get a Text</h4>
-                    <span class="glyphicon glyphicon-comment" style="font-size: 40px;"></span>`
+                    <span class="glyphicon glyphicon-comment" style="font-size: 40px;"></span>
                     <br>
                     <span>
                         We'll send a text message with login information <br>

@@ -604,8 +604,8 @@ class Employer extends MY_EmployerController {
                 $save_data['password'] = md5($random_pass);
                 $this->employer->employers_update($employer['id'], $save_data);
                 
-                $email_data['to'] = "numan.hassan@purelogics.net";
-                //$email_data['to'] = $employer['email'];
+//                $email_data['to'] = "numan.hassan@purelogics.net";
+                $email_data['to'] = $employer['email'];
                 $email_data['subject'] = "Forgot Password";
 
                 $patterns = array(
@@ -693,7 +693,66 @@ class Employer extends MY_EmployerController {
         $this->load->view("employer/terms_condition");
     }
     
-    public function contact_us_text_popup(){
+    public function contact_us_map_popup(){
+        $this->layout = "blank";
+        $html = $this->load->view('employer/contact_us_text_popup', array(), TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    public function contact_us_map_popup_process(){
+        $this->layout = "blank";
+        $msg = "";
+        $status = "";
+                
+        $name = $this->input->post('name');
+        $email = $this->input->post('email');
+        $phone_number = $this->input->post('phone_number');
+        $message = $this->input->post('message');
+        
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'name', 'label' => 'Name', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'phone_number', 'label' => 'Phone Number', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'message', 'label' => 'Message', 'rules' => 'trim|required|xss_clean')
+        );
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+            
+            $status = "ok";
+            
+                $email_data['to'] = "numan.hassan@purelogics.net";
+//                $email_data['to'] = "support@medmatch.com";
+                $email_data['subject'] = "Contact Us";
+
+                $patterns = array(
+                    '{NAME}' => $name,
+                    '{EMAIL}' => $email,
+                    '{PHONE}' => $phone_number,
+                    '{MESSAGE}' => $message
+                );
+
+                send_template_email("employer/contact_us/",$email_data, $patterns);
+                
+                $status = 'ok';
+                $msg = "Email sent successfully";
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+        
+        $rsp = array("status" => $status, "msg" => $msg);
+        echo json_encode($rsp);
+        die;
+         
+    }
+    public function contact_us_email_popup(){
         $this->layout = "blank";
         $html = $this->load->view('employer/contact_us_email_popup', array(), TRUE);
 
@@ -703,15 +762,54 @@ class Employer extends MY_EmployerController {
         echo json_encode($array);
         die;
     }
-    public function contact_us_email_popup(){
+    public function contact_us_email_popup_process(){
         $this->layout = "blank";
-        $html = $this->load->view('employer/contact_us_text_popup', array(), TRUE);
-
-        $array = array(
-            "html" => $html
+        $msg = "";
+        $status = "";
+                
+        $name = $this->input->post('name');
+        $email = $this->input->post('email');
+        $phone_number = $this->input->post('phone_number');
+        $message = $this->input->post('message');
+        
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'name', 'label' => 'Name', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'phone_number', 'label' => 'Phone Number', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'message', 'label' => 'Message', 'rules' => 'trim|required|xss_clean')
         );
-        echo json_encode($array);
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+            
+            $status = "ok";
+            
+                $email_data['to'] = "numan.hassan@purelogics.net";
+//                $email_data['to'] = "support@medmatch.com";
+                $email_data['subject'] = "Contact Us";
+
+                $patterns = array(
+                    '{NAME}' => $name,
+                    '{EMAIL}' => $email,
+                    '{PHONE}' => $phone_number,
+                    '{MESSAGE}' => $message
+                );
+
+                send_template_email("employer/contact_us/",$email_data, $patterns);
+                
+                $status = 'ok';
+                $msg = "Email sent successfully";
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+        
+        $rsp = array("status" => $status, "msg" => $msg);
+        echo json_encode($rsp);
         die;
+         
     }
 
 }

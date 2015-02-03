@@ -30,6 +30,13 @@
         <?php echo load_css("icon-font.css"); ?>
         <?php echo load_css("animations.css"); ?>
         <?php echo load_css("style.css"); ?>
+        
+        <?php 
+            echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
+            echo load_css('jquery.fancybox-buttons.css?v=1.0.5','assets/js/fancybox/helpers/');
+            echo load_css('jquery.fancybox-thumbs.css?v=1.0.7','assets/js/fancybox/helpers/');
+        ?>
+        
         <!--Google Fonts-->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,300,600,400' rel='stylesheet' type='text/css'>
         <!--End Google Fonts-->
@@ -46,7 +53,17 @@
         var SITE_URL = '<?php echo site_url();?>';
         var BASE_URL = '<?php echo base_url();?>';
         </script>
+        
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
         <?php echo load_js("jquery-1.10.2.min.js"); ?>  
+        
+        <?php 
+            // fancybox JS files
+            echo load_js("jquery.fancybox.js?v=2.1.4","assets/js/fancybox/");
+            echo load_js("jquery.fancybox-buttons.js?v=1.0.5","assets/js/fancybox/helpers/");
+            echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
+            echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
+        ?>
     </head>
 
     <body>
@@ -123,21 +140,36 @@
                                 </div>
                                 <br class="hidden-xs">
                                 <div class="box">
-                                    
-                                    <a href="javascript:void(0);" class="contact_us_text_lnk">
-                                        <span class="glyphicon glyphicon-phone" style=""></span> 
-                                        +1 (312) 635-4633
+                                    <a href="javascript:void(0);" class="contact_us_map_lnk">
+                                        <span class="glyphicon glyphicon-map-marker" style=""></span>
+                                        222 W. Merchandise Mart Plaza, 12th Floor Chicago, IL 60654
                                     </a>
                                     <br><br>
                                     <a href="javascript:void(0);" class="contact_us_email_lnk">
-                                        <span class="glyphicon glyphicon-map-marker" style=""></span>
-                                        222 W. Merchandise Mart Plaza, 12th Floor Chicago, IL 60654
+                                        <span class="glyphicon glyphicon-phone" style=""></span> 
+                                        +1 (312) 635-4633
                                     </a>
                                     <br><br>
                                     <a href="javascript:void(0);" class="btn btn-embossed btn-wide btn-inverse contact_us_email_lnk" style="color: #FFF;">
                                         <span class="glyphicon glyphicon-comment" style="font-size: 15px; margin-right: 10px;"></span>
                                         Contact Us
                                     </a>
+                                    <br><br>
+                                    <div>
+                                        <a href="#">
+                                            <?php echo load_img("icon_facebook.png", "", "35", "35"); ?>
+                                        </a>
+                                        <a href="#">
+                                            <?php echo load_img("icon_google.png", "", "35", "35"); ?>
+                                        </a>
+                                        <a href="#">
+                                            <?php echo load_img("icon_linkedin.png", "", "35", "35"); ?>
+                                        </a>
+                                        <a href="#">
+                                            <?php echo load_img("icon_twitter.png", "", "35", "35"); ?>
+                                        </a>
+                                        
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-sm-offset-1 box">
@@ -164,7 +196,7 @@
 <!--            FOOTER END -->
 
             <!-- Placed at the end of the document so the pages load faster --> 
-            
+            <?php echo load_js("jquery.mask.min.js"); ?>
             <?php echo load_js("jquery.bxslider.min.js"); ?>
             <?php echo load_js("jquery.scrollTo-1.4.3.1-min.js"); ?>
             <?php echo load_js("jquery.sharrre.min.js"); ?>
