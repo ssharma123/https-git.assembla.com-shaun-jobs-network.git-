@@ -21,6 +21,10 @@ class Employer_checkout extends MY_EmployerController {
         }
         
         $data['employer'] = $session['employer'];
+        $employer = $session['employer'];
+        $user_id = isset($employer['id']) ?  $employer['id'] : 0;
+        $sub_data = $this->employers_subscription->subscription_get_by_user_id($user_id);
+        $data['sub_data'] = $sub_data;
         
         $this->load->view('employer/checkout', $data);
     }

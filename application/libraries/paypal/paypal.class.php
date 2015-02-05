@@ -72,15 +72,15 @@ class paypal {
 
         $this->response = curl_exec($ch);
 
-        $this->debug($this->response);
-        $this->debug(curl_getinfo($ch));
-
-        if (!$this->response) {
-            $this->debug($this->response);
-            $this->debug(curl_getinfo($ch));
-        }
-        if (!$this->response)
-            $this->debug(array(), true, true);
+//        $this->debug($this->response);
+//        $this->debug(curl_getinfo($ch));
+//
+//        if (!$this->response) {
+//            $this->debug($this->response);
+//            $this->debug(curl_getinfo($ch));
+//        }
+//        if (!$this->response)
+//            $this->debug(array(), true, true);
 
         curl_close($ch);
         $httpResponseAr = explode("&", $this->response);
@@ -93,7 +93,9 @@ class paypal {
         }
 
         if ((0 == sizeof($httpParsedResponseAr)) || !array_key_exists('ACK', $httpParsedResponseAr)) {
-            exit("Invalid HTTP Response for POST request($nvpreq) to ".$this->api_end.".");
+            if($this->debug){
+                exit("Invalid HTTP Response for POST request($nvpreq) to ".$this->api_end.".");
+            }
         }
         $this->returnData = $httpParsedResponseAr;
         return $httpParsedResponseAr;

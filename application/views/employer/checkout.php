@@ -4,8 +4,12 @@
         <h3>Checkout Page</h3><br>
         <div class="row">
             
-            <?php if($this->input->post('payment_type')) { ?>
-            <form class="form-horizontal ng-pristine ng-valid" id="paypal_checkout_form" method="post" action="<?php echo site_url('employer_checkout/checkout_process'); ?>">
+            
+            <?php 
+            if($this->input->post('payment_type')) {
+                
+                if(!$sub_data) { ?>
+                    <form class="form-horizontal ng-pristine ng-valid" id="paypal_checkout_form" method="post" action="<?php echo site_url('employer_checkout/checkout_process'); ?>">
                 <input type="hidden" name="amount" id="amount" value="10" >
                 <?php
                 $first_name = "";
@@ -136,7 +140,12 @@
                 </div>
                 
             </form>
-            <?php } ?>
+            <?php } 
+                else { ?>
+                <div class="error_rsp"> You have already subscribe</div>
+                <?php
+                }
+            } ?>
         </div>
     </div>
 </div>
