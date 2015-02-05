@@ -607,6 +607,10 @@ function update_job_status(element , id, type){
             
             if(type === "interview"){
                 bootbox.alert("Interview Offered");
+                
+                element.removeClass("update_job_status");
+                element.removeClass("btn-danger");
+                element.addClass("btn-success");
             }
             else if(type === "face_2_face"){
                 popupFace2Face(element, id);
