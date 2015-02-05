@@ -499,6 +499,7 @@ $(document).ready(function(){
     
     
     $("#post-job-container").on("click",".edit_job_dashboard",function(){
+        $("#ui-datepicker-div").remove();
         
         var job_id = $(this).attr("data-value");
         
