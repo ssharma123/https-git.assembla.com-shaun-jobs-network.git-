@@ -378,7 +378,7 @@ class Employee_dashboard extends MY_EmployerController {
     }
     public function save_job_post_step_1(){
         $session = $this->session->all_userdata();
-        echo "<pre>"; print_r($session); echo "</pre>"; die;
+        $empoyer_id = (isset($session['employer']['id'])) ? $session['employer']['id'] : 0;
 
         $this->layout = "blank";
         $msg = "";
@@ -398,7 +398,7 @@ class Employee_dashboard extends MY_EmployerController {
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run() === TRUE) {
             
-            $save_data['employer_id'] = $this->session->userdata("user_id");
+            $save_data['employer_id'] = $empoyer_id;
             $save_data['internal_id'] = $this->input->post('internal_id');
             $save_data['specialty'] = $this->input->post('specialty');
             $save_data['sub_specialty'] = $this->input->post('sub_specialty');
