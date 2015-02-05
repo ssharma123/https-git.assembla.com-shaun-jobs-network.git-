@@ -50,7 +50,7 @@
         <br><br><br>
         <div>
             <p style="font-size: 12px">He will reach out to you momentarily to make sure you are all set.</p>
-            <p style="color: #777; font-size: 13px;" class="text-center ng-binding">Text (123) 123-1231 <br>or<br> <?php echo $employer["email"] ?> </p>
+            <p style="color: #777; font-size: 13px;" class="text-center ng-binding">Text (123) 123-1231 <br>or<br> <?php echo (isset($employer["email"])) ? $employer["email"] : "" ; ?> </p>
         </div>
 
     </div>
