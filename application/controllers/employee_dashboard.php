@@ -377,6 +377,9 @@ class Employee_dashboard extends MY_EmployerController {
         die;
     }
     public function save_job_post_step_1(){
+        $session = $this->session->all_userdata();
+        echo "<pre>"; print_r($session); echo "</pre>"; die;
+
         $this->layout = "blank";
         $msg = "";
         $status = "";
