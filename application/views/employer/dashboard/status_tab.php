@@ -25,7 +25,9 @@
     <div style="" class="ng-scope">
         <div class="row">
             <div class="col col-lg-12">
-            <?php foreach ($jobs as $key=>$row) { ?>
+            <?php 
+            if($jobs){
+            foreach ($jobs as $key=>$row) { ?>
 
                 <div class="status-list-item">
                     
@@ -68,7 +70,8 @@
                 
                  
              
-            <?php } ?>
+            <?php }
+            } ?>
 
 
         </div>
