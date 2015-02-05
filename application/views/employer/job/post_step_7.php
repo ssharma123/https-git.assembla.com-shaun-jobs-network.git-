@@ -33,6 +33,7 @@
                     <fieldset>
                         <div id="queue"></div>
                         <input type="file" id="profile_image" name="profile_image[]" nv-file-select="" onchange="upload_profile_image();">
+                        <div id="save_file_busy" style="display: none;"><?php echo load_img("busy.gif"); ?></div>
                     </fieldset>
 
                 </div>
@@ -83,6 +84,7 @@
 
 
 function upload_profile_image() {
+    $("#save_file_busy").show();
     var image_name = "";
 //    alert(SITE_URL);
     $.ajaxFileUpload({
@@ -98,6 +100,7 @@ function upload_profile_image() {
                  var image_thumb = BASE_URL+'uploads/employers/profiles/'+rsp.thumbnail_name;
                  $(".containedImage").attr("src",image_thumb);
             }
+            $("#save_file_busy").hide();
         }
     });
     return image_name;

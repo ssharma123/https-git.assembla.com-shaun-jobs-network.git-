@@ -17,8 +17,12 @@
                 <div class="text-left" style="margin: 0px">
                     <h3 class="ng-binding"><?php echo $employer['name']; ?></h3>
                     <?php
-                    if($sub_data){
-                        echo "( Pro member )<br><br>";
+                    if(isset($employers_facilities['name']) && $employers_facilities['name'] ){
+                        echo $employers_facilities['name']."<br><br>";
+                    }
+                    
+                    if($sub_data && $sub_data['status'] == 'active'){
+                        echo "Paid member <br><br>";
                     }
                     ?>
                     <a class="btn btn-lg btn-primary" ng-click="" id="new-job-post-btn">New Job Post</a>

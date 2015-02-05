@@ -93,7 +93,7 @@ class paypal {
         }
 
         if ((0 == sizeof($httpParsedResponseAr)) || !array_key_exists('ACK', $httpParsedResponseAr)) {
-            exit("Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.");
+            exit("Invalid HTTP Response for POST request($nvpreq) to ".$this->api_end.".");
         }
         $this->returnData = $httpParsedResponseAr;
         return $httpParsedResponseAr;

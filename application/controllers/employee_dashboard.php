@@ -10,6 +10,7 @@ class Employee_dashboard extends MY_EmployerController {
         parent::__construct();
         $this->load->model('jobs_model', 'jobs');
         $this->load->model('employer_model', 'employer');
+        $this->load->model('employer_facility_model', 'employer_facility');
         $this->load->model('employers_settings_model', 'settings');
         $this->load->model('employers_subscription_model', 'employers_subscription');
         $this->load->model('specialty_model', 'specialty');
@@ -25,6 +26,7 @@ class Employee_dashboard extends MY_EmployerController {
         }
         
         $data['employer'] = $this->employer->employers_get($session['employer']['id']);
+        $data['employers_facilities'] = $this->employer_facility->employers_facility_get_by_employer_id($session['employer']['id']);
         
         $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
         $data['sub_data'] = $sub_data;
@@ -837,6 +839,187 @@ class Employee_dashboard extends MY_EmployerController {
         
         if($r){
             $r = $this->jobs->jobs_delete($id);
+            $status = "ok";
+            $msg = "Deleted successfully";
+        }
+        else{
+            $status = "error";
+            $msg = "Data not found";
+        }
+            
+        $array = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($array); die;
+    }
+    
+    public function update_job_status(){
+        
+        $status = "";
+        $msg = "oops something went wrong";
+                    
+        $type = $this->input->post("type") ? $this->input->post("type") : "";
+        $id = $this->input->post("id") ? $this->input->post("id") : "";
+        
+        if($type != "" && $id > 0){
+            
+            $job_apply = $this->jobs->jobs_applied_get($id);
+            if($job_apply){
+                
+                if($type === "matched"){
+                    $save_data['matched'] = 1;
+                    $this->jobs->jobs_applied_update($id, $save_data);
+                    $status = "ok";
+                    $msg = "Saved successfully";
+                }
+                else if($type === "interview"){
+                    $save_data['interview'] = 1;
+                    $this->jobs->jobs_applied_update($id, $save_data);
+                    $status = "ok";
+                    $msg = "Saved successfully";
+                }
+                else if($type === "interview_complete"){
+                    $save_data['interview_complete'] = 1;
+                    $this->jobs->jobs_applied_update($id, $save_data);
+                    $status = "ok";
+                    $msg = "Saved successfully";
+                }
+                else if ($type === "face_2_face" || $type === "job_offer"){
+                    $status = "ok";
+                    $msg = "Saved successfully";
+                }
+                
+                
+                
+            }
+        }
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
+    
+    public function popup_face_2_face(){
+        $this->layout = "blank";
+        
+        $data['id'] = $this->input->post("id") ? : 0 ;
+        $data['btn_id'] = $this->input->post("btn_id") ? : 0 ;
+        
+        $html = $this->load->view('employer/dashboard/popup_face_2_face', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    
+    function save_face_2_face_dates(){
+        $this->layout = "blank";
+        
+        $status = "";
+        $msg = "oops something went wrong";
+        
+        $id = $this->input->post("id") ? $this->input->post("id") : 0;
+        $date_1 = $this->input->post("date_1") ? $this->input->post("date_1") : 0;
+        $date_2 = $this->input->post("date_2") ? $this->input->post("date_2") : 0;
+        $date_3 = $this->input->post("date_3") ? $this->input->post("date_3") : 0;
+        
+        
+        $job_apply = $this->jobs->jobs_applied_get($id);
+        if($job_apply){
+            $save_data['f2f_date_1'] = strtotime($date_1);
+            $save_data['f2f_date_2'] = strtotime($date_2);
+            $save_data['f2f_date_3'] = strtotime($date_3);
+            $save_data['face_2_face'] = 1;
+            $this->jobs->jobs_applied_update($id, $save_data);
+            
+            $status = "ok";
+            $msg = "saved successfully";
+        }
+        
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
+    
+    public function popup_job_offer(){
+        $this->layout = "blank";
+        
+        $data['id'] = $this->input->post("id") ? : 0 ;
+        $data['btn_id'] = $this->input->post("btn_id") ? : 0 ;
+        
+        $html = $this->load->view('employer/dashboard/popup_job_offer', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    
+    function upload_job_offer(){
+        $this->layout = "blank";
+        
+        $id = ( $this->input->post("id") ) ? $this->input->post("id") : 0 ;
+        
+        $status = '';
+        $msg = '';
+        $this->load->library('custom_image_lib');
+        
+        if($_FILES['job_letter']['name'][0] != ""){
+            
+            $old_file = pathinfo($_FILES['job_letter']['name'][0], PATHINFO_FILENAME);
+            $old_ext = pathinfo($_FILES['job_letter']['name'][0], PATHINFO_EXTENSION);
+
+            $lib_config['new_file_name'] = $id."_job_letter_".$old_file.".".$old_ext;
+            $lib_config['allowed_types'] = '*';
+            $this->custom_image_lib->config($lib_config);
+
+            $job_offers = $this->custom_image_lib->upload($_FILES['job_letter'], 'uploads/employers/job_offers/');
+            
+            
+            if($job_offers){
+                $status = "ok";
+                $msg = "success";
+
+                $save_data['job_offer_letter'] = $job_offers[0];
+                $save_data['job_offer'] = 1;
+                $this->jobs->jobs_applied_update($id, $save_data);
+            }
+            else{
+                $status = "error";
+                $msg = "oops something went wrong";
+            }
+        }
+        else{
+            $status = "error";
+            $msg = "File not selected";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        
+        echo json_encode($rsp); die;
+        
+    }
+    public function delete_job_applied(){
+        $this->layout = "blank";
+        $msg = "";
+        $status = "";
+        
+        $id = ($this->input->post("job_app_id")) ? $this->input->post("job_app_id") : 0 ;
+        $job_apply = $this->jobs->jobs_applied_get($id);
+        
+        if($job_apply){
+            $r = $this->jobs->jobs_applied_delete($id);
             $status = "ok";
             $msg = "Deleted successfully";
         }

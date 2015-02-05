@@ -14,6 +14,8 @@ class Custom_image_lib {
     var $thumb_sizes = array();
     var $path = '';
     var $file_name = '';
+    var $new_file_name = "";
+    var $allowed_types = "";
     var $file_ext = '';
     var $full_path = ''; // for resizing 
     var $uploaded_image_name = array();
@@ -36,7 +38,7 @@ class Custom_image_lib {
         if ($total_img > 0) {
 
             $remapped_array = $this->remap_array();
-            // var_dump($remapped_array); die;
+//             var_dump($remapped_array); die;
             $error_found = FALSE;
             foreach ($remapped_array as $key => $image) {
                 $image['name'] = str_replace(" ","_",$image['name']);
@@ -74,7 +76,12 @@ class Custom_image_lib {
     private function upload_file_to_server() {
         $config = array();
 
-        $new_file_name = $this->file_name . '_' . $this->freez_time . '.' . $this->file_ext;
+        if($this->new_file_name === ""){
+            $new_file_name = $this->file_name . '_' . $this->freez_time . '.' . $this->file_ext;
+        }
+        else {
+            $new_file_name = $this->new_file_name;
+        }
         $this->full_path = $this->path . $new_file_name;
         if (move_uploaded_file($this->tmp_name, $this->path . $new_file_name)) {
             if ($this->create_thumb == TRUE) {
@@ -92,11 +99,22 @@ class Custom_image_lib {
     private function upload_file_to_server_CI() {
         $that = & get_instance();
         
-        $new_file_name = $this->file_name . '_' . $this->freez_time . '.' . $this->file_ext;
+        if($this->new_file_name === ""){
+            $new_file_name = $this->file_name . '_' . $this->freez_time . '.' . $this->file_ext;
+        }
+        else {
+            $new_file_name = $this->new_file_name;
+        }
         $this->full_path = $this->path . $new_file_name;
         $config = array();
         $config['upload_path'] = $this->path;
-        $config['allowed_types'] = 'gif|jpg|png';
+        
+        if($this->allowed_types === ""){
+            $config['allowed_types'] = 'gif|jpg|png';
+        }
+        else{
+            $config['allowed_types'] = $this->allowed_types;
+        }
         $config['file_name'] = $new_file_name;
         $that->load->library('upload');
         $that->upload->initialize($config);
@@ -111,6 +129,7 @@ class Custom_image_lib {
             $this->uploaded_image_name[] = $new_file_name;
             return true;
         } else {
+            // echo $that->upload->display_errors(); die;
             return false;
         }
     }
@@ -137,8 +156,18 @@ class Custom_image_lib {
 
     public function config($array) {
         if ($array) {
-            $this->create_thumb = $array['create_thumb'];
-            $this->thumb_sizes = $array['thumb_sizes'];
+//            if(isset($array['create_thumb'])){
+//                $this->create_thumb = $array['create_thumb'];
+//            }
+//            if(isset($array['thumb_sizes'])){
+//                $this->thumb_sizes = $array['thumb_sizes'];
+//            }
+//            if(isset($array['new_file_name'])){
+//                $this->new_file_name = $array['new_file_name'];
+//            }
+            foreach ($array as $key => $val){
+                $this->$key = $val;
+            }
         } else {
             echo "Config array is required";
         }

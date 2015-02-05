@@ -21,7 +21,7 @@
 	/**
 	 * Mode ("sandbox" or "prod")
 	 **/
-	$config['mode']   = 'live';
+	$config['mode']   = 'sandbox';
 
 	/**
 	 * Account SID

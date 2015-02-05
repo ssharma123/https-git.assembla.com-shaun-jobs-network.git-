@@ -62,6 +62,7 @@ class Jobs_model extends CI_Model {
         if($job_id != 0){
             $this->db->where('jobs_applied.job_id',$job_id);
         }
+        $this->db->select("*,jobs_applied.id AS job_applied_id");
         $this->db->where('jobs_applied.employer_id',$employer_id);
         $this->db->join("jobs","jobs_applied.job_id = jobs.id");
         $r = $this->db->get("jobs_applied");
@@ -69,6 +70,35 @@ class Jobs_model extends CI_Model {
             return $r->result_array();
         }
         return false;
+    }
+    
+    public function jobs_applied_get($id = 0) {
+        if($id>0){
+            $this->db->where('id',$id);
+        }
+        $r = $this->db->get("jobs_applied");
+        if ($r->num_rows() > 0) {
+            
+            if($id>0){
+                return $r->row_array();
+            }else{
+                return $r->result_array();
+            }
+        }
+        return false;
+    }
+    public function jobs_applied_update($id, $data)
+    {
+        foreach ($data as $key => $val){
+            $data[$key] = $this->db->escape_str($val);
+        }
+        $this->db->where('id' , $id);
+        $this->db->update("jobs_applied",$data);
+        return $id;
+    }
+    public function jobs_applied_delete($id){
+        $this->db->where('id',$id);
+        $this->db->delete("jobs_applied");
     }
     
 }

@@ -153,6 +153,22 @@ class Employer extends MY_EmployerController {
                         $save_data['updated_at'] = time();
 
                         $employer_id = $this->employer->employers_add($save_data);
+                        
+                        // Send Register email Here
+                        $email_data['to'] = $save_data['email'];
+                        $email_data['subject'] = "Welcome";
+                        
+                        if (isset($no_password) && $no_password == "yes") {
+                            $email_data["password"] = $this->input->post("password");
+                        }
+                        else{
+                            $email_data["password"] = base64_decode($this->input->post("password"));
+                        }
+                        $patterns = array(
+                            '{EMAIL}' => $save_data['email'],
+                            '{PASSWORD}' => $email_data["password"]
+                        );
+                        send_template_email("employer/register",$email_data, $patterns);
 
                         $save_data_fac['employer_id'] = $employer_id;
 
@@ -189,7 +205,10 @@ class Employer extends MY_EmployerController {
 
                             $this->session->set_userdata('user_id', $save_data['id']);
                             $this->session->set_userdata('user_type', 'employer');
-                            $this->session->set_userdata('employer', $save_data);
+                            $employer = $this->employer->employers_get($employer_id);
+                            unset($employer['password']);
+                            
+                            $this->session->set_userdata('employer', $employer);
                             redirect('employee_dashboard');
                         }
                     } else {
@@ -285,6 +304,17 @@ class Employer extends MY_EmployerController {
             $save_data['created_at'] = time();
             $save_data['updated_at'] = time();
             $employer_id = $this->employer->employers_add($save_data);
+            
+            // Send Register email Here
+            $email_data['to'] = $save_data['email'];
+            $email_data['subject'] = "Welcome";
+            $email_data["password"] = $this->input->post("password");
+                
+            $patterns = array(
+                '{EMAIL}' => $save_data['email'],
+                '{PASSWORD}' => $email_data["password"]
+            );
+            send_template_email("employer/register",$email_data, $patterns);
 
             $save_data_fac['employer_id'] = $employer_id;
 
@@ -321,7 +351,9 @@ class Employer extends MY_EmployerController {
                 $this->session->set_userdata('user_id', $employer_id);
                 $this->session->set_userdata('user_type', 'employer');
                 unset($save_data['password']);
-                $this->session->set_userdata('employer', $save_data);
+                $employer = $this->employer->employers_get($employer_id);
+                unset($employer['password']);
+                $this->session->set_userdata('employer', $employer);
             }
         } else {
             $msg = validation_errors();
@@ -355,6 +387,16 @@ class Employer extends MY_EmployerController {
                     $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
                 } else {
                     $r = $this->employer->employers_add($data);
+                    // Send Register email Here
+                    $email_data['to'] = $data['email'];
+                    $email_data['subject'] = "Welcome";
+                    $email_data["password"] = $random_pass;
+
+                    $patterns = array(
+                        '{EMAIL}' => $data['email'],
+                        '{PASSWORD}' => $email_data["password"]
+                    );
+                    send_template_email("employer/register",$email_data, $patterns);
                 }
 
                 if ($r) {
@@ -493,6 +535,17 @@ class Employer extends MY_EmployerController {
                 $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
             } else {
                 $r = $this->employer->employers_add($data);
+                
+                // Send Register email Here
+                $email_data['to'] = $data['email'];
+                $email_data['subject'] = "Welcome";
+                $email_data["password"] = $random_pass;
+
+                $patterns = array(
+                    '{EMAIL}' => $data['email'],
+                    '{PASSWORD}' => $email_data["password"]
+                );
+                send_template_email("employer/register",$email_data, $patterns);
             }
 
             if ($r) {

@@ -49,7 +49,7 @@ class Employer_checkout extends MY_EmployerController {
             $data_array['expirey'] = $this->input->post('expMonth').$this->input->post('expYear');
             
             //$paypal_config['paypal_api_email'],$MYCC_GLOBAL['paypal_api_pass'],$MYCC_GLOBAL['paypal_api_signature'],$MYCC_GLOBAL['paypal_env_end'],true
-            $paypal = new paypal($paypal_config['username'], $paypal_config['password'], $paypal_config['signature'], 'sandbox', true);
+            $paypal = new paypal($paypal_config['username'], $paypal_config['password'], $paypal_config['signature'], 'sandbox', FALSE);
             $paypal->setOption("METHOD","CreateRecurringPaymentsProfile");
             $paypal->setOption("AMT",$data_array['amount']);
             $paypal->setOption("PROFILESTARTDATE",$profile_start_date);

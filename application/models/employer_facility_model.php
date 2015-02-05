@@ -34,5 +34,14 @@ class Employer_facility_model extends CI_Model {
         $this->db->where('id' , $id);
         $this->db->update($this->table_name,$data);
     }
+    function employers_facility_get_by_employer_id($employer_id){
+        $this->db->where('employer_id',$employer_id);
+        $this->db->join("facilities","facilities.id = ".$this->table_name.".facility_id");
+        $r = $this->db->get($this->table_name);
+        if ($r->num_rows() > 0) {
+            return $r->row_array();
+        }
+        return false;
+    }
      
 }

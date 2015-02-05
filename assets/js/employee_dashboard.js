@@ -563,8 +563,122 @@ $(document).ready(function(){
         popupContactUsEmail();
     });
     
+    $("#post-job-container").on("click",".update_job_status",function(){
+        
+        var element = $(this);
+        var type = $(this).attr("data-type");
+        var id = $(this).attr("data-id");
+        
+        update_job_status(element ,id, type);
+        
+    });
+    
+    $("#post-job-container").on("click",".delete_job_applied",function(){
+        var job_applied_id = $(this).attr("data-value");
+        
+        bootbox.confirm("Are you sure?", function(result) {
+            if(result === true){
+                var rsp = delete_job_applied(job_applied_id);
+                if(rsp !== false){
+                    $("#rsp_post-job-container").html(rsp.msg);
+                    $("#rsp_post-job-container").addClass("success_rsp").show();
+                }
+            }
+        }); 
+    });
+    
 });
 
+function update_job_status(element , id, type){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/update_job_status",
+        data: {
+            id : $.trim(id),
+            type : $.trim(type),
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+            
+            if(type === "interview"){
+                bootbox.alert("Interview Offered");
+            }
+            else if(type === "face_2_face"){
+                popupFace2Face(element, id);
+            }
+            else if(type === "job_offer"){
+                popupJobOffer(element, id);
+            }
+            else{
+                element.removeClass("update_job_status");
+                element.removeClass("btn-danger");
+                element.addClass("btn-success");
+            }
+        }
+        else{
+            flag = false;
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function popupFace2Face(element , id){
+    
+    var btn_id = element.attr("id");
+    
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/popup_face_2_face",
+        data: {
+            id : id,
+            btn_id : btn_id
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline'
+        });
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+}
+function popupJobOffer(element , id){
+    
+    var btn_id = element.attr("id");
+    
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/popup_job_offer",
+        data: {
+            id : id,
+            btn_id : btn_id
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline'
+        });
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+}
 function popupContactUsMap(){
     FBox.fancybox.showLoading();
         $.ajax({
@@ -844,6 +958,24 @@ function delete_job(job_id){
     }).success(function(rsp){
          if(rsp.status === "ok"){
              $("#job-list-item_"+job_id).remove();
+             flag = rsp;
+         }
+    });
+    return flag;
+}
+function delete_job_applied(job_app_id){
+    var flag = false;
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employee_dashboard/delete_job_applied/",
+        data: {
+            job_app_id : $.trim(job_app_id)
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+         if(rsp.status === "ok"){
+             $("#job-applied-list-item_"+job_app_id).remove();
              flag = rsp;
          }
     });
