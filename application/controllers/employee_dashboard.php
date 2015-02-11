@@ -858,48 +858,68 @@ class Employee_dashboard extends MY_EmployerController {
     }
     
     public function update_job_status(){
-        
+        $this->layout = "blank";
         $status = "";
         $msg = "oops something went wrong";
-                    
-        $type = $this->input->post("type") ? $this->input->post("type") : "";
-        $id = $this->input->post("id") ? $this->input->post("id") : "";
+        $html = "";
         
-        if($type != "" && $id > 0){
+        $session = $this->session->all_userdata();
+
+        $employer_id = ( isset($session['employer']['id']) ) ? $session['employer']['id'] : 0 ;
+        $employer = $this->employer->employers_get($employer_id);
+        if($employer){
+            $sub_data = $this->employers_subscription->subscription_get_by_user_id($employer['id']);
+            if( !( isset($sub_data['status']) && $sub_data['status'] == "active") ){
+                // user is not subscribe 
+                $status = "not_subscribe";
+                $msg = "user not subscribe";
+                $html = $this->load->view('employer/payment_popup', array(), TRUE);
+            }
             
-            $job_apply = $this->jobs->jobs_applied_get($id);
-            if($job_apply){
-                
-                if($type === "matched"){
-                    $save_data['matched'] = 1;
-                    $this->jobs->jobs_applied_update($id, $save_data);
-                    $status = "ok";
-                    $msg = "Saved successfully";
+        }
+        
+        if($status != "not_subscribe"){
+                    
+            $type = $this->input->post("type") ? $this->input->post("type") : "";
+            $id = $this->input->post("id") ? $this->input->post("id") : "";
+
+            if($type != "" && $id > 0){
+
+                $job_apply = $this->jobs->jobs_applied_get($id);
+                if($job_apply){
+
+                    if($type === "matched"){
+                        $save_data['matched'] = 1;
+                        $this->jobs->jobs_applied_update($id, $save_data);
+                        $status = "ok";
+                        $msg = "Saved successfully";
+                    }
+                    else if($type === "interview"){
+                        $save_data['interview'] = 1;
+                        $this->jobs->jobs_applied_update($id, $save_data);
+                        $status = "ok";
+                        $msg = "Saved successfully";
+                    }
+                    else if($type === "interview_complete"){
+                        $save_data['interview_complete'] = 1;
+                        $this->jobs->jobs_applied_update($id, $save_data);
+                        $status = "ok";
+                        $msg = "Saved successfully";
+                    }
+                    else if ($type === "face_2_face" || $type === "job_offer"){
+                        $status = "ok";
+                        $msg = "Saved successfully";
+                    }
+
+
+
                 }
-                else if($type === "interview"){
-                    $save_data['interview'] = 1;
-                    $this->jobs->jobs_applied_update($id, $save_data);
-                    $status = "ok";
-                    $msg = "Saved successfully";
-                }
-                else if($type === "interview_complete"){
-                    $save_data['interview_complete'] = 1;
-                    $this->jobs->jobs_applied_update($id, $save_data);
-                    $status = "ok";
-                    $msg = "Saved successfully";
-                }
-                else if ($type === "face_2_face" || $type === "job_offer"){
-                    $status = "ok";
-                    $msg = "Saved successfully";
-                }
-                
-                
-                
             }
         }
         $rsp = array(
             "status" => $status,
-            "msg" => $msg
+            "msg" => $msg,
+            "html" => $html
         );
         echo json_encode($rsp); die;
     }

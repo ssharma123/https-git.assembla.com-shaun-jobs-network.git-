@@ -30,7 +30,7 @@
         <?php echo load_css("icon-font.css"); ?>
         <?php echo load_css("animations.css"); ?>
         <?php echo load_css("style.css"); ?>
-        <?php echo load_css("employer.css","assets/css/employer/"); ?>
+        <?php echo load_css("job_seeker.css","assets/css/job_seeker/"); ?>
         
         <?php 
             echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
@@ -97,15 +97,15 @@
                                 </ul>
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-inverse" href="<?php echo site_url("job_seeker"); ?>">Job seekers</a></span> 
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-inverse" href="<?php echo site_url(); ?>">Employer</a></span> 
                                         <?php
                                         $session = $this->session->all_userdata();
-                                        if( isset($session['employer']) ){ ?>
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-info" href="<?php echo site_url('employee_dashboard'); ?>">Dashboard</a></span>
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-danger" href="<?php echo site_url('employer/signout'); ?>">Sign out</a></span>
+                                        if( isset($session['job_seeker']) ){ ?>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-info" href="<?php echo site_url('job_seeker_dashboard'); ?>">Dashboard</a></span>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-danger" href="<?php echo site_url('job_seeker/signout'); ?>">Sign out</a></span>
                                         <?php } 
                                         else { ?>
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url('employer/signin'); ?>">Sign in</a></span>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url('job_seeker/signin'); ?>">Sign in</a></span>
                                         <?php } ?>
                                     </form>
                                 </div>	
@@ -204,6 +204,9 @@
             <?php echo load_js("easing.min.js"); ?>
             <?php echo load_js("jquery.svg.js"); ?>
             <?php echo load_js("jquery.svganim.js"); ?>
+            
+            <!-- Knob js -->
+            
             <?php //echo load_js("froogaloop.min.js"); ?>
             <?php echo load_js("startup-kit.js"); ?>
 <!--            Validation Plugin-->
@@ -211,6 +214,7 @@
             <?php echo load_js("additional-methods.js",'assets/js/jquery-validation/'); ?>
 <!--            Validation Plugin END -->
             <?php echo load_js("employee.js"); ?>
+            <?php echo load_js("job_seeker.js"); ?>
             
         </div>
     </body>

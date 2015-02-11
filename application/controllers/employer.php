@@ -487,7 +487,7 @@ class Employer extends MY_EmployerController {
             $linkedin->access_token = unserialize($oauth_access_token);
         }
         
-        
+//        ~/connections
         $xml= $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
         $xml= new SimpleXmlElement($xml);
         

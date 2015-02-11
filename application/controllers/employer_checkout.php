@@ -129,6 +129,15 @@ class Employer_checkout extends MY_EmployerController {
     }
     
     public function paypal_ipn_listner(){
+        
+//        recurring_payment_profile_created
+//        recurring_payment_profile_cancel
+//        recurring_payment_profile_modify
+//        recurring_payment
+//        recurring_payment_skipped
+//        recurring_payment_failed
+//        recurring_payment_suspended_due_to_max_failed_payment
+        
         $this->layout = 'blank';
         if($this->input->post()){
             $post_data = $this->input->post();
@@ -152,6 +161,29 @@ class Employer_checkout extends MY_EmployerController {
                     $this->employers_subscription->subscription_update($sub['id'],$update_data);
                 }
                 
+            }
+            else if($subscription_id != "" && $txn_type == 'recurring_payment_suspended_due_to_max_failed_payment'){
+                // remove subsriptions 
+                // insert it in subsription history
+                $sub = $this->employers_subscription->subscription_get_by_subscription_id($subscription_id);
+                if($sub){
+                    $this->employers_subscription->subscription_delete($sub['id']);
+                    $save_data = $sub;
+                    $save_data["reason"] = $txn_type;
+                    $this->employers_subscription->subscription_history_save($save_data);
+                }
+            }
+            
+            else if($subscription_id != "" && $txn_type == 'recurring_payment_profile_cancel'){
+                // remove subsriptions 
+                // insert it in subsription history
+                $sub = $this->employers_subscription->subscription_get_by_subscription_id($subscription_id);
+                if($sub){
+                    $this->employers_subscription->subscription_delete($sub['id']);
+                    $save_data = $sub;
+                    $save_data["reason"] = $txn_type;
+                    $this->employers_subscription->subscription_history_save($save_data);
+                }
             }
             
             $log_data['subscription_id'] = $subscription_id;

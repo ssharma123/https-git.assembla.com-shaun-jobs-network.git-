@@ -34,6 +34,11 @@ class Employers_subscription_model extends CI_Model {
         $this->db->where('id' , $id);
         $this->db->update($this->table_name,$data);
     }
+    public function subscription_delete($id){
+        $this->db->where('id',$id);
+        $this->db->delete($this->table_name);
+    }
+    
     function subscription_get_by_subscription_id($sub_id){
         $this->db->where('subsription_id',$sub_id);
         $r = $this->db->get($this->table_name);
@@ -53,6 +58,11 @@ class Employers_subscription_model extends CI_Model {
     public function subscription_log_save($data)
     {
         $this->db->insert('employers_subscription_logs',$data);
+        return $this->db->insert_id();
+    }
+    public function subscription_history_save($data)
+    {
+        $this->db->insert('employers_subscription_history',$data);
         return $this->db->insert_id();
     }
 }

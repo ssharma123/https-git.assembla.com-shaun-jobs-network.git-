@@ -1,0 +1,193 @@
+.error{
+    border: 1px solid !important;
+    border-color: #ff0000 !important;
+}
+label.error{
+    border: none !important;
+    color: #ff0000;
+    margin: 5px 0 5px 0;
+}
+/* Response message */
+.success_rsp, .error_rsp{
+    border: 1px solid;
+    margin: 10px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+ 
+.success_rsp {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.error_rsp {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+/* Response message */
+.bg_section-11 {
+  background: url("../../img/young_female_dr.png") no-repeat scroll center -195px #f1f1f1;
+  min-height: 584px;
+  top: 0;
+  width: 100%;
+}
+.section-one {
+    position: relative;
+    top: 375px;
+    width: 100%;
+}
+.section-one h1 {
+    font-size: 35px;
+    text-align: center;
+}
+.section-two {
+    background: none repeat scroll 0 0 #ffffff;
+    min-height: 988px;
+    padding: 60px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.p-container-slider {
+    font-family: Verdana,Geneva,sans-serif;
+    margin: 0 auto;
+    width: 780px;
+}
+.p-container-inner-box {
+    border-bottom: 1px solid #a4a4a4;
+    padding: 10px;
+}
+.p-first-box {
+    float: left;
+    width: 230px;
+}
+.p-first-box-main {
+    background: none repeat scroll 0 0 #e6e8e9;
+    border-radius: 50%;
+    padding: 5px;
+    width: 120px;
+}
+.p-first-box-main-inner {
+    border-radius: 50%;
+    height: 110px;
+    margin: 0 auto;
+    text-align: center;
+    width: 110px;
+}
+.p-main-text-div {
+    font-size: 24px;
+    padding: 25px 30px;
+}
+.p-second-box {
+    float: left;
+    width: 340px;
+}
+.p-third-box {
+    float: left;
+    height: 122px;
+    width: 140px;
+}
+.p-fourth-box {
+    float: right;
+    padding: 50px 0;
+    width: 20px;
+}
+.p-title-bar {
+    color: #2c3d50;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.p-title-bar-detail {
+    color: #80868d;
+    font-size: 16px;
+}
+.p-third-box div.demo {
+    float: left;
+    padding-left: 4px;
+    padding-top: 29px;
+    text-align: center;
+    width: 191px;
+}
+div.demo > p {
+    font-size: 20px;
+}
+.orange .p-main-text-div {
+    color: #eb7d24;
+}
+.orange .p-first-box-main-inner {
+    background: url("../../img/orange-bed.png") no-repeat scroll 50% 50px rgba(0, 0, 0, 0);
+    border: 1px solid #eb7d24;
+}
+.orange .p-third-box {
+    background: url("../../img/orange-heart.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+.red .p-main-text-div {
+    color: #c7585f;
+}
+.red .p-first-box-main-inner {
+    background: url("../../img/red-bed.png") no-repeat scroll 50% 50px rgba(0, 0, 0, 0);
+    border: 1px solid #c7585f;
+}
+.red .p-third-box {
+    background: url("../../img/red-heart.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+.yellow .p-main-text-div {
+    color: #ffb404;
+}
+.yellow .p-first-box-main-inner {
+    background: url("../../img/yellow-bed.png") no-repeat scroll 50% 50px rgba(0, 0, 0, 0);
+    border: 1px solid #ffb404;
+}
+.yellow .p-third-box {
+    background: url("../../img/yellow-heart.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+.grey .p-main-text-div {
+    color: #666666;
+}
+.grey .p-first-box-main-inner {
+    background: url("../../img/grey-bed.png") no-repeat scroll 50% 50px rgba(0, 0, 0, 0);
+    border: 1px solid #666666;
+}
+.grey .p-third-box {
+    background: url("../../img/grey-heart.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+.green .p-main-text-div {
+    color: #2dcc70;
+}
+.green .p-first-box-main-inner {
+    background: url("../../img/green-bed.png") no-repeat scroll 50% 50px rgba(0, 0, 0, 0);
+    border: 1px solid #2dcc70;
+}
+.green .p-third-box {
+    background: url("../../img/green-heart.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+.blue .p-main-text-div {
+    color: #38b3b0;
+}
+.blue .p-first-box-main-inner {
+    background: url("../../img/blue-bed.png") no-repeat scroll 50% 50px rgba(0, 0, 0, 0);
+    border: 1px solid #38b3b0;
+}
+.blue .p-third-box {
+    background: url("../../img/blue-heart.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+.round_border {
+    border: 2px solid #000;
+    border-radius: 15px;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 10px 25px;
+}
+.round_border p{
+    font-size: 14px;
+}
+.round_border span.red {
+    color: red;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0;
+}
+.alternative_option p{
+    font-size: 12px;
+}

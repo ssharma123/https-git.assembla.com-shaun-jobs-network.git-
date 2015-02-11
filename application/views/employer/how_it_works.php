@@ -6,7 +6,7 @@
             
                         
             <div class="col col-sm-5">
-                <iframe src="//player.vimeo.com/video/95359263" width="100%" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <iframe width="100%" height="281" frameborder="0" allowfullscreen="" src="//www.youtube.com/embed/eknIvXx1hQU"></iframe>
             </div>
             <div class="col col-sm-7">
                 <div>

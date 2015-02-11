@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class MY_EmployerController extends MY_SiteController {
+class MY_Job_seekerController extends MY_SiteController {
 
     var $js = array();
     var $js_top = array();

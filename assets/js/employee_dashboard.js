@@ -569,6 +569,16 @@ $(document).ready(function(){
         var element = $(this);
         var type = $(this).attr("data-type");
         var id = $(this).attr("data-id");
+        var prev_done = "";
+        if(element.prev().hasClass("btn-success") ){
+            prev_done = true;
+        }
+        else{
+            prev_done = false;
+        } 
+        if(!prev_done){
+            return false;
+        }
         
         update_job_status(element ,id, type);
         
@@ -624,6 +634,14 @@ function update_job_status(element , id, type){
                 element.removeClass("btn-danger");
                 element.addClass("btn-success");
             }
+        }
+        else if(rsp.status === "not_subscribe"){
+            FBox.fancybox({
+                content: rsp.html,
+                padding: 0,
+                closeBtn: false,
+                type: 'inline',
+            });
         }
         else{
             flag = false;

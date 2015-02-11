@@ -30,13 +30,14 @@
         <?php echo load_css("icon-font.css"); ?>
         <?php echo load_css("animations.css"); ?>
         <?php echo load_css("style.css"); ?>
-        <?php echo load_css("employer.css","assets/css/employer/"); ?>
+        <?php echo load_css("job_seeker.css","assets/css/job_seeker/"); ?>
         
         <?php 
             echo load_css('jquery.fancybox.css?v=2.1.4','assets/js/fancybox/');
             echo load_css('jquery.fancybox-buttons.css?v=1.0.5','assets/js/fancybox/helpers/');
             echo load_css('jquery.fancybox-thumbs.css?v=1.0.7','assets/js/fancybox/helpers/');
         ?>
+        
         <!--Google Fonts-->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,300,600,400' rel='stylesheet' type='text/css'>
         <!--End Google Fonts-->
@@ -55,7 +56,7 @@
         </script>
         
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-        <?php echo load_js("jquery-1.10.2.min.js"); ?>
+        <?php echo load_js("jquery-1.10.2.min.js"); ?>  
         
         <?php 
             // fancybox JS files
@@ -64,7 +65,6 @@
             echo load_js("jquery.fancybox-thumbs.js?v=1.0.7","assets/js/fancybox/helpers/");
             echo load_js("jquery.fancybox-media.js?v=1.0.5","assets/js/fancybox/helpers/");
         ?>
-
     </head>
 
     <body>
@@ -97,15 +97,14 @@
                                 </ul>
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-inverse" href="<?php echo site_url("job_seeker"); ?>">Job seekers</a></span> 
+                                        
                                         <?php
                                         $session = $this->session->all_userdata();
-                                        if( isset($session['employer']) ){ ?>
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-info" href="<?php echo site_url('employee_dashboard'); ?>">Dashboard</a></span>
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-danger" href="<?php echo site_url('employer/signout'); ?>">Sign out</a></span>
+                                        if( isset($session['jobseeker']) ){ ?>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-danger" href="<?php echo site_url('job_seeker/signout'); ?>">Sign out</a></span>
                                         <?php } 
                                         else { ?>
-                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url('employer/signin'); ?>">Sign in</a></span>
+                                        <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-success" href="<?php echo site_url('job_seeker/signin'); ?>">Sign in</a></span>
                                         <?php } ?>
                                     </form>
                                 </div>	
@@ -197,7 +196,7 @@
             <?php echo load_js("jquery.scrollTo-1.4.3.1-min.js"); ?>
             <?php echo load_js("jquery.sharrre.min.js"); ?>
             <?php echo load_js("bootstrap.min.js"); ?>
-            <?php echo load_js("bootstrap-typeahead.js"); ?>
+            <?php echo load_js("bootbox.min.js"); ?>
             <?php echo load_js("masonry.pkgd.min.js"); ?>
             <?php echo load_js("modernizr.custom.js"); ?>
             <?php echo load_js("page-transitions.js"); ?>
@@ -206,11 +205,11 @@
             <?php echo load_js("jquery.svganim.js"); ?>
             <?php //echo load_js("froogaloop.min.js"); ?>
             <?php echo load_js("startup-kit.js"); ?>
-<!--            Validation Plugin-->
+            
+            <!--            Validation Plugin-->
             <?php echo load_js("jquery.validate.js",'assets/js/jquery-validation/'); ?>
             <?php echo load_js("additional-methods.js",'assets/js/jquery-validation/'); ?>
 <!--            Validation Plugin END -->
-            <?php echo load_js("employee.js"); ?>
             
         </div>
     </body>
