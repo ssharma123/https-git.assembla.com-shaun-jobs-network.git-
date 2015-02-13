@@ -117,7 +117,18 @@ $(document).ready(function(){
     
     if( $("#paypal_checkout_form").length > 0){
         $("#paypal_checkout_form").validate({
-             
+            rules: {
+                'cvv': {
+                    minlength: 3,
+                    maxlength: 4,
+                    required: true,
+                    number: true
+                },
+                'cc': {
+                    creditcard: true,
+                    required: true
+                }
+            },
             errorPlacement: function(error, element) {
                 element.attr("placeholder",error.text());
             },

@@ -107,7 +107,7 @@
                 <div class="form-group">
                   <label class="col-sm-4 control-label">Zip Code</label>
                   <div class="col-sm-4">
-                      <input type="text" name="zip" id="zip" required  class="form-control ng-pristine ng-valid" placeholder="" >
+                      <input type="number" name="zip" id="zip" required  class="form-control ng-pristine ng-valid" placeholder="" >
                   </div>
                 </div>
                 

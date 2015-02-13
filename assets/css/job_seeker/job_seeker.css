@@ -191,3 +191,26 @@ div.demo > p {
 .alternative_option p{
     font-size: 12px;
 }
+.left_col{
+    float: left;
+    width: 48%;
+    margin-right: 10px;
+    padding-top: 5px;
+}
+.right_col{
+    float: left; 
+    width: 48%;
+    padding-top: 5px;
+}
+.p_line_main {
+    background: url("../../img/p-bg-line.png") no-repeat scroll center center rgba(0, 0, 0, 0);
+    margin-top: 25px;
+    width: 600px;
+}
+.p_line_main .search {
+    background: none repeat scroll 0 0 #ecf0f1;
+    color: #000;
+    margin: 0 auto;
+    max-width: 200px;
+    text-align: center;
+}

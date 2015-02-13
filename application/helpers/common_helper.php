@@ -68,5 +68,27 @@ if(!function_exists('filter'))
     }
 }
 
+/* GET data from countries , cites , states */
+if(!function_exists('get_states')) 
+{
+    function get_states($where = "" ){
+        $that = & get_instance();
+        
+        if( is_array($where) ){
+            $that->db->where($where);
+        } 
+        $r = $that->db->get("states");
+        if($r->num_rows()>0){
+            $rows = $r->result_array();
+            return $rows;
+        }
+        return FALSE;
+        
+    }
+}
+
+/* GET data from countries , cites , states END */
+
+
 /**************************************************************/
 

@@ -1,5 +1,3 @@
-<?php //echo load_js("jquery-1.10.2.min.js"); ?>
-
 <?php 
     
     echo load_css('jquery-ui.css','assets/js/jquery_ui/');

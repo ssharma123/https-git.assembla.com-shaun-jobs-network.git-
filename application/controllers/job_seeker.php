@@ -133,7 +133,7 @@ class Job_seeker extends MY_Job_seekerController {
             $email = $this->input->post("signin_email");
             $password = $this->input->post("signin_password");
 
-            $jobseeker = $this->employer->jobseekers_get_by_email_pass($email, $password);
+            $jobseeker = $this->jobseeker->jobseekers_get_by_email_pass($email, $password);
             if ($jobseeker) {
                 unset($jobseeker['password']);
 

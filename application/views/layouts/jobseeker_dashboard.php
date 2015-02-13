@@ -210,6 +210,7 @@
             <?php echo load_js("jquery.validate.js",'assets/js/jquery-validation/'); ?>
             <?php echo load_js("additional-methods.js",'assets/js/jquery-validation/'); ?>
 <!--            Validation Plugin END -->
+            <?php echo load_js("job_seeker.js"); ?>
             
         </div>
     </body>

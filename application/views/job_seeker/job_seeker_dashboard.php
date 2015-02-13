@@ -35,7 +35,7 @@
                     else { ?>
                     <li><a style="border-radius: 6px; width: 25%;" class="" href="javascript:void(0)" id="get_started_tab">Profile</a></li>
                     <script>
-                        show_welcome_popup();
+                        show_welcome_popup_jobseeker();
                     </script>
                     <?php    
                     } ?>
@@ -56,7 +56,7 @@
                                 <p style="font-size: 24px; font-weight: 200; color: #ff5500">
                                     <em style="font-size: 22px; font-style: italic;">Start by creating your profile. You'll only have to do this once, and you'll be able to apply to multiple jobs with a click of a button!</em>
                                 </p>
-                                <a id="lets_get_started_btn" style="width: 60%; font-size: 24px" class="btn btn-lg btn-primary profile_steps_continue" data-step="step_1" >Let's Get Started </a>
+                                <a id="lets_get_started_btn" style="width: 60%; font-size: 24px" class="btn btn-lg btn-primary profile_steps_continue" data-step="continue-step0" >Let's Get Started </a>
                             </div>
                             <div class="col-sm-10 col-sm-offset-1 text-center round_border">
                                 <p class="text-left">
