@@ -51,11 +51,11 @@
 
                             ?>
                             <span class="btn btn-sm btn-success">Applied</span>
-                                    <span  class="btn btn-sm <?php echo $matched_class; ?> " data-type="matched" data-id="<?php echo $row['job_applied_id']; ?>" >Matched</span>
-                                    <span class="btn btn-sm <?php echo $interview_class; ?> " data-type="interview" data-id="<?php echo $row['job_applied_id']; ?>">Interview</span>
-                                    <span class="btn btn-sm <?php echo $interview_complete_class; ?> " data-type="interview_complete" data-id="<?php echo $row['job_applied_id']; ?>" >Interview Complete</span>
-                                    <span id="job_applied_Face2Face_<?php echo $row['job_applied_id']; ?>" class="btn btn-sm <?php echo $face_2_face_class; ?> " data-type="face_2_face" data-id="<?php echo $row['job_applied_id']; ?>">Face 2 Face</span>
-                                    <span id="job_applied_jobOffer_<?php echo $row['job_applied_id']; ?>" class="btn btn-sm <?php echo $job_offer_class; ?> " data-type="job_offer" data-id="<?php echo $row['job_applied_id']; ?>">Job Offer</span>
+                            <span  class="btn btn-sm <?php echo $matched_class; ?> " data-type="matched" data-id="<?php echo $row['job_applied_id']; ?>" >Matched</span>
+                            <span class="btn btn-sm <?php echo $interview_class; ?> " data-type="interview" data-id="<?php echo $row['job_applied_id']; ?>">Interview</span>
+                            <span class="btn btn-sm <?php echo $interview_complete_class; ?> " data-type="interview_complete" data-id="<?php echo $row['job_applied_id']; ?>" >Interview Complete</span>
+                            <span id="job_applied_Face2Face_<?php echo $row['job_applied_id']; ?>" class="btn btn-sm <?php echo $face_2_face_class; ?> " data-type="face_2_face" data-id="<?php echo $row['job_applied_id']; ?>">Face 2 Face</span>
+                            <span id="job_applied_jobOffer_<?php echo $row['job_applied_id']; ?>" class="btn btn-sm <?php echo $job_offer_class; ?> " data-type="job_offer" data-id="<?php echo $row['job_applied_id']; ?>">Job Offer</span>
                                     
                         </div>
                     </div>

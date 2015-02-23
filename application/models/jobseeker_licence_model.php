@@ -8,9 +8,12 @@ class Jobseeker_licence_model extends CI_Model {
         $this->table_name = "jobseekers_licences";
         parent::__construct();
     }
-    public function jobseekers_licences_get($id = 0) {
+    public function jobseekers_licences_get($id = 0, $where_array = array() ) {
         if($id>0){
             $this->db->where('id',$id);
+        }
+        if( count($where_array)>0 ){
+            $this->db->where( $where_array );
         }
         $r = $this->db->get($this->table_name);
         if ($r->num_rows() > 0) {

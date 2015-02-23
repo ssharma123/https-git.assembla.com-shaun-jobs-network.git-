@@ -30,32 +30,43 @@
                 <div class="clearfix "></div>
                 
                 <div id="license_list">
-                    <div class="row well-blue padding_5" data-val="1" >
-                        <div class="col col-sm-5 text-left">
-                            <strong>asdsad</strong><br>
-                            asdasda
+                    <?php
+                    if($licences){
+                        foreach ($licences as $row){ 
+                            ?>
+                        <div class="row well-blue padding_5" data-val="<?php echo $row["id"]; ?>" >
+                            <div class="col col-sm-5 text-left">
+                                <strong><?php echo $row["licence_type"]; ?></strong><br>
+                                <?php echo $row["licence_number"]; ?>
+                            </div>
+                            <div class="col col-sm-5 text-left">
+                                <?php echo date("Y-m-d",$row["issued_on"]); ?><br>
+                                <?php echo $row["state"]; ?>
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_license btn btn-danger btn-sm">Remove</a>
+                            </div>
                         </div>
-                        <div class="col col-sm-5 text-left">
-                            zx<br>
-                            cxzxzc
-                        </div>
-                        <div class="col col-sm-2 text-left">
-                            <a class="remove_license btn btn-danger btn-sm">Remove</a>
-                        </div>
-                    </div>
+                        <?php }
+                    } ?>
                 </div>
                 <div id="certification_list">
-                    <div class="row well-purple padding_5" >
+                    <?php
+                    if($certifications){
+                        foreach ($certifications as $row){ ?>
+                    <div class="row well-purple padding_5" data-val="<?php echo $row["id"]; ?>" >
                         <div class="col col-sm-5 text-left">
-                            <strong>asdsad</strong><br>
+                            <strong><?php echo $row["name"]; ?></strong><br>
                         </div>
                         <div class="col col-sm-5 text-left">
-                            zx 
+                            <?php echo date("Y-m-d",$row["issued_on"]); ?>
                         </div>
                         <div class="col col-sm-2 text-left">
-                            <a class="remove_license btn btn-danger btn-sm">Remove</a>
+                            <a class="remove_certification btn btn-danger btn-sm">Remove</a>
                         </div>
                     </div>
+                    <?php }
+                    } ?>
                 </div>
 
                     
@@ -75,16 +86,16 @@
                 <div id="add_license_block" class="well-blue col-lg-12 block-toggle" style="padding: 5%; display: none;" >
                     <form id="add_license_form">  
                         <div class="left_col">
-                            <input class="ng-valid ng-dirty form-control" id="licenseType"  name="licenseType" placeholder="License Type" type="text" required >
+                            <input class="ng-valid ng-dirty form-control license_text" id="licenseType"  name="licenseType" placeholder="License Type" type="text" required >
                         </div>
                         <div class="right_col">
-                            <input class="ng-valid ng-dirty form-control" id="licenseNumber" name="licenseNumber" placeholder="License Number" type="text" required >
+                            <input class="ng-valid ng-dirty form-control license_text" id="licenseNumber" name="licenseNumber" placeholder="License Number" type="text" required >
                         </div>
                         <div class="left_col">
-                            <input id="licenseIssued" name="licenseIssued" class="dateMask ng-valid ng-dirty form-control" placeholder="Issued On" type="text" required >
+                            <input class="dateMask ng-valid ng-dirty form-control license_text" id="licenseIssued" name="licenseIssued" placeholder="Issued On" type="text" required >
                         </div>
                         <div class="right_col">
-                            <select class="form-control" name="state" id="state" required>
+                            <select class="form-control license_text" name="state" id="state" required>
                                 <option value="">State</option>
                                 <?php 
                                 $states = get_states( array("country"=>"US") ); 
@@ -114,10 +125,10 @@
                 <div id="add_certification_block" class="well-purple col-lg-12 block-toggle" style="padding: 5%; display: none;" >
                     <form id="add_certification_form">
                     <div class="left_col">
-                        <input class="ng-valid ng-dirty form-control" id="certName" name="certName" placeholder="Certificate Name" type="text" required >
+                        <input class="ng-valid ng-dirty form-control cert_text" id="cert_name" name="cert_name" placeholder="Certificate Name" type="text" required >
                     </div>
                     <div class="right_col">
-                        <input id="certIssued" name="certIssued" class="dateMask ng-valid ng-dirty form-control" placeholder="Issued On" type="text" required >
+                        <input class="dateMask ng-valid ng-dirty form-control cert_text" id="cert_issued_on" name="cert_issued_on" placeholder="Issued On" type="text" required >
                     </div>
                     
                     <div class="col col-sm-12 text-center" style="margin-top: 15px; padding-left: 15px; clear: both;">
@@ -135,14 +146,15 @@
 
 
         <div style="text-align: center; margin-top: 20px;">
-            <a href="javascript:void(0)" class="btn btn-lg btn-primary profile_steps_continue" data-step="continue-step2" data-stepTo="3" data-formValidate="form_profileStep2">Continue</a>
+            <a href="javascript:void(0)" class="btn btn-lg btn-primary profile_steps_continue" data-step="continue-step3" data-stepTo="4" data-formValidate="form_profileStep3">Continue</a>
         </div>
 </div>
 <script>
     
+    var total_license = '<?php echo $total_license; ?>';
+    var total_cert = '<?php echo $total_cert; ?>';
     
-    
-    $("#certIssued").datepicker( {"dateFormat":"yy-mm-dd" } );
+    $("#cert_issued_on").datepicker( {"dateFormat":"yy-mm-dd" } );
     $("#licenseIssued").datepicker( {"dateFormat":"yy-mm-dd" } );
     
     $("#add_certification_form").validate({
@@ -164,19 +176,27 @@
         $(".block-toggle").hide();
         $("#add_license_block").show();
         
+        $(".license_text").val("");
+        $(this).removeClass("error");
     });
     $("#add_certification").click(function(){
         $(".block-toggle").hide();
         $("#add_certification_block").show();
         
+        $(".cert_text").val("");
+        $(this).removeClass("error");
     });
     $("#cancel_certification_btn").click(function(){
         $("#add_certification_block").hide();
         $("#toolbar").show();
+        
+        $(".license_text").val("");
     });
     $("#cancel_license_btn").click(function(){
         $("#add_license_block").hide();
         $("#toolbar").show();
+        
+        $(".cert_text").val("");
     });
     
     $("#add_license_btn").click(function(){
@@ -204,6 +224,45 @@
                     
                     $("#add_license_block").hide();
                     $("#toolbar").show();
+                    
+                    $(".license_text").val("");
+                    total_license++;
+                }
+                else{
+                    $("#tabContent_rsp").html(rsp.msg).show();
+                    $("#tabContent_rsp").addClass("error_rsp");
+                }
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            });
+        }
+    });
+    $("#add_certification_btn").click(function(){
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        
+        var valid = $("#add_certification_form").valid();
+        if(valid === true){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker_dashboard/add_certification_process",
+                dataType: "json",
+                data: {
+                    name : $.trim($("#cert_name").val()),
+                    issued_on : $.trim($("#cert_issued_on").val())
+                }
+            }).success(function(rsp){
+                if(rsp.status === "ok"){
+                    // continue then
+                    $("#certification_list").append(rsp.html);
+                    
+                    $("#add_certification_block").hide();
+                    $("#toolbar").show();
+                    
+                    $(".cert_text").val("");
+                    total_cert++;
                 }
                 else{
                     $("#tabContent_rsp").html(rsp.msg).show();
@@ -216,6 +275,67 @@
         }
     });
     
+    $("#tabContent").on("click",".remove_license",function(e){
+        
+        e.stopImmediatePropagation();
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_license",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                $(element).remove();
+                total_license--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        
+    });
     
+    $("#tabContent").on("click",".remove_certification",function(e){
+        e.stopImmediatePropagation();
+    
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_certification",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                $(element).remove();
+                total_cert--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        
+    });
     
 </script>

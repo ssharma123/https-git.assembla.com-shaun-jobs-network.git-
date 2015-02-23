@@ -1,14 +1,14 @@
 <?php
 
-class Jobseeker_certification_model extends CI_Model {
+class Jobseeker_practice_model extends CI_Model {
 
     protected $table_name = "";
 
     public function __construct() {
-        $this->table_name = "jobseekers_certifications";
+        $this->table_name = "jobseekers_practices";
         parent::__construct();
     }
-    public function jobseekers_certifications_get($id = 0, $where_array = array() ) {
+    public function jobseekers_practices_get($id = 0, $where_array = array() ) {
         if($id>0){
             $this->db->where('id',$id);
         }
@@ -26,18 +26,18 @@ class Jobseeker_certification_model extends CI_Model {
         }
         return false;
     }   
-    public function jobseekers_certifications_add($data)
+    public function jobseekers_practices_add($data)
     {
         $this->db->insert($this->table_name,$data);
         return $this->db->insert_id();
     }
-    public function jobseekers_certifications_update($id, $data)
+    public function jobseekers_practices_update($id, $data)
     {
         $this->db->where('id' , $id);
         $this->db->update($this->table_name,$data);
         return $id;
     }
-    public function jobseekers_certifications_delete($id){
+    public function jobseekers_practices_delete($id){
         $this->db->where('id',$id);
         $this->db->delete($this->table_name);
     }

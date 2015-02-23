@@ -8,7 +8,7 @@
             <div class="col-sm-2 col-xs-3">
                 <div class="imageContainer" style="font-size: 18px; border: 1px solid black; background-color: #aaa">
                     <?php
-                    $src = (isset($jobseeker['profile_image']) && $jobseeker['profile_image'] != "")  ? " src='".base_url("uploads/employers/profiles/".upload_img_thumb($jobseeker['profile_image'],150,185))."' " : "" ;
+                    $src = (isset($jobseeker['profile_image']) && $jobseeker['profile_image'] != "")  ? " src='".base_url("uploads/jobseeker/profiles/".upload_img_thumb($jobseeker['profile_image'],150,185))."' " : "" ;
                     ?>
                     <img class="containedImage" <?php echo $src; ?> >
                 </div>
@@ -26,10 +26,10 @@
                 <ul class="nav nav-pills nav-justified" style="cursor: auto">
                     
                     <?php if($jobseeker['profile_complete'] == 1) { ?>
-                    <li><a class="" href="javascript:void(0)" id="tabJobPost">Profile</a></li>
-                    <li><a class="" href="javascript:void(0)" id="tabStatus">Status</a></li>
-                    <li><a class="" href="javascript:void(0)" id="tabMatches">Matches</a></li>
-                    <li><a class="" href="javascript:void(0)" id="tabSetting">Settings</a></li>
+                    <li><a class="" href="javascript:void(0)" id="tab_profile">Profile</a></li>
+                    <li><a class="" href="javascript:void(0)" id="tab_status">Status</a></li>
+                    <li><a class="" href="javascript:void(0)" id="tab_matches">Matches</a></li>
+                    <li><a class="" href="javascript:void(0)" id="tab_settings">Settings</a></li>
                     <?php 
                     } 
                     else { ?>
@@ -78,7 +78,14 @@
                             <div class="clearfix"></div>
 
                         </div>
-                        <?php } ?>
+                        <?php 
+                        } 
+                        else{ ?>
+                        <script>
+                            show_default_tab();
+                        </script>
+                        <?php 
+                        } ?>
                         
                     </div>
                 </div>
