@@ -85,7 +85,7 @@
 
                                 <button type="button" class="navbar-toggle"></button>
 
-                                <a class="brand" href="<?php echo site_url(); ?>">
+                                <a class="brand" href="<?php echo site_url("job_seeker"); ?>">
                                     <?php echo load_img("logo.png", "MedMatch", "32", "234"); ?>
                                 </a>
 

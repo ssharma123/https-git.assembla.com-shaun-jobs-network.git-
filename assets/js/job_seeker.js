@@ -81,8 +81,94 @@ $(document).ready(function(){
         }
     });
     
+    // facebook login
+    $("#facebookLogin_jobseeker").click(function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        show_busy();
+        loginToFacebook_jobseeker();
+    });
+    // linkedin login
+    $("#linkedinLogin_jobseeker").click(function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        show_busy();
+        window.open(BASE_URL+"job_seeker/linkedin_connect", "", "width=500, height=200");
+    });
     
 });
+
+function loginToFacebook_jobseeker(){
+    $("#fb_error_msg").html('').removeClass();
+    $("#fb_error_msg").hide();
+    FB.login(function(response) {
+            if (response.authResponse && response.status == "connected") {
+                    
+                    FB.api('/me', {fields: 'id,first_name,last_name,email'}, function(rsp) {
+                        connect_with_facebook_jobseeker(rsp);
+                    });
+            }
+            else if (response.status === "unknown" || response.status === "not_authorized") {
+                $("#fb_error_msg").html('Login Error '+response.status+' user');
+                $("#fb_error_msg").show();
+                hide_busy();
+            }
+            else{
+                $("#fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');
+                $("#fb_error_msg").show();
+                hide_busy();
+            }
+    },{scope: 'email'});
+}
+function connect_with_facebook_jobseeker(rsp){
+    $("#fb_error_msg").html('').removeClass();
+    $("#fb_error_msg").hide();
+    $.ajax({
+        type: "POST",
+        url: BASE_URL+"job_seeker/facebook_connect",
+        data: {
+            id: rsp.id,
+            name: rsp.first_name+" "+rsp.last_name,
+            email: rsp.email
+        },
+        dataType: "json"
+        
+    }).success(function(rsp){
+        if(rsp.status == 'ok'){
+            window.location = BASE_URL+'job_seeker_dashboard';
+        }
+        else{
+            $("#fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');
+            $("#fb_error_msg").show();
+        }
+    }).always(function(){
+        hide_busy();
+    });
+}
+
+function connect_with_linkedin_jobseeker(linkedin_id , name, email){
+    $.ajax({
+        type: "POST",
+        url: BASE_URL+"job_seeker/linkedin_connect_save",
+        data: {
+            id: linkedin_id,
+            name: name,
+            email: email
+        },
+        dataType: "json"
+        
+    }).success(function(rsp){
+        if(rsp.status == 'ok'){
+            window.location = BASE_URL+'job_seeker_dashboard';
+        }
+        else{
+            $("#fb_error_msg").html('Oops something went wrong. Please try again');
+            $("#fb_error_msg").show();
+        }
+    }).always(function(){
+        hide_busy();
+    });
+} 
 
 function job_seeker_email_exist(email){
     var flag = false;

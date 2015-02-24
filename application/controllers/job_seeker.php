@@ -163,6 +163,215 @@ class Job_seeker extends MY_Job_seekerController {
         
     }
     
+    public function facebook_connect() {
+        $this->layout = 'blank';
+        $status = '';
+        $data['facebook_id'] = $this->input->post('id');
+        $data['first_name'] = $this->input->post('first_name');
+        $data['name'] = $this->input->post('name');
+        $data['email'] = ($this->input->post('email')) ? $this->input->post('email') : '';
+        $freez_time = time();
+        $data['created_at'] = $freez_time;
+        $data['updated_at'] = $freez_time;
+        $data['active'] = 1;
+        $random_pass = random_string('alnum', 10);
+        $data['password'] = md5($random_pass);
+        
+        if($data['email'] != ""){
+            $user_exist = $this->employer->employer_get_by_facebook_id($data['facebook_id']);
+            if (!$user_exist) {
+
+                $user_exist_email = $this->employer->employer_get_by_email($data['email']);
+                if ($user_exist_email) {
+                    $update_data['facebook_id'] = $data['facebook_id'];
+                    $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
+                } else {
+                    $r = $this->employer->employers_add($data);
+                    // Send Register email Here
+                    $email_data['to'] = $data['email'];
+                    $email_data['subject'] = "Welcome";
+                    $email_data["password"] = $random_pass;
+
+                    $patterns = array(
+                        '{EMAIL}' => $data['email'],
+                        '{PASSWORD}' => $email_data["password"]
+                    );
+                    send_template_email("employer/register",$email_data, $patterns);
+                }
+
+                if ($r) {
+                    $id = $r;
+                    $employer = $this->employer->employers_get($id);
+                    unset($employer['password']);
+                    $this->session->set_userdata('user_id', $employer['id']);
+                    $this->session->set_userdata('user_type', 'employer');
+                    $this->session->set_userdata('employer', $employer);
+                    $status = 'ok';
+                    // send email Create account  
+                } else {
+                    $status = 'error';
+                }
+            } else {
+                $employer = $user_exist;
+                unset($employer['password']);
+                $this->session->set_userdata('user_id', $employer['id']);
+                $this->session->set_userdata('user_type', 'employer');
+                $this->session->set_userdata('employer', $employer);
+                $status = 'ok';
+            }
+        }
+        else{
+            $status = 'error';
+        }
+
+        echo json_encode(array('status' => $status));
+        die;
+    }
+
+    public function linkedin_connect() {
+         
+        
+        $this->layout = 'blank';
+        $status = '';
+        require APPPATH.'libraries/linkedin/linkedin.php';
+
+        $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
+        $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
+        $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
+        $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
+
+        # First step is to initialize with your consumer key and secret. We'll use an out-of-band oauth_callback
+        $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
+
+        $state = isset($_REQUEST["state"]) ? $_REQUEST["state"] : 'start';
+        $mobile_user_id = isset($_REQUEST["post_id"]) ? $_REQUEST["post_id"] : '';
+        # Now we retrieve a request token. It will be set as $linkedin->request_token
+        $linkedin->getRequestToken();
+        $this->session->set_userdata('requestToken',serialize($linkedin->request_token));  
+        $this->session->set_userdata('oauth_state',$state);
+        $this->session->set_userdata('linkedin_post_id',$mobile_user_id);
+        header("Location: " . $linkedin->generateAuthorizeUrl());
+        
+        echo json_encode(array('status' => $status));
+        die;
+    }
+    
+    public function linkedin_connect_callback(){
+        $this->layout = 'blank';
+         
+        
+        require APPPATH.'libraries/linkedin/linkedin.php';
+        
+        $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
+        $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
+        $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
+        $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
+        $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
+        
+        $oauth_state = $this->session->userdata('oauth_state');
+        $requestToken = $this->session->userdata('requestToken');
+        $linkedin_post_id = $this->session->userdata('linkedin_post_id');
+        $oauth_access_token = $this->session->userdata('oauth_access_token');
+        
+        if (isset($_GET['oauth_verifier'])) {
+            $this->session->set_userdata('oauth_verifier',$_GET['oauth_verifier']);
+            $linkedin->request_token = unserialize($requestToken);
+            $linkedin->oauth_verifier = $this->session->userdata('oauth_verifier');
+            $token = $linkedin->getAccessToken($_GET['oauth_verifier']);
+            $this->session->set_userdata( 'oauth_access_token',serialize($linkedin->access_token) );
+            header("Location: " . $linkedin_config['callback_url']);
+            exit();
+        } else {
+            $linkedin->request_token = unserialize($requestToken);
+            $linkedin->oauth_verifier = $this->session->userdata('oauth_verifier');
+            $linkedin->access_token = unserialize($oauth_access_token);
+        }
+        
+//        ~/connections
+        $xml= $linkedin->getProfile("~:(id,first-name,last-name,email-address)");
+        $xml= new SimpleXmlElement($xml);
+        
+        
+        $linkedin_user = get_object_vars($xml);
+        $linkedin_id = ( isset($linkedin_user['id']) ) ? $linkedin_user['id'] : "" ;
+        $name = ( isset($linkedin_user['first-name']) ) ? $linkedin_user['first-name'] : "" ;
+        $name .= ( isset($linkedin_user['last-name']) ) ? " ".$linkedin_user['last-name'] : "" ;
+        $email = ( isset($linkedin_user['email-address']) ) ? $linkedin_user['email-address'] : "" ;
+        
+        if( $linkedin_id != "" && $name != "" && $email != "") {
+            $html = '<!DOCTYPE html><script>
+                var linkedin_id = "' . $linkedin_id . '" ;
+                var name = "' . $name . '" ;
+                var email = "' . $email . '" ;
+                self.opener.connect_with_linkedin(linkedin_id, name, email);
+                self.close();
+                </script>';
+            echo $html;
+        }
+        else{
+            echo "Error: something went wrong please try again";
+        }
+        die;
+    }
+    public function linkedin_connect_save(){
+        $this->layout = 'blank';
+        $status = '';
+        $data['linkedin_id'] = $this->input->post('id');
+        $data['name'] = $this->input->post('name');
+        $data['email'] = $this->input->post('email');
+        $freez_time = time();
+        $data['created_at'] = $freez_time;
+        $data['updated_at'] = $freez_time;
+        $data['active'] = 1;
+        $random_pass = random_string('alnum', 10);
+        $data['password'] = md5($random_pass);
+
+        $user_exist = $this->employer->employer_get_by_linkedin_id($data['linkedin_id']);
+        if (!$user_exist) {
+
+            $user_exist_email = $this->employer->employer_get_by_email($data['email']);
+            if ($user_exist_email) {
+                $update_data['linkedin_id'] = $data['linkedin_id'];
+                $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
+            } else {
+                $r = $this->employer->employers_add($data);
+                
+                // Send Register email Here
+                $email_data['to'] = $data['email'];
+                $email_data['subject'] = "Welcome";
+                $email_data["password"] = $random_pass;
+
+                $patterns = array(
+                    '{EMAIL}' => $data['email'],
+                    '{PASSWORD}' => $email_data["password"]
+                );
+                send_template_email("employer/register",$email_data, $patterns);
+            }
+
+            if ($r) {
+                $id = $r;
+                $employer = $this->employer->employers_get($id);
+                unset($employer['password']);
+                $this->session->set_userdata('user_id', $employer['id']);
+                $this->session->set_userdata('user_type', 'employer');
+                $this->session->set_userdata('employer', $employer);
+                $status = 'ok';
+                // send email Create account  
+            } else {
+                $status = 'error';
+            }
+        } else {
+            $employer = $user_exist;
+            unset($employer['password']);
+            $this->session->set_userdata('user_id', $employer['id']);
+            $this->session->set_userdata('user_type', 'employer');
+            $this->session->set_userdata('employer', $employer);
+            $status = 'ok';
+        }
+
+        echo json_encode(array('status' => $status));
+        die;
+    }
     public function forget_password(){
         // check already login
         $session = $this->session->all_userdata();
