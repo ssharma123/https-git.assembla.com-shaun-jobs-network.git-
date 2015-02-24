@@ -101,4 +101,26 @@ class Jobs_model extends CI_Model {
         $this->db->delete("jobs_applied");
     }
     
+    public function jobs_applied_by_jobseeker($jobseeker_id , $where_array = array() ){
+        
+        if( count($where_array)>0 ){
+            $this->db->where( $where_array );
+        }
+        $select = "jobs.*,jobs_applied.id AS job_applied_id,
+                   jobs_applied.matched,
+                   jobs_applied.interview,
+                   jobs_applied.interview_complete,
+                   jobs_applied.face_2_face,
+                   jobs_applied.job_offer  ";
+        $this->db->select($select);
+        $this->db->where('jobs_applied.jobseeker_id',$jobseeker_id);
+        $this->db->join("jobs","jobs_applied.job_id = jobs.id");
+        $this->db->order_by("jobs_applied.id","DESC");
+        $r = $this->db->get("jobs_applied");
+        if ($r->num_rows() > 0) {
+            return $r->result_array();
+        }
+        return false;
+    }
+    
 }

@@ -252,6 +252,8 @@ $(document).ready(function(){
         }).success(function(rsp){
             $("#tabContent").html(rsp.html);
             $("#tabContent").fadeIn();
+            
+            init_all_profiles_forms();
         })
         .always(function(){
             FBox.fancybox.hideLoading();
@@ -324,8 +326,158 @@ $(document).ready(function(){
         }); 
 
     });
-
+    
+    $("#tabContent").on("click","#change_email_link",function(){
+       $("#change_email_div").toggle();
+    });
+    $("#tabContent").on("click","#change_pass_link",function(){
+       $("#change_passwrod_div").toggle();
+    });
+    
+    $("#tabContent").on("click","#contact_info_edit_link",function(){
+        $("#contact_info_block").hide();
+        $("#contact_info_edit").show();
+    });
+    $("#tabContent").on("click","#contact_info_cancel",function(){
+        $("#contact_info_block").show();
+        $("#contact_info_edit").hide();
+    });
+    
+    $("#tabContent").on("click","#contact_info_save",function(){
+        var valid = $("#contact_info_form").valid();
+        if(valid === true){
+            var save = contact_info_save();
+            if(save === true){
+                $("#contact_info_edit").hide();
+                $("#contact_info_block").show();
+            }
+        }
+    });
+    
+    $("#tabContent").on("click","#profession_edit_link",function(){
+        $("#profession_block").hide();
+        $("#profession_edit").show();
+    });
+    $("#tabContent").on("click","#profession_cancel",function(){
+        $("#profession_block").show();
+        $("#profession_edit").hide();
+    });
+    
+    $("#tabContent").on("click","#profession_save",function(){
+        var valid = $("#profession_form").valid();
+        if(valid === true){
+            var save = profession_save();
+            if(save === true){
+                $("#profession_edit").hide();
+                $("#profession_block").show();
+            }
+        }
+    });
+    
+    $("#tabContent").on("click","#certification_edit_link",function(){
+        $("#certification_block").hide();
+        $("#certification_edit").show();
+    });
+    $("#tabContent").on("click","#certification_cancel",function(){
+        $("#certification_block").show();
+        $("#certification_edit").hide();
+    });
+    
+    $("#tabContent").on("click","#certification_save",function(){
+        var valid = $("#certification_form").valid();
+        if(valid === true){
+            var save = certification_save();
+            if(save === true){
+                $("#certification_edit").hide();
+                $("#certification_block").show();
+            }
+        }
+    });
+    
 });
+
+function contact_info_save(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker_dashboard/contact_info_save",
+        data: {
+            first_name : $.trim($("#first_name").val()),
+            last_name : $.trim($("#last_name").val()),
+            address : $.trim($("#address").val()),
+            apt : $.trim($("#apt").val()),
+            city : $.trim($("#city").val()),
+            state : $.trim($("#state").val()),
+            zip : $.trim($("#zip").val()),
+            phone : $.trim($("#phone").val()),
+            alt_phone : $.trim($("#alt_phone").val())
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+            $("#contact_info_block").html(rsp.html);
+        }
+        else{
+            flag = false;
+            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function profession_save(){
+    var flag = true;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker_dashboard/profession_save",
+        data: {
+            experince_level : $.trim($("#experince_level").val()),
+            specialty : $.trim($("#specialty").val()),
+            sub_specialty : $.trim($("#sub_specialty").val()),
+            board_status : $.trim($("#board_status").val()),
+            degree : $.trim($("#degree").val()),
+            resident_status : $.trim($("#resident_status").val()),
+            npi_number : $.trim($("#npi_number").val())
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status == "ok"){
+            // continue then
+            $("#profession_block").html(rsp.html);
+        }
+        else{
+            flag = false;
+            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").addClass("error_rsp");
+        }
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+function init_all_profiles_forms(){
+    $("#contact_info_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
+    $("#profession_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
+}
 
 function show_welcome_popup_jobseeker(){
     FBox.fancybox.showLoading();

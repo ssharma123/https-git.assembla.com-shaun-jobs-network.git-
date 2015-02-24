@@ -168,7 +168,7 @@ class Job_seeker extends MY_Job_seekerController {
         $status = '';
         $data['facebook_id'] = $this->input->post('id');
         $data['first_name'] = $this->input->post('first_name');
-        $data['name'] = $this->input->post('name');
+        $data['last_name'] = $this->input->post('last_name');
         $data['email'] = ($this->input->post('email')) ? $this->input->post('email') : '';
         $freez_time = time();
         $data['created_at'] = $freez_time;
@@ -294,16 +294,17 @@ class Job_seeker extends MY_Job_seekerController {
         
         $linkedin_user = get_object_vars($xml);
         $linkedin_id = ( isset($linkedin_user['id']) ) ? $linkedin_user['id'] : "" ;
-        $name = ( isset($linkedin_user['first-name']) ) ? $linkedin_user['first-name'] : "" ;
-        $name .= ( isset($linkedin_user['last-name']) ) ? " ".$linkedin_user['last-name'] : "" ;
+        $first_name = ( isset($linkedin_user['first-name']) ) ? $linkedin_user['first-name'] : "" ;
+        $last_name = ( isset($linkedin_user['last-name']) ) ? " ".$linkedin_user['last-name'] : "" ;
         $email = ( isset($linkedin_user['email-address']) ) ? $linkedin_user['email-address'] : "" ;
         
         if( $linkedin_id != "" && $name != "" && $email != "") {
             $html = '<!DOCTYPE html><script>
                 var linkedin_id = "' . $linkedin_id . '" ;
-                var name = "' . $name . '" ;
+                var first_name = "' . $first_name . '" ;
+                var last_name = "' . $last_name . '" ;
                 var email = "' . $email . '" ;
-                self.opener.connect_with_linkedin(linkedin_id, name, email);
+                self.opener.connect_with_linkedin_jobseeker(linkedin_id, first_name, last_name, email);
                 self.close();
                 </script>';
             echo $html;

@@ -67,7 +67,16 @@
         <div class="form-group">
           <label class="col-sm-4 control-label" for="city">State</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control ng-pristine ng-valid" name="facility_state" id="facility_state" required placeholder="">
+              <select id="facility_state" name="facility_state" class="form-control ng-pristine ng-valid" required >
+                    <option value="">State</option>
+                    <?php 
+                    $states = get_states( array("country"=>"US") ); 
+                    foreach($states as $state){ 
+                        ?>
+                        <option value="<?php echo $state["code"] ?>" ><?php echo $state["name"]; ?></option>
+                    <?php } ?>
+                </select>
+              <!--<input type="text" class="form-control ng-pristine ng-valid" name="facility_state" id="facility_state" required placeholder="">-->
           </div>
         </div>
         <div class="form-group">

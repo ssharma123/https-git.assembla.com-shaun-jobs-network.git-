@@ -76,3 +76,150 @@
 
     <div class="clearfix"></div>
 </div>
+<script>
+    
+    $("#change_email_form").validate({
+        errorPlacement: function(error, element) {
+            element.attr("placeholder",error.text());
+        }
+    });
+    $("#change_password_form").validate({
+        rules: {
+            'confirm_change_password': {
+                equalTo: "#change_password"
+            },
+            'change_password': {
+                minlength: 6,
+                required: true
+            }
+        },
+        errorPlacement: function(error, element) {
+            element.attr("placeholder",error.text());
+        }
+    });
+    
+    $("#update_settings").click(function(){
+        $("#tabContent_rsp").removeClass();
+        $("#tabContent_rsp").hide();
+        
+        $(this).hide();
+        $("#update_settings_busy").show();
+        
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/update_settings",
+            dataType: "json",
+            data: {
+                when_match_email : $("#when_match_email").is(":checked"),
+                when_match_phone : $("#when_match_phone").is(":checked"),
+                when_interview_offer_email : $("#when_interview_offer_email").is(":checked"),
+                when_interview_offer_phone : $("#when_interview_offer_phone").is(":checked"),
+                when_face_2_face_offer_email : $("#when_face_2_face_offer_email").is(":checked"),
+                when_face_2_face_offer_phone : $("#when_face_2_face_offer_phone").is(":checked"),
+                when_job_offer_email : $("#when_job_offer_email").is(":checked"),
+                when_job_offer_phone : $("#when_job_offer_phone").is(":checked"),
+                when_status_update_email : $("#when_status_update_email").is(":checked"),
+                when_status_update_phone : $("#when_status_update_phone").is(":checked"),
+            }
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                $("#tabContent_rsp").addClass("success_rsp");
+                $("#tabContent_rsp").html(rsp.msg).show();
+            }
+            else{
+                $("#tabContent_rsp").addClass("error_rsp");
+                $("#tabContent_rsp").html(rsp.msg).show();
+            }
+        })
+        .always(function(){
+            $("#update_settings_busy").hide();
+            $("#update_settings").show();
+        }); 
+       
+    });
+    
+    $("#save_email_change").click(function(){
+        $("#tabContent_rsp").removeClass();
+        $("#tabContent_rsp").hide();
+        
+        var valid = $("#change_email_form").valid();
+        
+        if(valid === false){
+            return false;
+        }
+        
+        $(this).hide();
+        $("#save_email_change_busy").show();
+        
+        
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/update_jobseeker_emails",
+            dataType: "json",
+            data: {
+                change_email : $.trim($("#change_email").val())
+            }
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                $("#tabContent_rsp").addClass("success_rsp");
+                $("#tabContent_rsp").html(rsp.msg).show();
+                
+                $("#change_email_div").hide();
+                $("#change_email").val("");
+            }
+            else{
+                $("#tabContent_rsp").addClass("error_rsp");
+                $("#tabContent_rsp").html(rsp.msg).show();
+            }
+        })
+        .always(function(){
+            $("#save_email_change_busy").hide();
+            $("#save_email_change").show();
+        }); 
+    });
+    $("#save_password_change").click(function(){
+        
+        $("#tabContent_rsp").removeClass();
+        $("#tabContent_rsp").hide();
+        
+        var valid = $("#change_password_form").valid();
+        
+        if(valid === false){
+            return false;
+        }
+        
+        $(this).hide();
+        $("#save_password_change_busy").show();
+        
+        
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/update_jobseeker_password",
+            dataType: "json",
+            data: {
+                change_password : $.trim($("#change_password").val()),
+                confirm_change_password : $.trim($("#confirm_change_password").val())
+            }
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                $("#tabContent_rsp").addClass("success_rsp");
+                $("#tabContent_rsp").html(rsp.msg).show();
+                
+                $("#change_passwrod_div").hide();
+                $("#change_password").val("");
+                $("#confirm_change_password").val("");
+                
+            }
+            else{
+                $("#tabContent_rsp").addClass("error_rsp");
+                $("#tabContent_rsp").html(rsp.msg).show();
+            }
+        })
+        .always(function(){
+            $("#save_password_change_busy").hide();
+            $("#save_password_change").show();
+        });
+        
+    });
+    
+</script>

@@ -128,7 +128,8 @@ function connect_with_facebook_jobseeker(rsp){
         url: BASE_URL+"job_seeker/facebook_connect",
         data: {
             id: rsp.id,
-            name: rsp.first_name+" "+rsp.last_name,
+            first_name: rsp.first_name,
+            last_name: rsp.last_name,
             email: rsp.email
         },
         dataType: "json"
@@ -146,13 +147,14 @@ function connect_with_facebook_jobseeker(rsp){
     });
 }
 
-function connect_with_linkedin_jobseeker(linkedin_id , name, email){
+function connect_with_linkedin_jobseeker(linkedin_id , first_name, last_name, email){
     $.ajax({
         type: "POST",
         url: BASE_URL+"job_seeker/linkedin_connect_save",
         data: {
             id: linkedin_id,
-            name: name,
+            first_name: first_name,
+            last_name: last_name,
             email: email
         },
         dataType: "json"

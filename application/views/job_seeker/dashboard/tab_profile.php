@@ -1,107 +1,376 @@
 <style>
-    .ng-hide{
+    .ng-hide,.hidden{
         display: none;
+    }
+    .form_btn_bar{
+        margin: 20px;
+        text-align: right;
+    }
+    .edit_link{
+        cursor: pointer;
+        float: right;
+    }
+    .profile_heading1{
+        text-align: left; font-size: 40px; padding-left: 20px; padding-top: 2px; margin-top: 5px; margin-bottom: 2px;
+    }
+    .contact_info_text{
+        padding-left: 20px; font-size: 16px;
+    }
+    .contact_info_text span{
+        color: #2A802A;
+    }
+    .profile_heading2{
+        text-align: left; padding-left: 20px;
+    }
+    .space-row-10{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .padding_5{
+        padding: 15px;
+    }
+    #license_list,#license_list_edit{
+        margin-bottom: 10px;
+    }
+    #certification_list,certification_list_edit{
+        margin-bottom: 10px;
     }
 </style>
 <div class="row-wrapper">
     <div class="col col-sm-7">
         <!--Contact Section-->
         <div id="contactC">
-            <div class="" ng-show="contactSection == 'list'">
+            <div id="contact_info_block">
                 <div style="float: left; width: 85%; padding-left: 10px;">
-                    <h1 class="ng-binding" style="text-align: left; font-size: 40px; padding-left: 20px; padding-top: 2px; margin-top: 5px; margin-bottom: 2px;">Numan Hassan</h1>
-                    <div class="ng-binding" style="padding-left: 20px; font-size: 16px;">
-                        <span class="ng-binding" style="color: #2A802A;">7399 Cross County Rd</span> Lahore, AK
+                    <h1  class="profile_heading1"><?php echo $jobseeker['first_name']." ".$jobseeker['last_name']; ?></h1>
+                    <div class="contact_info_text">
+                        <span ><?php echo $jobseeker['address']; ?></span> <?php echo $jobseeker['city'].",".$jobseeker['state']; ?>
                     </div>
                 </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="editContactInfo()"><i class="fa fa-pencil">&nbsp;</i>Edit</a></div>
+                <div>
+                    <a id="contact_info_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </div>
                 <div class="clearfix"></div>	
             </div>
-            <div class="ng-hide" ng-show="contactSection == 'edit'">
-                <div style="float: left; width: 85%; padding-left: 10px;">
-                    <fieldset style="float: none; margin: 0 auto; padding: 15px 0 0 25px;">
-                        <div class="filter">
-                            <input class="ng-pristine ng-valid" id="firstName" ng-model="advName.firstName" placeholder="First Name" type="text">
-                            <input class="ng-pristine ng-valid" id="lastName" ng-model="advName.lastName" placeholder="Last Name" type="text">
-                        </div>
-                        <div class="filter">
-                            <input class="ng-pristine ng-valid" id="address" ng-model="advContact.streetAddress" placeholder="Address" maxlength="50" type="text">
-                            <input class="ng-pristine ng-valid" ng-model="advContact.aptNumber" style="width: 25%;" placeholder="Apt / Suite #" type="text">
-                        </div>
-                        <div class="filter">
-                            <input class="ng-pristine ng-valid" id="city" placeholder="City" maxlength="50" ng-model="advContact.city" type="text">
-                            <select class="ng-pristine ng-valid" id="state" type="text" style="width: 15%;" ng-model="advContact.state" ng-options="option for option in states"><option class="" value="" selected="">State</option><option value="0">AL</option><option value="1">AK</option><option value="2">AS</option><option value="3">AZ</option><option value="4">AR</option><option value="5">CA</option><option value="6">CO</option><option value="7">CT</option><option value="8">DE</option><option value="9">DC</option><option value="10">FM</option><option value="11">FL</option><option value="12">GA</option><option value="13">GU</option><option value="14">HI</option><option value="15">ID</option><option value="16">IL</option><option value="17">IN</option><option value="18">IA</option><option value="19">KS</option><option value="20">KY</option><option value="21">LA</option><option value="22">ME</option><option value="23">MH</option><option value="24">MD</option><option value="25">MA</option><option value="26">MI</option><option value="27">MN</option><option value="28">MS</option><option value="29">MO</option><option value="30">MT</option><option value="31">NE</option><option value="32">NV</option><option value="33">NH</option><option value="34">NJ</option><option value="35">NM</option><option value="36">NY</option><option value="37">NC</option><option value="38">ND</option><option value="39">MP</option><option value="40">OH</option><option value="41">OK</option><option value="42">OR</option><option value="43">PW</option><option value="44">PA</option><option value="45">PR</option><option value="46">RI</option><option value="47">SC</option><option value="48">SD</option><option value="49">TN</option><option value="50">TX</option><option value="51">UT</option><option value="52">VT</option><option value="53">VI</option><option value="54">VA</option><option value="55">WA</option><option value="56">WV</option><option value="57">WI</option><option value="58">WY</option></select>
-                            <input class="ng-pristine ng-valid" id="zip" ng-model="advContact.zipCode" placeholder="Zip" maxlength="50" style="width: 15%; padding: 5px; margin: 0px 12px;" type="text">
-                        </div>
-                        <div class="filter">
-                            <input id="phone" placeholder="Phone Number" class="phoneNumberMask ng-pristine ng-valid" ng-model="advContact.phoneNumber" type="text">
-                            <input id="altphone" placeholder="Alt. Phone Number" class="phoneNumberMask ng-pristine ng-valid" ng-model="advContact.altPhoneNumber" type="text">
-                        </div>
-                        <div class="filter" style="margin-top: 5px;">
-                            <a ng-click="updateContactInfo()" class="btn btn-sm btn-green">Update</a>
+            <div id="contact_info_edit" style="display: none;">
+                <div>
+                    <form method="post" id="contact_info_form">
+                    <fieldset>
+                        <div class="left_col">
+                            <input type="text" maxlength="50" placeholder="First Name" id="first_name" name="first_name" class=" form-control" required value="<?php echo isset($jobseeker['first_name']) ? $jobseeker['first_name'] : "" ;  ?>" >
                         </div>
 
+                        <div class="right_col">
+                            <input type="text" maxlength="50" placeholder="Last Name" id="last_name" name="last_name" class=" form-control" required value="<?php echo isset($jobseeker['last_name']) ? $jobseeker['last_name'] : "" ;  ?>" >
+                        </div>
+
+                        <div class="left_col">
+                            <input type="text" maxlength="50" placeholder="Address" id="address" name="address" class=" form-control" required value="<?php echo isset($jobseeker['address']) ? $jobseeker['address'] : "" ;  ?>" >
+                        </div>
+                        <div class="right_col">
+                            <input type="text" placeholder="Apt / Suite #" style="" id="apt" name="apt" class=" form-control" required value="<?php echo isset($jobseeker['apt']) ? $jobseeker['apt'] : "" ;  ?>" >
+                        </div>
+
+                        <div class="left_col">
+                            <input type="text" maxlength="50" placeholder="City" id="city" name="city" class=" form-control" required value="<?php echo isset($jobseeker['city']) ? $jobseeker['city'] : "" ;  ?>">
+                        </div>
+                        <div class="right_col">
+                            <select style="width: 50%; float: left;" type="text" id="state" name="state" class=" form-control" required >
+                                <option value="">State</option>
+                                <?php 
+                                $states = get_states( array("country"=>"US") ); 
+                                foreach($states as $state){ 
+                                    $selected = (isset($state["code"]) && $state["code"] == $jobseeker['state'] ) ? ' selected="selected" ' : "" ;
+                                    ?>
+                                    <option value="<?php echo $state["code"] ?>" <?php echo $selected; ?> ><?php echo $state["code"] ?></option>
+                                <?php } ?>
+                            </select>
+                            <input type="text" style="width: 35%; padding: 5px; margin: 0px 12px; float: left;" maxlength="50" placeholder="Zip" id="zip" name="zip" class=" form-control" required value="<?php echo isset($jobseeker['zip']) ? $jobseeker['zip'] : "" ;  ?>">
+                        </div>
+                        <div class="left_col">
+                            <input type="text" class="is_phone_number  form-control" placeholder="Phone Number" id="phone" name="phone" required value="<?php echo isset($jobseeker['phone']) ? $jobseeker['phone'] : "" ;  ?>">
+                        </div>
+                        <div class="right_col">
+                            <input type="text" class="is_phone_number  form-control" placeholder="Alt. Phone Number" id="alt_phone" name="alt_phone" required  value="<?php echo isset($jobseeker['alt_phone']) ? $jobseeker['alt_phone'] : "" ;  ?>">
+                        </div>
                     </fieldset>
+                    </form>
                 </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="cancelContactInfo()">Cancel</a></div>
+                <div class="form_btn_bar">
+                    <a id="contact_info_cancel" href="javascript:void(0)" class="btn btn-warning">Cancel</a>
+                    <a id="contact_info_save" href="javascript:void(0)" class="btn btn-primary">Save</a>
+                </div>
                 <div class="clearfix"></div>	
             </div>
         </div>
         <!--Profession Section-->
         <div id="professionC">
-            <div class="" ng-show="professionSection == 'list'">
+            <div id="profession_block">
                 <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 class="ng-binding" style="text-align: left; padding-left: 20px;">Profession (#123123)</h3>
+                    <h3 class="profile_heading2">Profession (#<?php echo $jobseeker["npi_number"]; ?>)</h3>
                     <div style="padding-left: 25px;">
+                        <?php
+                        $spec_name = get_specialties($jobseeker["specialty"]);
+                        $spec_name = $spec_name['name'];
+                        $sub_spec_name = get_specialties($jobseeker["sub_specialty"]);
+                        $sub_spec_name = $sub_spec_name['name'];
+                        ?>
                         <ul>
                             <li class="ng-binding">
                                 Profession: Physician
                             </li>
                             <li class="ng-binding">
-                                Specialty: Anesthesiology
+                                Specialty: <?php echo (isset($spec_name)) ? $spec_name: ""; ?> 
                             </li>
                             <li class="ng-binding">
-                                Sub Specialty: Critical Care Medicine
+                                Sub Specialty: <?php echo (isset($sub_spec_name)) ? $sub_spec_name: ""; ?>
                             </li>
                             <li class="ng-binding">
-                                Experience Level: Medical School
+                                Experience Level: <?php echo isset($jobseeker["experince_level"]) ? str_replace("_"," ",ucfirst($jobseeker["experince_level"]) )  : "" ;?>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="editProfessionInfo()"><i class="fa fa-pencil">&nbsp;</i>Edit</a></div>
+                <div>
+                    <a id="profession_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="ng-hide" ng-show="professionSection == 'edit'">
+            <div id="profession_edit" style="display: none;">
                 <div style="float: left; width: 85%; padding-left: 10px;">
                     <h3 style="text-align: left; padding-left: 20px;">Profession</h3>
-                    <fieldset style="float: none; margin: 0 auto; padding: 15px 0 0 25px;">
-                        <div class="filter">
-                            <select class="ng-pristine ng-valid" disabled="" ng-model="advProfession.profession" ng-options="option for option in professions"><option selected="selected" value="0">Physician</option></select>
-                            <select class="ng-pristine ng-valid" id="experinceLevel" ng-model="advProfession.experienceLevel" ng-options="option for option in experienceLevels"><option class="" value="">Experience Level</option><option value="0">Medical School</option><option value="1">Residency</option><option value="2">Fellowship</option><option value="3">Practicing</option></select>
+                    <form method="post" id="profession_form">
+                    <fieldset>
+                        
+                        <div class="left_col">
+                            <select class="ng-pristine ng-valid form-control" id="" name="" disabled >
+                                <option value=""></option>
+                            </select>
                         </div>
-                        <div class="filter">
-                            <select class="ng-pristine ng-valid" id="specialty" ng-model="advProfession.specialty" ng-options="option.get('name') as option.get('name') for option in specialties" ng-change="advProfession.subSpecialty = null"><option class="" value="">Specialty</option><option value="0">Allergy and Immunology</option><option value="1">Anesthesiology</option><option value="2">Colon and Rectal Surgery</option><option value="3">Dermatology</option><option value="4">Emergency Medicine</option><option value="5">Family Medicine</option><option value="6">Internal Medicine</option><option value="7">Medical Genetics</option><option value="8">Neurological Surgery</option><option value="9">Neurology</option><option value="10">Nuclear Medicine</option><option value="11">Obstetrics and Gynecology</option><option value="12">Opthalmology</option><option value="13">Orthopaedic Surgery</option><option value="14">Otolaryngology</option><option value="15">Pathology</option><option value="16">Pediatrics</option><option value="17">Physical Medicine and Rehabilitation</option><option value="18">Plastic Surgery</option><option value="19">Preventive Medicine</option><option value="20">Psychiatry</option><option value="21">Radiology</option><option value="22">Surgery - General</option><option value="23">Thoracic and Cardiac Surgery</option><option value="24">Urology</option></select>
-                            <select class="ng-pristine ng-valid" id="subSpecialty" ng-model="advProfession.subSpecialty" ng-options="option for option in getSubspecialties(advProfession.specialty)"><option class="" value="">Sub Specialty</option><option value="0">General</option><option selected="selected" value="1">Critical Care Medicine</option><option value="2">Hospice and Palliative Medicine</option><option value="3">Pain Medicine</option><option value="4">Pediatric Anesthesiology</option><option value="5">Sleep Medicine</option></select>
-                        </div>
-                        <div class="filter">												
-                            <select class="ng-pristine ng-valid" id="boardStatus" ng-model="advProfession.boardStatus" ng-options="option for option in boardStatusTypes"><option class="" value="">Board Status</option><option value="0">Eligible</option><option value="1">Active</option></select>
-                            <select class="ng-pristine ng-valid" id="degree" ng-model="advProfession.degree" ng-options="option for option in degrees"><option class="" value="">Degree</option><option value="0">D.O.</option><option value="1">M.D.</option></select>
-                        </div>
-                        <div class="filter">												
-                            <select class="ng-pristine ng-valid" id="residentStatus" ng-model="advProfession.residentStatus" ng-options="option for option in citizenships"><option class="" value="">Resident Status</option><option value="0">US Citizen</option><option value="1">Permanent Resident</option><option value="2">H1 Visa</option><option value="3">J1 Visa</option></select>
-                            <input class="ng-pristine ng-valid" id="npiNumber" ng-model="advProfession.npiNumber" placeholder="NPI #" type="text">
-                        </div>
-                        <div class="filter" style="margin-top: 5px;">
-                            <a ng-click="updateProfessionInfo()" class="btn btn-sm btn-green">Update</a>
+                        <div class="right_col" >
+                            <select class="ng-pristine ng-valid form-control" id="experince_level" name="experince_level" required >
+                                <option class="" value="">Experience Level</option>
+                                <?php
+                                $selected = (isset($jobseeker['experince_level']) && $jobseeker['experince_level'] == "medical_school" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="medical_school" <?php echo $selected; ?> >Medical School</option>
+                                <?php
+                                $selected = (isset($jobseeker['experince_level']) && $jobseeker['experince_level'] == "residency" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="residency" <?php echo $selected; ?> >Residency</option>
+                                <?php
+                                $selected = (isset($jobseeker['experince_level']) && $jobseeker['experince_level'] == "fellowship" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="fellowship" <?php echo $selected; ?> >Fellowship</option>
+                                <?php
+                                $selected = (isset($jobseeker['experince_level']) && $jobseeker['experince_level'] == "practicing" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="practicing" <?php echo $selected; ?> >Practicing</option>
+                            </select>
                         </div>
 
+                        <div class="left_col">
+                            <select id="specialty" name="specialty" class="ng-pristine ng-valid parent_speciality form-control" required>
+                                <option value="">Specialty</option>
+                                <?php 
+                                foreach($specialties as $val){ 
+                                    $selected = (isset($jobseeker['specialty']) && $jobseeker['specialty'] == $val['id'] ) ? ' selected="selected" ' : "" ;
+                                    ?>
+                                    <option value="<?php echo $val['id']; ?>" <?php echo $selected; ?> ><?php echo strip_slashes($val['name']); ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="right_col">
+                            <select id="sub_specialty" name="sub_specialty" class="ng-pristine ng-valid form-control sub_speciality" required>
+                                <option value="">Sub Specialty</option>
+                                <?php 
+                                if(isset($sub_specialty) && is_array($sub_specialty)){ 
+                                    foreach($sub_specialty as $sub_spec) { 
+                                    $selected = (isset($jobseeker['sub_specialty']) && $jobseeker['sub_specialty'] == $sub_spec['id'] ) ? ' selected="selected" ' : "" ;
+                                    ?>
+                                    <option value="<?php echo $sub_spec['id']; ?>" <?php echo $selected; ?> ><?php echo strip_slashes($sub_spec['name']); ?></option>    
+                                    <?php } 
+                                }
+                                else{
+                                ?>
+                                <option value=""></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="left_col">
+                            <select class="ng-pristine ng-valid form-control" id="board_status" name="board_status" required >
+                                <option value="" class="">Board Status</option>
+                                <?php
+                                $selected = (isset($jobseeker['board_status']) && $jobseeker['board_status'] == "eligible" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="eligible" <?php echo $selected; ?> >Eligible</option>
+                                <?php
+                                $selected = (isset($jobseeker['board_status']) && $jobseeker['board_status'] == "active" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="active" <?php echo $selected; ?> >Active</option>
+                            </select>
+                        </div>
+                        <div class="right_col">
+                            <select class="ng-pristine ng-valid form-control" required id="degree" name="degree" >
+                                <option value="" class="">Select</option>
+                                <?php
+                                $selected = (isset($jobseeker['degree']) && $jobseeker['degree'] == "D.O" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option <?php echo $selected; ?> value="D.O">D.O.</option>
+                                <?php
+                                $selected = (isset($jobseeker['degree']) && $jobseeker['degree'] == "M.D" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option <?php echo $selected; ?> value="M.D">M.D.</option>
+                            </select>
+                        </div>
+                        <div class="left_col">
+                            <select class="ng-pristine ng-valid form-control" id="resident_status" name="resident_status" required >
+                                <option class="" value="">Resident Status</option>
+                                <?php
+                                $selected = (isset($jobseeker['resident_status']) && $jobseeker['resident_status'] == "citizen" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="citizen" <?php echo $selected; ?> >US Citizen</option>
+                                <?php
+                                $selected = (isset($jobseeker['resident_status']) && $jobseeker['resident_status'] == "permanent_resident" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="permanent_resident" <?php echo $selected; ?> >Permanent Resident</option>
+                                <?php
+                                $selected = (isset($jobseeker['resident_status']) && $jobseeker['resident_status'] == "h1_visa" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="h1_visa" <?php echo $selected; ?> >H1 Visa</option>
+                                <?php
+                                $selected = (isset($jobseeker['resident_status']) && $jobseeker['resident_status'] == "j1_visa" ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="j1_visa" <?php echo $selected; ?> >J1 Visa</option>
+                            </select>
+                        </div>
+                        <div class="right_col">
+                            <input type="text" class="ng-pristine ng-valid form-control" placeholder="NPI #" id="npi_number" name="npi_number" required value="<?php echo isset($jobseeker['npi_number']) ? $jobseeker['npi_number'] : "" ;  ?>">
+                        </div>
+                        
+
                     </fieldset>
+                    </form>
                 </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="cancelProfessionInfo()">Cancel</a></div>
+                <div class="clearfix"></div>
+                <div class="form_btn_bar">
+                    <a id="profession_cancel" href="javascript:void(0)" class="btn btn-warning">Cancel</a>
+                    <a id="profession_save" href="javascript:void(0)" class="btn btn-primary">Save</a>
+                </div>
                 <div class="clearfix"></div>
             </div>
         </div>
+        
+        <!--License & Certification Section-->
+        <div id="licenseC">
+            <div id="certification_block">
+                <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
+                    <h3 class="profile_heading2">Licenses &amp; Certifications</h3>
+                    
+                    <div id="license_list">
+                        <?php
+                        if($licences){
+                            foreach ($licences as $row){ 
+                                ?>
+                            <div class="row-wrapper well-blue padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                <div class="col col-sm-5 text-left">
+                                    <strong><?php echo $row["licence_type"]; ?></strong><br>
+                                    <?php echo $row["licence_number"]; ?>
+                                </div>
+                                <div class="col col-sm-4 text-left">
+                                    <?php echo date("Y-m-d",$row["issued_on"]); ?><br>
+                                    <?php echo $row["state"]; ?>
+                                </div>
+                                <div class="col col-sm-2 text-left">
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <?php }
+                        } ?>
+                    </div>
+                    <div id="certification_list">
+                        <?php
+                        if($certifications){
+                            foreach ($certifications as $row){ ?>
+                        <div class="row-wrapper well-purple padding_5" data-val="<?php echo $row["id"]; ?>" >
+                            <div class="col col-sm-5 text-left">
+                                <strong><?php echo $row["name"]; ?></strong><br>
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                <?php echo date("Y-m-d",$row["issued_on"]); ?>
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <?php }
+                        } ?>
+                    </div>
+                    
+                    
+                </div>
+                <div>
+                    <a id="certification_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </div>
+                
+                
+
+            </div>
+            <div id="certification_edit" style="display: none;">
+                <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
+                <h3 class="profile_heading2">Licenses &amp; Certifications</h3>
+                <div id="license_list_edit">
+                    <?php
+                    if($licences){
+                        foreach ($licences as $row){ 
+                            ?>
+                        <div class="row-wrapper well-blue padding_5" data-val="<?php echo $row["id"]; ?>" >
+                            <div class="col col-sm-5 text-left">
+                                <strong><?php echo $row["licence_type"]; ?></strong><br>
+                                <?php echo $row["licence_number"]; ?>
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                <?php echo date("Y-m-d",$row["issued_on"]); ?><br>
+                                <?php echo $row["state"]; ?>
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_license btn btn-danger btn-sm">Remove</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <?php }
+                    } ?>
+                </div>
+                <div id="certification_list_edit">
+                    <?php
+                    if($certifications){
+                        foreach ($certifications as $row){ ?>
+                    <div class="row-wrapper well-purple padding_5" data-val="<?php echo $row["id"]; ?>" >
+                        <div class="col col-sm-5 text-left">
+                            <strong><?php echo $row["name"]; ?></strong><br>
+                        </div>
+                        <div class="col col-sm-4 text-left">
+                            <?php echo date("Y-m-d",$row["issued_on"]); ?>
+                        </div>
+                        <div class="col col-sm-2 text-left">
+                            <a class="remove_certification btn btn-danger btn-sm">Remove</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <?php }
+                    } ?>
+                </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form_btn_bar">
+                    <a id="certification_cancel" href="javascript:void(0)" class="btn btn-warning">Cancel</a>
+                    <a id="certification_save" href="javascript:void(0)" class="btn btn-primary">Save</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+        
         <!--Education Section-->
         <div id="educationC">
             <div class="" ng-show="educationSection == 'list'">
@@ -307,132 +576,7 @@
             </div>
 
         </div>
-        <!--License & Certification Section-->
-        <div id="licenseC">
-            <div class="" ng-show="licenseSection == 'list'">
-                <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 style="text-align: left; padding-left: 20px;">Licenses &amp; Certifications</h3>
-                    <div style="padding-left: 25px;">
-                        <!-- ngRepeat: license in licenses --><div class="ng-scope" ng-repeat="license in licenses">
-                            <div class="well well-sm well-purple">
-                                <div class="col-sm-5 text-left">
-                                    <p style="margin-bottom: 0px"><strong class="ng-binding">asd</strong></p>
-                                    <p class="ng-binding">asd</p>
-                                </div>
-                                <div class="col-sm-5 text-left">
-                                    <p class="ng-binding" style="margin-bottom: 0px">Federal</p>
-                                    <p class="ng-binding">Issued: 12/31/2313</p>
-                                </div>
-                                <div class="col-sm-2">
-                                    &nbsp;
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div><!-- end ngRepeat: license in licenses -->
-                        <!-- ngRepeat: certificate in certifications --><div class="ng-scope" ng-repeat="certificate in certifications">
-                            <div class="well well-sm well-blue">
-                                <div class="col-sm-5 text-left">
-                                    <p><strong class="ng-binding">asdasd</strong></p>
-                                </div>
-                                <div class="col-sm-5 text-left ng-binding">
-                                    Issued: 12/31/2132
-                                </div>
-                                <div class="col-sm-2">
-                                    &nbsp;
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div><!-- end ngRepeat: certificate in certifications -->
-                    </div>
-                </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="editLicenseInfo()"><i class="fa fa-pencil">&nbsp;</i>Edit</a></div>
-                <div class="clearfix"></div>
-
-            </div>
-            <div class="ng-hide" ng-show="licenseSection == 'edit'" style="position: relative;">
-                <div id="licenseW" style="position: absolute; top: 10; width: 100%; height: 100%; background: #ccc; opacity: 0.3; z-index: 9999; display: none;">&nbsp;</div>
-                <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 style="text-align: left; padding-left: 20px;">Licenses &amp; Certifications</h3>
-                    <div class="alert alert-danger" id="licenseE" style="display: none;">You have to add at least one License and Certificate.</div>
-                    <fieldset style="float: none; margin: 0 auto; padding: 0 0 0 25px;">
-                        <div class="filter">
-                            <!-- ngRepeat: license in licenses --><div class="ng-scope" ng-repeat="license in licenses">
-                                <div class="well well-sm well-purple">
-                                    <div class="col-sm-5 text-left">
-                                        <p style="margin-bottom: 0px"><strong class="ng-binding">asd</strong></p>
-                                        <p class="ng-binding">asd</p>
-                                    </div>
-                                    <div class="col-sm-5 text-left">
-                                        <p class="ng-binding" style="margin-bottom: 0px">Federal</p>
-                                        <p class="ng-binding">Issued: 12/31/2313</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a class="btn btn-danger btn-xs" ng-click="licenses.splice($index, 1)">Remove</a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div><!-- end ngRepeat: license in licenses -->
-                            <!-- ngRepeat: certificate in certifications --><div class="ng-scope" ng-repeat="certificate in certifications">
-                                <div class="well well-sm well-blue">
-                                    <div class="col-sm-5 text-left">
-                                        <p><strong class="ng-binding">asdasd</strong></p>
-                                    </div>
-                                    <div class="col-sm-5 text-left ng-binding">
-                                        Issued: 12/31/2132
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a class="btn btn-danger btn-xs" ng-click="certifications.splice($index, 1)">Remove</a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div><!-- end ngRepeat: certificate in certifications -->
-                            <div class="text-center" ng-show="stage3SubState != 'addLicense' & amp; & amp;
-                                                                                                                        stage3SubState != 'addCert'">
-                                <a id="licenceImg" class="btn btn-light-red" ng-click="stage3SubState = 'addLicense'"><i class="fa fa-check-circle">&nbsp;</i> Add License</a>
-                                <a id="certImg" class="btn btn-light-blue" ng-click="stage3SubState = 'addCert'"><i class="fa fa-check-circle">&nbsp;</i> Add Certification</a>
-                            </div>
-
-                        </div>
-                        <div class="ng-hide" ng-show="stage3SubState == 'addLicense'">
-                            <div class="filter">												
-                                <input class="ng-pristine ng-valid" id="licenseType" placeholder="License Type" ng-model="newLicenseType" ng-options="option for option in specialty.get('subspecialties')" type="text">
-                                <input class="ng-pristine ng-valid" id="licenseNumber" placeholder="License Number" ng-model="newLicenseNumber" ng-options="option for option in boardStatusTypes" type="text">
-                            </div>	
-                            <div class="filter">
-                                <input id="licenseIssued" ng-model="newLicenseIssued" class="dateMask ng-pristine ng-valid" placeholder="Issued On" type="text">
-                                <select class="ng-pristine ng-valid" id="licenseState" ng-model="newLicenseState" style="width: 15%;" ng-options="option for option in states"><option class="" value="">State</option><option value="0">AL</option><option value="1">AK</option><option value="2">AS</option><option value="3">AZ</option><option value="4">AR</option><option value="5">CA</option><option value="6">CO</option><option value="7">CT</option><option value="8">DE</option><option value="9">DC</option><option value="10">FM</option><option value="11">FL</option><option value="12">GA</option><option value="13">GU</option><option value="14">HI</option><option value="15">ID</option><option value="16">IL</option><option value="17">IN</option><option value="18">IA</option><option value="19">KS</option><option value="20">KY</option><option value="21">LA</option><option value="22">ME</option><option value="23">MH</option><option value="24">MD</option><option value="25">MA</option><option value="26">MI</option><option value="27">MN</option><option value="28">MS</option><option value="29">MO</option><option value="30">MT</option><option value="31">NE</option><option value="32">NV</option><option value="33">NH</option><option value="34">NJ</option><option value="35">NM</option><option value="36">NY</option><option value="37">NC</option><option value="38">ND</option><option value="39">MP</option><option value="40">OH</option><option value="41">OK</option><option value="42">OR</option><option value="43">PW</option><option value="44">PA</option><option value="45">PR</option><option value="46">RI</option><option value="47">SC</option><option value="48">SD</option><option value="49">TN</option><option value="50">TX</option><option value="51">UT</option><option value="52">VT</option><option value="53">VI</option><option value="54">VA</option><option value="55">WA</option><option value="56">WV</option><option value="57">WI</option><option value="58">WY</option></select>
-                            </div>
-                            <div class="filter" style="padding-left: 15px;">
-                                Federal&nbsp;&nbsp;&nbsp;&nbsp;Yes&nbsp;&nbsp;<input class="federal" name="federal" value="1" type="radio">&nbsp;&nbsp;No&nbsp;&nbsp;<input value="0" name="federal" class="federal" type="radio">
-                            </div>
-                            <div class="filter" style="margin-top: 15px; padding-left: 15px;">
-                                <a class="btn btn-primary btn-sm" ng-click="addLicense()">Add</a>
-                                <a class="btn btn-primary btn-sm" ng-click="stage3SubState = 'normal';
-                                                                                                                            resetError();">Cancel</a>
-                                <br><br>
-                            </div>
-
-                        </div>
-                        <div class="ng-hide" ng-show="stage3SubState == 'addCert'">
-                            <div class="filter">
-                                <input class="ng-pristine ng-valid" id="certName" ng-model="newCertName" placeholder="Certificate Name" type="text">
-                                <input id="certIssued" ng-model="newCertDate" class="dateMask ng-pristine ng-valid" placeholder="Issued On" type="text">
-                            </div>
-                            <div class="filter" style="margin-top: 15px; padding-left: 15px;">
-                                <a class="btn btn-primary btn-sm" ng-click="addCert()">Add</a>
-                                <a class="btn btn-primary btn-sm" ng-click="stage3SubState = 'normal';
-                                                                                                                            resetError();">Cancel</a>
-                                <br><br>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="cancelLicenseInfo()">Cancel</a></div>
-                <div class="clearfix"></div>
-
-            </div>
-
-        </div>
+        
         <!--Practice Section-->
         <div id="practiceC">
             <div class="" ng-show="practiceSection == 'list'">
@@ -526,3 +670,4 @@
     </div>
     <div class="clearfix"></div>
 </div>
+

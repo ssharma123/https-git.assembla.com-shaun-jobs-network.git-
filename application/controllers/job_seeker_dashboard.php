@@ -18,6 +18,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $this->load->model('jobseeker_practice_model', 'jobseeker_practice');
         $this->load->model('jobseeker_search_locations_model', 'location');
         $this->load->model('specialty_model', 'specialty');
+        $this->load->model('jobseeker_settings_model', 'settings');
     }
     
     public function index() {
@@ -44,6 +45,19 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if(!isset($session['jobseeker'])){
             redirect('job_seeker/signin');
         }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
+        
+        $data["specialties"] = $this->get_specialties('parent');
+        if( isset($data["jobseeker"]["specialty"]) && $data["jobseeker"]["specialty"] != ""){
+            $data['sub_specialty'] = $this->specialty->specialties_get_by_type( "sub" , $data["jobseeker"]["specialty"] );
+        }
+        
+        $where_array["jobseeker_id"] = $jobseeker_id;
+        $data["certifications"] = $this->jobseeker_certification->jobseekers_certifications_get(0, $where_array);
+        $data["licences"] = $this->jobseeker_licence->jobseekers_licences_get(0, $where_array);
+        $data["total_license"] = ( $data["licences"] ) ? count($data["licences"]) : 0 ;
+        $data["total_cert"] = ( $data["certifications"] ) ? count($data["certifications"]) : 0 ;
         
         $html = $this->load->view('job_seeker/dashboard/tab_profile', $data, TRUE);
 
@@ -61,6 +75,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if(!isset($session['jobseeker'])){
             redirect('job_seeker/signin');
         }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        
+        
+        $data["jobs_applies"] = $this->jobs->jobs_applied_by_jobseeker($jobseeker_id);
         
         $html = $this->load->view('job_seeker/dashboard/tab_status', $data, TRUE);
 
@@ -95,7 +113,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if(!isset($session['jobseeker'])){
             redirect('job_seeker/signin');
         }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
         
+        $data["setting"] = $this->settings->jobseekers_setttings_get_by_jobseeker( $jobseeker_id );
         $html = $this->load->view('job_seeker/dashboard/tab_settings', $data, TRUE);
 
         $array = array(
@@ -1264,6 +1284,306 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         
         echo json_encode($rsp); die;
         
+    }
+    
+    public function update_settings(){
+        $this->layout = "blank";
+        
+        $status = "error";
+        $msg = "oops something went wrong, please try again";
+        
+        $session = $this->session->all_userdata();
+        
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/sigin');
+        }
+        $jobseeker = $session['jobseeker'];
+        $save_data['jobseeker_id'] = $jobseeker['id'];
+        
+        $save_data["when_match_email"] = ($this->input->post("when_match_email") == "true") ?  1 : 0 ;
+        $save_data["when_match_phone"] = ($this->input->post("when_match_phone") == "true") ?  1 : 0 ;
+        $save_data["when_interview_offer_email"] = ($this->input->post("when_interview_offer_email") == "true") ?  1 : 0 ;
+        $save_data["when_interview_offer_phone"] = ($this->input->post("when_interview_offer_phone") == "true") ?  1 : 0 ;
+        $save_data["when_face_2_face_offer_email"] = ($this->input->post("when_face_2_face_offer_email") == "true") ?  1 : 0 ;
+        $save_data["when_face_2_face_offer_phone"] = ($this->input->post("when_face_2_face_offer_phone") == "true") ?  1 : 0 ;
+        $save_data["when_job_offer_email"] = ($this->input->post("when_job_offer_email") == "true") ?  1 : 0 ;
+        $save_data["when_job_offer_phone"] = ($this->input->post("when_job_offer_phone") == "true") ?  1 : 0 ;
+        $save_data["when_status_update_email"] = ($this->input->post("when_status_update_email") == "true") ?  1 : 0 ;
+        $save_data["when_status_update_phone"] = ($this->input->post("when_status_update_phone") == "true") ?  1 : 0 ;
+        
+        
+
+        $setting = $this->settings->jobseekers_setttings_get_by_jobseeker($save_data['jobseeker_id']);
+
+        if($setting){
+            $save_data['updated_at'] = time();
+            unset($save_data['jobseeker_id']);
+            $this->settings->jobseekers_setttings_update($setting['id'], $save_data);
+            $status = "ok";
+            $msg = "saved successfully";
+        }
+        else{
+            $save_data['created_at'] = time();
+            $this->settings->jobseekers_setttings_add($save_data);
+            $status = "ok";
+            $msg = "saved successfully";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
+    public function update_jobseeker_emails(){
+        $this->layout = "blank";
+        
+        $status = "error";
+        $msg = "oops something went wrong, please try again";
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/sigin');
+        }
+        $jobseeker = $session['jobseeker'];
+        $jobseeker_id = $jobseeker['id'];
+        
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'change_email', 'label' => 'Email', 'rules' => 'trim|required|valid_email|xss_clean')
+        );
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+        
+            $save_data["email"] = $this->input->post("change_email");
+
+            $email_exist = $this->jobseeker->get_jobseekers_email_for_edit($jobseeker_id, $save_data["email"]);
+            if(!$email_exist){
+                
+                $this->jobseeker->jobseekers_update($jobseeker_id , $save_data);
+                $status = "ok";
+                $msg = "saved successfully";
+                
+            }
+            else{
+                $status = "error";
+                $msg = "email already exist";
+            }
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
+    public function update_jobseeker_password(){
+        $this->layout = "blank";
+        
+        $status = "error";
+        $msg = "oops something went wrong, please try again";
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/sigin');
+        }
+        $jobseeker = $session['jobseeker'];
+        $jobseeker_id = $jobseeker['id'];
+        
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'change_password', 'label' => 'Email', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'confirm_change_password', 'label' => 'Email', 'rules' => 'trim|required|xss_clean')
+        );
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+        
+            $save_data["password"] = md5($this->input->post("change_password"));
+
+            $employer_exist = $this->jobseeker->jobseekers_get($jobseeker_id);
+            if($employer_exist){
+                
+                $this->jobseeker->jobseekers_update($jobseeker_id , $save_data);
+                $status = "ok";
+                $msg = "saved successfully";
+                
+            }
+            else{
+                $status = "error";
+                $msg = "Unable to save password";
+            }
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
+    
+    public function contact_info_save(){
+        $session = $this->session->all_userdata();
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+
+        $this->layout = "blank";
+        $msg = "";
+        $status = "";
+        $html = "";
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'first_name', 'label' => 'first name', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'last_name', 'label' => 'last name', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'address', 'label' => 'address', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'apt', 'label' => 'Apt', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'city', 'label' => 'City', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'state', 'label' => 'State', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'zip', 'label' => 'Zip', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'phone', 'label' => 'Phone', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'alt_phone', 'label' => 'Alternate phone', 'rules' => 'trim|required|xss_clean')
+        );
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+            
+            
+            $save_data['first_name'] = $this->input->post('first_name');
+            $save_data['last_name'] = $this->input->post('last_name');
+            $save_data['address'] = $this->input->post('address');
+            $save_data['apt'] = $this->input->post('apt');
+            $save_data['city'] = $this->input->post('city');
+            $save_data['state'] = $this->input->post('state');
+            $save_data['zip'] = $this->input->post('zip');
+            $save_data['phone'] = $this->input->post('phone');
+            $save_data['alt_phone'] = $this->input->post('alt_phone');
+            
+            $id = $jobseeker_id;
+            if($id){
+                $this->jobseeker->jobseekers_update($id , $save_data);
+                $status = "ok";
+                $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
+                
+                $html = '<div style="float: left; width: 85%; padding-left: 10px;">
+                    <h1 class="profile_heading1" >'.$jobseeker['first_name'].' '.$jobseeker['last_name'].'</h1>
+                    <div class="contact_info_text" >
+                        <span >'.$jobseeker['address'].'</span> '.$jobseeker['city'].",".$jobseeker['state'].'
+                    </div>
+                </div>
+                <div>
+                    <a id="contact_info_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </div>
+                <div class="clearfix"></div>';
+            }
+            else{
+                $status = "error";
+                $msg = "Oops something went wrong please try again";
+            }
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+        
+        
+
+        $array = array(
+            "status" => $status,
+            "msg" => $msg,
+            "html" => $html
+        );
+        echo json_encode($array); die;
+    }
+    public function profession_save(){
+        $session = $this->session->all_userdata();
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+
+        $this->layout = "blank";
+        $msg = "";
+        $status = "";
+        $html = "";
+        $this->load->library('form_validation');
+        $config = array(
+            array('field' => 'experince_level', 'label' => 'experince level', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'specialty', 'label' => 'specialty', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'sub_specialty', 'label' => 'sub specialty', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'board_status', 'label' => 'board status', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'degree', 'label' => 'degree', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'resident_status', 'label' => 'resident status', 'rules' => 'trim|required|xss_clean'),
+            array('field' => 'npi_number', 'label' => 'npi number', 'rules' => 'trim|required|xss_clean')
+        );
+        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_rules($config);
+        if ($this->form_validation->run() === TRUE) {
+            
+            
+            $save_data['experince_level'] = $this->input->post('experince_level');
+            $save_data['specialty'] = $this->input->post('specialty');
+            $save_data['sub_specialty'] = $this->input->post('sub_specialty');
+            $save_data['board_status'] = $this->input->post('board_status');
+            $save_data['degree'] = $this->input->post('degree');
+            $save_data['resident_status'] = $this->input->post('resident_status');
+            $save_data['npi_number'] = $this->input->post('npi_number');
+            
+            $id = $jobseeker_id;
+            if($id){
+                $this->jobseeker->jobseekers_update($id , $save_data);
+                $status = "ok";
+                
+                $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
+                
+                $spec_name = get_specialties($jobseeker["specialty"]);
+                $spec_name = $spec_name['name'];
+                $sub_spec_name = get_specialties($jobseeker["sub_specialty"]);
+                $sub_spec_name = $sub_spec_name['name'];
+                $html = '<div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
+                    <h3 class="profile_heading2" >Profession (#'.$jobseeker["npi_number"].')</h3>
+                    <div style="padding-left: 25px;">
+                        <ul>
+                            <li class="ng-binding">
+                                Profession: Physician
+                            </li>
+                            <li class="ng-binding">
+                                Specialty: '.$spec_name.'
+                            </li>
+                            <li class="ng-binding">
+                                Sub Specialty: '.$sub_spec_name.'
+                            </li>
+                            <li class="ng-binding">
+                                Experience Level: '.str_replace("_"," ",ucfirst($jobseeker["experince_level"])).'
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <a id="profession_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </div>
+                <div class="clearfix"></div>';
+            }
+            else{
+                $status = "error";
+                $msg = "Oops something went wrong please try again";
+            }
+            
+        } else {
+            $msg = validation_errors();
+            $status = "error";
+        }
+
+        $array = array(
+            "status" => $status,
+            "msg" => $msg,
+            "html" => $html
+        );
+        echo json_encode($array); die;
     }
 
 }

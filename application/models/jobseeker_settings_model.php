@@ -34,9 +34,9 @@ class Jobseeker_settings_model extends CI_Model {
         $this->db->where('id' , $id);
         $this->db->update($this->table_name,$data);
     }
-    function jobseekers_setttings_get_by_employer($employer_id){
+    function jobseekers_setttings_get_by_jobseeker($jobseeker_id){
         
-        $this->db->where("employer_id",$employer_id);
+        $this->db->where("jobseeker_id",$jobseeker_id);
         $r = $this->db->get($this->table_name);
         if ($r->num_rows() > 0) {
             return $r->row_array();
