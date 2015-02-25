@@ -297,7 +297,7 @@ class Job_seeker extends MY_Job_seekerController {
         $last_name = ( isset($linkedin_user['last-name']) ) ? " ".$linkedin_user['last-name'] : "" ;
         $email = ( isset($linkedin_user['email-address']) ) ? $linkedin_user['email-address'] : "" ;
         
-        if( $linkedin_id != "" && $name != "" && $email != "") {
+        if( $linkedin_id != "" && $first_name != "" && $email != "") {
             $html = '<!DOCTYPE html><script>
                 var linkedin_id = "' . $linkedin_id . '" ;
                 var first_name = "' . $first_name . '" ;
