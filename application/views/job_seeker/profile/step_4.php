@@ -500,6 +500,7 @@
             if(rsp.status === "ok"){
                 // continue then
                 $(element).remove();
+                total_residencys--;
             }
             else{
                 $("#tabContent_rsp").html(rsp.msg).show();
@@ -619,6 +620,7 @@
             if(rsp.status === "ok"){
                 // continue then
                 $(element).remove();
+                total_fellowships--;
             }
             else{
                 $("#tabContent_rsp").html(rsp.msg).show();
@@ -633,9 +635,9 @@
      
      
      $(document).on("change","#fac_specialty",function(){
-        parent_speciality_change_residence(); 
+        parent_speciality_change_faculty(); 
      });
-     function parent_speciality_change_residence(){
+     function parent_speciality_change_faculty(){
         if($("#fac_specialty").val() !== ""){
             $.ajax({
                 type: "POST",

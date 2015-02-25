@@ -1,3 +1,9 @@
+<?php 
+    
+    echo load_css('jquery-ui.css','assets/js/jquery_ui/');
+    echo load_js("jquery-ui.js","assets/js/jquery_ui/");
+            
+?>
 <style>
     .ng-hide,.hidden{
         display: none;
@@ -6,12 +12,26 @@
         margin: 20px;
         text-align: right;
     }
+    .form_btn_bar_2{
+        float: left; width: 85%; padding-left: 10px;
+        text-align: center;
+        margin: 10px 0 10px 0;
+    }
     .edit_link{
         cursor: pointer;
         float: right;
     }
     .profile_heading1{
-        text-align: left; font-size: 40px; padding-left: 20px; padding-top: 2px; margin-top: 5px; margin-bottom: 2px;
+        text-align: left; 
+        font-size: 40px; 
+/*        padding-left: 20px; 
+        padding-top: 2px; 
+        margin-top: 5px; 
+        margin-bottom: 2px;*/
+        
+        padding: 0px; 
+        margin: 10px 0px; 
+        text-align: left;
     }
     .contact_info_text{
         padding-left: 20px; font-size: 16px;
@@ -20,7 +40,14 @@
         color: #2A802A;
     }
     .profile_heading2{
-        text-align: left; padding-left: 20px;
+        text-align: left; 
+        padding: 0px; 
+        margin: 10px 0px; 
+        text-align: left;
+        font-size: 30px; 
+    }
+    #profession_block ul{
+        padding-left: 0px;
     }
     .space-row-10{
         margin-top: 20px;
@@ -35,6 +62,17 @@
     #certification_list,certification_list_edit{
         margin-bottom: 10px;
     }
+    
+    #degree_list,#degree_list_edit{
+        margin-bottom: 10px;
+    }
+    #residency_list,#residency_list_edit{
+        margin-bottom: 10px;
+    }
+    #fellowship_list,#fellowship_list_edit{
+        margin-bottom: 10px;
+    }
+    
 </style>
 <div class="row-wrapper">
     <div class="col col-sm-7">
@@ -319,6 +357,7 @@
             <div id="certification_edit" style="display: none;">
                 <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
                 <h3 class="profile_heading2">Licenses &amp; Certifications</h3>
+                <div id="certification_rsp" class="" style="display: none;"></div>
                 <div id="license_list_edit">
                     <?php
                     if($licences){
@@ -361,11 +400,73 @@
                     } ?>
                 </div>
                 </div>
-                <div class="clearfix"></div>
-                <div class="form_btn_bar">
-                    <a id="certification_cancel" href="javascript:void(0)" class="btn btn-warning">Cancel</a>
-                    <a id="certification_save" href="javascript:void(0)" class="btn btn-primary">Save</a>
+                <div>
+                    <a id="certification_cancel" class="edit_link"><span class="glyphicon glyphicon-ok"></span> Done</a>
                 </div>
+                
+                <div class="clearfix"></div>
+                <div id="toolbar_certification" class="form_btn_bar_2">
+                    <a id="add_license" class="btn btn-blue btn-sm" >
+                        <span class="glyphicon glyphicon-check"></span> Add License
+                    </a>
+                    <a id="add_certification" class="btn btn-purple btn-sm" >
+                        <span class="glyphicon glyphicon-check"></span> Add Certification
+                    </a>
+                </div>
+                
+                <div id="add_license_block" class="well-blue col-lg-12 block-toggle" style="padding: 5%; display: none; width: 85%;" >
+                    <form id="add_license_form" method="post">  
+                        <div class="left_col">
+                            <input class="ng-valid ng-dirty form-control license_text" id="licenseType"  name="licenseType" placeholder="License Type" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            <input class="ng-valid ng-dirty form-control license_text" id="licenseNumber" name="licenseNumber" placeholder="License Number" type="text" required >
+                        </div>
+                        <div class="left_col">
+                            <input class="dateMask ng-valid ng-dirty form-control license_text" id="licenseIssued" name="licenseIssued" placeholder="Issued On" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            <select class="form-control license_text" name="state" id="state" required>
+                                <option value="">State</option>
+                                <?php 
+                                $states = get_states( array("country"=>"US") ); 
+                                foreach($states as $state){ ?>
+                                    <option value="<?php echo $state["code"] ?>"><?php echo $state["code"] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="">
+                            <strong>Federal</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                            Yes&nbsp;&nbsp;
+                            <input required class="" name="federal" id="federal-yes" value="yes" type="radio">&nbsp;&nbsp;
+                            No&nbsp;&nbsp;
+                            <input required  name="federal" id="federal-no" value="no" class="" type="radio">
+                        </div>
+
+
+                        <div class="col col-sm-12 text-center" style="margin-top: 15px; padding-left: 15px; clear: both;">
+                            <a class="btn btn-primary btn-sm" id="add_license_btn" >Add</a>
+                            <a class="btn btn-primary btn-sm" id="cancel_license_btn" >Cancel</a>
+                        </div>
+                    </form>
+                </div>
+                <div id="add_certification_block" class="well-purple col-lg-12 block-toggle" style="padding: 5%; display: none; width: 85%;" >
+                    <form id="add_certification_form" method="post">
+                    <div class="left_col">
+                        <input class="ng-valid ng-dirty form-control cert_text" id="cert_name" name="cert_name" placeholder="Certificate Name" type="text" required >
+                    </div>
+                    <div class="right_col">
+                        <input class="dateMask ng-valid ng-dirty form-control cert_text" id="cert_issued_on" name="cert_issued_on" placeholder="Issued On" type="text" required >
+                    </div>
+                    
+                    <div class="col col-sm-12 text-center" style="margin-top: 15px; padding-left: 15px; clear: both;">
+                        <a class="btn btn-primary btn-sm" id="add_certification_btn" >Add</a>
+                        <a class="btn btn-primary btn-sm" id="cancel_certification_btn" >Cancel</a>
+                    </div>
+                    </form>
+                </div>
+                
                 <div class="clearfix"></div>
             </div>
 
@@ -373,289 +474,484 @@
         
         <!--Education Section-->
         <div id="educationC">
-            <div class="" ng-show="educationSection == 'list'">
+            <div id="education_block">
                 <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 style="text-align: left; padding-left: 20px;">Education</h3>
-                    <div style="padding-left: 25px;">
-                        <!-- ngRepeat: residency in fellowships --><div class="ng-scope" ng-repeat="residency in fellowships">
-                            <!-- Summary of each school with option to remove. -->
-                            <div class="well well-sm well-yellow">
-                                <div class="col-sm-5 text-left">
-                                    <p style="margin-bottom: 0px"><strong class="ng-binding">asdasd</strong></p>
-                                    <p class="ng-binding">123123, AK, 121</p>
+                    <h3 class="profile_heading2">Educations</h3>
+                    
+                    <div id="degree_list">
+                        <?php
+                        if($degrees){
+                            foreach ($degrees as $row){ 
+                                ?>
+                            <div class="row-wrapper well-blue padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                <div class="col col-sm-5 text-left">
+                                    <strong><?php echo $row["degree"]; ?></strong><br>
+                                    <?php 
+                                    $med_school = (isset($row["med_school"]) && $row["med_school"] == "yes" ) ? "(Med School)" : ""; 
+                                    echo $row["school"].$med_school;
+                                    ?>
                                 </div>
-                                <div class="col-sm-5 text-left">
-                                    <p class="ng-binding" style="margin-bottom: 0px">Critical Care Medicine</p>
-                                    <p class="ng-binding">12/31/2313 - 12/31/2312</p>
+                                <div class="col col-sm-4 text-left">
+                                    <?php echo date("Y",$row["year"]); ?><br>
+                                    <?php echo $row["city"].",".$row["state"].",".$row["country"]; ?>
                                 </div>
-                                <div class="col-sm-2">
-                                    &nbsp;
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div><!-- end ngRepeat: residency in fellowships -->
-                        <!-- ngRepeat: residency in residencies --><div class="ng-scope" ng-repeat="residency in residencies">
-
-                            <!-- Summary of each school with option to remove. -->
-                            <div class="well well-sm well-blue">
-                                <div class="col-sm-5 text-left">
-                                    <p style="margin-bottom: 0px"><strong class="ng-binding">asdasd</strong></p>
-                                    <p class="ng-binding">zxczc, AK, pk</p>
-                                </div>
-                                <div class="col-sm-5 text-left">
-                                    <p class="ng-binding" style="margin-bottom: 0px">Hospice and Palliative Medicine</p>
-                                    <p class="ng-binding">12/31/2312 - 12/31/2313</p>
-                                </div>
-                                <div class="col-sm-2">
-                                    &nbsp;
+                                <div class="col col-sm-2 text-left">
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-
-                        </div><!-- end ngRepeat: residency in residencies -->
-                        <!-- ngRepeat: school in schools --><div class="ng-scope" ng-repeat="school in schools">
-                            <!-- Summary of each school with option to remove. -->
-                            <div class="well well-sm well-purple">
-                                <div class="col-sm-5 text-left">
-                                    <p style="margin-bottom: 0px"><strong class="ng-binding">asdads (Med School)</strong></p>
-                                    <p class="ng-binding">3, AS, 123</p>
-                                </div>
-                                <div class="col-sm-5 text-left">
-                                    <p class="ng-binding" style="margin-bottom: 0px">1231231</p>
-                                    <p class="ng-binding">Year Graduated: 3121</p>
-                                </div>
-                                <div class="col-sm-2">
-                                    &nbsp;
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div><!-- end ngRepeat: school in schools -->
+                            <?php }
+                        } ?>
                     </div>
+                    <div id="residency_list">
+                        <?php
+                        if($residencys){
+                            foreach ($residencys as $row){ 
+                                ?>
+                            <div class="row-wrapper well-purple padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                <div class="col col-sm-5 text-left">
+                                    <strong><?php echo $row["institution"]; ?></strong><br>
+                                    <?php echo $row["city"].",".$row["state"].",".$row["country"]; ?>
+                                </div>
+                                <div class="col col-sm-4 text-left">
+                                    <?php 
+                                    $speciality =  get_specialties($row["speciality"]); 
+                                    $sub_speciality =  get_specialties($row["sub_speciality"]); 
+                                    echo ( isset($speciality['name']) ) ? $speciality['name'] : "";
+                                    echo ( isset($sub_speciality['name']) ) ? ", ".$sub_speciality['name'] : "";
+                                    ?>
+                                    <br>
+                                    <?php echo date("Y-m-d",$row["date_from"])." - ".date("Y-m-d",$row["date_to"]); ?>
+                                </div>
+                                <div class="col col-sm-2 text-left">
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <?php }
+                        } ?>
+                    </div>
+                    <div id="fellowship_list">
+                        <?php
+                        if($fellowships){
+                            foreach ($fellowships as $row){ 
+                                ?>
+                            <div class="row-wrapper well-yellow padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                <div class="col col-sm-5 text-left">
+                                    <strong><?php echo $row["institution"]; ?></strong><br>
+                                    <?php echo $row["city"].",".$row["state"].",".$row["country"]; ?>
+                                </div>
+                                <div class="col col-sm-4 text-left">
+                                    <?php 
+                                    $speciality =  get_specialties($row["speciality"]); 
+                                    $sub_speciality =  get_specialties($row["sub_speciality"]); 
+                                    echo ( isset($speciality['name']) ) ? $speciality['name'] : "";
+                                    echo ( isset($sub_speciality['name']) ) ? ", ".$sub_speciality['name'] : "";
+                                    ?>
+                                    <br>
+                                    <?php echo date("Y-m-d",$row["date_from"])." - ".date("Y-m-d",$row["date_to"]); ?>
+                                </div>
+                                <div class="col col-sm-2 text-left">
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <?php }
+                        } ?>
+                    </div>
+                    
                 </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="editEducationInfo()"><i class="fa fa-pencil">&nbsp;</i>Edit</a></div>
-                <div class="clearfix"></div>
+                <div>
+                    <a id="education_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </div>
+                
+                
+
             </div>
-            <div class="ng-hide" ng-show="educationSection == 'edit'" style="position: relative;">											
-                <div id="educationW" style="position: absolute; top: 10; width: 100%; height: 100%; background: #ccc; opacity: 0.3; z-index: 9999; display: none;">&nbsp;</div>
+            <div id="education_edit" style="display: none;">
                 <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 style="text-align: left; padding-left: 20px;">Education</h3>
-                    <div class="alert alert-danger" id="educationE" style="display: none;">You have to add at least one School and Residency.</div>
-                    <fieldset style="float: none; margin: 0 auto; padding: 0 0 0 25px;">
-                        <div class="filter">
-                            <!-- ngRepeat: residency in fellowships --><div class="ng-scope" ng-repeat="residency in fellowships">
-                                <!-- Summary of each school with option to remove. -->
-                                <div class="well well-sm well-yellow">
-                                    <div class="col-sm-5 text-left">
-                                        <p style="margin-bottom: 0px"><strong class="ng-binding">asdasd</strong></p>
-                                        <p class="ng-binding">123123, AK, 121</p>
-                                    </div>
-                                    <div class="col-sm-5 text-left">
-                                        <p class="ng-binding" style="margin-bottom: 0px">Critical Care Medicine</p>
-                                        <p class="ng-binding">12/31/2313 - 12/31/2312</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a class="btn btn-danger btn-xs" ng-click="fellowships.splice($index, 1)">Remove</a>
-                                    </div>
-                                    <div class="clearfix"></div>
+                    <h3 class="profile_heading2">Educations</h3>
+                    <div id="education_rsp" class="" style="display: none;"></div>
+                    
+                    <div id="degree_list_edit">
+                        <?php
+                        if($degrees){
+                            foreach ($degrees as $row){ 
+                                ?>
+                            <div class="row-wrapper well-blue padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                <div class="col col-sm-5 text-left">
+                                    <strong><?php echo $row["degree"]; ?></strong><br>
+                                    <?php 
+                                    $med_school = (isset($row["med_school"]) && $row["med_school"] == "yes" ) ? "(Med School)" : ""; 
+                                    echo $row["school"].$med_school;
+                                    ?>
                                 </div>
-                            </div><!-- end ngRepeat: residency in fellowships -->
-                            <!-- ngRepeat: residency in residencies --><div class="ng-scope" ng-repeat="residency in residencies">
-
-                                <!-- Summary of each school with option to remove. -->
-                                <div class="well well-sm well-blue">
-                                    <div class="col-sm-5 text-left">
-                                        <p style="margin-bottom: 0px"><strong class="ng-binding">asdasd</strong></p>
-                                        <p class="ng-binding">zxczc, AK, pk</p>
-                                    </div>
-                                    <div class="col-sm-5 text-left">
-                                        <p class="ng-binding" style="margin-bottom: 0px">Hospice and Palliative Medicine</p>
-                                        <p class="ng-binding">12/31/2312 - 12/31/2313</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a class="btn btn-danger btn-xs" ng-click="residencies.splice($index, 1)">Remove</a>
-                                    </div>
-                                    <div class="clearfix"></div>
+                                <div class="col col-sm-4 text-left">
+                                    <?php echo date("Y",$row["year"]); ?><br>
+                                    <?php echo $row["city"].",".$row["state"].",".$row["country"]; ?>
                                 </div>
-
-                            </div><!-- end ngRepeat: residency in residencies -->
-                            <!-- ngRepeat: school in schools --><div class="ng-scope" ng-repeat="school in schools">
-                                <!-- Summary of each school with option to remove. -->
-                                <div class="well well-sm well-purple">
-                                    <div class="col-sm-5 text-left">
-                                        <p style="margin-bottom: 0px"><strong class="ng-binding">asdads (Med School)</strong></p>
-                                        <p class="ng-binding">3, AS, 123</p>
-                                    </div>
-                                    <div class="col-sm-5 text-left">
-                                        <p class="ng-binding" style="margin-bottom: 0px">1231231</p>
-                                        <p class="ng-binding">Year Graduated: 3121</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a class="btn btn-danger btn-xs" ng-click="schools.splice($index, 1)">Remove</a>
-                                    </div>
-                                    <div class="clearfix"></div>
+                                <div class="col col-sm-2 text-left">
+                                    <a class="remove_degree btn btn-danger btn-sm">Remove</a>
                                 </div>
-                            </div><!-- end ngRepeat: school in schools -->
-                        </div>
-                        <div style="text-align: center;" class="filter" ng-show="stage4SubState == 'normal'">
-                            <a class="btn btn-light-blue btn-sm" ng-click="stage4SubState = 'addEducation'"><i class="fa fa-check-circle">&nbsp;</i> Add Degree</a>
-                            <a class="btn btn-light-red btn-sm" ng-click="stage4SubState = 'addResidency'"><i class="fa fa-check-circle">&nbsp;</i> Add Residency</a>
-                            <a class="btn btn-light-yellow btn-sm" ng-click="stage4SubState = 'addFellowship'"><i class="fa fa-check-circle">&nbsp;</i> Add Fellowship</a>
-                        </div>
-                        <div class="ng-hide" ng-show="stage4SubState == 'addEducation'">
-                            <div class="filter">
-                                <input class="ng-pristine ng-valid" id="schoolName" ng-model="newSchool.name" placeholder="School" type="text">
-                                <input class="ng-pristine ng-valid" id="schoolDegree" ng-model="newSchool.degree" placeholder="Degree" type="text">
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="filter">
-                                <input class="ng-pristine ng-valid" id="schoolCity" ng-model="newSchool.city" placeholder="City" type="text">
-                                <select class="ng-pristine ng-valid" id="schoolState" ng-model="newSchool.state" style="width: 15%;" ng-options="option for option in states"><option class="" value="">State</option><option value="0">AL</option><option value="1">AK</option><option value="2">AS</option><option value="3">AZ</option><option value="4">AR</option><option value="5">CA</option><option value="6">CO</option><option value="7">CT</option><option value="8">DE</option><option value="9">DC</option><option value="10">FM</option><option value="11">FL</option><option value="12">GA</option><option value="13">GU</option><option value="14">HI</option><option value="15">ID</option><option value="16">IL</option><option value="17">IN</option><option value="18">IA</option><option value="19">KS</option><option value="20">KY</option><option value="21">LA</option><option value="22">ME</option><option value="23">MH</option><option value="24">MD</option><option value="25">MA</option><option value="26">MI</option><option value="27">MN</option><option value="28">MS</option><option value="29">MO</option><option value="30">MT</option><option value="31">NE</option><option value="32">NV</option><option value="33">NH</option><option value="34">NJ</option><option value="35">NM</option><option value="36">NY</option><option value="37">NC</option><option value="38">ND</option><option value="39">MP</option><option value="40">OH</option><option value="41">OK</option><option value="42">OR</option><option value="43">PW</option><option value="44">PA</option><option value="45">PR</option><option value="46">RI</option><option value="47">SC</option><option value="48">SD</option><option value="49">TN</option><option value="50">TX</option><option value="51">UT</option><option value="52">VT</option><option value="53">VI</option><option value="54">VA</option><option value="55">WA</option><option value="56">WV</option><option value="57">WI</option><option value="58">WY</option></select>
-                                <input class="ng-pristine ng-valid" id="schoolCountry" ng-model="newSchool.country" placeholder="Country" style="width: 25%" type="text">
+                            <?php }
+                        } ?>
+                    </div>
+                    <div id="residency_list_edit">
+                        <?php
+                        if($residencys){
+                            foreach ($residencys as $row){ 
+                                ?>
+                            <div class="row-wrapper well-purple padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                <div class="col col-sm-5 text-left">
+                                    <strong><?php echo $row["institution"]; ?></strong><br>
+                                    <?php echo $row["city"].",".$row["state"].",".$row["country"]; ?>
+                                </div>
+                                <div class="col col-sm-4 text-left">
+                                    <?php 
+                                    $speciality =  get_specialties($row["speciality"]); 
+                                    $sub_speciality =  get_specialties($row["sub_speciality"]); 
+                                    echo ( isset($speciality['name']) ) ? $speciality['name'] : "";
+                                    echo ( isset($sub_speciality['name']) ) ? ", ".$sub_speciality['name'] : "";
+                                    ?>
+                                    <br>
+                                    <?php echo date("Y-m-d",$row["date_from"])." - ".date("Y-m-d",$row["date_to"]); ?>
+                                </div>
+                                <div class="col col-sm-2 text-left">
+                                    <a class="remove_residency btn btn-danger btn-sm">Remove</a>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="filter">
-                                <input id="schoolYear" class="yearMask ng-pristine ng-valid" ng-model="newSchool.gradYear" placeholder="Year" type="text">
-                                <span style="margin: 5px; padding: 7px;">Med School &nbsp;<input class="ng-pristine ng-valid" ng-model="newSchool.isMedSchool" type="checkbox"></span>
+                            <?php }
+                        } ?>
+                    </div>
+                    <div id="fellowship_list_edit">
+                        <?php
+                        if($fellowships){
+                            foreach ($fellowships as $row){ 
+                                ?>
+                            <div class="row-wrapper well-yellow padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                <div class="col col-sm-5 text-left">
+                                    <strong><?php echo $row["institution"]; ?></strong><br>
+                                    <?php echo $row["city"].",".$row["state"].",".$row["country"]; ?>
+                                </div>
+                                <div class="col col-sm-4 text-left">
+                                    <?php 
+                                    $speciality =  get_specialties($row["speciality"]); 
+                                    $sub_speciality =  get_specialties($row["sub_speciality"]); 
+                                    echo ( isset($speciality['name']) ) ? $speciality['name'] : "";
+                                    echo ( isset($sub_speciality['name']) ) ? ", ".$sub_speciality['name'] : "";
+                                    ?>
+                                    <br>
+                                    <?php echo date("Y-m-d",$row["date_from"])." - ".date("Y-m-d",$row["date_to"]); ?>
+                                </div>
+                                <div class="col col-sm-2 text-left">
+                                    <a class="remove_fellowship btn btn-danger btn-sm">Remove</a>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="text-left" style="padding: 10px;">
-                                <a class="btn btn-primary btn-sm" ng-click="addEducation()">Add</a>
-                                <a class="btn btn-primary btn-sm" ng-click="stage4SubState = 'normal';
-                                                                                                                            resetError();">Cancel</a>
-                            </div>
-                        </div>
-                        <div class="ng-hide" ng-show="stage4SubState == 'addResidency'">
-                            <div class="filter">
-                                <input class="ng-pristine ng-valid" id="rInstitution" ng-model="newResidency.name" placeholder="Institution" type="text">
-                            </div>
-                            <div class="filter">
-                                <input id="rFrom" ng-model="newResidency.fromDate" class="dateMask ng-pristine ng-valid" placeholder="From" type="text">
-                                <input id="rTo" ng-model="newResidency.toDate" class="dateMask ng-pristine ng-valid" placeholder="To" type="text">
-                            </div>
-                            <div class="filter">
-                                <input class="ng-pristine ng-valid" id="rCity" ng-model="newResidency.city" placeholder="City" type="text">
-                                <select class="ng-pristine ng-valid" id="rState" ng-model="newResidency.state" style="width: 15%;" ng-options="option for option in states"><option class="" value="">State</option><option value="0">AL</option><option value="1">AK</option><option value="2">AS</option><option value="3">AZ</option><option value="4">AR</option><option value="5">CA</option><option value="6">CO</option><option value="7">CT</option><option value="8">DE</option><option value="9">DC</option><option value="10">FM</option><option value="11">FL</option><option value="12">GA</option><option value="13">GU</option><option value="14">HI</option><option value="15">ID</option><option value="16">IL</option><option value="17">IN</option><option value="18">IA</option><option value="19">KS</option><option value="20">KY</option><option value="21">LA</option><option value="22">ME</option><option value="23">MH</option><option value="24">MD</option><option value="25">MA</option><option value="26">MI</option><option value="27">MN</option><option value="28">MS</option><option value="29">MO</option><option value="30">MT</option><option value="31">NE</option><option value="32">NV</option><option value="33">NH</option><option value="34">NJ</option><option value="35">NM</option><option value="36">NY</option><option value="37">NC</option><option value="38">ND</option><option value="39">MP</option><option value="40">OH</option><option value="41">OK</option><option value="42">OR</option><option value="43">PW</option><option value="44">PA</option><option value="45">PR</option><option value="46">RI</option><option value="47">SC</option><option value="48">SD</option><option value="49">TN</option><option value="50">TX</option><option value="51">UT</option><option value="52">VT</option><option value="53">VI</option><option value="54">VA</option><option value="55">WA</option><option value="56">WV</option><option value="57">WI</option><option value="58">WY</option></select>
-                                <input class="ng-pristine ng-valid" id="rCountry" ng-model="newResidency.country" placeholder="Country" style="width: 25%" type="text">
-                            </div>
-                            <div class="filter">
-                                <select class="ng-pristine ng-valid" id="rField" ng-model="newResidency.field" ng-options="option as option.get('name') for option in specialties"><option class="" value="">Field</option><option value="0">Allergy and Immunology</option><option value="1">Anesthesiology</option><option value="2">Colon and Rectal Surgery</option><option value="3">Dermatology</option><option value="4">Emergency Medicine</option><option value="5">Family Medicine</option><option value="6">Internal Medicine</option><option value="7">Medical Genetics</option><option value="8">Neurological Surgery</option><option value="9">Neurology</option><option value="10">Nuclear Medicine</option><option value="11">Obstetrics and Gynecology</option><option value="12">Opthalmology</option><option value="13">Orthopaedic Surgery</option><option value="14">Otolaryngology</option><option value="15">Pathology</option><option value="16">Pediatrics</option><option value="17">Physical Medicine and Rehabilitation</option><option value="18">Plastic Surgery</option><option value="19">Preventive Medicine</option><option value="20">Psychiatry</option><option value="21">Radiology</option><option value="22">Surgery - General</option><option value="23">Thoracic and Cardiac Surgery</option><option value="24">Urology</option></select>
-                                <select class="ng-pristine ng-valid" id="rConcentration" ng-model="newResidency.concentration" ng-options="option for option in newResidency.field.get('subspecialties')"><option class="" value="">Concentration</option></select>
-                            </div>
-                            <div class="text-left" style="padding: 10px;">
-                                <a class="btn btn-primary btn-sm" ng-click="addResidency()">Add</a>
-                                <a class="btn btn-primary btn-sm" ng-click="stage4SubState = 'normal';
-                                                                                                                            resetError();">Cancel</a>
-                            </div>
-                        </div>
-                        <div class="ng-hide" ng-show="stage4SubState == 'addFellowship'">
-
-                            <div class="filter">
-                                <input class="ng-pristine ng-valid" id="fInstitution" ng-model="newFellowship.name" placeholder="Institution" type="text">
-                            </div>
-                            <div class="filter">
-                                <input id="fFrom" ng-model="newFellowship.fromDate" class="dateMask ng-pristine ng-valid" placeholder="From" type="text">
-                                <input id="fTo" ng-model="newFellowship.toDate" class="dateMask ng-pristine ng-valid" placeholder="To" type="text">
-                            </div>
-                            <div class="filter">
-                                <input class="ng-pristine ng-valid" id="fCity" ng-model="newFellowship.city" placeholder="City" type="text">
-                                <select class="ng-pristine ng-valid" id="fState" ng-model="newFellowship.state" style="width: 15%;" ng-options="option for option in states"><option class="" value="">State</option><option value="0">AL</option><option value="1">AK</option><option value="2">AS</option><option value="3">AZ</option><option value="4">AR</option><option value="5">CA</option><option value="6">CO</option><option value="7">CT</option><option value="8">DE</option><option value="9">DC</option><option value="10">FM</option><option value="11">FL</option><option value="12">GA</option><option value="13">GU</option><option value="14">HI</option><option value="15">ID</option><option value="16">IL</option><option value="17">IN</option><option value="18">IA</option><option value="19">KS</option><option value="20">KY</option><option value="21">LA</option><option value="22">ME</option><option value="23">MH</option><option value="24">MD</option><option value="25">MA</option><option value="26">MI</option><option value="27">MN</option><option value="28">MS</option><option value="29">MO</option><option value="30">MT</option><option value="31">NE</option><option value="32">NV</option><option value="33">NH</option><option value="34">NJ</option><option value="35">NM</option><option value="36">NY</option><option value="37">NC</option><option value="38">ND</option><option value="39">MP</option><option value="40">OH</option><option value="41">OK</option><option value="42">OR</option><option value="43">PW</option><option value="44">PA</option><option value="45">PR</option><option value="46">RI</option><option value="47">SC</option><option value="48">SD</option><option value="49">TN</option><option value="50">TX</option><option value="51">UT</option><option value="52">VT</option><option value="53">VI</option><option value="54">VA</option><option value="55">WA</option><option value="56">WV</option><option value="57">WI</option><option value="58">WY</option></select>
-                                <input class="ng-pristine ng-valid" id="fCountry" ng-model="newFellowship.country" placeholder="Country" style="width: 25%" type="text">
-                            </div>
-                            <div class="filter">
-                                <select class="ng-pristine ng-valid" id="fField" ng-model="newFellowship.field" ng-options="option as option.get('name') for option in specialties"><option class="" value="">Field</option><option value="0">Allergy and Immunology</option><option value="1">Anesthesiology</option><option value="2">Colon and Rectal Surgery</option><option value="3">Dermatology</option><option value="4">Emergency Medicine</option><option value="5">Family Medicine</option><option value="6">Internal Medicine</option><option value="7">Medical Genetics</option><option value="8">Neurological Surgery</option><option value="9">Neurology</option><option value="10">Nuclear Medicine</option><option value="11">Obstetrics and Gynecology</option><option value="12">Opthalmology</option><option value="13">Orthopaedic Surgery</option><option value="14">Otolaryngology</option><option value="15">Pathology</option><option value="16">Pediatrics</option><option value="17">Physical Medicine and Rehabilitation</option><option value="18">Plastic Surgery</option><option value="19">Preventive Medicine</option><option value="20">Psychiatry</option><option value="21">Radiology</option><option value="22">Surgery - General</option><option value="23">Thoracic and Cardiac Surgery</option><option value="24">Urology</option></select>
-                                <select class="ng-pristine ng-valid" id="fConcentration" ng-model="newFellowship.concentration" ng-options="option for option in newFellowship.field.get('subspecialties')"><option class="" value="">Concentration</option></select>
-                            </div>
-                            <div class="text-left" style="padding: 10px;">
-                                <a class="btn btn-primary btn-sm" ng-click="addFellowship()">Add</a>
-                                <a class="btn btn-primary btn-sm" ng-click="stage4SubState = 'normal';
-                                                                                                                            resetError();">Cancel</a>
-                            </div>
-
-                        </div>
-                    </fieldset>
+                            <?php }
+                        } ?>
+                    </div>
+                
                 </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="cancelEducationInfo()">Cancel</a></div>
+                <div>
+                    <a id="education_cancel" class="edit_link"><span class="glyphicon glyphicon-ok"></span> Done</a>
+                </div>
+                
+                <div class="clearfix"></div>
+                <div id="toolbar_education" class="form_btn_bar_2">
+                    <a id="add_degree" class="btn btn-blue btn-sm" >
+                        <span class="glyphicon glyphicon-check"></span> Add Degree
+                    </a>
+                    <a id="add_residency" class="btn btn-purple btn-sm" >
+                        <span class="glyphicon glyphicon-check"></span> Add Residency
+                    </a>
+                    <a id="add_fellowship" class="btn btn-warning btn-sm" >
+                        <span class="glyphicon glyphicon-check"></span> Add Fellowship
+                    </a>
+                </div>
+                
+                <div id="add_degree_block" class="well-blue col-lg-12 block-toggle" style="padding: 5%; display: none; width: 85%;" >
+                    <form id="add_degree_form" method="post"> 
+                        
+                        <div class="left_col">
+                            <input class="ng-valid ng-dirty form-control degree_text" id="degree_school"  name="degree_school" placeholder="School" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            <input class="ng-valid ng-dirty form-control degree_text" id="degree_name" name="degree_name" placeholder="Degree" type="text" required >
+                        </div>
+                        <div class="left_col">
+                            <input class="dateMask ng-valid ng-dirty form-control degree_text" id="degree_city" name="degree_city" placeholder="City" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            <select class="form-control degree_text" name="degree_state" id="degree_state" required style="width: 40%; float: left; margin-right: 7px;">
+                                <option value="">State</option>
+                                <?php 
+                                $states = get_states( array("country"=>"US") ); 
+                                foreach($states as $state){ ?>
+                                    <option value="<?php echo $state["code"] ?>"><?php echo $state["code"] ?></option>
+                                <?php } ?>
+                            </select>
+                            
+                            <input style="float: left; width: 55%;" class="ng-valid ng-dirty form-control degree_text" id="degree_country" name="degree_country" placeholder="Country" type="text" required >
+                        </div>
+                        
+                        <div class="left_col">
+                            <input class="ng-valid ng-dirty form-control degree_text" id="degree_year"  name="degree_year" placeholder="Year" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            <div style="text-align: left; margin-top:10px;">
+                            <lable for="med_school"> Med School&nbsp;&nbsp;</lable>
+                            <input class="" name="med_school" id="med_school" value="yes" type="checkbox">
+                            </div>
+                        </div>
+                            
+                             
+                        <div class="col col-sm-12 text-center" style="margin-top: 15px; padding-left: 15px; clear: both;">
+                            <a class="btn btn-primary btn-sm" id="add_degree_btn" >Add</a>
+                            <a class="btn btn-primary btn-sm" id="cancel_degree_btn" >Cancel</a>
+                        </div>
+                    </form>
+                </div>
+                <div id="add_residency_block" class="well-purple col-lg-12 block-toggle" style="padding: 5%; display: none; width: 85%; " >
+                    <form id="add_residency_form" method="post">
+                    
+                    <div class="left_col">
+                        <input class="ng-valid ng-dirty form-control degree_text" id="res_institution"  name="res_institution" placeholder="Institution" type="text" required >
+                    </div>
+                    <div class="right_col">
+                        
+                    </div>
+                    <div class="left_col">
+                        <input class="ng-valid ng-dirty form-control degree_text" id="res_date_from"  name="res_date_from" placeholder="From" type="text" required >
+                    </div>
+                    <div class="right_col">
+                        <input class="ng-valid ng-dirty form-control degree_text" id="res_date_to" name="res_date_to" placeholder="To" type="text" required >
+                    </div>
+                    <div class="left_col">
+                        <input class="dateMask ng-valid ng-dirty form-control degree_text" id="res_city" name="res_city" placeholder="City" type="text" required >
+                    </div>
+                    <div class="right_col">
+                        <select class="form-control degree_text" name="res_state" id="res_state" required style="width: 40%; float: left; margin-right: 7px;">
+                            <option value="">State</option>
+                            <?php 
+                            $states = get_states( array("country"=>"US") ); 
+                            foreach($states as $state){ ?>
+                                <option value="<?php echo $state["code"] ?>"><?php echo $state["code"] ?></option>
+                            <?php } ?>
+                        </select>
+
+                        <input style="float: left; width: 55%;" class="ng-valid ng-dirty form-control degree_text" id="res_country" name="res_country" placeholder="Country" type="text" required >
+                    </div>
+                        
+                    <div class="left_col">
+                        <select id="res_specialty" name="res_specialty" class="ng-pristine ng-valid form-control" required>
+                            <option value="">Specialty</option>
+                            <?php 
+                            foreach($specialties as $val){ 
+                                $selected = (isset($jobseeker['specialty']) && $jobseeker['specialty'] == $val['id'] ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="<?php echo $val['id']; ?>" <?php echo $selected; ?> ><?php echo strip_slashes($val['name']); ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="right_col">
+                        <select id="res_sub_specialty" name="res_sub_specialty" class="ng-pristine ng-valid form-control sub_speciality" required>
+                            <option value="">Sub Specialty</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col col-sm-12 text-center" style="margin-top: 15px; padding-left: 15px; clear: both;">
+                        <a class="btn btn-primary btn-sm" id="add_residency_btn" >Add</a>
+                        <a class="btn btn-primary btn-sm" id="cancel_residency_btn" >Cancel</a>
+                    </div>
+                    </form>
+                </div>
+                <div id="add_fellowship_block" class="well-yellow col-lg-12 block-toggle" style="padding: 5%; display: none; width: 85%; " >
+                    <form id="add_fellowship_form" method="post">
+                    
+                    <div class="left_col">
+                        <input class="ng-valid ng-dirty form-control degree_text" id="fac_institution"  name="fac_institution" placeholder="Institution" type="text" required >
+                    </div>
+                    <div class="right_col">
+                        
+                    </div>
+                    <div class="left_col">
+                        <input class="ng-valid ng-dirty form-control degree_text" id="fac_date_from"  name="fac_date_from" placeholder="From" type="text" required >
+                    </div>
+                    <div class="right_col">
+                        <input class="ng-valid ng-dirty form-control degree_text" id="fac_date_to" name="fac_date_to" placeholder="To" type="text" required >
+                    </div>
+                    <div class="left_col">
+                        <input class="dateMask ng-valid ng-dirty form-control degree_text" id="fac_city" name="fac_city" placeholder="City" type="text" required >
+                    </div>
+                    <div class="right_col">
+                        <select class="form-control degree_text" name="fac_state" id="fac_state" required style="width: 40%; float: left; margin-right: 7px;">
+                            <option value="">State</option>
+                            <?php 
+                            $states = get_states( array("country"=>"US") ); 
+                            foreach($states as $state){ ?>
+                                <option value="<?php echo $state["code"] ?>"><?php echo $state["code"] ?></option>
+                            <?php } ?>
+                        </select>
+
+                        <input style="float: left; width: 55%;" class="ng-valid ng-dirty form-control degree_text" id="fac_country" name="fac_country" placeholder="Country" type="text" required >
+                    </div>
+                        
+                    <div class="left_col">
+                        <select id="fac_specialty" name="fac_specialty" class="ng-pristine ng-valid form-control" required>
+                            <option value="">Specialty</option>
+                            <?php 
+                            foreach($specialties as $val){ 
+                                $selected = (isset($jobseeker['specialty']) && $jobseeker['specialty'] == $val['id'] ) ? ' selected="selected" ' : "" ;
+                                ?>
+                                <option value="<?php echo $val['id']; ?>" <?php echo $selected; ?> ><?php echo strip_slashes($val['name']); ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="right_col">
+                        <select id="fac_sub_specialty" name="fac_sub_specialty" class="ng-pristine ng-valid form-control sub_speciality" required>
+                            <option value="">Sub Specialty</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col col-sm-12 text-center" style="margin-top: 15px; padding-left: 15px; clear: both;">
+                        <a class="btn btn-primary btn-sm" id="add_fellowship_btn" >Add</a>
+                        <a class="btn btn-primary btn-sm" id="cancel_fellowship_btn" >Cancel</a>
+                    </div>
+                    </form>
+                </div>
+                
                 <div class="clearfix"></div>
             </div>
-
         </div>
         
         <!--Practice Section-->
         <div id="practiceC">
-            <div class="" ng-show="practiceSection == 'list'">
+            <div id="practice_block">
                 <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 style="text-align: left; padding-left: 20px;">Practices</h3>
-                    <div style="padding-left: 25px;">
-                        <!-- ngRepeat: practice in practices --><div class="ng-scope" ng-repeat="practice in practices">
-
-                            <div class="well well-sm well-blue">
-                                <div class="col-sm-5 text-left">
-                                    <p style="margin-bottom: 0px"><strong class="ng-binding">zasdasd</strong></p>
-                                    <p class="ng-binding">adsd asdasd</p>
-                                </div>
-                                <div class="col-sm-5 text-left">
-                                    <p class="ng-binding" style="margin-bottom: 0px">12/31/2313 - 12/31/2312</p>
-                                    <p class="ng-binding">zxc, AL, US</p>
-                                </div>
-                                <div class="col-sm-2">
-                                    &nbsp;
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-
-                        </div><!-- end ngRepeat: practice in practices -->
-                    </div>
-                </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="editPracticeInfo()"><i class="fa fa-pencil">&nbsp;</i>Edit</a></div>
-                <div class="clearfix"></div>	
-            </div>
-            <div class="ng-hide" ng-show="practiceSection == 'edit'">
-                <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 style="text-align: left; padding-left: 20px;">Practices</h3>
-                    <fieldset style="float: none; margin: 0 auto; padding: 15px 0 0 25px;">
-                        <div class="filter">
-                            <!-- ngRepeat: practice in practices --><div class="ng-scope" ng-repeat="practice in practices">
-
-                                <div class="well well-sm well-blue">
-                                    <div class="col-sm-5 text-left">
-                                        <p style="margin-bottom: 0px"><strong class="ng-binding">zasdasd</strong></p>
-                                        <p class="ng-binding">adsd asdasd</p>
+                    <h3 class="profile_heading2">Practices</h3>
+                    
+                    <div id="practice_list">
+                        <?php
+                        if($practices){
+                            foreach ($practices as $row){ 
+                                ?>
+                                <div class="row-wrapper well-blue padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                    <div class="col col-sm-5 text-left">
+                                        <strong><?php echo $row["hospital_name"]; ?></strong><br>
+                                        <?php 
+                                        echo $row["facility_type"].",".$row["job_title"];
+                                        ?>
                                     </div>
-                                    <div class="col-sm-5 text-left">
-                                        <p class="ng-binding" style="margin-bottom: 0px">12/31/2313 - 12/31/2312</p>
-                                        <p class="ng-binding">zxc, AL, US</p>
+                                    <div class="col col-sm-4 text-left">
+                                        <?php echo date("Y-m-d",$row["start_date"])." - ".date("Y-m-d",$row["end_date"]); ?><br>
+                                        <?php 
+                                        echo $row["city"].",".$row["state"];
+                                        ?>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <a class="btn btn-danger btn-xs" ng-click="deletePracticeInfo($index)">Remove</a>
+                                    <div class="col col-sm-2 text-left">
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-
-                            </div><!-- end ngRepeat: practice in practices -->
-                        </div>
-                        <div class="filter">
-                            <input class="ng-pristine ng-valid" id="jobTitle" ng-model="newPractice.job" placeholder="Job Title" type="text">
-                            <input class="ng-pristine ng-valid" id="workCity" placeholder="City" maxlength="50" ng-model="newPractice.city" style="width: 25%" type="text">
-                            <select class="ng-pristine ng-valid" id="workState" type="text" style="width: 15%;" ng-model="newPractice.state" ng-options="option for option in states"><option class="" value="" selected="">State</option><option value="0">AL</option><option value="1">AK</option><option value="2">AS</option><option value="3">AZ</option><option value="4">AR</option><option value="5">CA</option><option value="6">CO</option><option value="7">CT</option><option value="8">DE</option><option value="9">DC</option><option value="10">FM</option><option value="11">FL</option><option value="12">GA</option><option value="13">GU</option><option value="14">HI</option><option value="15">ID</option><option value="16">IL</option><option value="17">IN</option><option value="18">IA</option><option value="19">KS</option><option value="20">KY</option><option value="21">LA</option><option value="22">ME</option><option value="23">MH</option><option value="24">MD</option><option value="25">MA</option><option value="26">MI</option><option value="27">MN</option><option value="28">MS</option><option value="29">MO</option><option value="30">MT</option><option value="31">NE</option><option value="32">NV</option><option value="33">NH</option><option value="34">NJ</option><option value="35">NM</option><option value="36">NY</option><option value="37">NC</option><option value="38">ND</option><option value="39">MP</option><option value="40">OH</option><option value="41">OK</option><option value="42">OR</option><option value="43">PW</option><option value="44">PA</option><option value="45">PR</option><option value="46">RI</option><option value="47">SC</option><option value="48">SD</option><option value="49">TN</option><option value="50">TX</option><option value="51">UT</option><option value="52">VT</option><option value="53">VI</option><option value="54">VA</option><option value="55">WA</option><option value="56">WV</option><option value="57">WI</option><option value="58">WY</option></select>
-                        </div>
-                        <div class="filter">
-                            <input class="ng-pristine ng-valid" id="hospitalName" ng-model="newPractice.name" placeholder="Hospital Name" type="text">
-                            <input id="workStartDate" ng-model="newPractice.fromDate" class="dateMask ng-pristine ng-valid" placeholder="Start Date" type="text">
-                        </div>
-                        <div class="filter">
-                            <input class="ng-pristine ng-valid" id="facilityType" ng-model="newPractice.type" placeholder="Facility Type" type="text">
-                            <input id="workEndDate" ng-model="newPractice.toDate" class="dateMask ng-pristine ng-valid" placeholder="End Date" type="text">
-                        </div>
-                        <div class="filter" style="margin-top: 5px;">
-                            <a ng-click="addProfessionInfo()" class="btn btn-sm btn-green">Add</a>
-                        </div>
-
-
-
-                    </fieldset>
+                            <?php }
+                        } ?>
+                    </div>  
                 </div>
-                <div style="float: left; width: 15%; text-align: right; padding-right: 15px; padding-top: 15px;"><a ng-click="cancelPracticeInfo()">Cancel</a></div>
+                <div>
+                    <a id="practice_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                </div>
+
+            </div>
+            <div id="practice_edit" style="display: none;">
+                <div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
+                <h3 class="profile_heading2">Practices</h3>
+                <div id="practice_rsp" class="" style="display: none;"></div>
+                    <div id="practice_list_edit">
+                        <?php
+                        if($practices){
+                            foreach ($practices as $row){ 
+                                ?>
+                                <div class="row-wrapper well-blue padding_5" data-val="<?php echo $row["id"]; ?>" >
+                                    <div class="col col-sm-5 text-left">
+                                        <strong><?php echo $row["hospital_name"]; ?></strong><br>
+                                        <?php 
+                                        echo $row["facility_type"].",".$row["job_title"];
+                                        ?>
+                                    </div>
+                                    <div class="col col-sm-4 text-left">
+                                        <?php echo date("Y-m-d",$row["start_date"])." - ".date("Y-m-d",$row["end_date"]); ?><br>
+                                        <?php 
+                                        echo $row["city"].",".$row["state"];
+                                        ?>
+                                    </div>
+                                    <div class="col col-sm-2 text-left">
+                                        <a class="remove_practice btn btn-danger btn-sm">Remove</a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            <?php }
+                        } ?>
+                    </div>
+                </div>
+                <div>
+                    <a id="practice_cancel" class="edit_link"><span class="glyphicon glyphicon-ok"></span> Done</a>
+                </div>
+                
+                <div class="clearfix"></div>
+                <div id="toolbar_practice" class="form_btn_bar_2">
+                    <a id="add_practice" class="btn btn-blue btn-sm" >
+                        <span class="glyphicon glyphicon-check"></span> Add Practice
+                    </a>
+                </div>
+                
+                <div id="add_practice_block" class="well-blue col-lg-12 block-toggle" style="padding: 5%; display: none; width: 85%;" >
+                    <form id="add_practice_form"> 
+                        
+                        <div class="left_col">
+                            <input class="dateMask ng-valid ng-dirty form-control practice_text" id="job_title" name="job_title" placeholder="Job Title" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            
+                            <input style="float: left; width: 55%;" class="ng-valid ng-dirty form-control practice_text" id="city" name="city" placeholder="City" type="text" required >
+                            
+                            <select class="form-control practice_text" name="state" id="state" required style="width: 40%; float: left; margin-right: 7px;">
+                                <option value="">State</option>
+                                <?php 
+                                $states = get_states( array("country"=>"US") ); 
+                                foreach($states as $state){ ?>
+                                    <option value="<?php echo $state["code"] ?>"><?php echo $state["code"] ?></option>
+                                <?php } ?>
+                            </select>
+                            
+                        </div>
+                        
+                        <div class="left_col">
+                            <input class="ng-valid ng-dirty form-control practice_text" id="hospital_name"  name="hospital_name" placeholder="Hospital Name" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            <input class="ng-valid ng-dirty form-control practice_text" id="start_date" name="start_date" placeholder="Start Date" type="text" required >
+                        </div>
+                        
+                        <div class="left_col">
+                            <input class="ng-valid ng-dirty form-control practice_text" id="facility_type"  name="facility_type" placeholder="Facility Type" type="text" required >
+                        </div>
+                        <div class="right_col">
+                            <input class="ng-valid ng-dirty form-control practice_text" id="end_date"  name="end_date" placeholder="End date" type="text" required >
+                        </div>
+                            
+                             
+                        <div class="col col-sm-12 text-center" style="margin-top: 15px; padding-left: 15px; clear: both;">
+                            <a class="btn btn-primary btn-sm" id="add_practice_btn" >Add</a>
+                            <a class="btn btn-primary btn-sm" id="cancel_practice_btn" >Cancel</a>
+                        </div>
+                    </form>
+                </div>
+                
                 <div class="clearfix"></div>
             </div>
-
         </div>
+        
+        <br>
         <br>
     </div>
     <div class="col col-sm-5">
@@ -670,4 +966,665 @@
     </div>
     <div class="clearfix"></div>
 </div>
+
+<script>
+    // certification script
+    
+    var total_license = '<?php echo $total_license; ?>';
+    var total_cert = '<?php echo $total_cert; ?>';
+    $("#cert_issued_on").datepicker( {"dateFormat":"yy-mm-dd" } );
+    $("#licenseIssued").datepicker( {"dateFormat":"yy-mm-dd" } );
+    
+    $("#tabContent").on("click","#certification_cancel",function(){
+        if(total_license <= 0 || total_cert <= 0){
+            $("#certification_rsp").html("Must add at least one of each");
+            $("#certification_rsp").addClass("error_rsp").show();
+        }
+        else{
+            $("#certification_block").show();
+            $("#certification_edit").hide();
+        }
+    });
+    
+    $("#add_license").click(function(){
+        
+        $(".block-toggle").hide();
+        $("#add_license_block").show();
+        
+        $(".license_text").val("");
+        $(this).removeClass("error");
+    });
+    $("#add_certification").click(function(){
+        $(".block-toggle").hide();
+        $("#add_certification_block").show();
+        
+        $(".cert_text").val("");
+        $(this).removeClass("error");
+    });
+    $("#cancel_certification_btn").click(function(){
+        $("#add_certification_block").hide();
+        $("#toolbar").show();
+        
+        $(".license_text").val("");
+    });
+    $("#cancel_license_btn").click(function(){
+        $("#add_license_block").hide();
+        $("#toolbar").show();
+        
+        $(".cert_text").val("");
+    });
+    
+    $("#add_license_btn").click(function(){
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        
+        var valid = $("#add_license_form").valid();
+        if(valid === true){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker_dashboard/add_license_process",
+                dataType: "json",
+                data: {
+                    licence_type : $.trim($("#licenseType").val()),
+                    licence_number : $.trim($("#licenseNumber").val()),
+                    issued_on : $.trim($("#licenseIssued").val()),
+                    state : $.trim($("#state").val()),
+                    federal: $("input[name='federal']:checked").val(),
+                    is_profile: 'true'
+                },
+            }).success(function(rsp){
+                if(rsp.status === "ok"){
+                    // continue then
+                    $("#license_list").append(rsp.html2);
+                    $("#license_list_edit").append(rsp.html);
+                    
+                    $("#add_license_block").hide();
+                    $("#toolbar").show();
+                    
+                    $(".license_text").val("");
+                    total_license++;
+                }
+                else{
+                    $("#tabContent_rsp").html(rsp.msg).show();
+                    $("#tabContent_rsp").addClass("error_rsp");
+                }
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            });
+        }
+    });
+    $("#add_certification_btn").click(function(){
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        
+        var valid = $("#add_certification_form").valid();
+        if(valid === true){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker_dashboard/add_certification_process",
+                dataType: "json",
+                data: {
+                    name : $.trim($("#cert_name").val()),
+                    issued_on : $.trim($("#cert_issued_on").val()),
+                    is_profile: 'true'
+                }
+            }).success(function(rsp){
+                if(rsp.status === "ok"){
+                    // continue then
+                    $("#certification_list").append(rsp.html2);
+                    $("#certification_list_edit").append(rsp.html);
+                    
+                    $("#add_certification_block").hide();
+                    $("#toolbar").show();
+                    
+                    $(".cert_text").val("");
+                    total_cert++;
+                }
+                else{
+                    $("#tabContent_rsp").html(rsp.msg).show();
+                    $("#tabContent_rsp").addClass("error_rsp");
+                }
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            });
+        }
+    });
+    
+    $("#tabContent").on("click",".remove_license",function(e){
+        
+        e.stopImmediatePropagation();
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_license",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                var data_val = element.attr("data-val");
+                $("#license_list div[data-val='"+data_val+"']").remove();
+                $(element).remove();
+                
+                total_license--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        
+    });
+    
+    $("#tabContent").on("click",".remove_certification",function(e){
+        e.stopImmediatePropagation();
+    
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_certification",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                var data_val = element.attr("data-val");
+                $("#certification_list div[data-val='"+data_val+"']").remove();
+                $(element).remove();
+                total_cert--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        
+    });
+    
+    // education script
+    var total_degrees = '<?php echo $total_degrees; ?>';
+    var total_residencys = '<?php echo $total_residencys; ?>';
+    var total_fellowships = '<?php echo $total_fellowships; ?>';
+    
+    $("#degree_year").datepicker(
+        {
+            "dateFormat":"yy",
+            changeYear: true,
+            showButtonPanel: true
+        }
+    );
+    
+     
+    $("#res_date_from").datepicker( {"dateFormat":"yy-mm-dd" } );
+    $("#res_date_to").datepicker( {"dateFormat":"yy-mm-dd" } );
+    $("#fac_date_from").datepicker( {"dateFormat":"yy-mm-dd" } );
+    $("#fac_date_to").datepicker( {"dateFormat":"yy-mm-dd" } );
+    
+    $("#tabContent").on("click","#education_cancel",function(){
+        if(total_degrees <= 0 || total_residencys <= 0 || total_fellowships <= 0 ){
+            $("#education_rsp").html("Must add at least one of each");
+            $("#education_rsp").addClass("error_rsp").show();
+        }
+        else{
+            $("#education_block").show();
+            $("#education_edit").hide();
+        }
+    });
+     
+    
+    $("#add_degree").click(function(){
+        
+        $(".block-toggle").hide();
+        $("#add_degree_block").show();
+        
+        $(".degree_text").val("");
+        $(this).removeClass("error");
+    });
+     
+    $("#cancel_degree_btn").click(function(){
+        $("#add_degree_block").hide();
+        $("#toolbar").show();
+        
+        $(".degree_text").val("");
+    });
+    
+    $("#add_degree_btn").click(function(){
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        
+        var valid = $("#add_degree_form").valid();
+        if(valid === true){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker_dashboard/add_degree_process",
+                dataType: "json",
+                data: {
+                    school : $.trim($("#degree_school").val()),
+                    degree : $.trim($("#degree_name").val()),
+                    city : $.trim($("#degree_city").val()),
+                    state : $.trim($("#degree_state").val()),
+                    country : $.trim($("#degree_country").val()),
+                    year : $.trim($("#degree_year").val()),
+                    med_school: $("#med_school").is(":checked"),
+                    is_profile: 'true'
+                }
+            }).success(function(rsp){
+                if(rsp.status === "ok"){
+                    // continue then
+                    $("#degree_list").append(rsp.html2);
+                    $("#degree_list_edit").append(rsp.html);
+                    
+                    $("#add_degree_block").hide();
+                    $("#toolbar").show();
+                    
+                    $(".degree_text").val("");
+                    total_degrees++;
+                }
+                else{
+                    $("#tabContent_rsp").html(rsp.msg).show();
+                    $("#tabContent_rsp").addClass("error_rsp");
+                }
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            });
+        }
+    });
+    
+    $("#tabContent").on("click",".remove_degree",function(e){
+        e.stopImmediatePropagation();
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_degree",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                var data_val = element.attr("data-val");
+                $("#degree_list div[data-val='"+data_val+"']").remove();
+                $(element).remove();
+                total_degrees--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        
+    });
+    
+    
+    $("#add_residency").click(function(){
+        
+        $(".block-toggle").hide();
+        $("#add_residency_block").show();
+        
+        $(".residency_text").val("");
+        $(this).removeClass("error");
+    });
+     
+    $("#cancel_residency_btn").click(function(){
+        $("#add_residency_block").hide();
+        $("#toolbar").show();
+        
+        $(".residency_text").val("");
+    });
+    
+    $("#add_residency_btn").click(function(){
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        
+        var valid = $("#add_residency_form").valid();
+        if(valid === true){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker_dashboard/add_residency_process",
+                dataType: "json",
+                data: {
+                    institution : $.trim($("#res_institution").val()),
+                    date_from : $.trim($("#res_date_from").val()),
+                    date_to : $.trim($("#res_date_to").val()),
+                    city : $.trim($("#res_city").val()),
+                    state : $.trim($("#res_state").val()),
+                    country : $.trim($("#res_country").val()),
+                    specialty: $.trim($("#res_specialty").val()),
+                    sub_specialty: $.trim($("#res_sub_specialty").val()),
+                    is_profile: 'true'
+                }
+            }).success(function(rsp){
+                if(rsp.status === "ok"){
+                    // continue then
+                    $("#residency_list").append(rsp.html2);
+                    $("#residency_list_edit").append(rsp.html);
+                    
+                    $("#add_residency_block").hide();
+                    $("#toolbar").show();
+                    
+                    $(".residency_text").val("");
+                    total_residencys++;
+                }
+                else{
+                    $("#tabContent_rsp").html(rsp.msg).show();
+                    $("#tabContent_rsp").addClass("error_rsp");
+                }
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            });
+        }
+    });
+    
+        
+    
+    $("#tabContent").on("click",".remove_residency",function(e){
+        e.stopImmediatePropagation();
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_residency",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                var data_val = element.attr("data-val");
+                $("#residency_list div[data-val='"+data_val+"']").remove();
+                $(element).remove();
+                total_residencys--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        return false;
+    });
+     
+     
+     $(document).on("change","#res_specialty",function(){
+        parent_speciality_change_residence(); 
+     });
+     function parent_speciality_change_residence(){
+        if($("#res_specialty").val() !== ""){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker/get_specialties/sub",
+                data: {
+                    parent_id : $.trim($("#res_specialty").val()),
+                    options: 'true'
+                },
+                dataType: "json",
+            }).success(function(rsp){
+                $("#res_sub_specialty").html(rsp.html); 
+            });
+        }
+    }
+    
+    
+    $("#add_fellowship").click(function(){
+        
+        $(".block-toggle").hide();
+        $("#add_fellowship_block").show();
+        
+        $(".fellowship_text").val("");
+        $(this).removeClass("error");
+    });
+     
+    $("#cancel_fellowship_btn").click(function(){
+        $("#add_fellowship_block").hide();
+        $("#toolbar").show();
+        
+        $(".fellowship_text").val("");
+    });
+    
+    $("#add_fellowship_btn").click(function(){
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        
+        var valid = $("#add_fellowship_form").valid();
+        if(valid === true){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker_dashboard/add_fellowship_process",
+                dataType: "json",
+                data: {
+                    institution : $.trim($("#fac_institution").val()),
+                    date_from : $.trim($("#fac_date_from").val()),
+                    date_to : $.trim($("#fac_date_to").val()),
+                    city : $.trim($("#fac_city").val()),
+                    state : $.trim($("#fac_state").val()),
+                    country : $.trim($("#fac_country").val()),
+                    specialty: $.trim($("#fac_specialty").val()),
+                    sub_specialty: $.trim($("#fac_sub_specialty").val()),
+                    is_profile: 'true'
+                }
+            }).success(function(rsp){
+                if(rsp.status === "ok"){
+                    // continue then
+                    $("#fellowship_list").append(rsp.html2);
+                    $("#fellowship_list_edit").append(rsp.html);
+                    
+                    $("#add_fellowship_block").hide();
+                    $("#toolbar").show();
+                    
+                    $(".fellowship_text").val("");
+                    total_fellowships++;
+                }
+                else{
+                    $("#tabContent_rsp").html(rsp.msg).show();
+                    $("#tabContent_rsp").addClass("error_rsp");
+                }
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            });
+        }
+    });
+    
+        
+    
+    $("#tabContent").on("click",".remove_fellowship",function(e){
+        e.stopImmediatePropagation();
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_fellowship",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                var data_val = element.attr("data-val");
+                $("#fellowship_list div[data-val='"+data_val+"']").remove();
+                $(element).remove();
+                total_fellowships--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        return false;
+    });
+     
+     
+     $(document).on("change","#fac_specialty",function(){
+        parent_speciality_change_faculty(); 
+     });
+     function parent_speciality_change_faculty(){
+        if($("#fac_specialty").val() !== ""){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker/get_specialties/sub",
+                data: {
+                    parent_id : $.trim($("#fac_specialty").val()),
+                    options: 'true'
+                },
+                dataType: "json",
+            }).success(function(rsp){
+                $("#fac_sub_specialty").html(rsp.html); 
+            });
+        }
+    }
+    
+    // practice script
+    
+    var total_practices = '<?php echo $total_practices; ?>';
+     
+    $("#start_date").datepicker( {"dateFormat":"yy-mm-dd" } );
+    $("#end_date").datepicker( {"dateFormat":"yy-mm-dd" } );
+    
+    $("#add_practice").click(function(){
+        
+        $(".block-toggle").hide();
+        $("#add_practice_block").show();
+        
+        $(".practice_text").val("");
+        $(this).removeClass("error");
+    });
+    
+    $("#tabContent").on("click","#practice_cancel",function(){
+        $("#practice_block").show();
+        $("#practice_edit").hide();
+    });
+    
+    $("#cancel_practice_btn").click(function(){
+        $("#add_practice_block").hide();
+        $("#toolbar").show();
+        
+        $(".practice_text").val("");
+    });
+    
+    $("#add_practice_btn").click(function(){
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        
+        var valid = $("#add_practice_form").valid();
+        if(valid === true){
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"job_seeker_dashboard/add_practice_process",
+                dataType: "json",
+                data: {
+                    job_title : $.trim($("#job_title").val()),
+                    city : $.trim($("#city").val()),
+                    state : $.trim($("#state").val()),
+                    hospital_name : $.trim($("#hospital_name").val()),
+                    facility_type : $.trim($("#facility_type").val()),
+                    start_date : $.trim($("#start_date").val()),
+                    end_date : $.trim($("#end_date").val()),
+                    is_profile: 'true'
+                }
+            }).success(function(rsp){
+                if(rsp.status === "ok"){
+                    // continue then
+                    $("#practice_list").append(rsp.html2);
+                    $("#practice_list_edit").append(rsp.html);
+                    
+                    $("#add_practice_block").hide();
+                    $("#toolbar").show();
+                    
+                    $(".practice_text").val("");
+                    total_practices++;
+                }
+                else{
+                    $("#tabContent_rsp").html(rsp.msg).show();
+                    $("#tabContent_rsp").addClass("error_rsp");
+                }
+            })
+            .always(function(){
+                FBox.fancybox.hideLoading();
+            });
+        }
+    });
+    
+    $("#tabContent").on("click",".remove_practice",function(e){
+        e.stopImmediatePropagation();
+        
+        $("#tabContent_rsp").html("").hide();
+        $("#tabContent_rsp").removeClass();
+        var element = $(this).parent().parent();
+        var id = $(this).parent().parent().attr("data-val");
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/delete_practice",
+            dataType: "json",
+            data: {
+                id : id
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                var data_val = element.attr("data-val");
+                $("#practice_list div[data-val='"+data_val+"']").remove();
+                
+                $(element).remove();
+                total_practices--;
+            }
+            else{
+                $("#tabContent_rsp").html(rsp.msg).show();
+                $("#tabContent_rsp").addClass("error_rsp");
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+        
+    });
+    
+</script>
 

@@ -242,6 +242,11 @@ $(document).ready(function(){
 
         $(this).parent().parent().find('li').removeClass('active');
         $(this).parent().addClass('active');
+        
+        /* datepicker fix */
+        if($("#ui-datepicker-div").length>0){
+            $("#ui-datepicker-div").remove();
+        }
 
         $("#tabContent").hide();
         FBox.fancybox.showLoading();
@@ -377,24 +382,78 @@ $(document).ready(function(){
     $("#tabContent").on("click","#certification_edit_link",function(){
         $("#certification_block").hide();
         $("#certification_edit").show();
+        
+        $("#certification_rsp").hide();
+        
     });
-    $("#tabContent").on("click","#certification_cancel",function(){
-        $("#certification_block").show();
-        $("#certification_edit").hide();
+    $("#tabContent").on("click","#education_edit_link",function(){
+        $("#education_block").hide();
+        $("#education_edit").show();
+        
+        $("#education_rsp").hide();
+        
+    });
+    $("#tabContent").on("click","#practice_edit_link",function(){
+        $("#practice_block").hide();
+        $("#practice_edit").show();
+        
+        $("#practice_rsp").hide();
+        
     });
     
-    $("#tabContent").on("click","#certification_save",function(){
-        var valid = $("#certification_form").valid();
-        if(valid === true){
-            var save = certification_save();
-            if(save === true){
-                $("#certification_edit").hide();
-                $("#certification_block").show();
-            }
-        }
+    $(".contact_us_map_lnk").click(function(){
+        popupContactUsMap();
     });
+    
+    $(".contact_us_email_lnk").click(function(){
+        popupContactUsEmail();
+    });
+     
     
 });
+
+function popupContactUsMap(){
+    FBox.fancybox.showLoading();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"employer/contact_us_map_popup",
+            data: {
+                
+            },
+            dataType: "json"
+        }).success(function(rsp){
+            FBox.fancybox({
+                content: rsp.html,
+                padding: 0,
+                closeBtn: false,
+                type: 'inline'
+            });
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+}
+function popupContactUsEmail(){
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employer/contact_us_email_popup",
+        data: {
+
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline'
+        });
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+}
 
 function contact_info_save(){
     var flag = true;
@@ -477,6 +536,42 @@ function init_all_profiles_forms(){
         submitHandler: function(form) {
         }
     });
+    $("#add_license_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
+    $("#add_certification_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
+    $("#add_degree_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
+    $("#add_residency_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
+    $("#add_fellowship_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
+    $("#add_practice_form").validate({
+        errorPlacement: function(error, element) {
+        },
+        submitHandler: function(form) {
+        }
+    });
 }
 
 function show_welcome_popup_jobseeker(){
@@ -509,6 +604,7 @@ function show_default_tab(){
         dataType: "json"
     }).success(function(rsp){
         $("#tabContent").html(rsp.html);
+        init_all_profiles_forms();
     })
     .always(function(){
         FBox.fancybox.hideLoading();

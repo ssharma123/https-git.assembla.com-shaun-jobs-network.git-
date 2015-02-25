@@ -59,6 +59,15 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $data["total_license"] = ( $data["licences"] ) ? count($data["licences"]) : 0 ;
         $data["total_cert"] = ( $data["certifications"] ) ? count($data["certifications"]) : 0 ;
         
+        $data["degrees"] = $this->jobseeker_degree->jobseekers_degrees_get(0, $where_array);
+        $data["residencys"] = $this->jobseeker_residency->jobseekers_residency_get(0, $where_array);
+        $data["fellowships"] = $this->jobseeker_fellowship->jobseekers_fellowships_get(0, $where_array);
+        $data["total_degrees"] = ( $data["degrees"] ) ? count($data["degrees"]) : 0 ;
+        $data["total_residencys"] = ( $data["residencys"] ) ? count($data["residencys"]) : 0 ;
+        $data["total_fellowships"] = ( $data["fellowships"] ) ? count($data["fellowships"]) : 0 ;
+        $data["practices"] = $this->jobseeker_practice->jobseekers_practices_get(0, $where_array);
+        $data["total_practices"] = ( $data["practices"] ) ? count($data["practices"]) : 0 ;
+        
         $html = $this->load->view('job_seeker/dashboard/tab_profile', $data, TRUE);
 
         $array = array(
@@ -347,6 +356,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $msg = "";
         $status = "";
         $html = "";
+        $html2 = "";
         $this->load->library('form_validation');
         $config = array(
             array('field' => 'licence_type', 'label' => 'licence type', 'rules' => 'trim|required|xss_clean'),
@@ -372,9 +382,38 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             if($id){
                 
                 $status = "ok";
-                
-                
-                $html = '<div class="row well-blue padding_5" data-val="'.$id.'" >
+                $is_profile = $this->input->post("is_profile");
+                if( isset($is_profile) && $is_profile == "true" ){
+                    $html = '<div class="row-wrapper well-blue padding_5" data-val="'.$id.'" >
+                        <div class="col col-sm-5 text-left">
+                            <strong>'.$save_data['licence_type'].'</strong><br>
+                            '.$save_data['licence_number'].'
+                        </div>
+                        <div class="col col-sm-4 text-left">
+                            '.date("Y-m-d",$save_data['issued_on']).'<br>
+                            '.$save_data['state'].'
+                        </div>
+                        <div class="col col-sm-2 text-left">
+                            <a class="remove_license btn btn-danger btn-sm">Remove</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>';
+                    $html2 = '<div class="row-wrapper well-blue padding_5" data-val="'.$id.'" >
+                        <div class="col col-sm-5 text-left">
+                            <strong>'.$save_data['licence_type'].'</strong><br>
+                            '.$save_data['licence_number'].'
+                        </div>
+                        <div class="col col-sm-4 text-left">
+                            '.date("Y-m-d",$save_data['issued_on']).'<br>
+                            '.$save_data['state'].'
+                        </div>
+                        <div class="col col-sm-2 text-left">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>';
+                }
+                else{
+                    $html = '<div class="row well-blue padding_5" data-val="'.$id.'" >
                         <div class="col col-sm-5 text-left">
                             <strong>'.$save_data['licence_type'].'</strong><br>
                             '.$save_data['licence_number'].'
@@ -387,6 +426,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             <a class="remove_license btn btn-danger btn-sm">Remove</a>
                         </div>
                     </div>';
+                }
+                
+                
             }
             else{
                 $status = "error";
@@ -403,7 +445,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $array = array(
             "status" => $status,
             "msg" => $msg,
-            "html" => $html
+            "html" => $html,
+            "html2" => $html2
+            
         );
         echo json_encode($array); die;
     }
@@ -415,6 +459,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $msg = "";
         $status = "";
         $html = "";
+        $html2 = "";
         $this->load->library('form_validation');
         $config = array(
             array('field' => 'name', 'label' => 'name', 'rules' => 'trim|required|xss_clean'),
@@ -433,17 +478,45 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             $id = $this->jobseeker_certification->jobseekers_certifications_add($save_data);
             if($id){
                 $status = "ok";
-                $html = '<div class="row well-purple padding_5" data-val="'.$id.'" >
-                        <div class="col col-sm-5 text-left">
-                            <strong>'.$save_data['name'].'</strong><br>
-                        </div>
-                        <div class="col col-sm-5 text-left">
-                            '.date("Y-m-d",$save_data['issued_on']).'  
-                        </div>
-                        <div class="col col-sm-2 text-left">
-                            <a class="remove_certification btn btn-danger btn-sm">Remove</a>
-                        </div>
-                    </div>';
+                $is_profile = $this->input->post("is_profile");
+                if( isset($is_profile) && $is_profile == "true" ){
+                    $html = '<div class="row-wrapper well-purple padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['name'].'</strong><br>
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                '.date("Y-m-d",$save_data['issued_on']).'  
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_certification btn btn-danger btn-sm">Remove</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>';
+                    $html2 = '<div class="row-wrapper well-purple padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['name'].'</strong><br>
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                '.date("Y-m-d",$save_data['issued_on']).'  
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>';
+                }
+                else{
+                    $html = '<div class="row well-purple padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['name'].'</strong><br>
+                            </div>
+                            <div class="col col-sm-5 text-left">
+                                '.date("Y-m-d",$save_data['issued_on']).'  
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_certification btn btn-danger btn-sm">Remove</a>
+                            </div>
+                        </div>';
+                }
             }
             else{
                 $status = "error";
@@ -460,7 +533,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $array = array(
             "status" => $status,
             "msg" => $msg,
-            "html" => $html
+            "html" => $html,
+            "html2" => $html2
         );
         echo json_encode($array); die;
     }
@@ -552,6 +626,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $msg = "";
         $status = "";
         $html = "";
+        $html2 = "";
         $this->load->library('form_validation');
         $config = array(
             array('field' => 'school', 'label' => 'School', 'rules' => 'trim|required|xss_clean'),
@@ -582,19 +657,52 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 $status = "ok";
                 
                 $med_school = ( $save_data["med_school"] == "yes" ) ? " (Med School)" : ""; 
-                $html = '<div class="row well-blue padding_5" data-val="'.$id.'" >
-                        <div class="col col-sm-5 text-left">
-                            <strong>'.$save_data['degree'].'</strong><br>
-                            '.$save_data["school"].$med_school.'
-                        </div>
-                        <div class="col col-sm-5 text-left">
-                            '.date("Y",$save_data['year']).'<br>
-                            '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
-                        </div>
-                        <div class="col col-sm-2 text-left">
-                            <a class="remove_degree btn btn-danger btn-sm">Remove</a>
-                        </div>
-                    </div>';
+                
+                $is_profile = $this->input->post("is_profile");
+                if( isset($is_profile) && $is_profile == "true" ){
+                    $html = '<div class="row-wrapper well-blue padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['degree'].'</strong><br>
+                                '.$save_data["school"].$med_school.'
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                '.date("Y",$save_data['year']).'<br>
+                                '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_degree btn btn-danger btn-sm">Remove</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>';
+                    $html2 = '<div class="row-wrapper well-blue padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['degree'].'</strong><br>
+                                '.$save_data["school"].$med_school.'
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                '.date("Y",$save_data['year']).'<br>
+                                '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>';
+                }
+                else{
+                    $html = '<div class="row well-blue padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['degree'].'</strong><br>
+                                '.$save_data["school"].$med_school.'
+                            </div>
+                            <div class="col col-sm-5 text-left">
+                                '.date("Y",$save_data['year']).'<br>
+                                '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_degree btn btn-danger btn-sm">Remove</a>
+                            </div>
+                        </div>';
+                }
             }
             else{
                 $status = "error";
@@ -611,7 +719,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $array = array(
             "status" => $status,
             "msg" => $msg,
-            "html" => $html
+            "html" => $html,
+            "html2" => $html2
         );
         echo json_encode($array); die;
     }
@@ -649,6 +758,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $msg = "";
         $status = "";
         $html = "";
+        $html2 = "";
         $this->load->library('form_validation');
         $config = array(
             array('field' => 'institution', 'label' => 'Institution', 'rules' => 'trim|required|xss_clean'),
@@ -685,7 +795,39 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 $speciality_name = ( isset($speciality['name']) ) ? $speciality['name'] : "";
                 $speciality_name .= ( isset($sub_speciality['name']) ) ? ", ".$sub_speciality['name'] : "";
                 
-                $html = '<div class="row well-purple padding_5" data-val="'.$id.'" >
+                $is_profile = $this->input->post("is_profile");
+                if( isset($is_profile) && $is_profile == "true" ){
+                    $html = '<div class="row-wrapper well-purple padding_5" data-val="'.$id.'" >
+                        <div class="col col-sm-5 text-left">
+                            <strong>'.$save_data['institution'].'</strong><br>
+                            '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
+                        </div>
+                        <div class="col col-sm-4 text-left">
+                            '.$speciality_name.'<br>
+                            '.date("Y-m-d",$save_data['date_from'])."-".date("Y-m-d",$save_data['date_to']).'
+                        </div>
+                        <div class="col col-sm-2 text-left">
+                            <a class="remove_residency btn btn-danger btn-sm">Remove</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>';
+                    $html2 = '<div class="row-wrapper well-purple padding_5" data-val="'.$id.'" >
+                        <div class="col col-sm-5 text-left">
+                            <strong>'.$save_data['institution'].'</strong><br>
+                            '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
+                        </div>
+                        <div class="col col-sm-4 text-left">
+                            '.$speciality_name.'<br>
+                            '.date("Y-m-d",$save_data['date_from'])."-".date("Y-m-d",$save_data['date_to']).'
+                        </div>
+                        <div class="col col-sm-2 text-left">
+                            <a class="remove_residency btn btn-danger btn-sm">Remove</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>';
+                }
+                else{
+                    $html = '<div class="row well-purple padding_5" data-val="'.$id.'" >
                         <div class="col col-sm-5 text-left">
                             <strong>'.$save_data['institution'].'</strong><br>
                             '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
@@ -698,6 +840,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             <a class="remove_residency btn btn-danger btn-sm">Remove</a>
                         </div>
                     </div>';
+                }
             }
             else{
                 $status = "error";
@@ -714,7 +857,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $array = array(
             "status" => $status,
             "msg" => $msg,
-            "html" => $html
+            "html" => $html,
+            "html2" => $html2
         );
         echo json_encode($array); die;
     }
@@ -752,6 +896,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $msg = "";
         $status = "";
         $html = "";
+        $html2 = "";
         $this->load->library('form_validation');
         $config = array(
             array('field' => 'institution', 'label' => 'Institution', 'rules' => 'trim|required|xss_clean'),
@@ -788,19 +933,52 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 $speciality_name = ( isset($speciality['name']) ) ? $speciality['name'] : "";
                 $speciality_name .= ( isset($sub_speciality['name']) ) ? ", ".$sub_speciality['name'] : "";
                 
-                $html = '<div class="row well-yellow padding_5" data-val="'.$id.'" >
+                $is_profile = $this->input->post("is_profile");
+                if( isset($is_profile) && $is_profile == "true" ){
+                    $html = '<div class="row-wrapper well-yellow padding_5" data-val="'.$id.'" >
+                        <div class="col col-sm-5 text-left">
+                            <strong>'.$save_data['institution'].'</strong><br>
+                            '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
+                        </div>
+                        <div class="col col-sm-4 text-left">
+                            '.$speciality_name.'<br>
+                            '.date("Y-m-d",$save_data['date_from'])." - ".date("Y-m-d",$save_data['date_to']).'
+                        </div>
+                        <div class="col col-sm-2 text-left">
+                            <a class="remove_fellowship btn btn-danger btn-sm">Remove</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>';
+                    $html2 = '<div class="row-wrapper well-yellow padding_5" data-val="'.$id.'" >
+                        <div class="col col-sm-5 text-left">
+                            <strong>'.$save_data['institution'].'</strong><br>
+                            '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
+                        </div>
+                        <div class="col col-sm-4 text-left">
+                            '.$speciality_name.'<br>
+                            '.date("Y-m-d",$save_data['date_from'])." - ".date("Y-m-d",$save_data['date_to']).'
+                        </div>
+                        <div class="col col-sm-2 text-left">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>';
+                }
+                else{
+                    $html = '<div class="row well-yellow padding_5" data-val="'.$id.'" >
                         <div class="col col-sm-5 text-left">
                             <strong>'.$save_data['institution'].'</strong><br>
                             '.$save_data["city"].",".$save_data["state"].",".$save_data["country"].'
                         </div>
                         <div class="col col-sm-5 text-left">
                             '.$speciality_name.'<br>
-                            '.date("Y-m-d",$save_data['date_from'])."-".date("Y-m-d",$save_data['date_to']).'
+                            '.date("Y-m-d",$save_data['date_from'])." - ".date("Y-m-d",$save_data['date_to']).'
                         </div>
                         <div class="col col-sm-2 text-left">
                             <a class="remove_fellowship btn btn-danger btn-sm">Remove</a>
                         </div>
                     </div>';
+                }
+                
             }
             else{
                 $status = "error";
@@ -817,7 +995,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $array = array(
             "status" => $status,
             "msg" => $msg,
-            "html" => $html
+            "html" => $html,
+            "html2" => $html2
         );
         echo json_encode($array); die;
     }
@@ -880,6 +1059,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $msg = "";
         $status = "";
         $html = "";
+        $html2 = "";
         $this->load->library('form_validation');
         $config = array(
             array('field' => 'job_title', 'label' => 'Job title', 'rules' => 'trim|required|xss_clean'),
@@ -910,19 +1090,51 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 
                 $status = "ok";
                 
-                $html = '<div class="row well-blue padding_5" data-val="'.$id.'" >
-                        <div class="col col-sm-5 text-left">
-                            <strong>'.$save_data['hospital_name'].'</strong><br>
-                            '.$save_data["facility_type"].",".$save_data["job_title"].'
-                        </div>
-                        <div class="col col-sm-5 text-left">
-                            '.date("Y-m-d",$save_data["start_date"])."-".date("Y-m-d",$save_data["end_date"]).'<br>
-                            '.$save_data["city"].",".$save_data["state"].'
-                        </div>
-                        <div class="col col-sm-2 text-left">
-                            <a class="remove_practice btn btn-danger btn-sm">Remove</a>
-                        </div>
-                    </div>';
+                $is_profile = $this->input->post("is_profile");
+                if( isset($is_profile) && $is_profile == "true" ){
+                    $html = '<div class="row-wrapper well-blue padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['hospital_name'].'</strong><br>
+                                '.$save_data["facility_type"].",".$save_data["job_title"].'
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                '.date("Y-m-d",$save_data["start_date"])." - ".date("Y-m-d",$save_data["end_date"]).'<br>
+                                '.$save_data["city"].",".$save_data["state"].'
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_practice btn btn-danger btn-sm">Remove</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>';
+                    $html2 = '<div class="row-wrapper well-blue padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['hospital_name'].'</strong><br>
+                                '.$save_data["facility_type"].",".$save_data["job_title"].'
+                            </div>
+                            <div class="col col-sm-4 text-left">
+                                '.date("Y-m-d",$save_data["start_date"])." - ".date("Y-m-d",$save_data["end_date"]).'<br>
+                                '.$save_data["city"].",".$save_data["state"].'
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>';
+                }
+                else{
+                    $html = '<div class="row well-blue padding_5" data-val="'.$id.'" >
+                            <div class="col col-sm-5 text-left">
+                                <strong>'.$save_data['hospital_name'].'</strong><br>
+                                '.$save_data["facility_type"].",".$save_data["job_title"].'
+                            </div>
+                            <div class="col col-sm-5 text-left">
+                                '.date("Y-m-d",$save_data["start_date"])."-".date("Y-m-d",$save_data["end_date"]).'<br>
+                                '.$save_data["city"].",".$save_data["state"].'
+                            </div>
+                            <div class="col col-sm-2 text-left">
+                                <a class="remove_practice btn btn-danger btn-sm">Remove</a>
+                            </div>
+                        </div>';
+                }
             }
             else{
                 $status = "error";
@@ -939,7 +1151,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $array = array(
             "status" => $status,
             "msg" => $msg,
-            "html" => $html
+            "html" => $html,
+            "html2" => $html2
         );
         echo json_encode($array); die;
     }
