@@ -234,8 +234,8 @@ class Job_seeker extends MY_Job_seekerController {
         $status = '';
         require APPPATH.'libraries/linkedin/linkedin.php';
 
-        $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
-        $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
+        $linkedin_config['callback_url'] = base_url('job_seeker/linkedin_connect_callback');
+        $linkedin_config['base_url'] = base_url('job_seeker/linkedin_connect');
         $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
         $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
 
@@ -261,8 +261,8 @@ class Job_seeker extends MY_Job_seekerController {
         
         require APPPATH.'libraries/linkedin/linkedin.php';
         
-        $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
-        $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
+        $linkedin_config['callback_url'] = base_url('job_seeker/linkedin_connect_callback');
+        $linkedin_config['base_url'] = base_url('job_seeker/linkedin_connect');
         $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
         $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
         $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
