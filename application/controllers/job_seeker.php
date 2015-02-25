@@ -178,15 +178,15 @@ class Job_seeker extends MY_Job_seekerController {
         $data['password'] = md5($random_pass);
         
         if($data['email'] != ""){
-            $user_exist = $this->employer->employer_get_by_facebook_id($data['facebook_id']);
+            $user_exist = $this->jobseeker->jobseekers_get_by_facebook_id($data['facebook_id']);
             if (!$user_exist) {
 
-                $user_exist_email = $this->employer->employer_get_by_email($data['email']);
+                $user_exist_email = $this->jobseeker->jobseekers_get_by_email($data['email']);
                 if ($user_exist_email) {
                     $update_data['facebook_id'] = $data['facebook_id'];
-                    $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
+                    $r = $this->jobseeker->jobseekers_update($user_exist_email['id'], $update_data);
                 } else {
-                    $r = $this->employer->employers_add($data);
+                    $r = $this->jobseeker->jobseekers_add($data);
                     // Send Register email Here
                     $email_data['to'] = $data['email'];
                     $email_data['subject'] = "Welcome";
@@ -201,22 +201,22 @@ class Job_seeker extends MY_Job_seekerController {
 
                 if ($r) {
                     $id = $r;
-                    $employer = $this->employer->employers_get($id);
-                    unset($employer['password']);
-                    $this->session->set_userdata('user_id', $employer['id']);
-                    $this->session->set_userdata('user_type', 'employer');
-                    $this->session->set_userdata('employer', $employer);
+                    $jobseeker = $this->jobseeker->jobseekers_get($id);
+                    unset($jobseeker['password']);
+                    $this->session->set_userdata('user_id', $jobseeker['id']);
+                    $this->session->set_userdata('user_type', 'jobseeker');
+                    $this->session->set_userdata('jobseeker', $jobseeker);
                     $status = 'ok';
                     // send email Create account  
                 } else {
                     $status = 'error';
                 }
             } else {
-                $employer = $user_exist;
-                unset($employer['password']);
-                $this->session->set_userdata('user_id', $employer['id']);
-                $this->session->set_userdata('user_type', 'employer');
-                $this->session->set_userdata('employer', $employer);
+                $jobseeker = $user_exist;
+                unset($jobseeker['password']);
+                $this->session->set_userdata('user_id', $jobseeker['id']);
+                $this->session->set_userdata('user_type', 'jobseeker');
+                $this->session->set_userdata('jobseeker', $jobseeker);
                 $status = 'ok';
             }
         }
@@ -327,15 +327,15 @@ class Job_seeker extends MY_Job_seekerController {
         $random_pass = random_string('alnum', 10);
         $data['password'] = md5($random_pass);
 
-        $user_exist = $this->employer->employer_get_by_linkedin_id($data['linkedin_id']);
+        $user_exist = $this->jobseeker->jobseekers_get_by_linkedin_id($data['linkedin_id']);
         if (!$user_exist) {
 
-            $user_exist_email = $this->employer->employer_get_by_email($data['email']);
+            $user_exist_email = $this->jobseeker->jobseekers_get_by_email($data['email']);
             if ($user_exist_email) {
                 $update_data['linkedin_id'] = $data['linkedin_id'];
-                $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
+                $r = $this->jobseeker->jobseekers_update($user_exist_email['id'], $update_data);
             } else {
-                $r = $this->employer->employers_add($data);
+                $r = $this->jobseeker->jobseekers_add($data);
                 
                 // Send Register email Here
                 $email_data['to'] = $data['email'];
@@ -351,22 +351,22 @@ class Job_seeker extends MY_Job_seekerController {
 
             if ($r) {
                 $id = $r;
-                $employer = $this->employer->employers_get($id);
-                unset($employer['password']);
-                $this->session->set_userdata('user_id', $employer['id']);
-                $this->session->set_userdata('user_type', 'employer');
-                $this->session->set_userdata('employer', $employer);
+                $jobseeker = $this->jobseeker->jobseekers_get($id);
+                unset($jobseeker['password']);
+                $this->session->set_userdata('user_id', $jobseeker['id']);
+                $this->session->set_userdata('user_type', 'jobseeker');
+                $this->session->set_userdata('jobseeker', $jobseeker);
                 $status = 'ok';
                 // send email Create account  
             } else {
                 $status = 'error';
             }
         } else {
-            $employer = $user_exist;
-            unset($employer['password']);
-            $this->session->set_userdata('user_id', $employer['id']);
-            $this->session->set_userdata('user_type', 'employer');
-            $this->session->set_userdata('employer', $employer);
+            $jobseeker = $user_exist;
+            unset($jobseeker['password']);
+            $this->session->set_userdata('user_id', $jobseeker['id']);
+            $this->session->set_userdata('user_type', 'jobseeker');
+            $this->session->set_userdata('jobseeker', $jobseeker);
             $status = 'ok';
         }
 
