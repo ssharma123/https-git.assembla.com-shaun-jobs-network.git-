@@ -173,7 +173,6 @@ class Job_seeker extends MY_Job_seekerController {
         $freez_time = time();
         $data['created_at'] = $freez_time;
         $data['updated_at'] = $freez_time;
-        $data['active'] = 1;
         $random_pass = random_string('alnum', 10);
         $data['password'] = md5($random_pass);
         
@@ -323,7 +322,6 @@ class Job_seeker extends MY_Job_seekerController {
         $freez_time = time();
         $data['created_at'] = $freez_time;
         $data['updated_at'] = $freez_time;
-        $data['active'] = 1;
         $random_pass = random_string('alnum', 10);
         $data['password'] = md5($random_pass);
 
