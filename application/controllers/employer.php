@@ -582,7 +582,7 @@ class Employer extends MY_EmployerController {
         
         
         $this->layout = "employer";
-        $this->title .= " - Recover Passwrd";
+        $this->title .= " - Recover Password";
         
         $status = $this->session->flashdata("status");
         $msg = $this->session->flashdata("msg");

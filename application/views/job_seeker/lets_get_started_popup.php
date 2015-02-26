@@ -108,8 +108,9 @@
                     <label class="col-sm-4 control-label">Ideal Culture</label>
                     <div class="col-sm-8">
                         <select  id="salary_range" name="salary_range" class="ng-pristine ng-valid form-control" >
-                            <option value="Medium sized Hospital" selected >Medium sized Hospital</option>
-                            <option value="Large Teaching Institution"  >Large / Teaching Institution</option>
+                            <option value="small" selected="selected">Small and Intimate</option>
+                            <option value="medium" selected >Medium sized Hospital</option>
+                            <option value="large"  >Large / Teaching Institution</option>
                         </select>
                     </div>
                 </div>

@@ -380,7 +380,7 @@ class Job_seeker extends MY_Job_seekerController {
         
         
         $this->layout = "job_seeker";
-        $this->title .= " - Recover Passwrd";
+        $this->title .= " - Recover Password";
         
         $status = $this->session->flashdata("status");
         $msg = $this->session->flashdata("msg");
@@ -409,20 +409,20 @@ class Job_seeker extends MY_Job_seekerController {
             
             $email = $this->input->post("forgot_email");
             $sms_phone = $this->input->post("sms_phone");
-            $employer = $this->employer->employer_get_by_email($email);
-            if($employer){
+            $jobseeker = $this->jobseeker->jobseekers_get_by_email($email);
+            if($jobseeker){
                 
                 
             
                 $random_pass = random_string('alnum', 10);
                 
                 $save_data['password'] = md5($random_pass);
-                $this->employer->employers_update($employer['id'], $save_data);
+                $this->jobseeker->jobseekers_update($jobseeker['id'], $save_data);
                 
                 $this->load->library('twilio');
                 $from = '+13126354633';
                 $to = $sms_phone;
-                $message = "Email : ".$employer['email']." Password: ".$random_pass;
+                $message = "Email : ".$jobseeker['email']." Password: ".$random_pass;
                 $response = $this->twilio->sms($from, $to, $message);
 
                 if($response->IsError){
@@ -447,13 +447,13 @@ class Job_seeker extends MY_Job_seekerController {
         else if($type == "email"){
             
             $email = $this->input->post("forgot_email");
-            $employer = $this->employer->employer_get_by_email($email);
-            if($employer){
+            $jobseeker = $this->jobseeker->jobseekers_get_by_email($email);
+            if($jobseeker){
             
                 $random_pass = random_string('alnum', 10);
                 
                 $save_data['password'] = md5($random_pass);
-                $this->employer->employers_update($employer['id'], $save_data);
+                $this->jobseeker->jobseekers_update($jobseeker['id'], $save_data);
                 
 //                $email_data['to'] = "numan.hassan@purelogics.net";
                 $email_data['to'] = $employer['email'];
@@ -480,20 +480,20 @@ class Job_seeker extends MY_Job_seekerController {
             
             $email = $this->input->post("forgot_email");
             $call_phone = $this->input->post("call_phone");
-            $employer = $this->employer->employer_get_by_email($email);
-            if($employer){
+            $jobseeker = $this->jobseeker->jobseekers_get_by_email($email);
+            if($jobseeker){
             
                 $random_pass = random_string('alnum', 10);
                 
                 $save_data['password'] = md5($random_pass);
-                $this->employer->employers_update($employer['id'], $save_data);
+                $this->jobseeker->jobseekers_update($jobseeker['id'], $save_data);
                 
 //                $email_data['to'] = "numan.hassan@purelogics.net";
                 $email_data['to'] = "support@medmatch.com";
                 $email_data['subject'] = "Forgot Password - Call to number";
 
                 $patterns = array(
-                    '{EMAIL}' => $employer['email'],
+                    '{EMAIL}' => $jobseeker['email'],
                     '{PASSWORD}' => $random_pass,
                     '{CALL_PHONE}' => $call_phone
                 );
