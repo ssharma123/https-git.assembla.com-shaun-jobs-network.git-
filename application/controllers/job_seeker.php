@@ -456,11 +456,11 @@ class Job_seeker extends MY_Job_seekerController {
                 $this->jobseeker->jobseekers_update($jobseeker['id'], $save_data);
                 
 //                $email_data['to'] = "numan.hassan@purelogics.net";
-                $email_data['to'] = $employer['email'];
+                $email_data['to'] = $jobseeker['email'];
                 $email_data['subject'] = "Forgot Password";
 
                 $patterns = array(
-                    '{EMAIL}' => $employer['email'],
+                    '{EMAIL}' => $jobseeker['email'],
                     '{PASSWORD}' => $random_pass
                 );
 
