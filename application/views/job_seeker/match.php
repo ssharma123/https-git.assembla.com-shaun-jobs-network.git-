@@ -25,197 +25,162 @@
     <div class="">
         <div class="p-container-slider" id="job_match_list_id">
             <div>
-                <div class="p-first-box" style="padding-left: 50px">Facility</div>
+                <div class="p-first-box" style="padding-left: 50px"><h4>Facility</h4></div>
                 <div class="p-second-box">&nbsp;</div>
                 <div style="float: left; width: 25px;">&nbsp;</div>
-                <div class="p-third-box" style="height: auto; padding-left: 40px">You Match</div>
+                <div class="p-third-box" style="height: auto; padding-left: 30px"><h4>You Match</h4></div>
                 <div class="p-fourth-box" style="padding: 0">&nbsp;</div>
                 <div style="clear: both;"></div>
             </div>
             
             
-            <div class="p-container-inner-box job_match_div" style="cursor: pointer; ">
-                <div class="red">
-                    <div class="p-first-box">
-                        <div class="p-first-box-main">
-                            <div class="p-first-box-main-inner">
-                                <div class="p-main-text-div ng-binding">100+</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-second-box">
-                        <div class="p-title-bar ng-binding">asdf </div>
-                        <div class="p-title-bar-detail ng-binding">San Francisco<br>$50K - $75K</div>
-                    </div>
-                    <div style="float: left; width: 25px;">&nbsp;</div>
-                    <div class="p-third-box">
-                        <div class="demo">
-                            <div style="display: inline; width: 80px; height: 80px;">
-                                <input data-readOnly="true" data-fgColor="#C7585F" class="knob" data-width="100" data-displayInput="true" value="80" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-fourth-box">
-                        <a href="#">
-                            <?php echo load_img("arrow-next.png","next","17","28"); ?>
-                            
-                        </a>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </div>
-            <div class="p-container-inner-box job_match_div" style="cursor: pointer; ">
-                <div class="red">
-                    <div class="p-first-box">
-                        <div class="p-first-box-main">
-                            <div class="p-first-box-main-inner">
-                                <div class="p-main-text-div ng-binding">100+</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-second-box">
-                        <div class="p-title-bar ng-binding">asdf asdf</div>
-                        <div class="p-title-bar-detail ng-binding">San Francisco<br>$50K - $75K</div>
-                    </div>
-                    <div style="float: left; width: 25px;">&nbsp;</div>
-                    <div class="p-third-box">
-                        <div class="demo">
-                            <div style="display: inline; width: 80px; height: 80px;">
-                                <input data-readOnly="true" data-fgColor="#C7585F" class="knob" data-width="100" data-displayInput="true" value="80" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-fourth-box">
-                        <a href="#">
-                            <?php echo load_img("arrow-next.png","next","17","28"); ?>
-                            
-                        </a>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </div>
-            <div class="p-container-inner-box job_match_div" style="cursor: pointer; ">
-                <div class="red">
-                    <div class="p-first-box">
-                        <div class="p-first-box-main">
-                            <div class="p-first-box-main-inner">
-                                <div class="p-main-text-div ng-binding">100+</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-second-box">
-                        <div class="p-title-bar ng-binding">test</div>
-                        <div class="p-title-bar-detail ng-binding">San Francisco<br>$50K - $75K</div>
-                    </div>
-                    <div style="float: left; width: 25px;">&nbsp;</div>
-                    <div class="p-third-box">
-                        <div class="demo">
-                            <div style="display: inline; width: 80px; height: 80px;">
-                                <input data-readOnly="true" data-fgColor="#C7585F" class="knob" data-width="100" data-displayInput="true" value="80" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-fourth-box">
-                        <a href="#">
-                            <?php echo load_img("arrow-next.png","next","17","28"); ?>
-                            
-                        </a>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </div>
-            <div class="p-container-inner-box job_match_div" style="cursor: pointer; ">
-                <div class="red">
-                    <div class="p-first-box">
-                        <div class="p-first-box-main">
-                            <div class="p-first-box-main-inner">
-                                <div class="p-main-text-div ng-binding">100+</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-second-box">
-                        <div class="p-title-bar ng-binding">asdf asdf</div>
-                        <div class="p-title-bar-detail ng-binding">San Francisco<br>$50K - $75K</div>
-                    </div>
-                    <div style="float: left; width: 25px;">&nbsp;</div>
-                    <div class="p-third-box">
-                        <div class="demo">
-                            <div style="display: inline; width: 80px; height: 80px;">
-                                <input data-readOnly="true" data-fgColor="#C7585F" class="knob" data-width="100" data-displayInput="true" value="80" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-fourth-box">
-                        <a href="#">
-                            <?php echo load_img("arrow-next.png","next","17","28"); ?>
-                            
-                        </a>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-            </div>
-             
+            <?php
             
+            
+            if($jobs){
+                
+                foreach($jobs as $key => $row){ 
+                    $percent = 0;
+                    
+                    $points_matched = 0;
+                    $total_points = 7;
+                    
+                    // check salary range
+                    if ( isset($salary_range) && $salary_range != "" ){
+                        $salary_range_array = explode("-", $salary_range);
+                        $min = $salary_range_array[0];
+                        
+                        if(isset($salary_range_array[1])){
+                            $max = $salary_range_array[1];
+                            if( $min >= $row['salary_range_min'] && $max <= $row['salary_range_max']){
+                                $points_matched++;
+                            }
+                        }
+                        else{
+                            if( $min >= $row['salary_range_min'] && $min <= $row['salary_range_max']){
+                                $points_matched++;
+                            }
+                        }
+                        
+                    }
+                    
+                    
+                    // check Speciality
+                    if( isset($specialty) && $specialty!="" ){
+                        if($specialty == $row["specialty"]){
+                            $points_matched++;
+                        }
+                    }
+                    // check sub speciality
+                    if( isset($sub_specialty) && $sub_specialty!="" ){
+                        if($sub_specialty == $row["sub_specialty"]){
+                            $points_matched++;
+                        }
+                    }
+                    // department size
+                    if( isset($departmant_size) && $departmant_size!="" ){
+                        if( $departmant_size == "small" && $row["department_size"] == "0-5" ){
+                            $points_matched++;
+                        }
+                        else if( $departmant_size == "medium" && ( $row["department_size"] == "5-10" || $row["department_size"] == "10-20" ) ){
+                            $points_matched++;
+                        }
+                        else if( $departmant_size == "large" && ( $row["department_size"] == "20-40" || $row["department_size"] == "40+" ) ){
+                            $points_matched++;
+                        }
+                    }
+                    
+                    // check location & miles 
+                    if( (isset($state) && $state!="") && (isset($miles) && $miles!="") ){
+                        // which filed to match for jobs
+                        // get two points lat lng and calculate distance between two lat lng
+                        $points_matched++;
+                        if( (strcasecmp($row["state"],$state) == 0 ) || (strcasecmp($row["city"],$state) == 0 ) ){
+                            $points_matched++;
+                        }
+                        
+                    }
+                    // availability
+                    if( isset($availability) && $availability!="" ){
+                        // which filed to match for jobs 
+                        $points_matched++;
+                    }
+                    // current_employed
+                    if( isset($current_employed) && $current_employed!="" ){
+                        // which filed to match for jobs
+                        $points_matched++;
+                    }
+                    
+                    $percent = ($points_matched / $total_points ) * 100;
+                    $percent = ceil($percent);
+                    if($percent < 0){
+                        $percent = 0;
+                    }
+                    if($percent > 100){
+                        $percent = 100;
+                    }
+                    $percent_class = get_match_class($percent);
+                    $percent_color = get_match_color($percent);
+                    
+                    $jobs[$key]['percent'] = $percent;
+                    $jobs[$key]['percent_class'] = $percent_class;
+                    $jobs[$key]['percent_color'] = $percent_color;
+                }
+                
+                usort($jobs, "jobs_sort_by_percent" );
+                
+                foreach($jobs as $row){ 
+                    ?>
+                <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $row['id']; ?>" data-percent="<?php echo $row['percent']; ?>" data-dashboard="no" >
+                    <div class="<?php echo $row['percent_class']; ?>">
+                        <div class="p-first-box">
+                            <div class="p-first-box-main">
+                                <div class="p-first-box-main-inner">
+                                    <div class="p-main-text-div ng-binding"><?php echo $row['patients_per_day']; ?>+</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-second-box">
+                            <div class="p-title-bar ng-binding"><?php echo trim_str($row['job_headline'],60); ?> </div>
+                            <div class="p-title-bar-detail ng-binding"><?php echo $row['city'].",".$row['state']?><br>
+                                
+                                $<?php echo show_salary($row['salary_range_min']); ?> 
+                                <?php
+                                if($row['salary_range_max'] == 0){
+                                    echo "+";
+                                } 
+                                else { ?>
+                                - $<?php echo show_salary($row['salary_range_max']); ?>    
+                                <?php 
+                                } ?>
+                                
+                            </div>
+                        </div>
+                        <div style="float: left; width: 25px;">&nbsp;</div>
+                        <div class="p-third-box">
+                            <div class="demo">
+                                <div style="display: inline; width: 80px; height: 80px;">
+                                    <input data-readOnly="true" data-fgColor="<?php echo $row['percent_color']; ?>" class="knob" data-width="100" data-displayInput="true" value="<?php echo $row['percent']; ?>" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-fourth-box">
+                            <a href="#">
+                                <span style="font-size: 35px; font-weight: normal; color: #4a4a4a;" class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <?php 
+                }
+            } ?>
             				
         </div>
         
         
         <div class="p-container-slider" id="job_match_detail_block" style="display: none;" >
-            <div>
-                <div class="p-first-box" style="padding-left: 50px">Facility</div>
-                <div class="p-second-box">&nbsp;</div>
-                <div style="float: left; width: 25px;">&nbsp;</div>
-                <div class="p-third-box" style="height: auto; padding-left: 40px">You Match</div>
-                <div class="p-fourth-box" style="padding: 0">&nbsp;</div>
-                <div style="clear: both;"></div>
-            </div>
             
-            <div class="p-container-inner-box" style="border: none; padding-bottom: 30px;">
-                <div class="red">
-                    <div class="p-first-box">
-                        <div style="width: 120px; height: 120px; border: 1px solid #aaa; background-color: #ddd"><img ng-src=""></div>
-                    </div>
-                    <div class="p-second-box">
-                        <div class="p-title-bar ng-binding">fds asd</div>
-                        <div class="p-title-bar-detail ng-binding">San Francisco<br>$30K - $50K</div>
-                    </div>
-                    <div style="float: left; width: 25px;">&nbsp;</div>
-                    <div class="p-third-box">
-                        <div class="demo" >
-                            <input data-readOnly="true" data-fgColor="#C7585F" class="knob" data-width="100" data-displayInput="true" value="80" >
-                        </div>
-                    </div>
-                    <div class="p-fourth-box">&nbsp;</div>
-                    <div style="clear: both;"></div>
-                </div>
-            </div>
-            <div style="font-size: 17px;">
-                Additional Information:
-            </div>
-            <div style="border: 2px solid #a4a4a4; padding: 10px;" class="ng-binding">
-                <strong>Description:</strong> No Description.<br>
-                <strong>Position:</strong> <br>
-                <strong>Bonus:</strong> <br>
-                <strong>Pay Frequency:</strong> <br>
-                <div><strong>Inpatient:</strong> Yes<br></div>
-                <div><strong>Loan Assistance:</strong> Yes<br></div>
-                <div><strong>Requires BLS:</strong> Yes<br></div>
-                <strong>Vacation Days:</strong> <br>
-                <div><strong>cmeAllowance:</strong> Yes<br></div>
-            </div>
-            <div style="text-align: center; margin-top: 10px;">
-                <?php echo load_img("Stock_1.png","","","","margin: 5px;"); ?>
-                <?php echo load_img("Stock_2.png","","","","margin: 5px;"); ?>
-                <?php echo load_img("Stock_3.png","","","","margin: 5px;"); ?>
-                <?php echo load_img("Stock_4.jpg","","","","margin: 5px;"); ?>
-            </div>
-            <div style="text-align: center; margin-top: 10px;">
-                <a class="btn btn-danger btn-lg" href="<?php echo site_url("job_seeker/signup"); ?>">Not Interested</a>
-                <a class="btn btn-primary btn-lg" href="<?php echo site_url("job_seeker/signup"); ?>" >Apply</a>
-                <a class="btn btn-warning btn-lg" href="<?php echo site_url("job_seeker/signup"); ?>" >Save</a>
-                <br><br>
-                <a class="btn btn-inverse btn-lg" href="<?php echo site_url("job_seeker/signup"); ?>">Want More? Sign Up Here</a>
-            </div>
         </div>
 
     </div>

@@ -19,7 +19,7 @@
                 </h2>
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Facility</label>
+                    <label class="col-sm-4 control-label">Specialty</label>
                     <div class="col-sm-8">
                         <select id="specialty" name="specialty" class="ng-pristine ng-valid parent_speciality form-control" >
                             <option value="" disabled selected>Select</option>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="phone">Sub facility</label>
+                    <label class="col-sm-4 control-label" for="phone">Sub-Specialty</label>
                     <div class="col-sm-8">
                         <select id="sub_specialty" name="sub_specialty" class="ng-pristine ng-valid sub_speciality form-control" >
                             <option value=""></option>
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Location</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control ng-pristine ng-valid sates_auto" placeholder="" id="state" name="state" >
+                        <input type="text" class="form-control ng-pristine ng-valid sates_auto" placeholder="" id="state" name="state" autocomplete="off" >
                         <input type="hidden" id="sates_auto_val">
                     </div>
                 </div>
@@ -54,7 +54,14 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="phone">Within</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control ng-pristine ng-valid " placeholder="" >
+                        <select name="miles" id="miles" class="form-control">
+                            <option value="" selected>Miles</option>
+                            <option value="5">5</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
                     </div>
                     <div class="col-sm-4" style="line-height: 30px;">Miles</div>
                 </div>
@@ -107,9 +114,9 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Ideal Culture</label>
                     <div class="col-sm-8">
-                        <select  id="salary_range" name="salary_range" class="ng-pristine ng-valid form-control" >
+                        <select  id="departmant_size" name="departmant_size" class="ng-pristine ng-valid form-control" >
                             <option value="small" selected="selected">Small and Intimate</option>
-                            <option value="medium" selected >Medium sized Hospital</option>
+                            <option value="medium" >Medium sized Hospital</option>
                             <option value="large"  >Large / Teaching Institution</option>
                         </select>
                     </div>
@@ -117,11 +124,11 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Availability</label>
                     <div class="col-sm-8">
-                        <select  id="salary_range" name="salary_range" class="ng-pristine ng-valid form-control" >
+                        <select  id="availability" name="availability" class="ng-pristine ng-valid form-control" >
                             <option value="ASAP" selected>ASAP</option>
-                            <option value="1-3 Months">1-3 Months</option>
-                            <option value="3-6 Months">3-6 Months</option>
-                            <option value="6-12 Months">6-12 Months</option>
+                            <option value="1-3">1-3 Months</option>
+                            <option value="3-6">3-6 Months</option>
+                            <option value="6-12">6-12 Months</option>
                             <option value="Just Looking">Just Looking</option>
                         </select>
                     </div>

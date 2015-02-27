@@ -62,9 +62,24 @@ class Jobs_model extends CI_Model {
         if($job_id != 0){
             $this->db->where('jobs_applied.job_id',$job_id);
         }
-        $this->db->select("*,jobs_applied.id AS job_applied_id");
+        $this->db->select("jobs_applied.*,
+            jobs_applied.id AS job_applied_id,
+            jobs.internal_id,
+            jobseekers.first_name,
+            jobseekers.last_name,
+            jobseekers.prof_suffix,
+            jobseekers.city,
+            jobseekers.state,
+            jobseekers.zip,
+            jobseekers.phone,
+            jobseekers.alt_phone,
+            jobseekers.profile_image,
+            jobseekers.specialty
+            ");
+        $this->db->where('jobs_applied.applied',"1");
         $this->db->where('jobs_applied.employer_id',$employer_id);
         $this->db->join("jobs","jobs_applied.job_id = jobs.id");
+        $this->db->join("jobseekers","jobseekers.id = jobs_applied.jobseeker_id");
         $r = $this->db->get("jobs_applied");
         if ($r->num_rows() > 0) {
             return $r->result_array();
@@ -72,9 +87,12 @@ class Jobs_model extends CI_Model {
         return false;
     }
     
-    public function jobs_applied_get($id = 0) {
+    public function jobs_applied_get($id = 0, $where_array = array() ) {
         if($id>0){
             $this->db->where('id',$id);
+        }
+        if( count($where_array)>0 ){
+            $this->db->where( $where_array );
         }
         $r = $this->db->get("jobs_applied");
         if ($r->num_rows() > 0) {
@@ -86,6 +104,11 @@ class Jobs_model extends CI_Model {
             }
         }
         return false;
+    }
+    public function jobs_applied_add($data)
+    {
+        $this->db->insert("jobs_applied",$data);
+        return $this->db->insert_id();
     }
     public function jobs_applied_update($id, $data)
     {
@@ -107,6 +130,7 @@ class Jobs_model extends CI_Model {
             $this->db->where( $where_array );
         }
         $select = "jobs.*,jobs_applied.id AS job_applied_id,
+                   jobs_applied.applied,
                    jobs_applied.matched,
                    jobs_applied.interview,
                    jobs_applied.interview_complete,
@@ -122,5 +146,102 @@ class Jobs_model extends CI_Model {
         }
         return false;
     }
+    
+    public function top_matches($data){
+        
+        $where = "";
+        
+//        if ( isset($data["salary_range"]) && $data["salary_range"] != "" ){
+//            $salary = $data["salary_range"];
+//            $salary_range = explode("-", $salary);
+//            $min = $salary_range[0];
+//            $where .= " AND j.salary_range_min >= '$min' ";
+//            $max = NULL;
+//            if(isset($salary_range[1])){
+//                $max = $salary_range[1];
+//                $where .= " AND j.salary_range_max <= '$max' ";
+//            }
+//        }
+        
+        $q = "SELECT j.*,
+            ef.state,ef.city
+            FROM jobs j
+            JOIN employers e ON j.employer_id = e.id
+            JOIN employers_facilities ef ON j.employer_id = ef.employer_id
+            WHERE 1 ".$where."
+            ORDER BY j.id DESC ";
+        $r = $this->db->query($q);
+        if ($r->num_rows() > 0) {
+            return $r->result_array();
+        }
+        return FALSE;
+        
+    }
+    public function top_matches_dashboard($data){
+        $session = $this->session->all_userdata();
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        
+        $where = " j.id NOT IN (SELECT job_id FROM jobseekers_jobs_status WHERE jobseeker_id = '$jobseeker_id' AND ( not_interested = 1 OR applied = 1 ) ) ";
+        
+        $q = "SELECT j.*,
+            ef.state,ef.city
+            FROM jobs j
+            JOIN employers e ON j.employer_id = e.id
+            JOIN employers_facilities ef ON j.employer_id = ef.employer_id
+            WHERE 1 AND ".$where."
+            ORDER BY j.id DESC ";
+        $r = $this->db->query($q);
+        if ($r->num_rows() > 0) {
+            return $r->result_array();
+        }
+        return FALSE;
+        
+    }
+    
+    function jobs_get_details($id){
+        $q = "SELECT j.*,
+            ef.state,ef.city
+            FROM jobs j
+            JOIN employers e ON j.employer_id = e.id
+            JOIN employers_facilities ef ON j.employer_id = ef.employer_id
+            WHERE j.id = '$id' ";
+        $r = $this->db->query($q);
+        if ($r->num_rows() > 0) {
+            return $r->row_array();
+        }
+        return FALSE;
+    }
+    
+    
+    public function jobseekers_jobs_status_get($id = 0, $where_array = array() ) {
+        if($id>0){
+            $this->db->where('id',$id);
+        }
+        if( count($where_array)>0 ){
+            $this->db->where( $where_array );
+        }
+        $r = $this->db->get("jobseekers_jobs_status");
+        if ($r->num_rows() > 0) {
+            
+            if($id>0){
+                return $r->row_array();
+            }else{
+                return $r->result_array();
+            }
+        }
+        return false;
+    }   
+    public function jobseekers_jobs_status_add($data)
+    {
+        $this->db->insert("jobseekers_jobs_status",$data);
+        return $this->db->insert_id();
+    }
+    public function jobseekers_jobs_status_update($id, $data)
+    {
+        $this->db->where('id' , $id);
+        $this->db->update("jobseekers_jobs_status",$data);
+        return $id;
+    }
+
     
 }

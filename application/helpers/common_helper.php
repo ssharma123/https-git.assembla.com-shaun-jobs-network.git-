@@ -103,6 +103,26 @@ if(!function_exists('get_countries'))
         
     }
 }
+
+if(!function_exists('get_locations_home_page')) 
+{
+    function get_locations_home_page(){
+        $that = & get_instance();
+        $q = " SELECT *,COUNT(*) AS total FROM `cities` WHERE `country` LIKE 'US' GROUP BY name HAVING total = 1  ";
+        $r = $that->db->query($q);
+        if($r->num_rows()>0){
+            $rows = $r->result_array();
+            foreach ($rows as $val){
+                $temp = array();
+                $temp['id'] = $val['name'];
+                $temp['name'] = $val['name'];
+                $output[] = $temp;
+            }
+            return json_encode($output);
+        }
+        return FALSE;
+    }
+}
 /* ** */
 
 if(!function_exists('get_specialties')) 
@@ -130,6 +150,78 @@ if(!function_exists('get_specialties'))
         
     }
 }
+
+if(!function_exists('get_match_class')) 
+{
+    function get_match_class($percent){
+        $class = "grey";
+        if($percent > 90){
+            $class = "red";
+        }
+        else if($percent > 80){
+            $class = "orange";
+        }
+        else if($percent > 70){
+            $class = "yellow";
+        }
+        else if($percent > 60){
+            $class = "green";
+        }
+        else if($percent > 50){
+            $class = "blue";
+        } 
+        return $class;
+    }
+}
+if(!function_exists('get_match_color')) 
+{
+    function get_match_color($percent){
+        $color = "#666666";
+        if($percent > 90){
+            $color = "#C7585F";
+        }
+        else if($percent > 80){
+            $color = "#EB7D24";
+        }
+        else if($percent > 70){
+            $color = "#FFB404";
+        }
+        else if($percent > 60){
+            $color = "#2DCC70";
+        }
+        else if($percent > 50){
+            $color = "#38B3B0";
+        } 
+        return $color;
+    }
+}
+if(!function_exists('jobs_sort_by_percent')){
+    function jobs_sort_by_percent($a, $b){
+        $a = $a['percent'];
+        $b = $b['percent'];
+        if ($a == $b)
+        {
+            return 0;
+        }
+        return ($a > $b) ? -1 : 1;
+    }
+}
+if(!function_exists('show_salary')){
+    function show_salary($salary){
+        $output = "";
+        if($salary === 0){
+            return $output;
+        }
+        else if($salary > 1000){
+            $output = ceil($salary / 1000)."K";
+        }
+        else{
+            $output = $salary;
+        }
+        return $output;
+    }
+}
+    
 
 /* GET data from countries , cites , states END */
 

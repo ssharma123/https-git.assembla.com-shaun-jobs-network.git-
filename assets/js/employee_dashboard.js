@@ -538,7 +538,8 @@ $(document).ready(function(){
          
     });
     
-    $("#post-job-container").on("click",".matches_link",function(){
+    $("#post-job-container").on("click",".matches_link",function(e){
+        e.stopImmediatePropagation(); 
         
         var applied_job_div = $(this).parent().parent().parent().next();
         if(applied_job_div.hasClass("applied_jobs_div")){
@@ -765,6 +766,24 @@ function show_welcome_popup(){
     .always(function(){
         FBox.fancybox.hideLoading();
     });
+}
+function show_default_employer_tab(){
+    $(".employerdashbordTabs-items").hide();
+    $("#post-job-container").hide();
+    $("#new-job-post-btn-item").show();
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "GET",
+        url: SITE_URL+"employee_dashboard/dashboard_job_list",
+        dataType: "json"
+    }).success(function(rsp){
+        $("#post-job-container").html(rsp.html);
+        $("#post-job-container").fadeIn();
+        $("#new-job-post-btn-item").show();
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    }); 
 }
 
 function parent_speciality_change(){

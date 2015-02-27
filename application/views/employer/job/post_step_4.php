@@ -8,37 +8,37 @@
                 <select style="width: 20%" id="salary_range" name="salary_range" class="ng-pristine ng-valid" required onchange="toggleSalary_range()">
                     <option value="" class="">Select</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "35-50" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "35000-50000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="35-50" <?php echo $selected; ?> >$35k - $50k</option>
+                    <option value="35000-50000" <?php echo $selected; ?> >$35k - $50k</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "50-75" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "50000-75000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="50-75" <?php echo $selected; ?> >$50K - $75K</option>
+                    <option value="50000-75000" <?php echo $selected; ?> >$50K - $75K</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "100-150" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "100000-150000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="100-150" <?php echo $selected; ?> >$100K - $150K</option>
+                    <option value="100000-150000" <?php echo $selected; ?> >$100K - $150K</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "150-225" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "150000-225000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="150-225" <?php echo $selected; ?> >$150K - $225K</option>
+                    <option value="150000-225000" <?php echo $selected; ?> >$150K - $225K</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "225-300" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "225000-300000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="225-300" <?php echo $selected; ?> >$225k - $300K</option>
+                    <option value="225000-300000" <?php echo $selected; ?> >$225k - $300K</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "300-400" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "300000-400000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="300-400" <?php echo $selected; ?> >$300k - $400K</option>
+                    <option value="300000-400000" <?php echo $selected; ?> >$300k - $400K</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "400-550" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "400000-550000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="400-550" <?php echo $selected; ?> >$400k - $550K</option>
+                    <option value="400000-550000" <?php echo $selected; ?> >$400k - $550K</option>
                     <?php
-                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "550" ) ? ' selected="selected" ' : "" ;
+                    $selected = (isset($job['salary_range']) && $job['salary_range'] == "550000" ) ? ' selected="selected" ' : "" ;
                     ?>
-                    <option value="550" <?php echo $selected; ?> >$550k+</option>
+                    <option value="550000" <?php echo $selected; ?> >$550k+</option>
                     <?php
                     $selected = (isset($job['salary_range']) && $job['salary_range'] == "custom" ) ? ' selected="selected" ' : "" ;
                     ?>

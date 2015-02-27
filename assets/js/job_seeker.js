@@ -39,9 +39,17 @@ $(document).ready(function(){
        parent_speciality_change(); 
     });
     
-    $(".job_match_div").click(function(){
+    $(document).on("click",".job_match_div",function(e){
+        e.stopImmediatePropagation();
+
         $("#job_match_list_id").hide();
         $("#job_match_detail_block").show();
+        
+        var id = $(this).attr("data-id");
+        var percent = $(this).attr("data-percent");
+        var dashboard = $(this).attr("data-dashboard");
+        
+        get_top_match_job_details(id , percent , dashboard);
         
     });
     
@@ -192,6 +200,33 @@ function job_seeker_email_exist(email){
     });
     return flag;
 }
+function get_top_match_job_details(id , percent , dashboard){
+    $("#job_match_detail_block").html("");
+    var flag = false;
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker/get_top_match_job_details",
+        data: {
+            id: id,
+            percent: percent,
+            dashboard: dashboard
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        
+        $("#job_match_list_id").hide();
+        $("#job_match_detail_block").html(rsp.html);
+        $("#job_match_detail_block").show();
+        
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    return flag;
+}
+
 
 function parent_speciality_change(){
     if($("#specialty").val() !== ""){

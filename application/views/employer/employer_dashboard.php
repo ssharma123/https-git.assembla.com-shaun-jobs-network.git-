@@ -44,6 +44,9 @@
                 <hr>
                 <div>
                     
+                    <?php
+                    if($total_jobs == 0) {
+                    ?>
                     <div class="employerdashbordTabs-items" id="welcome-item" style="display: block;" >
                         <h4 class="text-left ng-binding" style="margin-top: 5px;">Hi <?php $name = explode(' ',$employer['name']); echo $name[0]; ?></h4>
                         <p class="text-left">
@@ -66,7 +69,14 @@
                         </script>
 
                     </div>
-                    
+                    <?php
+                    }
+                    else { ?>
+                        <script>
+                        show_default_employer_tab();
+                        </script>
+                    <?php 
+                    } ?>
                     
                     <div class="col col-sm-4 employerdashbordTabs-items" id="tabStatus-item" style="display: none; width: 100%;">
                         Headline

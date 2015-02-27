@@ -24,10 +24,21 @@
                     </div>
                     <div class="p-second-box col col-sm-3">
                         <div class="p-title-bar ng-binding"><?php echo trim_str($row["job_headline"], 70); ?></div>
-                        <div class="p-title-bar-detail ng-binding">San Francisco<br>$<?php echo $row["salary_range_min"]; ?>K - $<?php echo $row["salary_range_max"]; ?>K</div>
+                        <div class="p-title-bar-detail ng-binding">San Francisco<br>
+                            $<?php echo show_salary($row['salary_range_min']); ?> 
+                            <?php
+                            if($row['salary_range_max'] == 0){
+                                echo "+";
+                            } 
+                            else { ?>
+                            - $<?php echo show_salary($row['salary_range_max']); ?>    
+                            <?php 
+                            } ?>
+                        </div>
                     </div>
                     <div class=" col col-sm-4">
                         <?php
+                            $applied_class = ($row['applied'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
                             $matched_class = ($row['matched'] == 1 ) ? " btn-success " : "btn-danger " ;
                             $interview_class = ($row['interview'] == 1 ) ? " btn-success " : "btn-danger " ;
                             $interview_complete_class = ($row['interview_complete'] == 1 ) ? " btn-success " : "btn-danger " ;
@@ -35,7 +46,7 @@
                             $job_offer_class = ($row['job_offer'] == 1 ) ? " btn-success " : "btn-danger " ;
 
                         ?>
-                        <span class="btn btn-sm margin_5 btn-success">Applied</span>
+                        <span class="btn btn-sm margin_5 <?php echo $applied_class; ?> " data-type="applied" data-id="<?php echo $row['job_applied_id']; ?>">Applied</span>
                         <span class="btn btn-sm margin_5 <?php echo $matched_class; ?> ">Matched</span>
                         <span class="btn btn-sm margin_5 <?php echo $interview_class; ?>">Interview</span>
                         <span class="btn btn-sm margin_5 <?php echo $interview_complete_class; ?>">Interview Complete</span>

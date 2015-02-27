@@ -1,5 +1,5 @@
 <script>
-var states = <?php echo $states; ?>;
+var states = <?php echo $locations; ?>;
 </script>
 
 <?php echo load_css("job_seeker/home.css"); ?>

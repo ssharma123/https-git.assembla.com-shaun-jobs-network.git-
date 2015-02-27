@@ -35,7 +35,13 @@
                         <?php echo $row["internal_id"]; ?>
                         <div class="ng-hide" style="text-align: left; padding-left: 16px; ">
                             <a href="javascript:void(0)" class="matches_link" style="color: #FFF">
+                                <?php 
+                                if( isset( $job_applied[$row["id"]]) ) { ?>
                                 <span class="glyphicon glyphicon-plus-sign"></span>
+                                <?php
+                                } else { ?>
+                                <span class="">&nbsp;&nbsp;&nbsp;</span>
+                                <?php } ?>
                                 Matches
                             </a>
                         </div>
@@ -72,11 +78,17 @@
                         <div  id="job-applied-list-item_<?php echo $apply['job_applied_id']; ?>" >
                             <div style="border: 1px solid #e4e4e4; border-left: none;">
                                 <div style="float: left; width: 60px; height: 60px;">
-                                    <img ng-src="">
+                                    <?php 
+                                    $src = (isset($apply['profile_image']) && $apply['profile_image'] != "")  ? " src='".base_url("uploads/jobseeker/profiles/".upload_img_thumb($apply['profile_image'],150,185))."' " : "" ;
+                                    ?>
+                                    <img <?php echo $src; ?> >
                                 </div>
                                 <div style="float: left; width: 150px; vertical-align: top; font-size: 12px; padding-left: 5px; padding-top: 5px;" class="ng-binding">
-                                    <span style="color: #5298fc" class="ng-binding">Dr. Farhan</span>
-                                    <br>Emergency Medicine<br>Lahore, FL										
+                                    <span style="color: #5298fc" class="ng-binding"><?php echo $apply["prof_suffix"].". ".$apply["first_name"];?></span>
+                                    <br><?php 
+                                    $speciality =  get_specialties($apply["specialty"]); 
+                                    $spec_name = ( isset($speciality['name']) ) ? $speciality['name'] : "";
+                                    echo $spec_name."<br>".$apply["city"].",".$apply["state"];?>											
                                 </div>
                                 <div style="float: left; padding-top: 14px;"  >
 

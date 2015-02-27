@@ -409,29 +409,163 @@ $(document).ready(function(){
         popupContactUsEmail();
     });
      
-    
+    $("#tabContent").on("click","#not_interested_job_btn",function(){
+        var this_ele = $(this);
+        bootbox.confirm("Are you sure you are not interested?", function(result) {
+            if(result === true){
+                var r = do_not_interested_job_btn(this_ele);
+                if(r === true){
+                    $("#tab_matches").click();
+                    $('html,body').animate({scrollTop:0},0);
+                }
+            }
+        }); 
+        
+    });
+    $("#tabContent").on("click","#apply_job_btn",function(){
+        var r = do_apply_job_btn($(this));
+        if(r === true){
+            show_job_applied_popup($(this));
+        }
+    });
+    $("#tabContent").on("click","#save_job_btn",function(){
+        var r = do_save_job_btn($(this));
+        if(r === true){
+            $(this).hide();
+        }
+    });
 });
+
+function do_not_interested_job_btn(element){
+    var flag = true;
+    var job_id = element.attr("data-id");
+    var id = element.attr("id");
+    element.attr("id","");
+    $("#busy_job_detail").show();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker/do_not_interested_job_btn",
+        data: {
+            job_id : job_id
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status === "ok"){
+            flag = true;
+        }
+        else{
+            flag = false;
+        }
+    })
+    .always(function(){
+        $("#busy_job_detail").hide();
+    });
+    element.attr("id",id);
+    return flag;
+}
+function do_apply_job_btn(element){
+    var flag = true;
+    var job_id = element.attr("data-id");
+    var id = element.attr("id");
+    element.attr("id","");
+    $("#busy_job_detail").show();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker/do_apply_job_btn",
+        data: {
+            job_id : job_id
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status === "ok"){
+            flag = true;
+        }
+        else{
+            flag = false;
+        }
+    })
+    .always(function(){
+        $("#busy_job_detail").hide();
+    });
+    element.attr("id",id);
+    return flag;
+}
+function do_save_job_btn(element){
+    var flag = true;
+    var job_id = element.attr("data-id");
+    var id = element.attr("id");
+    element.attr("id","");
+    $("#busy_job_detail").show();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker/do_save_job_btn",
+        data: {
+            job_id : job_id
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status === "ok"){
+            flag = true;
+        }
+        else{
+            flag = false;
+        }
+    })
+    .always(function(){
+        $("#busy_job_detail").hide();
+    });
+    element.attr("id",id);
+    return flag;
+}
+function show_job_applied_popup(element){
+    FBox.fancybox.showLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker/job_applied_popup",
+        data: {
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline',
+        });
+        var job_id = element.attr("data-id");
+        $(".job_match_div[data-id='"+job_id+"']").remove();
+        $("#job_match_list_id").show();
+        $("#job_match_detail_block").hide();
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
+    
+}
 
 function popupContactUsMap(){
     FBox.fancybox.showLoading();
-        $.ajax({
-            type: "POST",
-            url: SITE_URL+"employer/contact_us_map_popup",
-            data: {
-                
-            },
-            dataType: "json"
-        }).success(function(rsp){
-            FBox.fancybox({
-                content: rsp.html,
-                padding: 0,
-                closeBtn: false,
-                type: 'inline'
-            });
-        })
-        .always(function(){
-            FBox.fancybox.hideLoading();
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"employer/contact_us_map_popup",
+        data: {
+
+        },
+        dataType: "json"
+    }).success(function(rsp){
+        FBox.fancybox({
+            content: rsp.html,
+            padding: 0,
+            closeBtn: false,
+            type: 'inline'
         });
+    })
+    .always(function(){
+        FBox.fancybox.hideLoading();
+    });
 }
 function popupContactUsEmail(){
     FBox.fancybox.showLoading();

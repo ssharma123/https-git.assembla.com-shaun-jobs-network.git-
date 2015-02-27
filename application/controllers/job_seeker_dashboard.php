@@ -105,6 +105,11 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if(!isset($session['jobseeker'])){
             redirect('job_seeker/signin');
         }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
+        $match_data['salary'] = $data["jobseeker"]['salary'];
+        
+        $data["jobs"] = $this->jobs->top_matches_dashboard($match_data);
         
         $html = $this->load->view('job_seeker/dashboard/tab_matches', $data, TRUE);
 

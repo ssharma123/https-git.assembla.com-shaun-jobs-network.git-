@@ -31,6 +31,13 @@ class Employee_dashboard extends MY_EmployerController {
         $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
         $data['sub_data'] = $sub_data;
         
+        $data['jobs'] = $this->jobs->jobs_get_by_employer($data['employer']['id']);
+        $total_jobs = 0;
+        if($data['jobs']){
+            $total_jobs = count($data['jobs']);
+        }
+        $data['total_jobs'] = $total_jobs;
+        
         $this->load->view('employer/employer_dashboard', $data);
     }
     
@@ -74,35 +81,35 @@ class Employee_dashboard extends MY_EmployerController {
         echo json_encode($array);
         die;
     }
-    public function dashboard_status_tab(){
-        $this->layout = "blank";
-        $data = array();
-        
-        $session = $this->session->all_userdata();
-        if(!isset($session['employer'])){
-            redirect('employer/signin');
-        }
-        
-        $data['employer'] = $session['employer'];
-        
-        $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
-        $data['sub_data'] = $sub_data;
-        
-        $data['jobs'] = $this->jobs->jobs_get_by_employer($data['employer']['id']);
-        $total_jobs = 0;
-        if($data['jobs']){
-            $total_jobs = count($data['jobs']);
-        }
-        $data['total_jobs'] = $total_jobs;
-        
-        $html = $this->load->view('employer/dashboard/job_list', $data, TRUE);
-
-        $array = array(
-            "html" => $html
-        );
-        echo json_encode($array);
-        die;
-    }
+//    public function dashboard_status_tab(){
+//        $this->layout = "blank";
+//        $data = array();
+//        
+//        $session = $this->session->all_userdata();
+//        if(!isset($session['employer'])){
+//            redirect('employer/signin');
+//        }
+//        
+//        $data['employer'] = $session['employer'];
+//        
+//        $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
+//        $data['sub_data'] = $sub_data;
+//        
+//        $data['jobs'] = $this->jobs->jobs_get_by_employer($data['employer']['id']);
+//        $total_jobs = 0;
+//        if($data['jobs']){
+//            $total_jobs = count($data['jobs']);
+//        }
+//        $data['total_jobs'] = $total_jobs;
+//        
+//        $html = $this->load->view('employer/dashboard/job_list', $data, TRUE);
+//
+//        $array = array(
+//            "html" => $html
+//        );
+//        echo json_encode($array);
+//        die;
+//    }
     public function dashboard_settings(){
         $this->layout = "blank";
         $data = array();

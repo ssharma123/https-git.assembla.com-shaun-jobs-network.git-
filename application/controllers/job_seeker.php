@@ -8,12 +8,16 @@ class Job_seeker extends MY_Job_seekerController {
     function __construct() {
         parent::__construct();
         $this->load->model('jobseeker_model', 'jobseeker');
+        $this->load->model('jobs_model', 'jobs');
          
     }
 
     public function index() {
         $this->layout = "job_seeker";
+        
         $data["states"] = $this->get_states();
+        $data["locations"] = get_locations_home_page();
+        
         $this->load->view('job_seeker/home', $data);
     }
     
@@ -32,9 +36,216 @@ class Job_seeker extends MY_Job_seekerController {
     public function match(){
         $this->layout = "job_seeker";
         $data = array();
+        
+        $data = $this->input->post();
+        
+        $data["jobs"] = $this->jobs->top_matches($data);
+        
         $this->load->view('job_seeker/match', $data);
         
     }
+    public function get_top_match_job_details(){
+        $this->layout = "blank";
+        $data = array();
+        $session = $this->session->all_userdata();
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        
+        $data = $this->input->post();
+        $data["row"] = $this->jobs->jobs_get_details($data['id']);
+        
+        $data["saved"] = false;
+        if($jobseeker_id != 0){
+            $where["jobseeker_id"] = $jobseeker_id;
+            $where["job_id"] = $data['id'];
+            $where["saved"] = 1;
+            $data["saved"] = $this->jobs->jobseekers_jobs_status_get(0 , $where);
+        }
+        
+        $html = $this->load->view('job_seeker/job_details', $data, TRUE);
+        
+        $rsp = array( "html" => $html );
+        echo json_encode($rsp);
+        die;
+    }
+    public function do_not_interested_job_btn(){
+        $this->layout = "blank";
+        $data = array();
+        $msg = "";
+        $status = "";
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/signin');
+        }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        
+        $job_id = $this->input->post("job_id");
+        if($job_id){
+            
+            $save_data["jobseeker_id"] = $jobseeker_id;
+            $save_data["job_id"] = $job_id;
+            $save_data["not_interested"] = 1;
+            
+            // jobseekers_jobs_status
+            $where["jobseeker_id"] = $jobseeker_id;
+            $where["job_id"] = $job_id;
+            $r = $this->jobs->jobseekers_jobs_status_get(0 , $where);
+            if($r){
+                $id = $r['id'];
+                unset($save_data["jobseeker_id"]);
+                unset($save_data["job_id"]);
+                $this->jobs->jobseekers_jobs_status_update($id , $save_data);
+                $status = "ok";
+            }
+            else{
+                $this->jobs->jobseekers_jobs_status_add($save_data);
+                $status = "ok";
+            }
+            
+        }
+        
+        
+        $rsp = array( "status" => $status );
+        echo json_encode($rsp);
+        die;
+    }
+    public function do_save_job_btn(){
+        $this->layout = "blank";
+        $data = array();
+        $msg = "";
+        $status = "";
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/signin');
+        }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        
+        $job_id = $this->input->post("job_id");
+        if($job_id){
+            $job = $this->jobs->jobs_get($job_id);
+            $save_data["jobseeker_id"] = $jobseeker_id;
+            $save_data["job_id"] = $job_id;
+            $save_data["saved"] = 1;
+            
+            // jobseekers_jobs_status
+            $where["jobseeker_id"] = $jobseeker_id;
+            $where["job_id"] = $job_id;
+            $r = $this->jobs->jobseekers_jobs_status_get(0 , $where);
+            if($r){
+                $id = $r['id'];
+                unset($save_data["jobseeker_id"]);
+                unset($save_data["job_id"]);
+                $this->jobs->jobseekers_jobs_status_update($id , $save_data);
+                $status = "ok";
+            }
+            else{
+                $this->jobs->jobseekers_jobs_status_add($save_data);
+                $status = "ok";
+            }
+            if($status == "ok"){
+                
+                $job_applied_data['employer_id'] = $job["employer_id"];
+                $job_applied_data['jobseeker_id'] = $jobseeker_id; 
+                $job_applied_data['job_id'] = $job_id;
+                $job_applied_data['applied'] = 0;
+                $job_applied_data['matched'] = 0;
+                $job_applied_data['interview'] = 0;
+                $job_applied_data['interview_complete'] = 0;
+                $job_applied_data['face_2_face'] = 0;
+                $job_applied_data['job_offer'] = 0;
+                $job_applied_data['created_at'] = time();
+                $this->jobs->jobs_applied_add($job_applied_data);
+            }
+            
+        }
+        
+        $rsp = array( "status" => $status );
+        echo json_encode($rsp);
+        die;
+    }
+    public function do_apply_job_btn(){
+        $this->layout = "blank";
+        $data = array();
+        $msg = "";
+        $status = "";
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/signin');
+        }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        
+        $job_id = $this->input->post("job_id");
+        if($job_id){
+            $job = $this->jobs->jobs_get($job_id);
+            $save_data["jobseeker_id"] = $jobseeker_id;
+            $save_data["job_id"] = $job_id;
+            $save_data["applied"] = 1;
+            
+            // jobseekers_jobs_status
+            $where["jobseeker_id"] = $jobseeker_id;
+            $where["job_id"] = $job_id;
+            $r = $this->jobs->jobseekers_jobs_status_get(0 , $where);
+            if($r){
+                $id = $r[0]['id'];
+                unset($save_data["jobseeker_id"]);
+                unset($save_data["job_id"]);
+                $this->jobs->jobseekers_jobs_status_update($id , $save_data);
+                $status = "ok";
+            }
+            else{
+                $this->jobs->jobseekers_jobs_status_add($save_data);
+                $status = "ok";
+            }
+
+            if($status == "ok"){
+                $job_applied_data['employer_id'] = $job["employer_id"];
+                $job_applied_data['jobseeker_id'] = $jobseeker_id; 
+                $job_applied_data['job_id'] = $job_id;
+                $job_applied_data['applied'] = 1;
+                $job_applied_data['matched'] = 0;
+                $job_applied_data['interview'] = 0;
+                $job_applied_data['interview_complete'] = 0;
+                $job_applied_data['face_2_face'] = 0;
+                $job_applied_data['job_offer'] = 0;
+                $job_applied_data['created_at'] = time();
+                
+                $where_2['employer_id'] = $job["employer_id"];
+                $where_2['jobseeker_id'] = $jobseeker_id; 
+                $where_2['job_id'] = $job_id;
+                
+                $job_applied = $this->jobs->jobs_applied_get(0 , $where_2);
+                if($job_applied){
+                    $update_data["applied"] = 1;
+                    $this->jobs->jobs_applied_update($job_applied[0]["id"] , $update_data);
+                }
+                else{
+                    $this->jobs->jobs_applied_add($job_applied_data);
+                }
+            }
+            
+        }
+        
+        $rsp = array( "status" => $status );
+        echo json_encode($rsp);
+        die;
+    }
+    public function job_applied_popup(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/signin');
+        }
+        
+        $html = $this->load->view('job_seeker/job_applied_popup', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    
     public function signup(){
         $this->layout = "job_seeker";
         $data = array();
