@@ -57,6 +57,14 @@
         <div class="col-sm-4 text-center">
             <p style="font-weight: 300; margin-top: 60px; font-size: 1.3em">Your personal<br>match consultant</p>
             <p style="font-size: 12px">We are here for you, whenever you need us!  Seriously.</p>
+            
+            <div >
+                <div style="background-color: #fff; width: 96px; height: 96px; border-radius: 100%; margin: auto">
+                     <?php echo load_img("doctor.png","","",""); ?>   
+                </div>
+                <h3 style="margin-top: 8px" class="ng-binding">PARTH</h3>
+                <p class="text-center ng-binding" style="color: #777; font-size: 13px;">Text (122) 338-9839  <br>or <br><a href="mailto:ANSBDS2@GMAIL.COM">ANSBDS2@GMAIL.COM</a><br></p>
+            </div>
         </div>
 
         <div class="clearfix"></div>
