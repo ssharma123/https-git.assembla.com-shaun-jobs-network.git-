@@ -916,6 +916,17 @@ class Employee_dashboard extends MY_EmployerController {
                     else if ($type === "face_2_face" || $type === "job_offer"){
                         $status = "ok";
                         $msg = "Saved successfully";
+                        
+                        if($type === "face_2_face"){
+                            
+                            $this->load->model('jobseeker_notifications_model', 'notification');
+                            $noti_data["jobseeker_id"] = $job_apply["jobseeker_id"];
+                            $noti_data["employer_id"] = $job_apply["employer_id"];
+                            $noti_data["job_id"] = $job_apply["job_id"];
+                            $noti_data["job_applied_id"] = $job_apply["id"];
+                            $this->notification->jobseeker_notifications_add($noti_data);
+                            
+                        }
                     }
 
 

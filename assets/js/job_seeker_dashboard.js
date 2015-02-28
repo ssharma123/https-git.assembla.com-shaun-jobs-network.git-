@@ -332,6 +332,29 @@ $(document).ready(function(){
 
     });
     
+    $("#tabContent").on("click","#notification_page",function(){
+        
+        $("#tabContent_rsp").hide();
+
+        $(this).parent().parent().find('li').removeClass('active');
+        $("#tab_profile").parent().addClass('active');
+
+        $("#tabContent").hide();
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"job_seeker_dashboard/notification_page/",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#tabContent").html(rsp.html);
+            $("#tabContent").fadeIn();
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+
+    });
+    
     $("#tabContent").on("click","#change_email_link",function(){
        $("#change_email_div").toggle();
     });
@@ -434,8 +457,69 @@ $(document).ready(function(){
             $(this).hide();
         }
     });
+    
+    $("#tabContent").on("click",".select_date_radio",function(e){
+        
+        e.stopImmediatePropagation();
+        var selected_date = $(this).val();
+        
+        var date = $(this).parent().parent().find(".selected_date");
+        date.val(selected_date);
+        
+    });
+    
+    $("#tabContent").on("click",".select_date_jobseeker",function(e){
+        e.stopImmediatePropagation();
+        
+        var busy_gif = $(this).next();
+        var btn = $(this); 
+        var date = $(this).parent().parent().find(".selected_date");
+        var selected_date = date.val();
+        var id = $(this).attr("id");
+        console.log(date)
+        console.log(selected_date)
+        if(selected_date === "0"){
+            bootbox.alert("Please select date");
+        }
+        else{
+            var save = notification_select_date( btn, busy_gif, selected_date, id );
+            if(save === true){
+                btn.parent().parent().fadeOut();
+            }
+        }
+        
+        
+    });
 });
 
+function notification_select_date(btn, busy_gif, selected_date, id){
+    btn.hide();
+    busy_gif.show();
+    var flag = true;
+    $.ajax({
+        type: "POST",
+        url: SITE_URL+"job_seeker_dashboard/notification_select_date",
+        data: {
+            selected_date : selected_date,
+            id : id
+        },
+        dataType: "json",
+        async: false
+    }).success(function(rsp){
+        if(rsp.status === "ok"){
+            flag = true;
+        }
+        else{
+            flag = false;
+            btn.show();
+            busy_gif.hide();
+        }
+    })
+    .always(function(){
+        
+    });
+    return flag;
+}
 function do_not_interested_job_btn(element){
     var flag = true;
     var job_id = element.attr("data-id");

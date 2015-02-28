@@ -75,6 +75,16 @@
     
 </style>
 <div class="row-wrapper">
+    
+    <?php
+    if($total_notification > 0){ ?>
+    <div class="col col-sm-12">
+        <div class="alert well-blue" style="border: 1px solid;">
+            You have <?php echo $total_notification; ?> notification(s) pending. <a href="javascript:void(0)" id="notification_page" >Read</a>
+        </div>
+    </div>
+    <?php } ?>
+    
     <div class="col col-sm-7">
         <!--Contact Section-->
         <div id="contactC">

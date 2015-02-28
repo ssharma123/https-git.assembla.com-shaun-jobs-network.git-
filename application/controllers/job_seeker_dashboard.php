@@ -19,6 +19,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $this->load->model('jobseeker_search_locations_model', 'location');
         $this->load->model('specialty_model', 'specialty');
         $this->load->model('jobseeker_settings_model', 'settings');
+        $this->load->model('jobseeker_notifications_model', 'notification');
     }
     
     public function index() {
@@ -38,6 +39,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
     }
     
     public function tab_profile(){
+        
         $this->layout = "blank";
         $data = array();
         
@@ -53,7 +55,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             $data['sub_specialty'] = $this->specialty->specialties_get_by_type( "sub" , $data["jobseeker"]["specialty"] );
         }
         
-        $where_array["jobseeker_id"] = $jobseeker_id;
+        $where_array["jobseeker_id"] = $jobseeker_id; 
         $data["certifications"] = $this->jobseeker_certification->jobseekers_certifications_get(0, $where_array);
         $data["licences"] = $this->jobseeker_licence->jobseekers_licences_get(0, $where_array);
         $data["total_license"] = ( $data["licences"] ) ? count($data["licences"]) : 0 ;
@@ -67,6 +69,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $data["total_fellowships"] = ( $data["fellowships"] ) ? count($data["fellowships"]) : 0 ;
         $data["practices"] = $this->jobseeker_practice->jobseekers_practices_get(0, $where_array);
         $data["total_practices"] = ( $data["practices"] ) ? count($data["practices"]) : 0 ;
+        
+        $where_noti["is_read"] = "0";
+        $data["total_notification"] = $this->notification->jobseeker_notifications_total( $where_noti );
         
         $html = $this->load->view('job_seeker/dashboard/tab_profile', $data, TRUE);
 
@@ -137,6 +142,54 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         );
         echo json_encode($array);
         die;
+    }
+    
+    public function notification_page(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/signin');
+        }
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        
+        
+        $data["notifications"] = $this->notification->jobseeker_notifications_get_by_jobseeker($jobseeker_id );
+        
+        $html = $this->load->view('job_seeker/dashboard/notification_page', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    public function notification_select_date(){
+        $selected_date = $this->input->post("selected_date");
+        $id = $this->input->post("id");
+        $status = "";
+        $msg = "";
+        
+        $r = $this->notification->jobseeker_notifications_get($id);
+        if($r){
+            $save["is_read"] = 1;
+            $save["selected_date"] = 1;
+            $this->notification->jobseeker_notifications_update($id , $save);
+            $status = "ok";
+            $msg = "saved successfully";
+                    
+        }
+        else{
+            $status= "error";
+            $msg = "oops something went wrong";
+        }
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        
+        echo json_encode($rsp); die;
     }
     
     public function welcome(){
