@@ -476,8 +476,6 @@ $(document).ready(function(){
         var date = $(this).parent().parent().find(".selected_date");
         var selected_date = date.val();
         var id = $(this).attr("id");
-        console.log(date)
-        console.log(selected_date)
         if(selected_date === "0"){
             bootbox.alert("Please select date");
         }
