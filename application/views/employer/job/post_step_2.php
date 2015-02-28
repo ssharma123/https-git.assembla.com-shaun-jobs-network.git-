@@ -27,6 +27,6 @@
         </fieldset>
     </div>
     <div style="text-align: center; margin-top: 20px;">
-        <a href="javascript:void(0)" class="post-form-back" data-backTo="1">Back</a> &nbsp;  &nbsp; <a href="javascript:void(0)" class="btn btn-lg btn-primary post-form-continue-btn" id="continue-step2" data-stepTo="3">Continue</a>
+        <a href="javascript:void(0)" class="post-form-back" data-backTo="1" data-value="<?php echo isset($job['id']) ? $job['id'] : 0; ?>">Back</a> &nbsp;  &nbsp; <a href="javascript:void(0)" class="btn btn-lg btn-primary post-form-continue-btn" id="continue-step2" data-stepTo="3">Continue</a>
     </div>
 </form>

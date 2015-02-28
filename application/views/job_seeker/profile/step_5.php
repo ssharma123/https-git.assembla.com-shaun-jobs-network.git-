@@ -122,6 +122,7 @@
 
 
         <div style="text-align: center; margin-top: 20px;">
+            <a href="javascript:void(0)" class="profile-back" data-backTo="4" >Back</a>&nbsp;
             <a href="javascript:void(0)" class="btn btn-lg btn-primary profile_steps_continue" data-step="continue-step5" data-stepTo="6" data-formValidate="form_profileStep5">Continue</a>
         </div>
 </div>

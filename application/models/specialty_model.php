@@ -41,7 +41,7 @@ class Specialty_model extends CI_Model {
         else if($type == "sub"){
             $this->db->where("parent_id",$parent_id);
         }
-        
+        $this->db->order_by("name","ASC");
         $r = $this->db->get($this->table_name);
         if ($r->num_rows() > 0) {
             return $r->result_array();

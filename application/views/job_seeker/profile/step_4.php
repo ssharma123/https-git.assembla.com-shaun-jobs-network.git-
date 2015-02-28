@@ -206,7 +206,7 @@
                         
                     <div class="left_col">
                         <select id="res_specialty" name="res_specialty" class="ng-pristine ng-valid form-control" required>
-                            <option value="">Specialty</option>
+                            <option value="">Field</option>
                             <?php 
                             foreach($specialties as $val){ 
                                 $selected = (isset($jobseeker['specialty']) && $jobseeker['specialty'] == $val['id'] ) ? ' selected="selected" ' : "" ;
@@ -217,7 +217,7 @@
                     </div>
                     <div class="right_col">
                         <select id="res_sub_specialty" name="res_sub_specialty" class="ng-pristine ng-valid form-control sub_speciality" required>
-                            <option value="">Sub Specialty</option>
+                            <option value="">Concentration</option>
                         </select>
                     </div>
                     
@@ -262,7 +262,7 @@
                         
                     <div class="left_col">
                         <select id="fac_specialty" name="fac_specialty" class="ng-pristine ng-valid form-control" required>
-                            <option value="">Specialty</option>
+                            <option value="">Field</option>
                             <?php 
                             foreach($specialties as $val){ 
                                 $selected = (isset($jobseeker['specialty']) && $jobseeker['specialty'] == $val['id'] ) ? ' selected="selected" ' : "" ;
@@ -273,7 +273,7 @@
                     </div>
                     <div class="right_col">
                         <select id="fac_sub_specialty" name="fac_sub_specialty" class="ng-pristine ng-valid form-control sub_speciality" required>
-                            <option value="">Sub Specialty</option>
+                            <option value="">Concentration</option>
                         </select>
                     </div>
                     
@@ -292,6 +292,7 @@
 
 
         <div style="text-align: center; margin-top: 20px;">
+            <a href="javascript:void(0)" class="profile-back" data-backTo="3" >Back</a>&nbsp;
             <a href="javascript:void(0)" class="btn btn-lg btn-primary profile_steps_continue" data-step="continue-step4" data-stepTo="5" data-formValidate="form_profileStep4">Continue</a>
         </div>
 </div>
@@ -531,6 +532,10 @@
                 $("#res_sub_specialty").html(rsp.html); 
             });
         }
+        else{
+            $("#res_sub_specialty").html("<option value='' selected>Concentration</option>");
+        }
+        
     }
     
     
@@ -650,6 +655,9 @@
             }).success(function(rsp){
                 $("#fac_sub_specialty").html(rsp.html); 
             });
+        }
+        else{
+            $("#fac_sub_specialty").html("<option value='' selected>Concentration</option>");
         }
     }
     

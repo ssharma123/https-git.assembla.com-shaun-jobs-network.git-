@@ -71,6 +71,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $data["total_practices"] = ( $data["practices"] ) ? count($data["practices"]) : 0 ;
         
         $where_noti["is_read"] = "0";
+        $where_noti["jobseeker_id"] = $jobseeker_id; 
         $data["total_notification"] = $this->notification->jobseeker_notifications_total( $where_noti );
         
         $html = $this->load->view('job_seeker/dashboard/tab_profile', $data, TRUE);

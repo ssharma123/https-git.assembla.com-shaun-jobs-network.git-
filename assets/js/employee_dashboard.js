@@ -394,6 +394,30 @@ $(document).ready(function(){
         
         
     });
+    
+    
+    $("#post-job-container").on("click",".post-form-back",function(){
+        
+        var job_id = $(this).attr("data-value");
+        var back_to = $(this).attr("data-backTo");
+        
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"employee_dashboard/job_post_step_"+back_to,
+            dataType: "json",
+            data: {
+                recent_job_id: job_id
+            }
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+            
+    });
         
     
     $(".post-form-back").click(function(){

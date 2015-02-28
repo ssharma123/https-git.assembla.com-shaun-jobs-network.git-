@@ -25,7 +25,7 @@
                 <form id="form_profileStep6" method="post">
                     <div class="left_col">
                          <select class="ng-pristine ng-valid form-control" id="position_type" name="position_type" required >
-                            <option value="" class="">Select</option>
+                            <option value="" class="">Position Type</option>
                             <?php
                             $selected = (isset($jobseeker['position_type']) && $jobseeker['position_type'] == "full_time" ) ? ' selected="selected" ' : "" ;
                             ?>
@@ -85,11 +85,12 @@
                         </select>
                     </div>
                     <div class="right_col">
-                        <input required min="1" type="number" name="patient_per_day" id="patient_per_day" value="<?php echo (isset($jobseeker['patient_per_day'])) ? $jobseeker['patient_per_day'] : "" ; ?>" class="form-control" placeholder="Patient per day" >
+                        <input required min="1" type="number" name="patient_per_day" id="patient_per_day" value="<?php echo (isset($jobseeker['patient_per_day'])) ? $jobseeker['patient_per_day'] : "Patient per day" ; ?>" class="form-control" placeholder="Patient per day" >
                     </div>
                     <div class="left_col">
-                        <input required min="1" type="number" name="salary" id="salary" value="<?php echo (isset($jobseeker['salary'])) ? $jobseeker['salary'] : "" ; ?>" class="form-control" placeholder="Salary" >
+                        <input required min="1" type="number" name="salary" id="salary" value="<?php echo (isset($jobseeker['salary'])) ? $jobseeker['salary'] : "Salary" ; ?>" class="form-control" placeholder="Salary" >
                     </div>
+                     
                     <div class="right_col">
                         <select class="ng-pristine ng-valid form-control" required id="availability" name="availability" >
                             <option value="">Availability</option>
@@ -183,6 +184,7 @@
 
 
         <div style="text-align: center; margin-top: 20px;">
+            <a href="javascript:void(0)" class="profile-back" data-backTo="5" >Back</a>&nbsp;
             <a href="javascript:void(0)" class="btn btn-lg btn-primary profile_steps_continue" data-step="continue-step6" data-stepTo="7" data-formValidate="form_profileStep5">Continue</a>
         </div>
 </div>
@@ -215,7 +217,7 @@
                 if(rsp.status === "ok"){
                     // continue then
                     $("#search_location_list").append(rsp.html);
-                    
+                    $("#location_name").val("");
                 }
                 else{
                     $("#tabContent_rsp").html(rsp.msg).show();

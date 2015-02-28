@@ -228,6 +228,8 @@ $(document).ready(function(){
                 dataType: "json"
             }).success(function(rsp){
                 $("#tabContent").html(rsp.html);
+                
+                $("#jobseeker_tabs_nav").html('<li><a class="" href="javascript:void(0)" id="tab_profile">Profile</a></li><li><a class="" href="javascript:void(0)" id="tab_status">Status</a></li><li><a class="" href="javascript:void(0)" id="tab_matches">Matches</a></li><li><a class="" href="javascript:void(0)" id="tab_settings">Settings</a></li>');
             })
             .always(function(){
                 FBox.fancybox.hideLoading();
@@ -487,6 +489,46 @@ $(document).ready(function(){
         }
         
         
+    });
+    
+    $("#tabContent").on("click",".profile-back",function(){
+        
+        var back_to = $(this).attr("data-backTo");
+        
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"job_seeker_dashboard/profile_step_"+back_to,
+            dataType: "json",
+            data: {
+            }
+        }).success(function(rsp){
+            $("#tabContent").html(rsp.html);
+            
+            if(back_to == 1 ){
+                $("#form_profileStep1").validate({
+                    errorPlacement: function(error, element) {
+//                                element.attr("placeholder",error.text());
+                    },
+                    submitHandler: function(form) {
+                    }
+                });
+            }
+            else if(back_to == 2){
+                $("#form_profileStep2").validate({
+                    errorPlacement: function(error, element) {
+//                                element.attr("placeholder",error.text());
+                    },
+                    submitHandler: function(form) {
+                    }
+                });
+            }
+
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+            
     });
 });
 

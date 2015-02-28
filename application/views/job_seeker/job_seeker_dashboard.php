@@ -23,7 +23,7 @@
 
             <div class="col-sm-10">
 
-                <ul class="nav nav-pills nav-justified" style="cursor: auto">
+                <ul class="nav nav-pills nav-justified" style="cursor: auto" id="jobseeker_tabs_nav">
                     
                     <?php if($jobseeker['profile_complete'] == 1) { ?>
                     <li><a class="" href="javascript:void(0)" id="tab_profile">Profile</a></li>

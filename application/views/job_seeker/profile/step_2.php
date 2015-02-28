@@ -39,7 +39,7 @@
                 
                 <div class="left_col">
                     <select id="specialty" name="specialty" class="ng-pristine ng-valid parent_speciality form-control" required>
-                        <option value="">Specialty</option>
+                        <option value="">Categories</option>
                         <?php 
                         foreach($specialties as $val){ 
                             $selected = (isset($jobseeker['specialty']) && $jobseeker['specialty'] == $val['id'] ) ? ' selected="selected" ' : "" ;
@@ -50,9 +50,9 @@
                 </div>
                 <div class="right_col">
                     <select id="sub_specialty" name="sub_specialty" class="ng-pristine ng-valid form-control sub_speciality" required>
-                        <option value="">Sub Specialty</option>
+                        <option value="">Sub Categories</option>
                         <?php 
-                        if(isset($sub_specialty) && is_array($sub_specialty)){ 
+                        if(isset($sub_specialty) && is_array($sub_specialty) && (isset($jobseeker["specialty"]) && $jobseeker["specialty"] != 0) ){ 
                             foreach($sub_specialty as $sub_spec) { 
                             $selected = (isset($jobseeker['sub_specialty']) && $jobseeker['sub_specialty'] == $sub_spec['id'] ) ? ' selected="selected" ' : "" ;
                             ?>
@@ -61,7 +61,7 @@
                         }
                         else{
                         ?>
-                        <option value=""></option>
+<!--                        <option value=""></option>-->
                         <?php } ?>
                     </select>
                 </div>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="right_col">
                     <select class="ng-pristine ng-valid form-control" required id="degree" name="degree" >
-                        <option value="" class="">Select</option>
+                        <option value="" class="">Degree</option>
                         <?php
                         $selected = (isset($jobseeker['degree']) && $jobseeker['degree'] == "D.O" ) ? ' selected="selected" ' : "" ;
                         ?>
@@ -142,6 +142,7 @@
             
         </div>
         <div style="text-align: center; margin-top: 20px;">
+            <a href="javascript:void(0)" class="profile-back" data-backTo="1" >Back</a>&nbsp;
             <a href="javascript:void(0)" class="btn btn-lg btn-primary profile_steps_continue" data-step="continue-step2" data-stepTo="3" data-formValidate="form_profileStep2">Continue</a>
         </div>
     </form>
