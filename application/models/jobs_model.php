@@ -171,7 +171,6 @@ class Jobs_model extends CI_Model {
             WHERE 1 ".$where."
             ORDER BY j.id DESC ";
         $r = $this->db->query($q);
-        echo $this->db->last_query();
         if ($r->num_rows() > 0) {
             return $r->result_array();
         }
