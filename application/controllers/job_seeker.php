@@ -15,6 +15,12 @@ class Job_seeker extends MY_Job_seekerController {
     public function index() {
         $this->layout = "job_seeker";
         
+        // check already login
+        $session = $this->session->all_userdata();
+        if (isset($session['jobseeker'])) {
+            redirect('job_seeker_dashboard');
+        }
+        
         $data["states"] = $this->get_states();
         $data["locations"] = get_locations_home_page();
         
@@ -35,6 +41,12 @@ class Job_seeker extends MY_Job_seekerController {
     
     public function match(){
         $this->layout = "job_seeker";
+        // check already login
+        $session = $this->session->all_userdata();
+        if (isset($session['jobseeker'])) {
+            redirect('job_seeker_dashboard');
+        }
+        
         $data = array();
         
         $data = $this->input->post();
@@ -247,6 +259,13 @@ class Job_seeker extends MY_Job_seekerController {
     }
     
     public function signup(){
+        // check already login
+        $session = $this->session->all_userdata();
+        if (isset($session['jobseeker'])) {
+            redirect('job_seeker_dashboard');
+        }
+        
+        
         $this->layout = "job_seeker";
         $data = array();
         $msg = "";

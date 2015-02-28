@@ -85,10 +85,10 @@
                         </select>
                     </div>
                     <div class="right_col">
-                        <input required min="1" type="number" name="patient_per_day" id="patient_per_day" value="<?php echo (isset($jobseeker['patient_per_day'])) ? $jobseeker['patient_per_day'] : "Patient per day" ; ?>" class="form-control" placeholder="Patient per day" >
+                        <input required min="1" type="number" name="patient_per_day" id="patient_per_day" value="<?php echo (isset($jobseeker['patient_per_day']) && $jobseeker['patient_per_day'] != 0) ? $jobseeker['patient_per_day'] : "" ; ?>" class="form-control" placeholder="Patient per day" >
                     </div>
                     <div class="left_col">
-                        <input required min="1" type="number" name="salary" id="salary" value="<?php echo (isset($jobseeker['salary'])) ? $jobseeker['salary'] : "Salary" ; ?>" class="form-control" placeholder="Salary" >
+                        <input required min="1" type="number" name="salary" id="salary" value="<?php echo (isset($jobseeker['salary']) && $jobseeker['salary'] != 0) ? $jobseeker['salary'] : "" ; ?>" class="form-control" placeholder="Salary" >
                     </div>
                      
                     <div class="right_col">

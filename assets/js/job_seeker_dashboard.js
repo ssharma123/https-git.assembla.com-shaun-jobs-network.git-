@@ -238,7 +238,8 @@ $(document).ready(function(){
         
     });
     
-    $("#tab_profile").click(function(){
+    $(document).on("click","#tab_profile",function(e){
+        e.stopImmediatePropagation();
         
         $("#tabContent_rsp").hide();
 
@@ -267,7 +268,9 @@ $(document).ready(function(){
         }); 
 
     });
-    $("#tab_status").click(function(){
+    
+    $(document).on("click","#tab_status",function(e){
+        e.stopImmediatePropagation();
         
         $("#tabContent_rsp").hide();
 
@@ -289,7 +292,9 @@ $(document).ready(function(){
         }); 
 
     });
-    $("#tab_matches").click(function(){
+    
+    $(document).on("click","#tab_matches",function(e){
+        e.stopImmediatePropagation();
         
         $("#tabContent_rsp").hide();
 
@@ -311,7 +316,9 @@ $(document).ready(function(){
         }); 
 
     });
-    $("#tab_settings").click(function(){
+    
+    $(document).on("click","#tab_settings",function(e){
+        e.stopImmediatePropagation();
         
         $("#tabContent_rsp").hide();
 
@@ -529,6 +536,22 @@ $(document).ready(function(){
             FBox.fancybox.hideLoading();
         }); 
             
+    });
+    
+    $("#tabContent").on("click","#skip_7_btn",function(){
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"job_seeker_dashboard/profile_step_8",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#tabContent").html(rsp.html);
+
+            $("#jobseeker_tabs_nav").html('<li><a class="" href="javascript:void(0)" id="tab_profile">Profile</a></li><li><a class="" href="javascript:void(0)" id="tab_status">Status</a></li><li><a class="" href="javascript:void(0)" id="tab_matches">Matches</a></li><li><a class="" href="javascript:void(0)" id="tab_settings">Settings</a></li>');
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
     });
 });
 
