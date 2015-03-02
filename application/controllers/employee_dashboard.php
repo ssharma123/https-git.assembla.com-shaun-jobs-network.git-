@@ -900,12 +900,16 @@ class Employee_dashboard extends MY_EmployerController {
                         $this->jobs->jobs_applied_update($id, $save_data);
                         $status = "ok";
                         $msg = "Saved successfully";
+                        
+                        $this->job_applied_status_matched($job_apply);
                     }
                     else if($type === "interview"){
                         $save_data['interview'] = 1;
                         $this->jobs->jobs_applied_update($id, $save_data);
                         $status = "ok";
                         $msg = "Saved successfully";
+                        
+                        $this->job_applied_status_interview($job_apply);
                     }
                     else if($type === "interview_complete"){
                         $save_data['interview_complete'] = 1;
@@ -919,12 +923,8 @@ class Employee_dashboard extends MY_EmployerController {
                         
                         if($type === "face_2_face"){
                             
-                            $this->load->model('jobseeker_notifications_model', 'notification');
-                            $noti_data["jobseeker_id"] = $job_apply["jobseeker_id"];
-                            $noti_data["employer_id"] = $job_apply["employer_id"];
-                            $noti_data["job_id"] = $job_apply["job_id"];
-                            $noti_data["job_applied_id"] = $job_apply["id"];
-                            $this->notification->jobseeker_notifications_add($noti_data);
+                            $this->job_applied_status_face_2_face($job_apply);
+                            
                             
                         }
                     }
@@ -940,6 +940,43 @@ class Employee_dashboard extends MY_EmployerController {
             "html" => $html
         );
         echo json_encode($rsp); die;
+    }
+    function job_applied_status_matched($job_apply){
+        
+        $email_data['to'] = 'numan.hassan@purelogics.net';
+        $email_data['subject'] = "Job Matched";
+        
+        $job = $this->jobs->jobs_get($job_apply['job_id']);
+        $patterns = array(
+            '{JOB_HEADING}' => $job['job_headline'],
+            '{JOB_INTERNAL_ID}' => $job['internal_id']
+        );
+        send_template_email("employer/register",$email_data, $patterns);
+        
+    }
+    function job_applied_status_interview($job_apply){
+        
+        $email_data['to'] = 'numan.hassan@purelogics.net';
+        $email_data['subject'] = "Job Interview";
+        
+        $job = $this->jobs->jobs_get($job_apply['job_id']);
+        $patterns = array(
+            '{JOB_HEADING}' => $job['job_headline'],
+            '{JOB_INTERNAL_ID}' => $job['internal_id']
+        );
+        send_template_email("employer/register",$email_data, $patterns);
+        
+    }
+    
+    function job_applied_status_face_2_face($job_apply){
+        
+        $this->load->model('jobseeker_notifications_model', 'notification');
+        $noti_data["jobseeker_id"] = $job_apply["jobseeker_id"];
+        $noti_data["employer_id"] = $job_apply["employer_id"];
+        $noti_data["job_id"] = $job_apply["job_id"];
+        $noti_data["job_applied_id"] = $job_apply["id"];
+        $this->notification->jobseeker_notifications_add($noti_data);
+        
     }
     
     public function popup_face_2_face(){
