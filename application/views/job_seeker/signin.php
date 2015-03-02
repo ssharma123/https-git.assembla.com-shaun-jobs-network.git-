@@ -66,21 +66,7 @@ var facilities = <?php echo $facilities; ?>;
 </div>
 <script>
     
-    $("#save_email_siginin_form").validate({
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        }
-    });
     
-    $("#complete_sigin_facebook").click(function(){
-        var rsp;
-        rsp.id = $.trim ( $("#facebook_id").val() );
-        rsp.first_name = $.trim( $("#first_name").val() );
-        rsp.last_name = $.trim( $("#last_name").val() );
-        rsp.email = $.trim( $("#email").val() );
-        
-        connect_with_facebook(rsp);
-    });
     
     
 </script>
