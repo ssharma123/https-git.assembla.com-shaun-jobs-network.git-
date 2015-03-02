@@ -48,7 +48,10 @@
                 $select_date_status = $this->session->flashdata("select_date_status");
                 $select_date_msg = $this->session->flashdata("select_date_msg");
                 if( isset($select_date_status) && $select_date_status == "ok"){ ?>
-                <div class="success_rsp"><?php echo $select_date_msg; ?></div>
+                <div id="select_date_rsp" class="success_rsp"><?php echo $select_date_msg; ?></div>
+                <script>
+                    $('#select_date_rsp').delay(5000).fadeOut('slow');
+                </script>
                 <?php } 
                 ?>
                 <div>
