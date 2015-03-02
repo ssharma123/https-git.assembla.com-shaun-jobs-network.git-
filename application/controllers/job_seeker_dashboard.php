@@ -1878,6 +1878,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         if($notification){
                             $save["is_read"] = 1;
                             $save["selected_date"] = 1;
+                            echo "<pre>"; print_r($notification); echo "</pre>";
+                            echo "<pre>"; print_r($save); echo "</pre>";
+                            die;
+
                             $this->notification->jobseeker_notifications_update($notification['id'] , $save);
                         }
                         
