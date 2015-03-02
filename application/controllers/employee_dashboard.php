@@ -1030,6 +1030,8 @@ class Employee_dashboard extends MY_EmployerController {
             
             $status = "ok";
             $msg = "saved successfully";
+            
+            $this->job_applied_status_face_2_face($job_apply);
         }
         
         
