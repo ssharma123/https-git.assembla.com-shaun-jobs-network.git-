@@ -179,7 +179,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             $this->notification->jobseeker_notifications_update($id , $save);
             $status = "ok";
             $msg = "saved successfully";
-                    
+            
+            $save_data["face_2_face_selected"] = $selected_date;
+            $this->jobs->jobs_applied_update( $r['job_applied_id'], $save_data);
         }
         else{
             $status= "error";
