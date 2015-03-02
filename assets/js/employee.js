@@ -295,17 +295,17 @@ function connect_with_facebook(rsp){
     $("#fb_error_msg").hide();
     
      
-    if( typeof rsp.id === undefined){
+    if( typeof rsp.id == "undefined" ){
         $("#fb_error_msg").html('Oops something went wrong.Unable to read your data from facebook').addClass('error_rsp');
         $("#fb_error_msg").show();
         hide_busy();
     }
-    else if ( (typeof rsp.first_name === undefined) && (typeof rsp.last_name === "undefined") ){
+    else if ( (typeof rsp.first_name == "undefined" ) && (typeof rsp.last_name == "undefined") ){
         $("#fb_error_msg").html('Oops something went wrong. Unable to read your data from facebook').addClass('error_rsp');
         $("#fb_error_msg").show();
         hide_busy();
     }
-    else if( typeof rsp.email === undefined){
+    else if(typeof rsp.email == "undefined" ){
         $("#sigin_form_div").hide();
         $("#signin_email_form_div").show();
         

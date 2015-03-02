@@ -144,15 +144,7 @@ function loginToFacebook_jobseeker(){
 function connect_with_facebook_jobseeker(rsp){
     $("#fb_error_msg").html('').removeClass();
     $("#fb_error_msg").hide();
-    
-    console.log(typeof rsp.id);
-    console.log(typeof rsp.email);
-    if(typeof rsp.email == "undefined"){
-        console.log("zzZZ");
-    }
-    else{
-        console.log("qqq");
-    }
+     
     
     if( typeof rsp.id == "undefined" ){
         $("#fb_error_msg").html('Oops something went wrong.Unable to read your data from facebook').addClass('error_rsp');
