@@ -132,6 +132,8 @@ function connect_with_facebook_jobseeker(rsp){
     $("#fb_error_msg").html('').removeClass();
     $("#fb_error_msg").hide();
     
+    console.log(rsp)
+    
     if( typeof rsp.id === undefined){
         $("#fb_error_msg").html('Oops something went wrong.Unable to read your data from facebook').addClass('error_rsp');
         $("#fb_error_msg").show();
