@@ -556,7 +556,8 @@ class Job_seeker extends MY_Job_seekerController {
         $this->layout = 'blank';
         $status = '';
         $data['linkedin_id'] = $this->input->post('id');
-        $data['name'] = $this->input->post('name');
+        $data['first_name'] = $this->input->post('first_name');
+        $data['last_name'] = $this->input->post('last_name');
         $data['email'] = $this->input->post('email');
         $freez_time = time();
         $data['created_at'] = $freez_time;
