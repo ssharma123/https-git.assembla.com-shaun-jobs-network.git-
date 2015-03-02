@@ -923,8 +923,6 @@ class Employee_dashboard extends MY_EmployerController {
                         
                         if($type === "face_2_face"){
                             
-                            $this->job_applied_status_face_2_face($job_apply);
-                            
                             
                         }
                     }
