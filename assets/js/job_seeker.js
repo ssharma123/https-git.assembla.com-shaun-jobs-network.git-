@@ -144,7 +144,7 @@ function connect_with_facebook_jobseeker(rsp){
     
     console.log(typeof rsp.id);
     console.log(typeof rsp.email);
-    if(rsp.email == "undefined"){
+    if(typeof rsp.email == "undefined"){
         console.log("zzZZ");
     }
     else{
