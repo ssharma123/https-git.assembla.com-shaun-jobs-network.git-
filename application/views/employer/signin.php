@@ -20,7 +20,7 @@ var facilities = <?php echo $facilities; ?>;
                 <div id="signup_signin_form_rsp" style="display: none;"></div>
                 <div id="fb_error_msg" style="display: none;"></div>
                 
-            <div class="col col-sm-4">
+            <div class="col col-sm-4" id="sigin_form_div">
                 <form class="well well-lg text-center ng-valid ng-dirty validate_form" action="<?php echo site_url('employer/signin'); ?>" method="post">
                     
                     <input type="email" placeholder="Your Email" class="form-control ng-valid ng-dirty" required id="signin_email" name="signin_email" value="<?php echo isset($signin_email) ? $signin_email : '' ; ?>">
@@ -36,6 +36,20 @@ var facilities = <?php echo $facilities; ?>;
 
                 </form>
             </div>
+            
+            <div class="col col-sm-4" id="signin_email_form_div" style="display: none;">
+                <p>Please enter email to complete the process</p>
+                <form class="well well-lg text-center ng-valid ng-dirty validate_form" method="post" id="save_email_siginin_form">
+                    <input type="hidden" name="facebook_id" id="facebook_id" >
+                    <input type="hidden" name="first_name" id="first_name" >
+                    <input type="hidden" name="last_name" id="last_name" >
+                    <input type="email" placeholder="Your Email" class="form-control" required id="email" name="email" id="email" value="">
+                    <br>
+                    <a href="javascript:void(0)" id="complete_sigin_facebook" class="btn btn-primary btn-block">Complete Signin</a>
+                    <br>
+                </form>
+            </div>
+                
             <div class="col col-sm-2"></div>
             <div class="col col-sm-6">
                 <form class="form-horizontal ng-pristine ng-valid" id="signup_sigin_form" method="post" action="<?php echo site_url('employer/signup/2'); ?>">
