@@ -144,6 +144,12 @@ function connect_with_facebook_jobseeker(rsp){
     
     console.log(typeof rsp.id);
     console.log(typeof rsp.email);
+    if(rsp.email == "undefined"){
+        console.log("zzZZ");
+    }
+    else{
+        console.log("qqq");
+    }
     
     if( typeof rsp.id == undefined){
         $("#fb_error_msg").html('Oops something went wrong.Unable to read your data from facebook').addClass('error_rsp');
