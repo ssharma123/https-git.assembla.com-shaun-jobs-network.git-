@@ -21,7 +21,7 @@ if(! function_exists('send_template_email'))
                     $body = $email_data['body'];
                 }
                 else{
-                    $body = $that->load->view("email_templates/".$type,array(),TRUE);
+                    $body = $that->load->view("email_templates/".$type, $email_data ,TRUE);
                     if(count($patterns) > 0){
                         $body = replace_body_patters($body , $patterns);
                     }

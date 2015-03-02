@@ -1857,6 +1857,57 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         );
         echo json_encode($array); die;
     }
+    
+    public function select_date_face2face($job_applied_id = 0, $selected_date = ""){
+        
+        if($job_applied_id != 0 && $selected_date != ""){
+            
+            $apply = $this->jobs->jobs_applied_get($job_applied_id);
+            if($apply){
+                if($apply["face_2_face_selected"] == 0){
+                    $possible_date = array("date_1","date_2","date_3");
+                    if(in_array($selected_date, $possible_date)){
+                        $key = "f2f_".$selected_date;
+                        $date = $apply[$key];
+                        $save_data["face_2_face_selected"] = $date;
+                        $this->jobs->jobs_applied_update($apply["id"] , $save_data);
+                        
+                        // delete notification for select date 
+                        $where['job_applied_id'] = $apply["id"];
+                        $notification = $this->notification->jobseeker_notifications_get(0 , $where);
+                        if($notification){
+                            $save["is_read"] = 1;
+                            $save["selected_date"] = 1;
+                            $this->notification->jobseeker_notifications_update($notification['id'] , $save);
+                        }
+                        
+                        $this->session->set_flashdata("select_date_status","ok");
+                        $this->session->set_flashdata("select_date_msg","You have successfully selected the date ");
+                        
+                        // check already login
+                        $session = $this->session->all_userdata();
+                        if (isset($session['jobseeker'])) {
+                            redirect('job_seeker_dashboard');
+                        }
+                        $jobseeker = $this->jobseeker->jobseekers_get($apply['jobseeker_id']);
+                        if ($jobseeker) {
+                            unset($jobseeker['password']);
+
+                            $this->session->set_userdata('user_id', $jobseeker['id']);
+                            $this->session->set_userdata('user_type', 'jobseeker');
+                            $this->session->set_userdata('jobseeker', $jobseeker);
+                            redirect('job_seeker_dashboard');
+                        }
+                    }
+                }
+                
+            }
+            redirect('job_seeker/signin');
+            
+        }
+        redirect('job_seeker/signin');
+        
+    }
 
 }
 

@@ -44,6 +44,13 @@
                 </ul>
                 <div class="clearfix"></div>
                 <hr>
+                <?php
+                $select_date_status = $this->session->flashdata("select_date_status");
+                $select_date_msg = $this->session->flashdata("select_date_msg");
+                if( isset($select_date_status) && $select_date_status == "ok"){ ?>
+                <div class="success_rsp"><?php echo $select_date_msg; ?></div>
+                <?php } 
+                ?>
                 <div>
                     <div id="tabContent_rsp" style="display: none;"></div>
                     <div id="tabContent">
