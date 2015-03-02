@@ -11,8 +11,8 @@
                  
 
                 <div class="left_col">
-                    <select class="ng-pristine ng-valid form-control" id="" name="" disabled >
-                        <option value=""></option>
+                    <select style="color:#57718b" class="ng-pristine ng-valid form-control" id="" name="" disabled >
+                        <option value="" selected >Physician</option>
                     </select>
                 </div>
                 <div class="right_col" >

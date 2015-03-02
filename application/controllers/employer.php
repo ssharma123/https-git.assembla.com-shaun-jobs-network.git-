@@ -130,6 +130,7 @@ class Employer extends MY_EmployerController {
                         array('field' => 'facility_address', 'label' => 'Address', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_zipCode', 'label' => 'Zip Code', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_city', 'label' => 'City', 'rules' => 'trim|required|xss_clean'),
+                        array('field' => 'facility_state', 'label' => 'State', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_num_of_employee', 'label' => 'Number of employer', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_num_of_bed', 'label' => 'Number of bed', 'rules' => 'trim|required|xss_clean'),
                     );
@@ -194,6 +195,7 @@ class Employer extends MY_EmployerController {
                         $save_data_fac['address'] = $this->db->escape_str($this->input->post('facility_address'));
                         $save_data_fac['zipCode'] = $this->db->escape_str($this->input->post('facility_zipCode'));
                         $save_data_fac['city'] = $this->db->escape_str($this->input->post('facility_city'));
+                        $save_data_fac['state'] = $this->db->escape_str($this->input->post('facility_state'));
                         $save_data_fac['num_of_employee'] = $this->db->escape_str($this->input->post('facility_num_of_employee'));
                         $save_data_fac['num_of_bed'] = $this->db->escape_str($this->input->post('facility_num_of_bed'));
 
