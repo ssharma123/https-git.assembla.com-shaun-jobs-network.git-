@@ -380,3 +380,7 @@ function __autoload($class)
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+
+
+$config['linkedin_api_key'] = "78p3q0wml3c39p";
+$config['linkedin_secret'] = "VrvJuaXEubhsPET8";

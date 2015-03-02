@@ -439,8 +439,12 @@ class Employer extends MY_EmployerController {
 
         $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
         $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
-        $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
-        $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
+        
+        $linkedin_api_key = $this->config->item("linkedin_api_key");
+        $linkedin_secret = $this->config->item("linkedin_secret");
+        
+        $linkedin_config['linkedin_api_key'] = $linkedin_api_key;
+        $linkedin_config['linkedin_secret'] = $linkedin_secret;
 
         # First step is to initialize with your consumer key and secret. We'll use an out-of-band oauth_callback
         $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
@@ -466,8 +470,13 @@ class Employer extends MY_EmployerController {
         
         $linkedin_config['callback_url'] = base_url('employer/linkedin_connect_callback');
         $linkedin_config['base_url'] = base_url('employer/linkedin_connect');
-        $linkedin_config['linkedin_api_key'] = "78j2kaieeedqhd";
-        $linkedin_config['linkedin_secret'] = "78DO283omKfQ0zkt";
+        
+        $linkedin_api_key = $this->config->item("linkedin_api_key");
+        $linkedin_secret = $this->config->item("linkedin_secret");
+        
+        $linkedin_config['linkedin_api_key'] = $linkedin_api_key;
+        $linkedin_config['linkedin_secret'] = $linkedin_secret;
+        
         $linkedin = new LinkedIn($linkedin_config['linkedin_api_key'], $linkedin_config['linkedin_secret'], $linkedin_config['callback_url']);
         
         $oauth_state = $this->session->userdata('oauth_state');
