@@ -982,12 +982,13 @@ class Employee_dashboard extends MY_EmployerController {
         $email_data['subject'] = "Job - Face 2 Face";
         
         $job = $this->jobs->jobs_get($job_apply['job_id']);
+        $job_apply = $this->jobs->jobs_applied_get($job_apply['id']);
         $patterns = array(
             '{JOB_HEADING}' => $job['job_headline'],
             '{JOB_INTERNAL_ID}' => $job['internal_id'],
-            '{DATE_1}' => formate_date($job['f2f_date_1']),
-            '{DATE_2}' => formate_date($job['f2f_date_2']),
-            '{DATE_3}' => formate_date($job['f2f_date_3'])
+            '{DATE_1}' => formate_date($job_apply['f2f_date_1']),
+            '{DATE_2}' => formate_date($job_apply['f2f_date_2']),
+            '{DATE_3}' => formate_date($job_apply['f2f_date_3'])
         );
         send_template_email("job/face_2_face",$email_data, $patterns);
         
