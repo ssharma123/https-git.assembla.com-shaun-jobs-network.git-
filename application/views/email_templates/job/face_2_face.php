@@ -13,15 +13,15 @@
             </tr>
             <tr>
                 <td>
-                    You have a match <br><br>
+                    Face To Face <br><br>
                     Job Internal ID : {JOB_INTERNAL_ID}<br>
                     Job Heading : {JOB_HEADING}<br>
                     <br><br>
                     Please Click & choose one date given below : <br>
                     
-                    <a style="padding:10px; " href="<?php site_url("job_seeker_dashboard/select_date_face2face/".$job_applied_id."/date_1"); ?>"><strong>{DATE_1}</strong></a>
-                    <a style="padding:10px; " href="<?php site_url("job_seeker_dashboard/select_date_face2face/".$job_applied_id."/date_2"); ?>"><strong>{DATE_2}</strong></a>
-                    <a style="padding:10px; " href="<?php site_url("job_seeker_dashboard/select_date_face2face/".$job_applied_id."/date_3"); ?>"><strong>{DATE_3}</strong></a>
+                    <a style="padding:10px; " href="<?php echo site_url("job_seeker_dashboard/select_date_face2face/".$job_applied_id."/date_1"); ?>"><strong>{DATE_1}</strong></a>
+                    <a style="padding:10px; " href="<?php echo site_url("job_seeker_dashboard/select_date_face2face/".$job_applied_id."/date_2"); ?>"><strong>{DATE_2}</strong></a>
+                    <a style="padding:10px; " href="<?php echo site_url("job_seeker_dashboard/select_date_face2face/".$job_applied_id."/date_3"); ?>"><strong>{DATE_3}</strong></a>
                     
                 </td>
             </tr>
