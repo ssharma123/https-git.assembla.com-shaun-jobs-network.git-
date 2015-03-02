@@ -980,6 +980,7 @@ class Employee_dashboard extends MY_EmployerController {
         
         $email_data['to'] = 'numan.hassan@purelogics.net';
         $email_data['subject'] = "Job - Face 2 Face";
+        $email_data['job_applied_id'] = $job_apply['id'];
         
         $job = $this->jobs->jobs_get($job_apply['job_id']);
         $job_apply = $this->jobs->jobs_applied_get($job_apply['id']);
