@@ -131,28 +131,49 @@ function loginToFacebook_jobseeker(){
 function connect_with_facebook_jobseeker(rsp){
     $("#fb_error_msg").html('').removeClass();
     $("#fb_error_msg").hide();
-    $.ajax({
-        type: "POST",
-        url: BASE_URL+"job_seeker/facebook_connect",
-        data: {
-            id: rsp.id,
-            first_name: rsp.first_name,
-            last_name: rsp.last_name,
-            email: rsp.email
-        },
-        dataType: "json"
-        
-    }).success(function(rsp){
-        if(rsp.status == 'ok'){
-            window.location = BASE_URL+'job_seeker_dashboard';
-        }
-        else{
-            $("#fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');
-            $("#fb_error_msg").show();
-        }
-    }).always(function(){
+    
+    if( typeof rsp.id === undefined){
+        $("#fb_error_msg").html('Oops something went wrong.Unable to read your data from facebook').addClass('error_rsp');
+        $("#fb_error_msg").show();
         hide_busy();
-    });
+    }
+    else if ( (typeof rsp.first_name === undefined) && (typeof rsp.last_name === "undefined") ){
+        $("#fb_error_msg").html('Oops something went wrong. Unable to read your data from facebook').addClass('error_rsp');
+        $("#fb_error_msg").show();
+        hide_busy();
+    }
+    else if( typeof rsp.email === undefined){
+        $("#sigin_form_div").hide();
+        $("#signin_email_form_div").show();
+        
+        $("#facebook_id").val(rsp.id);
+        $("#name").val(rsp.first_name+" "+rsp.last_name);
+        
+    }
+    else{
+        $.ajax({
+            type: "POST",
+            url: BASE_URL+"job_seeker/facebook_connect",
+            data: {
+                id: rsp.id,
+                first_name: rsp.first_name,
+                last_name: rsp.last_name,
+                email: rsp.email
+            },
+            dataType: "json"
+
+        }).success(function(rsp){
+            if(rsp.status == 'ok'){
+                window.location = BASE_URL+'job_seeker_dashboard';
+            }
+            else{
+                $("#fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');
+                $("#fb_error_msg").show();
+            }
+        }).always(function(){
+            hide_busy();
+        });
+    }
 }
 
 function connect_with_linkedin_jobseeker(linkedin_id , first_name, last_name, email){
