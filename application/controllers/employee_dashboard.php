@@ -951,7 +951,7 @@ class Employee_dashboard extends MY_EmployerController {
             '{JOB_HEADING}' => $job['job_headline'],
             '{JOB_INTERNAL_ID}' => $job['internal_id']
         );
-        send_template_email("employer/register",$email_data, $patterns);
+        send_template_email("job/matched",$email_data, $patterns);
         
     }
     function job_applied_status_interview($job_apply){
@@ -964,7 +964,7 @@ class Employee_dashboard extends MY_EmployerController {
             '{JOB_HEADING}' => $job['job_headline'],
             '{JOB_INTERNAL_ID}' => $job['internal_id']
         );
-        send_template_email("employer/register",$email_data, $patterns);
+        send_template_email("job/interview",$email_data, $patterns);
         
     }
     
