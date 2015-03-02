@@ -104,7 +104,10 @@ $(document).ready(function(){
         window.open(BASE_URL+"job_seeker/linkedin_connect", "", "width=500, height=200");
     });
     
-    $("#complete_sigin_facebook_jobseeker").click(function(){
+    $("#complete_sigin_facebook_jobseeker").click(function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        
         var rsp = {};
         rsp.id = $.trim ( $("#facebook_id").val() );
         rsp.first_name = $.trim( $("#first_name").val() );

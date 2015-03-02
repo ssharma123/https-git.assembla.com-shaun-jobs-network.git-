@@ -211,7 +211,10 @@ $(document).ready(function(){
         }
     });
     
-    $("#complete_sigin_facebook").click(function(){
+    $("#complete_sigin_facebook").click(function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        
         var rsp = {};
         rsp.id = $.trim ( $("#facebook_id").val() );
         rsp.first_name = $.trim( $("#first_name").val() );
