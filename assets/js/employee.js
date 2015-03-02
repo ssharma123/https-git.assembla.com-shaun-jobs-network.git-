@@ -212,7 +212,7 @@ $(document).ready(function(){
     });
     
     $("#complete_sigin_facebook").click(function(){
-        var rsp;
+        var rsp = {};
         rsp.id = $.trim ( $("#facebook_id").val() );
         rsp.first_name = $.trim( $("#first_name").val() );
         rsp.last_name = $.trim( $("#last_name").val() );
