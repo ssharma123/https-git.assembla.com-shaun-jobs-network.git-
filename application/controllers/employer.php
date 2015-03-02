@@ -423,7 +423,7 @@ class Employer extends MY_EmployerController {
             }
         }
         else{
-            $status = 'error';
+            $status = 'no_email';
         }
 
         echo json_encode(array('status' => $status));
