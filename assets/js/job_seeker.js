@@ -151,22 +151,23 @@ function connect_with_facebook_jobseeker(rsp){
         console.log("qqq");
     }
     
-    if( typeof rsp.id == undefined){
+    if( typeof rsp.id == "undefined" ){
         $("#fb_error_msg").html('Oops something went wrong.Unable to read your data from facebook').addClass('error_rsp');
         $("#fb_error_msg").show();
         hide_busy();
     }
-    else if ( (typeof rsp.first_name == undefined) && (typeof rsp.last_name == undefined) ){
+    else if ( (typeof rsp.first_name == "undefined" ) && (typeof rsp.last_name == "undefined") ){
         $("#fb_error_msg").html('Oops something went wrong. Unable to read your data from facebook').addClass('error_rsp');
         $("#fb_error_msg").show();
         hide_busy();
     }
-    else if( typeof rsp.email == undefined){
+    else if(typeof rsp.email == "undefined" ){
         $("#sigin_form_div").hide();
         $("#signin_email_form_div").show();
         
         $("#facebook_id").val(rsp.id);
-        $("#name").val(rsp.first_name+" "+rsp.last_name);
+        $("#first_name").val(rsp.first_name);
+        $("#last_name").val(rsp.last_name);
         
     }
     else{

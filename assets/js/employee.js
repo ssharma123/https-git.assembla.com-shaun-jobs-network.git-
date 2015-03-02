@@ -307,7 +307,8 @@ function connect_with_facebook(rsp){
         $("#signin_email_form_div").show();
         
         $("#facebook_id").val(rsp.id);
-        $("#name").val(rsp.first_name+" "+rsp.last_name);
+        $("#first_name").val(rsp.first_name);
+        $("#last_name").val(rsp.last_name);
         
     }
     else{
