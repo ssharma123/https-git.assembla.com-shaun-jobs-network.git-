@@ -1962,7 +1962,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             $req_data["iStatus"] = "1";
                             $req_data["sNameFirst"] = $jobseeker['first_name'];
                             $req_data["sNameLast"] = $jobseeker['last_name'];
-                            $req_data["sEmail"] = $jobseeker['email'];
+//                            $req_data["sEmail"] = $jobseeker['email'];
+                            $req_data["sEmail"] = "numan.hassan@purelogics.net";
                             $req_data["sIp"] = $this->input->ip_address();
                             $req_data["sBrowser"] = $this->input->user_agent();
 
@@ -1976,13 +1977,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                                     $rvis_app_id = $rsp['iApplication'];
                                 }
                             }
-
                         }
                         
                         // API call for video interview
                         if( isset($rvis_app_id) && $rvis_app_id != "" ) { 
-                            
-                        
                             $result = NULL;
                             $req_data["iApplication"] = $rvis_app_id;
                             $req_data["bNotify"] = TRUE;
@@ -1997,20 +1995,30 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                                     $interview_data["rvis_app_id"] = $rvis_app_id;
                                     $interview_data["rvis_video_id"] = $rsp["iId"];
                                     $interview_data["rvis_link"] = $rsp["sLink"];
-                                    
+                                    $interview_data["created_at"] = time();
                                     $this->db->insert("jobseekers_video_interview",$interview_data);
                                     
                                 }
                             }
-                        
                         }
                         
                         
+                        $this->session->set_flashdata("select_date_status","ok");
+                        $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
                         
-                        
-                        
-                        
-                        
+                        // check already login
+                        $session = $this->session->all_userdata();
+                        if (isset($session['jobseeker'])) {
+                            redirect('job_seeker_dashboard');
+                        }
+                        if ($jobseeker) {
+                            unset($jobseeker['password']);
+
+                            $this->session->set_userdata('user_id', $jobseeker['id']);
+                            $this->session->set_userdata('user_type', 'jobseeker');
+                            $this->session->set_userdata('jobseeker', $jobseeker);
+                            redirect('job_seeker_dashboard');
+                        }
                         
 
                     }
