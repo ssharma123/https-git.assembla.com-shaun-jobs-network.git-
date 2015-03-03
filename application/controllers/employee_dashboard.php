@@ -940,7 +940,7 @@ class Employee_dashboard extends MY_EmployerController {
         echo json_encode($rsp); die;
     }
     function job_applied_status_matched($job_apply){
-        
+        $this->load->model('jobseeker_model', 'jobseeker');
         
         $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
         $email_data['to'] = $jobseeker['email'];
@@ -955,10 +955,9 @@ class Employee_dashboard extends MY_EmployerController {
         
     }
     function job_applied_status_interview($job_apply){
+        $this->load->model('jobseeker_model', 'jobseeker');
         
-        echo "<pre>"; print_r($job_apply); echo "</pre>"; die;
-
-        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['id']);
+        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
         $email_data['to'] = $jobseeker['email'];
         $email_data['to'] = 'numan.hassan@purelogics.net';
         $email_data['subject'] = "Job Interview";
