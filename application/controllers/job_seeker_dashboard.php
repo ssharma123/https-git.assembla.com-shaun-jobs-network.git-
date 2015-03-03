@@ -1912,6 +1912,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
     }
     
     function offer_interview($status = "", $job_applied_id = 0){
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        
         if($status != "" && $job_applied_id != 0){
             
             // interview accept
