@@ -1910,6 +1910,16 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         redirect('job_seeker/signin');
         
     }
+    
+    function offer_interview($status = "", $job_applied_id = 0){
+        if($status != "" && $job_applied_id != 0){
+            
+            // interview accept
+            if($status == "accept"){
+                
+            }
+        }
+    }
 
 }
 
