@@ -1980,18 +1980,42 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         }
                         
                         // API call for video interview
-                        $result = NULL;
-                        $req_data["iApplication"] = $rvis_app_id;
-                        $result = $Rivs->call("interviewautomatedvideo.create",$req_data);
+                        if( isset($rvis_app_id) && $rvis_app_id != "" ) { 
+                            
                         
-                        echo "<pre>"; print_r($result); echo "</pre>"; die;
+                            $result = NULL;
+                            $req_data["iApplication"] = $rvis_app_id;
+                            $req_data["bNotify"] = TRUE;
+                            $result = $Rivs->call("interviewautomatedvideo.create",$req_data);
+
+                            if( isset($result['aaOutput']) ){
+                                $rsp = $result['aaOutput'];
+
+                                if( isset( $rsp["iId"] ) && isset( $rsp["sLink"] ) ){
+                                    
+                                    $interview_data["job_applied_id"] = $job_apply["id"];
+                                    $interview_data["rvis_app_id"] = $rvis_app_id;
+                                    $interview_data["rvis_video_id"] = $rsp["iId"];
+                                    $interview_data["rvis_link"] = $rsp["sLink"];
+                                    
+                                    $this->db->insert("jobseekers_video_interview",$interview_data);
+                                    
+                                }
+                            }
+                        
+                        }
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 
                     }
                 }
                 
-                
-                
-                die;
                 
             }
         }
