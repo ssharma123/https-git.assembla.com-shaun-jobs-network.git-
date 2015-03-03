@@ -1952,23 +1952,41 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 if($job_apply){
                     
                     $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
-                    $rvis_app_id = $jobseeker["rvis_app_id"];
                     
-                    if($rvis_app_id == "0"){
+                    if($jobseeker){
                         
-                        $req_data["iJob"] = $rand_job_id;
-                        $req_data["iStatus"] = "1";
-                        $req_data["sNameFirst"] = $jobseeker['first_name'];
-                        $req_data["sNameLast"] = $jobseeker['last_name'];
-                        $req_data["sEmail"] = $jobseeker['email'];
-                        $req_data["sIp"] = $this->input->ip_address();
-                        $req_data["sBrowser"] = $this->input->user_agent();
+                        $rvis_app_id = $jobseeker["rvis_app_id"];
+                        if($rvis_app_id == "0"){
+
+                            $req_data["iJob"] = $rand_job_id;
+                            $req_data["iStatus"] = "1";
+                            $req_data["sNameFirst"] = $jobseeker['first_name'];
+                            $req_data["sNameLast"] = $jobseeker['last_name'];
+                            $req_data["sEmail"] = $jobseeker['email'];
+                            $req_data["sIp"] = $this->input->ip_address();
+                            $req_data["sBrowser"] = $this->input->user_agent();
+
+                            $result = $Rivs->call('application.create',$req_data);
+
+                            if( isset($result['aaOutput']) ){
+                                $rsp = $result['aaOutput'];
+                                if( isset($rsp['iApplication']) ){
+                                    $save_data["rvis_app_id"] = $rsp['iApplication'];
+                                    $this->jobseeker->jobseekers_update($job_apply['jobseeker_id'], $save_data);
+                                    $rvis_app_id = $rsp['iApplication'];
+                                }
+                            }
+
+                        }
                         
-                        $result = $Rivs->call('application.create',$req_data);
+                        // API call for video interview
+                        $result = NULL;
+                        $req_data["iApplication"] = $rvis_app_id;
+                        $result = $Rivs->call("interviewautomatedvideo.create",$req_data);
                         
                         echo "<pre>"; print_r($result); echo "</pre>"; die;
 
-                    } 
+                    }
                 }
                 
                 
