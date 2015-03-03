@@ -2032,7 +2032,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
     function offer_interview_webhook(){
         
         $post = $this->input->post();
-        $data['data'] = serialize( $post );
+        $data['data'] =  $post ;
         $this->db->insert("webhook_logs",$data);
     }
 
