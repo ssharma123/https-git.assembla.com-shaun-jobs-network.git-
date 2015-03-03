@@ -1958,7 +1958,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     if($rvis_app_id == "0"){
                         
                         $req_data["iJob"] = $rand_job_id;
-                        $req_data["iStatus"] = "active";
+                        $req_data["iStatus"] = "1";
                         $req_data["sNameFirst"] = $jobseeker['first_name'];
                         $req_data["sNameLast"] = $jobseeker['last_name'];
                         $req_data["sEmail"] = $jobseeker['email'];
