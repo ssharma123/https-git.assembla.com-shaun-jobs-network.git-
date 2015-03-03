@@ -1928,7 +1928,6 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 
                 if($rivs_jobs->num_rows() == 0){
                     $oResult = $Rivs->call('job.list');
-                    echo "<pre>"; print_r($oResult); echo "</pre>";  die;
                     if( isset($oResult["aaOutput"]) && count($oResult["aaOutput"]) > 0 ){
                         $jobs = $oResult["aaOutput"]["aaJobs"];
 
