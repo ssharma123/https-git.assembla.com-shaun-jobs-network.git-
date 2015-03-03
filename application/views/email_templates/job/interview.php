@@ -18,7 +18,7 @@
                     Job Heading : {JOB_HEADING}
                     <br>
                     <br>
-                    <a href="<?php echo site_url("job_seeker_dashboard/offer_interview/accept/".$job_applied_id); ?>" >ACCEPT INTERVIEW</a> or <a href="<?php echo site_url("job_seeker/offer_interview/reject/".$job_applied_id); ?>" >REJECT INTERVIEW</a>
+                    <a href="<?php echo site_url("job_seeker_dashboard/offer_interview/accept/".$job_applied_id); ?>" >ACCEPT INTERVIEW</a> or <a href="<?php echo site_url("job_seeker_dashboard/offer_interview/reject/".$job_applied_id); ?>" >REJECT INTERVIEW</a>
                 </td>
             </tr>
             <tr>
