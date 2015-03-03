@@ -1920,21 +1920,23 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 require_once APPPATH.'libraries/RIVS/class.rivs.php';
 	
                 $oR = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
+                
+                $rivs_jobs = $this->db->get("rivs_jobs");
+                
+                if($rivs_jobs->num_rows() == 0){
+                    $oResult = $oR->call('job.list');
+    //                echo "<pre>"; print_r($oResult); echo "</pre>"; 
+                    if( isset($oResult["aaOutput"]) && count($oResult["aaOutput"]) > 0 ){
+                        $jobs = $oResult["aaOutput"]["aaJobs"];
 
+                        foreach($jobs as $key=>$job){
+                            $job_ids[$key]['job_id'] = $job['iId'];
+                        }
+                        $this->db->insert_batch("rivs_jobs",$job_ids);
 
-                $oResult = $oR->call('job.list');
-
-                echo "<pre>"; print_r($oResult); echo "</pre>"; 
-                if( isset($oResult["aaOutput"]) && count($oResult["aaOutput"]) > 0 ){
-                    $jobs = $oResult["aaOutput"]["aaJobs"];
-                    
-                    foreach($jobs as $job){
-                        $job_id = $job['iId'];
-                        
                     }
-                    
-                    
                 }
+                
                 
                 
                 die;
