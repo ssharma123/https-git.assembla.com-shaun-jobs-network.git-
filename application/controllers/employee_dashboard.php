@@ -956,7 +956,7 @@ class Employee_dashboard extends MY_EmployerController {
     }
     function job_applied_status_interview($job_apply){
         
-        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['id']);
         $email_data['to'] = $jobseeker['email'];
         $email_data['to'] = 'numan.hassan@purelogics.net';
         $email_data['subject'] = "Job Interview";
