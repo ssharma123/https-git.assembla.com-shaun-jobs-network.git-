@@ -1939,8 +1939,6 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         }
                         $this->db->insert_batch("rivs_jobs",$job_ids);
                         
-                        
-
                     }
                 }
                 $q = "SELECT * FROM rivs_jobs ORDER BY RAND() LIMIT 1";
