@@ -107,14 +107,16 @@ $(document).ready(function(){
     $("#complete_sigin_facebook_jobseeker").click(function(e){
         e.preventDefault();
         e.stopImmediatePropagation();
-        
-        var rsp = {};
-        rsp.id = $.trim ( $("#facebook_id").val() );
-        rsp.first_name = $.trim( $("#first_name").val() );
-        rsp.last_name = $.trim( $("#last_name").val() );
-        rsp.email = $.trim( $("#email").val() );
-        
-        connect_with_facebook_jobseeker(rsp);
+        var valid = $("#save_email_siginin_form_jobseeker").valid();
+        if( valid === true){
+            var rsp = {};
+            rsp.id = $.trim ( $("#facebook_id").val() );
+            rsp.first_name = $.trim( $("#first_name").val() );
+            rsp.last_name = $.trim( $("#last_name").val() );
+            rsp.email = $.trim( $("#email").val() );
+
+            connect_with_facebook_jobseeker(rsp);
+        }
     });
     
 });

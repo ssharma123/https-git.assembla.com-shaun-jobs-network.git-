@@ -38,7 +38,7 @@ var facilities = <?php echo $facilities; ?>;
             </div>
             
             <div class="col col-sm-4" id="signin_email_form_div" style="display: none;">
-                <p>Please enter email to complete the process</p>
+                <p>Add your email address below to get started</p>
                 <form class="well well-lg text-center ng-valid ng-dirty validate_form" method="post" id="save_email_siginin_form">
                     <input type="hidden" name="facebook_id" id="facebook_id" >
                     <input type="hidden" name="first_name" id="first_name" >

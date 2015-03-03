@@ -215,13 +215,16 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
         
-        var rsp = {};
-        rsp.id = $.trim ( $("#facebook_id").val() );
-        rsp.first_name = $.trim( $("#first_name").val() );
-        rsp.last_name = $.trim( $("#last_name").val() );
-        rsp.email = $.trim( $("#email").val() );
-        
-        connect_with_facebook(rsp);
+        var valid = $("#save_email_siginin_form").valid();
+        if( valid === true){
+            var rsp = {};
+            rsp.id = $.trim ( $("#facebook_id").val() );
+            rsp.first_name = $.trim( $("#first_name").val() );
+            rsp.last_name = $.trim( $("#last_name").val() );
+            rsp.email = $.trim( $("#email").val() );
+
+            connect_with_facebook(rsp);
+        }
     });
 
 });
