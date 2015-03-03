@@ -958,9 +958,11 @@ class Employee_dashboard extends MY_EmployerController {
         
         $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
         $email_data['to'] = $jobseeker['email'];
+        $email_data['to'] = 'numan.hassan@purelogics.net';
         $email_data['subject'] = "Job Interview";
         $email_data['job_applied_id'] = $job_apply['id'];
         $job = $this->jobs->jobs_get($job_apply['job_id']);
+        
         $patterns = array(
             '{JOB_HEADING}' => $job['job_headline'],
             '{JOB_INTERNAL_ID}' => $job['internal_id']
@@ -978,7 +980,8 @@ class Employee_dashboard extends MY_EmployerController {
         $noti_data["job_applied_id"] = $job_apply["id"];
         $this->notification->jobseeker_notifications_add($noti_data);
         
-        $email_data['to'] = 'numan.hassan@purelogics.net';
+        $email_data['to'] = $jobseeker['email'];
+//        $email_data['to'] = 'numan.hassan@purelogics.net';
         $email_data['subject'] = "Job - Face 2 Face";
         $email_data['job_applied_id'] = $job_apply['id'];
         

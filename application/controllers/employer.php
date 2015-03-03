@@ -790,8 +790,8 @@ class Employer extends MY_EmployerController {
             
             $status = "ok";
             
-                $email_data['to'] = "numan.hassan@purelogics.net";
-//                $email_data['to'] = "support@medmatch.com";
+//                $email_data['to'] = "numan.hassan@purelogics.net";
+                $email_data['to'] = "support@medmatch.com";
                 $email_data['subject'] = "Contact Us";
 
                 $patterns = array(
@@ -849,8 +849,8 @@ class Employer extends MY_EmployerController {
             
             $status = "ok";
             
-                $email_data['to'] = "numan.hassan@purelogics.net";
-//                $email_data['to'] = "support@medmatch.com";
+//                $email_data['to'] = "numan.hassan@purelogics.net";
+                $email_data['to'] = "support@medmatch.com";
                 $email_data['subject'] = "Contact Us";
                 $email_data['from'] = $email;
                 $patterns = array(
