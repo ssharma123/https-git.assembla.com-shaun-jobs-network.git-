@@ -2034,6 +2034,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 //        $post = $this->input->post();
         $data['data'] =  "test";
         $this->db->insert("webhook_logs",$data);
+        
+        return true;
     }
 
 }
