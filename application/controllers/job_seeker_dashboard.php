@@ -1922,12 +1922,12 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 
                 require_once APPPATH.'libraries/RIVS/class.rivs.php';
 	
-                $oR = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
+                $Rivs = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
                 
                 $rivs_jobs = $this->db->get("rivs_jobs");
                 
                 if($rivs_jobs->num_rows() == 0){
-                    $oResult = $oR->call('job.list');
+                    $oResult = $Rivs->call('job.list');
     //                echo "<pre>"; print_r($oResult); echo "</pre>"; 
                     if( isset($oResult["aaOutput"]) && count($oResult["aaOutput"]) > 0 ){
                         $jobs = $oResult["aaOutput"]["aaJobs"];
@@ -1936,8 +1936,40 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             $job_ids[$key]['job_id'] = $job['iId'];
                         }
                         $this->db->insert_batch("rivs_jobs",$job_ids);
+                        
+                        
 
                     }
+                }
+                $q = "SELECT * FROM rivs_jobs ORDER BY RAND() LIMIT 1";
+                $r = $this->db->query($q);
+                $row = $r->row_array();
+                $rand_job_id = $row['job_id'];
+                
+                // get insert if not application id
+                
+                $job_apply = $this->jobs->jobs_applied_get($job_applied_id);
+
+                if($job_apply){
+                    
+                    $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+                    $rvis_app_id = $jobseeker["rvis_app_id"];
+                    
+                    if($rvis_app_id == "0"){
+                        
+                        $req_data["iJob"] = $rand_job_id;
+                        $req_data["iStatus"] = "active";
+                        $req_data["sNameFirst"] = $jobseeker['first_name'];
+                        $req_data["sNameLast"] = $jobseeker['last_name'];
+                        $req_data["sEmail"] = $jobseeker['email'];
+                        $req_data["sIp"] = $this->input->ip_address();
+                        $req_data["sBrowser"] = $this->input->user_agent();
+                        
+                        $result = $Rivs->call('application.create',$req_data);
+                        
+                        echo "<pre>"; print_r($result); echo "</pre>"; die;
+
+                    } 
                 }
                 
                 
