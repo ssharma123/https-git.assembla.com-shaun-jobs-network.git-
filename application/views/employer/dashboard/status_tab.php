@@ -68,7 +68,7 @@
                             <?php
                             $matched_class = ($row['matched'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
                             $interview_class = ($row['interview'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
-                            $interview_complete_class = ($row['interview_complete'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
+                            $interview_complete_class = ($row['interview_complete'] == 1 ) ? " btn-success " : "btn-danger " ;
                             $face_2_face_class = ($row['face_2_face'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
                             $job_offer_class = ($row['job_offer'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
 

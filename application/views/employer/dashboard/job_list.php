@@ -95,7 +95,7 @@
                                     <?php
                                     $matched_class = ($apply['matched'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
                                     $interview_class = ($apply['interview'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
-                                    $interview_complete_class = ($apply['interview_complete'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
+                                    $interview_complete_class = ($apply['interview_complete'] == 1 ) ? " btn-success " : "btn-danger " ;
                                     $face_2_face_class = ($apply['face_2_face'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
                                     $job_offer_class = ($apply['job_offer'] == 1 ) ? " btn-success " : "btn-danger update_job_status" ;
 
