@@ -1916,7 +1916,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             
             // interview accept
             if($status == "accept"){
-                
+                echo "<pre>"; print_r($job_applied_id); echo "</pre>"; 
+                echo "<pre>"; print_r($status); echo "</pre>"; die;
+
             }
         }
     }
