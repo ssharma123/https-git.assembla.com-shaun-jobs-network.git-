@@ -1917,9 +1917,19 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             // interview accept
             if($status == "accept"){
                 
-                var_dump($job_applied_id);
-                var_dump($status);
+                include('class.rivs.php');
+                require_once APPPATH.'libraries/RIVS/class.rivs.php';
+	
+                $oR = new RIVS('access_token', 'eba5wq7bblspvuc21nv67msoa3ebpjq3v09rqg322v');
+
+                $oResult = $oR->call('jobindustry.list');
+
+                print_r('<pre>');
+                print_r($oResult);
+                
+                
                 die;
+                
             }
         }
     }
