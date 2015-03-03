@@ -1919,7 +1919,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 
                 require_once APPPATH.'libraries/RIVS/class.rivs.php';
 	
-                $oR = new RIVS('access_token', 'o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
+                $oR = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
 
                 echo "<pre>"; print_r($oR); echo "</pre>";  
 
