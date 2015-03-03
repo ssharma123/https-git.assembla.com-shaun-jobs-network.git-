@@ -1923,7 +1923,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                 echo "<pre>"; print_r($oR); echo "</pre>";  
 
-                $oResult = $oR->call('jobindustry.list');
+                $oResult = $oR->call('job.list');
 
                 echo "<pre>"; print_r($oResult); echo "</pre>"; 
                 
