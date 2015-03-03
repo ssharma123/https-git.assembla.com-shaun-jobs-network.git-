@@ -1933,7 +1933,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         $jobs = $oResult["aaOutput"]["aaJobs"];
 
                         foreach($jobs as $key=>$job){
-                            $job_ids[$key]['job_id'] = $job['iId'];
+                            if(isset($job["sStatus"]) && $job["sStatus"] == "Active"){
+                                $job_ids[$key]['job_id'] = $job['iId'];
+                            }
                         }
                         $this->db->insert_batch("rivs_jobs",$job_ids);
                         
