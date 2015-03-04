@@ -1143,7 +1143,7 @@ class Employee_dashboard extends MY_EmployerController {
             'title' => "Android Developer",
             'heading' => "Android Developer"
         );
-        $rsp = $this->sajari->sajari_request($params);
+        $rsp = $this->sajari->sajari_request("sajari_search" , $params);
         print_r($rsp);
         
 
