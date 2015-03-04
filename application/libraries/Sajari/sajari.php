@@ -10,13 +10,17 @@ class Sajari {
      * @params = array('address'=>'');
      */
     public function sajari_request($type ,$params) {
-        $urlParam = "";
+        
+        echo "<pre>"; print_r($url); echo "</pre>"; 
+        echo "<pre>"; print_r($post_data); echo "</pre>"; die;
+
+        
         if (is_array($params)) {
             $post_data = http_build_query($params);
         }
         
         $url = base_url($type.EXT);
-
+        
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
 

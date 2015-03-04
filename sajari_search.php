@@ -30,8 +30,7 @@ try {
     if($meta){
         $search_param["meta"] = $meta;
     }
-    echo "<pre>"; print_r($search_param); echo "</pre>"; die;
-
+        
     $result = $c->search($search_param);
     $rsp['status'] = "ok";
     $rsp['result'] = $result;
