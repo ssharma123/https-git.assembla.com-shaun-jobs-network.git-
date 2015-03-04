@@ -9,10 +9,10 @@ use Sajari\Engine\EngineClient;
 use Sajari\Engine\Exception\EngineException;
 
 $c = new EngineClient(new Guzzle\Http\Client(), array(
-    'access_key' => getenv('SAJARI_ACCESS_KEY'),
-    'secret_key' => getenv('SAJARI_SECRET_KEY'),
-    'company'    => getenv('SAJARI_COMPANY'),
-    'collection' => getenv('SAJARI_COLLECTION'),
+    'access_key' => "5SHyDCxwMCi0HXTt",
+    'secret_key' => "AVHRfLskQEUjEfdw",
+    'company'    => 'medmatch',
+    'collection' => "medmatchjobs"
 ));
 
 echo "<pre>"; print_r($c); echo "</pre>"; 

@@ -11,7 +11,7 @@ use Sajari\Engine\Exception\EngineException;
 $c = new EngineClient(new Guzzle\Http\Client(), array(
     'access_key' => "5SHyDCxwMCi0HXTt",
     'secret_key' => "AVHRfLskQEUjEfdw",
-    'company'    => 'MedMatch',
+    'company'    => 'medmatch',
     'collection' => "medmatchjobs"
 ));
 
