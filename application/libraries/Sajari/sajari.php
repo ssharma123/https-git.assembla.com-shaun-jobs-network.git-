@@ -12,6 +12,7 @@ class Sajari {
     public function sajari_request($type ,$params) {
         
         
+        $post_data = array();
         
         if (is_array($params)) {
             $post_data = http_build_query($params);
@@ -19,8 +20,6 @@ class Sajari {
         
         $url = base_url($type.EXT);
         
-        echo "<pre>"; print_r($url); echo "</pre>"; 
-        echo "<pre>"; print_r($post_data); echo "</pre>"; die;
 
         
         $ch = curl_init();
