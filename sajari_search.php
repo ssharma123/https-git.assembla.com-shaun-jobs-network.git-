@@ -25,9 +25,8 @@ try {
             'lng'  => '97.4567',
             'heading' => 'PHP Developer',
             "specialty" => "1",
-            "subspecialty" => "2"
+            "subspecialty" => "4"
         ),
-        'q'          => $q,
         'maxresults' => 10,
     ));
 //    echo var_export($results, true), PHP_EOL;
