@@ -19,7 +19,7 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 
 try {
     $results = $c->search(array(
-        'q'          => "test",
+        'q'          => "",
         'maxresults' => 10,
     ));
 //    echo var_export($results, true), PHP_EOL;
