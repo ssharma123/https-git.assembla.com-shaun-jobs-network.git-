@@ -20,12 +20,13 @@ try {
     $r = $c->add(array(
         'meta' => array(
             'title' => 'test document '.rand(1, 10),
-            'lat' => '55.2345',
-            'lng'  => '105.4567'
+            'lat' => '50.2345',
+            'lng'  => '97.4567',
+            'test' => 'zzzz'
         ),
     ));
     echo "<hr>";
-    echo "Docment detila";
+    echo "Document details";
     echo "<hr>";
     echo "<pre>"; print_r($r); echo "</pre>";
     echo "<hr>";

@@ -19,6 +19,9 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 
 try {
     $results = $c->search(array(
+        'meta' => array(
+            'test' => 'zzzz'
+        ),
         'q'          => "",
         'maxresults' => 10,
     ));
