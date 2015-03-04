@@ -15,7 +15,6 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
-echo "<pre>"; print_r($c); echo "</pre>"; 
 
 try {
     $r = $c->add(array(

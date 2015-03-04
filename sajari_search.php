@@ -15,7 +15,6 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
-echo "<pre>"; print_r($c); echo "</pre>"; die;
 
 
 try {
@@ -27,3 +26,6 @@ try {
 } catch (EngineException $e) {
     echo "There was an error running the search. ", $e->getMessage(), PHP_EOL;
 }
+echo PHP_EOL; 
+echo PHP_EOL;
+echo getenv('QUERY');
