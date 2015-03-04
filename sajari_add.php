@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'vendor/autoload.php';
+require 'sajari/vendor/autoload.php';
 
 use Sajari\Engine\EngineClient;
 use Sajari\Engine\Exception\EngineException;
