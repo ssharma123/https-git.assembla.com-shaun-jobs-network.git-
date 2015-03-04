@@ -19,14 +19,14 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 
 try {
     $results = $c->search(array(
-        'q'          => "test document",
+        'q'          => "test",
         'maxresults' => 10,
     ));
 //    echo var_export($results, true), PHP_EOL;
     echo "<hr>";
     echo "Result";
     echo "<hr>";
-    echo "<pre>"; print_r($r); echo "</pre>";
+    echo "<pre>"; print_r($results); echo "</pre>";
     echo "<hr>";
 } catch (EngineException $e) {
     echo "There was an error running the search. ", $e->getMessage(), PHP_EOL;
