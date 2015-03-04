@@ -1140,30 +1140,30 @@ class Employee_dashboard extends MY_EmployerController {
 
     }
     function sajari_api_add(){
-        require 'vendor/autoload.php';
-
-        use Sajari\Engine\EngineClient;
-        use Sajari\Engine\Exception\EngineException;
-
-        $c = new EngineClient(new Guzzle\Http\Client(), array(
-            'access_key' => "5SHyDCxwMCi0HXTt",
-            'secret_key' => "AVHRfLskQEUjEfdw",
-            'company'    => "MedMatch",
-            'collection' => "medmatchjobs"
-        ));
-
-        try {
-            $r = $c->add(array(
-                'q' => implode(' ', array(getenv('FIRST_NAME'), getenv('LAST_NAME'))),
-                'meta' => array(
-                    'first_name' => getenv('FIRST_NAME'),
-                    'last_name'  => getenv('LAST_NAME'),
-                ),
-            ));
-            echo var_export($r, true), PHP_EOL;
-        } catch (EngineException $e) {
-            echo "There was an error adding the document.", $e->getMessage(), PHP_EOL;
-        }
+//        require 'vendor/autoload.php';
+//
+//        use Sajari\Engine\EngineClient;
+//        use Sajari\Engine\Exception\EngineException;
+//
+//        $c = new EngineClient(new Guzzle\Http\Client(), array(
+//            'access_key' => "5SHyDCxwMCi0HXTt",
+//            'secret_key' => "AVHRfLskQEUjEfdw",
+//            'company'    => "MedMatch",
+//            'collection' => "medmatchjobs"
+//        ));
+//
+//        try {
+//            $r = $c->add(array(
+//                'q' => implode(' ', array(getenv('FIRST_NAME'), getenv('LAST_NAME'))),
+//                'meta' => array(
+//                    'first_name' => getenv('FIRST_NAME'),
+//                    'last_name'  => getenv('LAST_NAME'),
+//                ),
+//            ));
+//            echo var_export($r, true), PHP_EOL;
+//        } catch (EngineException $e) {
+//            echo "There was an error adding the document.", $e->getMessage(), PHP_EOL;
+//        }
     }
 
 }

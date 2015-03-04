@@ -15,6 +15,9 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
+echo "<pre>"; print_r($c); echo "</pre>"; die;
+
+
 try {
     $results = $c->search(array(
         'q'          => getenv('QUERY'),
