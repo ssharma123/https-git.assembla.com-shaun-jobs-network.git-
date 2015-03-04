@@ -18,13 +18,21 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 
 try {
     $r = $c->add(array(
-        'q' => implode(' ', array(getenv('FIRST_NAME'), getenv('LAST_NAME'))),
         'meta' => array(
-            'first_name' => getenv('FIRST_NAME'),
-            'last_name'  => getenv('LAST_NAME'),
+            'title' => 'test document '.rand(1, 10),
+            'lat' => '55.2345',
+            'lng'  => '105.4567'
         ),
     ));
-    echo var_export($r, true), PHP_EOL;
+    echo "<hr>";
+    echo "Docment detila";
+    echo "<hr>";
+    echo "<pre>"; print_r($r); echo "</pre>";
+    echo "<hr>";
+
+//    echo var_export($r, true), PHP_EOL;
 } catch (EngineException $e) {
     echo "There was an error adding the document.", $e->getMessage(), PHP_EOL;
 }
+
+ 

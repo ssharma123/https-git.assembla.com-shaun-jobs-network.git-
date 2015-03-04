@@ -216,20 +216,6 @@
             <?php echo load_js("employee.js"); ?>
             <?php echo load_js("job_seeker.js"); ?>
             
-
-<script type="text/javascript">
-    var _sj = _sj || [];
-    _sj.push(['company', 'medmatch']);
-    _sj.push(['collection', 'medmatchjobs']);
-    (function () {
-        var sj = document.createElement('script');
-        sj.type = 'text/javascript';
-        sj.async = true;
-        sj.src = 'https://www.sajari.com/js/sj.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(sj, s);
-    })();
- </script>
         </div>
     </body>
 </html>
