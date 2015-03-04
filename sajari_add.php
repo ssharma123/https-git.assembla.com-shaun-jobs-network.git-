@@ -19,10 +19,32 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 try {
     $r = $c->add(array(
         'meta' => array(
-            'title' => 'test document '.rand(1, 10),
+            'title' => 'PHP Developer',
             'lat' => '50.2345',
             'lng'  => '97.4567',
-            'test' => 'zzzz'
+            'heading' => 'PHP Developer',
+            "specialty" => "1",
+            "subspecialty" => "2"
+        ),
+    ));
+    $r = $c->add(array(
+        'meta' => array(
+            'title' => 'IOS Developer',
+            'lat' => '50.2345',
+            'lng'  => '98.4567',
+            'heading' => 'IOS Developer',
+            "specialty" => "1",
+            "subspecialty" => "3"
+        ),
+    ));
+    $r = $c->add(array(
+        'meta' => array(
+            'title' => 'Android Developer',
+            'lat' => '50.2345',
+            'lng'  => '99.4567',
+            'heading' => 'Android Developer',
+            "specialty" => "1",
+            "subspecialty" => "4"
         ),
     ));
     echo "<hr>";
