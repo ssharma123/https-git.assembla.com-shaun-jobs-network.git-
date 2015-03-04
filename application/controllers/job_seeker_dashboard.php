@@ -2100,8 +2100,22 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             // get employer detail and mail him
                             $this->load->model('employer_model', 'employer');
                             $employer = $this->employer->employers_get($apply['employer_id']);
-                            if($employer){
+                            $jobseeker = $this->employer->employers_get($apply['jobseeker_id']);
+                            if($employer && $jobseeker){
                                 // email employer
+                                
+                                $email_data['to'] = $employer['email'];
+                                $email_data['to'] = 'numan.hassan@purelogics.net';
+                                $email_data['subject'] = "Job Interview Complete";
+                                $email_data['link'] = $interview_data["rvis_link"];
+                                $job = $this->jobs->jobs_get($apply['job_id']);
+
+                                $patterns = array(
+                                    '{JOB_HEADING}' => $job['job_headline'],
+                                    '{JOB_INTERNAL_ID}' => $job['internal_id']
+                                );
+                                send_template_email("job/interview_complete",$email_data, $patterns);
+                                
                             }
                             
                         }
