@@ -15,22 +15,30 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
-$q = isset($_GET['q']) ? $_GET['q']: "" ;
+$query = isset($_POST['q']) ? $_POST['q']: FALSE ;
+$meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
+$max_result = isset($_POST['max_result']) ? $_POST['max_result']: 20 ;
 
 try {
-    $results = $c->search(array(
-        'meta' => array(
-            'title' => 'PHP Developer'
-        ),
-        'maxresults' => 10,
-    ));
-//    echo var_export($results, true), PHP_EOL;
-    echo "<hr>";
-    echo "Result";
-    echo "<hr>";
-    echo "<pre>"; print_r($results); echo "</pre>";
-    echo "<hr>";
+    
+    $search_param = array(
+        'maxresults' => $max_result,
+    );
+    if($query){
+        $search_param["q"] = $query;
+    }
+    if($meta){
+        $search_param["meta"] = $meta;
+    }
+        
+    $result = $c->search($search_param);
+    $rsp['status'] = "ok";
+    $rsp['result'] = $result;
+    echo json_encode($rsp); die;
+    
 } catch (EngineException $e) {
-    echo "There was an error running the search. ", $e->getMessage(), PHP_EOL;
+    $rsp['status'] = "error";
+    $rsp['result'] = "There was an error running the search." .$e->getMessage();
+    echo json_encode($rsp); die;
 }
  

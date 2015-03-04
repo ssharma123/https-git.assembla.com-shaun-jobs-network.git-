@@ -1136,6 +1136,15 @@ class Employee_dashboard extends MY_EmployerController {
     }
     function sajari_api_search(){
         
+        $this->load->library("sajari");
+        
+        $params['q'] = "Android Developer";
+        $params['meta'] = array(
+            'title' => "Android Developer",
+            'heading' => "Android Developer"
+        );
+        $rsp = $this->sajari->sajari_request($params);
+        print_r($rsp);
         
 
     }

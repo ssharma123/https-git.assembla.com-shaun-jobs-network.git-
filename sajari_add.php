@@ -17,7 +17,7 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 
 
 try {
-    $r = $c->add(array(
+    $result = $c->add(array(
         'meta' => array(
             'title' => 'PHP Developer',
             'lat' => '50.2345',
@@ -27,35 +27,16 @@ try {
             "subspecialty" => "2"
         ),
     ));
-    $r = $c->add(array(
-        'meta' => array(
-            'title' => 'IOS Developer',
-            'lat' => '50.2345',
-            'lng'  => '98.4567',
-            'heading' => 'IOS Developer',
-            "specialty" => "1",
-            "subspecialty" => "3"
-        ),
-    ));
-    $r = $c->add(array(
-        'meta' => array(
-            'title' => 'Android Developer',
-            'lat' => '50.2345',
-            'lng'  => '99.4567',
-            'heading' => 'Android Developer',
-            "specialty" => "1",
-            "subspecialty" => "4"
-        ),
-    ));
-    echo "<hr>";
-    echo "Document details";
-    echo "<hr>";
-    echo "<pre>"; print_r($r); echo "</pre>";
-    echo "<hr>";
+    
+    $rsp['status'] = "ok";
+    $rsp['result'] = $result;
+    echo json_encode($rsp); die;
 
 //    echo var_export($r, true), PHP_EOL;
 } catch (EngineException $e) {
-    echo "There was an error adding the document.", $e->getMessage(), PHP_EOL;
+    $rsp['status'] = "error";
+    $rsp['result'] = "There was an error adding the document." .$e->getMessage();
+    echo json_encode($rsp); die;
 }
 
  
