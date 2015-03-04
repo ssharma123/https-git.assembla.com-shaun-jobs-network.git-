@@ -15,14 +15,14 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
-
+$q = isset($_GET['q']) ? $_GET['q']: "" ;
 
 try {
     $results = $c->search(array(
         'meta' => array(
             'test' => 'zzzz'
         ),
-        'q'          => "",
+        'q'          => $q,
         'maxresults' => 10,
     ));
 //    echo var_export($results, true), PHP_EOL;
