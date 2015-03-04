@@ -15,24 +15,22 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
-$query = isset($_POST['q']) ? $_POST['q']: FALSE ;
-$meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
-$max_result = isset($_POST['max_result']) ? $_POST['max_result']: 20 ;
+$q = isset($_GET['q']) ? $_GET['q']: "" ;
 
 try {
     
-    $search_param = array(
-        'maxresults' => $max_result,
-    );
-    if($query){
-        $search_param["q"] = $query;
-    }
-    if($meta){
-        $search_param["meta"] = $meta;
-    }
-    echo "<pre>"; print_r($search_param); echo "</pre>"; die;
-
-    $result = $c->search($search_param);
+    
+    $result = $c->search(array(
+        'meta' => array(
+            'title' => 'PHP Developer',
+            'lat' => '50.2345',
+            'lng'  => '97.4567',
+            'heading' => 'PHP Developer',
+            "specialty" => "1",
+            "subspecialty" => "4"
+        ),
+        'maxresults' => 10,
+    ));
     $rsp['status'] = "ok";
     $rsp['result'] = $result;
     echo json_encode($rsp); die;
