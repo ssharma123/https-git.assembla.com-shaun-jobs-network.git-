@@ -20,12 +20,7 @@ $q = isset($_GET['q']) ? $_GET['q']: "" ;
 try {
     $results = $c->search(array(
         'meta' => array(
-            'title' => 'PHP Developer',
-            'lat' => '50.2345',
-            'lng'  => '97.4567',
-            'heading' => 'PHP Developer',
-            "specialty" => "1",
-            "subspecialty" => "4"
+            'title' => 'PHP Developer'
         ),
         'maxresults' => 10,
     ));
