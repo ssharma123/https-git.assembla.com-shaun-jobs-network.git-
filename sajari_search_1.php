@@ -37,7 +37,9 @@ try {
     ));
     $rsp['status'] = "ok";
     $rsp['result'] = $result;
-    echo json_encode($rsp); die;
+    
+    echo "<pre>"; print_r($rsp); echo "</pre>"; die;
+
     
 } catch (EngineException $e) {
     $rsp['status'] = "error";
