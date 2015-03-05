@@ -17,16 +17,18 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 
  
 $meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
+$doc_id = isset( $_POST["id"] ) ? $_POST["id"] : FALSE ;
 
 try {
     
     
     if($meta){
-        $search_param["meta"] = $meta;
+        $params["meta"] = $meta;
+    } 
+    if($doc_id){
+        $params['id'] = $doc_id;
     }
-     
-    
-    $result = $c->add($search_param);
+    $result = $c->replace($params);
     
     $rsp['status'] = "ok";
     $rsp['result'] = $result;
