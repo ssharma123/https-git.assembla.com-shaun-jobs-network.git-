@@ -25,7 +25,7 @@ try {
         "filters"=>array(
             array("~title" => "developer"),
             array("specialty" => "1"),
-            array("subspecialty" => "5"),
+//            array("subspecialty" => "5"),
         ),
         'maxresults' => 10,
     ));
