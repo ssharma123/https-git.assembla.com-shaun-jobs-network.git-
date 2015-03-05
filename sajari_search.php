@@ -35,11 +35,6 @@ try {
         $search_param["filters"] = $filters;
     }
     
-    $filters = array(
-        ""
-    );
-    $search_param["filters"] = $filters;
-        
     $result = $c->search($search_param);
     $rsp['status'] = "ok";
     $rsp['result'] = $result;

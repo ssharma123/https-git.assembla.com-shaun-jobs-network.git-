@@ -21,6 +21,7 @@ try {
     
     
     $result = $c->search(array(
+        'q'=> 'game',
         'meta' => array(
             'title' => 'PHP Developer',
             'lat' => '50.2345',
@@ -28,6 +29,9 @@ try {
             'heading' => 'PHP Developer',
             "specialty" => "1",
             "subspecialty" => "4"
+        ),
+        "filters"=>array(
+            "~title" => "developer"
         ),
         'maxresults' => 10,
     ));
@@ -40,4 +44,3 @@ try {
     $rsp['result'] = "There was an error running the search." .$e->getMessage();
     echo json_encode($rsp); die;
 }
- 
