@@ -1150,6 +1150,7 @@ class Employee_dashboard extends MY_EmployerController {
 
     }
     function sajari_api_add(){
+        $this->load->library("Sajari/sajari");
 //        $data = array(
 //            'meta' => array(
 //                'title' => 'Game Developer',
