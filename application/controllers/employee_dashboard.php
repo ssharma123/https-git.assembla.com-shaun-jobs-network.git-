@@ -1134,39 +1134,18 @@ class Employee_dashboard extends MY_EmployerController {
         );
         echo json_encode($array); die;
     }
-    function sajari_api_search(){
-        
+    function sajari_api($file = "sajari_search"){
+        // $file = "sajari_search"
+        // $file = "sajari_add"
+        // $file = "sajari_get"
         $this->load->library("Sajari/sajari");
         
-//        $params['q'] = "Android Developer";
-//        $params['meta'] = array(
-//            'title' => "Android Developer",
-//            'heading' => "Android Developer"
-//        );
         $params = $this->input->post();
-        $rsp = $this->sajari->sajari_request("sajari_search" , $params);
+        $rsp = $this->sajari->sajari_request( $file , $params);
         print_r($rsp);
         
 
-    }
-    function sajari_api_add(){
-        $this->load->library("Sajari/sajari"); 
-//        $data = array(
-//            'meta' => array(
-//                'title' => 'Game Developer',
-//                'lat' => '50.2345',
-//                'lng'  => '97.4567',
-//                'heading' => 'Game Developer',
-//                "specialty" => "1",
-//                "subspecialty" => "5"
-//            ),
-//            "body" => "this is a game develpoer job, we require developer interested in game development for android , unity"
-//        );
-        
-        $params = $this->input->post();
-        $rsp = $this->sajari->sajari_request("sajari_add" , $params);
-        print_r($rsp);
-    }
+    } 
 
 }
 

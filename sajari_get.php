@@ -15,20 +15,10 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
-
-
-
+$doc_id = isset( $_POST["id"] ) ? $_POST["id"] : 0 ;
 try {
-    $result = $c->add(array(
-        'meta' => array(
-            'title' => 'Game Developer',
-            'lat' => '50.2345',
-            'lng'  => '97.4567',
-            'heading' => 'Game Developer',
-            "specialty" => "1",
-            "subspecialty" => "5"
-        ),
-        "body" => "this is a game develpoer job, we require developer interested in game development for android , unity"
+    $result = $c->get(array(
+        'id' => $doc_id
     ));
     
     $rsp['status'] = "ok";
