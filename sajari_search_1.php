@@ -21,15 +21,7 @@ try {
     
     
     $result = $c->search(array(
-        'q'=> 'game',
-        'meta' => array(
-            'title' => 'PHP Developer',
-            'lat' => '50.2345',
-            'lng'  => '97.4567',
-            'heading' => 'PHP Developer',
-            "specialty" => "1",
-            "subspecialty" => "4"
-        ),
+        
         "filters"=>array(
             array("~title" => "developer")
         ),
