@@ -23,7 +23,7 @@ try {
     $result = $c->search(array(
         
         "filters"=>array(
-            array("~title" => "developer"),
+//            array("~title" => "developer"),
             array("specialty" => "1"),
             array("subspecialty" => "5"),
         ),
