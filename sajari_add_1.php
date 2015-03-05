@@ -15,21 +15,19 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
- 
-$meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
-$body = isset($_POST['body']) ? $_POST['body']: FALSE ;
 
 try {
-    
-    
-    if($meta){
-        $search_param["meta"] = $meta;
-    }
-    if($meta){
-        $search_param["body"] = $body;
-    }
-    
-    $result = $c->add($search_param);
+    $result = $c->add(array(
+        'meta' => array(
+            'title' => 'Game Developer',
+            'lat' => '50.2345',
+            'lng'  => '97.4567',
+            'heading' => 'Game Developer',
+            "specialty" => "1",
+            "subspecialty" => "5"
+        ),
+        "body" => "this is a game develpoer job, we require developer interested in game development for android , unity"
+    ));
     
     $rsp['status'] = "ok";
     $rsp['result'] = $result;

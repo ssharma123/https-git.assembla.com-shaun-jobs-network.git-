@@ -17,6 +17,7 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 
 $query = isset($_POST['q']) ? $_POST['q']: FALSE ;
 $meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
+$filters = isset($_POST['filters']) ? $_POST['filters']: FALSE ;
 $max_result = isset($_POST['max_result']) ? $_POST['max_result']: 20 ;
 
 try {
@@ -30,6 +31,14 @@ try {
     if($meta){
         $search_param["meta"] = $meta;
     }
+    if($filters){
+        $search_param["filters"] = $filters;
+    }
+    
+    $filters = array(
+        ""
+    );
+    $search_param["filters"] = $filters;
         
     $result = $c->search($search_param);
     $rsp['status'] = "ok";
