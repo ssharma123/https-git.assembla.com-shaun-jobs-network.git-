@@ -31,7 +31,7 @@ try {
             "subspecialty" => "4"
         ),
         "filters"=>array(
-            "~title" => "developer"
+            array("~title" => "developer")
         ),
         'maxresults' => 10,
     ));
