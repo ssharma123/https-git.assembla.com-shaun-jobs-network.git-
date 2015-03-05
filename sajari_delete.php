@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require 'sajari/vendor/autoload.php';
-        
+
 use Sajari\Engine\EngineClient;
 use Sajari\Engine\Exception\EngineException;
 
@@ -15,28 +15,21 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'collection' => "medmatchjobs"
 ));
 
-$q = isset($_GET['q']) ? $_GET['q']: "" ;
-
+$doc_id = isset( $_POST["id"] ) ? $_POST["id"] : 0 ;
 try {
-    
-    
-    $result = $c->search(array(
-        
-        "filters"=>array(
-            array("~title" => "developer"),
-            array("specialty" => "1"),
-//            array("subspecialty" => "5"),
-        ),
-        'maxresults' => 40,
+    $result = $c->remove(array(
+        'id' => $doc_id
     ));
+    
     $rsp['status'] = "ok";
     $rsp['result'] = $result;
-    
-    echo "<pre>"; print_r($rsp); echo "</pre>"; die;
+    echo json_encode($rsp); die;
 
-    
+//    echo var_export($r, true), PHP_EOL;
 } catch (EngineException $e) {
     $rsp['status'] = "error";
-    $rsp['result'] = "There was an error running the search." .$e->getMessage();
+    $rsp['result'] = "There was an error adding the document." .$e->getMessage();
     echo json_encode($rsp); die;
 }
+
+ 
