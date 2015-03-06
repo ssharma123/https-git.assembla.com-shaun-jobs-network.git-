@@ -45,7 +45,7 @@ var facilities = <?php echo $facilities; ?>;
                     <input type="hidden" name="last_name" id="last_name" >
                     <input type="email" placeholder="Your Email" class="form-control" required id="email" name="email" id="email" value="">
                     <br>
-                    <a href="javascript:void(0)" id="complete_sigin_facebook_jobseeker" class="btn btn-primary btn-block">Complete Signin</a>
+                    <a href="javascript:void(0)" id="complete_sigin_facebook_jobseeker" class="btn btn-primary btn-block">Complete Sign In</a>
                     <br>
                 </form>
             </div>

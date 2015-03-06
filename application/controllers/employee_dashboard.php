@@ -788,6 +788,16 @@ class Employee_dashboard extends MY_EmployerController {
             
             if($job['sajari_doc_id'] == ""){
                 // ADD to sajari
+                $params = array(
+                    'meta' => array(
+                        'title' => 'Game Developer',
+                        'lat' => '50.2345',
+                        'lng'  => '97.4567',
+                        'heading' => 'Game Developer',
+                        "specialty" => "1",
+                        "subspecialty" => "5"
+                    )
+                );
                 $rsp = sajari_api("sajari_search", $params);
             }
             else{
