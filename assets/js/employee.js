@@ -1,6 +1,6 @@
 //var $ = jQuery.noConflict();
 var facebook_app_id = '786134894789637';
-var base_url = "http://104.236.98.239/";
+var base_url = BASE_URL;
 // FACEBOOK SIGNIN CODE
 window.fbAsyncInit = function() {
     // init the FB JS SDK
