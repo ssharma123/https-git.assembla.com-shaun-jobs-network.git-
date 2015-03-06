@@ -18,7 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-if($_SERVER['HTTP_HOST'] == '104.236.98.239'){
+if($_SERVER['HTTP_HOST'] == '104.236.98.239' || $_SERVER['HTTP_HOST'] == 'medmatchjobs.com'){
     define('ENVIRONMENT', 'production');
 }
 else{
