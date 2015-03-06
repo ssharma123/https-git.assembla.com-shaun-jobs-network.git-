@@ -1100,7 +1100,7 @@ class Employee_dashboard extends MY_EmployerController {
             $old_ext = pathinfo($_FILES['job_letter']['name'][0], PATHINFO_EXTENSION);
 
             $lib_config['new_file_name'] = $id."_job_letter_".$old_file.".".$old_ext;
-            $lib_config['allowed_types'] = '*';
+            $lib_config['allowed_types'] = 'pdf|doc|docx';
             $this->custom_image_lib->config($lib_config);
 
             $job_offers = $this->custom_image_lib->upload($_FILES['job_letter'], 'uploads/employers/job_offers/');
@@ -1116,7 +1116,7 @@ class Employee_dashboard extends MY_EmployerController {
             }
             else{
                 $status = "error";
-                $msg = "oops something went wrong";
+                $msg = "Please Upload file pdf or doc type";
             }
         }
         else{

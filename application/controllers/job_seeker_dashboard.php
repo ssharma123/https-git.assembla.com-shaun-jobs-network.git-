@@ -1413,7 +1413,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             $old_ext = pathinfo($_FILES['file_document']['name'][0], PATHINFO_EXTENSION);
 
             $lib_config['new_file_name'] = $jobseeker_id."_document_".$old_file.".".$old_ext;
-            $lib_config['allowed_types'] = '*';
+            $lib_config['allowed_types'] = 'pdf|doc|docx';
+            
             $this->custom_image_lib->config($lib_config);
 
             $file_document = $this->custom_image_lib->upload($_FILES['file_document'], 'uploads/jobseeker/file_document/');
@@ -1428,7 +1429,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             }
             else{
                 $status = "error";
-                $msg = "oops something went wrong";
+                $msg = "Please Upload file pdf or doc type";
             }
         }
         else{
