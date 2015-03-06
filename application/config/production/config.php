@@ -13,8 +13,13 @@
 | path to your installation.
 |
 */
+if($_SERVER['HTTP_HOST'] == '104.236.98.239'){
+    $config['base_url'] = 'http://104.236.98.239/';
+}
+if($_SERVER['HTTP_HOST'] == 'medmatchjobs.com'){
+    $config['base_url'] = 'http://medmatchjobs.com/';
+}
 
-$config['base_url'] = 'http://104.236.98.239/';
 
 /*
 |--------------------------------------------------------------------------
