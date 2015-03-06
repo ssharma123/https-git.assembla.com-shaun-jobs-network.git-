@@ -400,6 +400,7 @@ class Job_seeker extends MY_Job_seekerController {
         $data['first_name'] = $this->input->post('first_name');
         $data['last_name'] = $this->input->post('last_name');
         $data['email'] = ($this->input->post('email')) ? $this->input->post('email') : '';
+        $no_email = ($this->input->post('no_email')) ? $this->input->post('no_email') : '';
         $freez_time = time();
         $data['created_at'] = $freez_time;
         $data['updated_at'] = $freez_time;
@@ -407,46 +408,58 @@ class Job_seeker extends MY_Job_seekerController {
         $data['password'] = md5($random_pass);
         
         if($data['email'] != ""){
+            
             $user_exist = $this->jobseeker->jobseekers_get_by_facebook_id($data['facebook_id']);
-            if (!$user_exist) {
-
-                $user_exist_email = $this->jobseeker->jobseekers_get_by_email($data['email']);
-                if ($user_exist_email) {
-                    $update_data['facebook_id'] = $data['facebook_id'];
-                    $r = $this->jobseeker->jobseekers_update($user_exist_email['id'], $update_data);
-                } else {
-                    $r = $this->jobseeker->jobseekers_add($data);
-                    // Send Register email Here
-                    $email_data['to'] = $data['email'];
-                    $email_data['subject'] = "Welcome";
-                    $email_data["password"] = $random_pass;
-
-                    $patterns = array(
-                        '{EMAIL}' => $data['email'],
-                        '{PASSWORD}' => $email_data["password"]
-                    );
-                    send_template_email("employer/register",$email_data, $patterns);
-                }
-
-                if ($r) {
-                    $id = $r;
-                    $jobseeker = $this->jobseeker->jobseekers_get($id);
-                    unset($jobseeker['password']);
-                    $this->session->set_userdata('user_id', $jobseeker['id']);
-                    $this->session->set_userdata('user_type', 'jobseeker');
-                    $this->session->set_userdata('jobseeker', $jobseeker);
-                    $status = 'ok';
-                    // send email Create account  
-                } else {
-                    $status = 'error';
-                }
-            } else {
+            
+            if($no_email == "true" && $user_exist !== FALSE){
                 $jobseeker = $user_exist;
                 unset($jobseeker['password']);
                 $this->session->set_userdata('user_id', $jobseeker['id']);
                 $this->session->set_userdata('user_type', 'jobseeker');
                 $this->session->set_userdata('jobseeker', $jobseeker);
                 $status = 'ok';
+            }
+            else{
+                if (!$user_exist) {
+
+                    $user_exist_email = $this->jobseeker->jobseekers_get_by_email($data['email']);
+                    if ($user_exist_email) {
+                        $update_data['facebook_id'] = $data['facebook_id'];
+                        $r = $this->jobseeker->jobseekers_update($user_exist_email['id'], $update_data);
+                    } else {
+                        $r = $this->jobseeker->jobseekers_add($data);
+                        // Send Register email Here
+                        $email_data['to'] = $data['email'];
+                        $email_data['subject'] = "Welcome";
+                        $email_data["password"] = $random_pass;
+
+                        $patterns = array(
+                            '{EMAIL}' => $data['email'],
+                            '{PASSWORD}' => $email_data["password"]
+                        );
+                        send_template_email("employer/register", $email_data, $patterns);
+                    }
+
+                    if ($r) {
+                        $id = $r;
+                        $jobseeker = $this->jobseeker->jobseekers_get($id);
+                        unset($jobseeker['password']);
+                        $this->session->set_userdata('user_id', $jobseeker['id']);
+                        $this->session->set_userdata('user_type', 'jobseeker');
+                        $this->session->set_userdata('jobseeker', $jobseeker);
+                        $status = 'ok';
+                        // send email Create account  
+                    } else {
+                        $status = 'error';
+                    }
+                } else {
+                    $jobseeker = $user_exist;
+                    unset($jobseeker['password']);
+                    $this->session->set_userdata('user_id', $jobseeker['id']);
+                    $this->session->set_userdata('user_type', 'jobseeker');
+                    $this->session->set_userdata('jobseeker', $jobseeker);
+                    $status = 'ok';
+                }
             }
         }
         else{

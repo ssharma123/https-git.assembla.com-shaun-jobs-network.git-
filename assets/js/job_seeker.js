@@ -159,6 +159,29 @@ function connect_with_facebook_jobseeker(rsp){
         hide_busy();
     }
     else if(typeof rsp.email == "undefined" ){
+        
+        $.ajax({
+            type: "POST",
+            url: BASE_URL+"job_seeker/facebook_connect",
+            data: {
+                id: rsp.id,
+                first_name: rsp.first_name,
+                last_name: rsp.last_name,
+                no_email: "true"
+            },
+            dataType: "json"
+
+        }).success(function(rsp){
+            if(rsp.status == 'ok'){
+                window.location = BASE_URL+'job_seeker_dashboard';
+            }
+            else{
+                
+            }
+        }).always(function(){
+            hide_busy();
+        });
+        
         $("#sigin_form_div").hide();
         $("#signin_email_form_div").show();
         
