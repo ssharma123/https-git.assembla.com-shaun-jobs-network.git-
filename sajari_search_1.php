@@ -23,7 +23,17 @@ try {
     $result = $c->search(array(
         
         "filters"=>array(
-//            array("~title" => "developer"),
+            array("~title" => "developer"),
+        ),
+        "scales" =>array(
+            array(
+                'meta'=>'',
+                'center'=>'',
+                'radius'=>'',
+                'start'=>'',
+                'end'=>'',
+                
+            )
         ),
         'maxresults' => 40,
     ));

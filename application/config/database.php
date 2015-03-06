@@ -44,7 +44,7 @@
 | The $active_record variables lets you determine whether or not to load
 | the active record class
 */
-if($_SERVER['HTTP_HOST'] == '104.236.98.239'){
+if($_SERVER['HTTP_HOST'] == '104.236.98.239' || $_SERVER['HTTP_HOST'] == 'medmatchjobs.com'){
     $active_group = 'LIVE';
 }
 else{

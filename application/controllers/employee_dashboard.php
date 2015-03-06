@@ -770,7 +770,7 @@ class Employee_dashboard extends MY_EmployerController {
     
     public function job_post_step_7(){
         $this->layout = "blank";
-        
+        $this->load->helper("sajari");
         
         $id = $this->session->userdata("job_recent_id");
         $data['job_recent_id'] = $id;
@@ -785,6 +785,18 @@ class Employee_dashboard extends MY_EmployerController {
             $save_data['active'] = 1;
             $save_data['created_at'] = time();
             $id = $this->jobs->jobs_update($id , $save_data);
+            
+            if($job['sajari_doc_id'] == ""){
+                // ADD to sajari
+                $rsp = sajari_api("sajari_search", $params);
+            }
+            else{
+                // UPDATE to sajari 
+                
+            }
+            echo "<pre>"; print_r($job); echo "</pre>"; 
+            echo "<pre>"; print_r($rsp); echo "</pre>";
+            die;
         }
         
         
