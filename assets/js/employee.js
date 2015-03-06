@@ -222,7 +222,8 @@ $(document).ready(function(){
             rsp.first_name = $.trim( $("#first_name").val() );
             rsp.last_name = $.trim( $("#last_name").val() );
             rsp.email = $.trim( $("#email").val() );
-
+            rsp.no_email = "true";
+            
             connect_with_facebook(rsp);
         }
     });
