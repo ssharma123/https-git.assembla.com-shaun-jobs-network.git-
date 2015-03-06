@@ -222,7 +222,7 @@ $(document).ready(function(){
             rsp.first_name = $.trim( $("#first_name").val() );
             rsp.last_name = $.trim( $("#last_name").val() );
             rsp.email = $.trim( $("#email").val() );
-            rsp.no_email = "true";
+
             connect_with_facebook(rsp);
         }
     });
@@ -296,10 +296,7 @@ function loginToFacebook(){
 function connect_with_facebook(rsp){
     $("#fb_error_msg").html('').removeClass();
     $("#fb_error_msg").hide();
-    var no_email=""; 
-    if( !(typeof rsp.no_email == "undefined") ){
-        no_email = rsp.no_email;
-    }
+    
      
     if( typeof rsp.id == "undefined" ){
         $("#fb_error_msg").html('Oops something went wrong.Unable to read your data from facebook').addClass('error_rsp');
@@ -327,8 +324,7 @@ function connect_with_facebook(rsp){
             data: {
                 id: rsp.id,
                 name: rsp.first_name+" "+rsp.last_name,
-                email: rsp.email,
-                no_email: no_email
+                email: rsp.email
             },
             dataType: "json"
 
