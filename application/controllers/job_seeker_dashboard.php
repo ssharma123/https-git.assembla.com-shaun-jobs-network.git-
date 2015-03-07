@@ -1966,7 +1966,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                             $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
                             $email_data['to'] = $jobseeker['email'];
-                            $email_data['to'] = 'numan.hassan@purelogics.net';
+//                            $email_data['to'] = 'numan.hassan@purelogics.net';
                             $email_data['subject'] = "Job Interview Details";
                             $email_data['link'] = $interview_data["rvis_link"];
                             $job = $this->jobs->jobs_get($job_apply['job_id']);
@@ -2043,7 +2043,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                                     
                                     $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
                                     $email_data['to'] = $jobseeker['email'];
-                                    $email_data['to'] = 'numan.hassan@purelogics.net';
+//                                    $email_data['to'] = 'numan.hassan@purelogics.net';
                                     $email_data['subject'] = "Job Interview Details";
                                     $email_data['link'] = $interview_data["rvis_link"];
                                     $job = $this->jobs->jobs_get($job_apply['job_id']);
@@ -2160,7 +2160,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                                         // email employer
 
                                         $email_data['to'] = $employer['email'];
-                                        $email_data['to'] = 'numan.hassan@purelogics.net';
+//                                        $email_data['to'] = 'numan.hassan@purelogics.net';
                                         $email_data['subject'] = "Job Interview Complete";
                                         $email_data['link'] = $interview_data["rvis_link"];
                                         $job = $this->jobs->jobs_get($apply['job_id']);
