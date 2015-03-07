@@ -42,7 +42,7 @@
                 
                 foreach($jobs as $key => $row){ 
                     
-                    echo "<pre>"; print_r($row); echo "</pre>";
+                    echo "<pre>"; print_r($row); echo "</pre>"; die;
                     
                     $percent = 0;
                     
