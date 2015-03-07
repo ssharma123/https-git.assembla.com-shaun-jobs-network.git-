@@ -42,10 +42,11 @@
             if($jobs_data){
                 $jobs = $jobs_data['results'];
                 foreach($jobs as $key => $obj){ 
-                    $obj = (array) $obj;
-                    
-                    $row = $obj['meta'];
-                    $doc_id = $obj['docId'];
+                    $obj_array = (array) $obj;
+                    echo "<pre>"; print_r($obj_array); echo "</pre>";
+
+                    $row = $obj_array['meta'];
+                    $doc_id = $obj_array['docId'];
                     
                     $percent = 0;
                     
