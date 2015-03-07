@@ -153,6 +153,7 @@ if(!function_exists('get_specialties'))
 if(!function_exists('get_facility_info_by_job')) 
 {
     function get_facility_info_by_job($employer_id){
+        $that = & get_instance();
         $q = "SELECT city , state FROM employers_facilities WHERE employer_id = '$employer_id' ";
         $r = $that->db->query($q);
         if($r->num_rows()>0){
