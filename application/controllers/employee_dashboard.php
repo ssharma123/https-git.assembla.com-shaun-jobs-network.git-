@@ -811,9 +811,9 @@ class Employee_dashboard extends MY_EmployerController {
                     'id' => $job['sajari_doc_id']
                 );
                 $rsp = sajari_api("sajari_replace", $params);
-                
+                echo "<pre>"; print_r($rsp); echo "</pre>";
             }
-            echo "<pre>"; print_r($rsp->result); echo "</pre>";
+            
             die;
         }
         
