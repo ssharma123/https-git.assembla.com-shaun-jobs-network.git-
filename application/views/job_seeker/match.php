@@ -38,15 +38,17 @@
             
             error_reporting(E_ALL);
             ini_set('display_errors', 1);
-
+            $jobs_sorted_array = array();
             if($jobs_data){
+                
                 $jobs = $jobs_data['results'];
                 foreach($jobs as $key => $obj){ 
                     $obj_array = (array) $obj;
-                    echo "<pre>"; print_r($obj_array); echo "</pre>";
 
                     $row = (array)$obj_array['meta'];
                     $doc_id = $obj_array['docId'];
+                    $score = $obj_array['score'];
+                    $rawscore = $obj_array['rawscore'];
                     
                     $percent = 0;
                     
@@ -134,18 +136,21 @@
                     $jobs[$key]->percent = $percent;
                     $jobs[$key]->percent_class = $percent_class;
                     $jobs[$key]->percent_color = $percent_color;
+                    
+                    $jobs_sorted_array[$key] = (array)$obj_array['meta'];
+                    $jobs_sorted_array[$key]['score'] = $score;
+                    $jobs_sorted_array[$key]['rawscore'] = $rawscore;
+                    $jobs_sorted_array[$key]['percent'] = $percent;
+                    $jobs_sorted_array[$key]['percent_class']= $percent_class;
+                    $jobs_sorted_array[$key]['percent_color']= $percent_color;
                 }
                 
-                echo "<pre>"; print_r($jobs); echo "</pre>"; 
                 
-                usort($jobs, "jobs_sort_by_percent" );
+                usort($jobs_sorted_array, "jobs_sort_by_percent" );
                 
-                echo "<pre>"; print_r($jobs); echo "</pre>"; die;
 
                 
-                foreach($jobs as $key => $obj){ 
-                    $row = (array) $obj->meta;
-                    $doc_id = $obj->docId;
+                foreach($jobs_sorted_array as $key => $row){ 
                     ?>
                 <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $row['id']; ?>" data-percent="<?php echo $row['percent']; ?>" data-dashboard="no" >
                     <div class="<?php echo $row['percent_class']; ?>">
