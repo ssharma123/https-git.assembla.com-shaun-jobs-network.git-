@@ -2096,8 +2096,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
     
     function offer_interview_webhook(){
         
-//        $post = $this->input->post();
-        $data['data'] =  "test";
+        $post = $this->input->post();
+        $data['data'] =  $post;
         $this->db->insert("webhook_logs",$data);
         
         // suppose video ID 
