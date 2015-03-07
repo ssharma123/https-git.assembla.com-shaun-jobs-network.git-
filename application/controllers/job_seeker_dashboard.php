@@ -2096,20 +2096,25 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
     
     function offer_interview_webhook(){
         
-        $data = file_get_contents("php://input");
-        $data['data'] =  $data;
+        
+        $data['data'] =  "test";
+        $this->db->insert("webhook_logs",$data);
+        
+        $data = @file_get_contents("php://input");
+        $data['data'] =  ($data) ? $data : "no input json";
         $data['created_at'] =  "1111-11-11 11:11:11";
         $this->db->insert("webhook_logs",$data);
         
-        $data = file_get_contents("php://input");
+        $data = serialize($_POST);
         $data['data'] =  $data;
         $data['created_at'] =  "2222-22-22 22:22:22";
         $this->db->insert("webhook_logs",$data);
         
-        $data = file_get_contents("php://input");
+        $data = count($_POST);
         $data['data'] =  $data;
         $data['created_at'] =  "333-33-33 33:33:33";
         $this->db->insert("webhook_logs",$data);
+        
         
         return true;
         
