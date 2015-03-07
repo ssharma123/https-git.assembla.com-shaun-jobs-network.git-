@@ -45,7 +45,7 @@
                     $obj_array = (array) $obj;
                     echo "<pre>"; print_r($obj_array); echo "</pre>";
 
-                    $row = $obj_array['meta'];
+                    $row = (array)$obj_array['meta'];
                     $doc_id = $obj_array['docId'];
                     
                     $percent = 0;
