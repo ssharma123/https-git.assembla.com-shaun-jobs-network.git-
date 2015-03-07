@@ -51,6 +51,8 @@ class Job_seeker extends MY_Job_seekerController {
         
         $data = $this->input->post();
         
+        echo "<pre>"; var_dump($data); echo "</pre>";  
+        
         $filters = array();
         if(isset($data['specialty'])){
             $filters["specialty"] = $data["specialty"];
@@ -82,7 +84,7 @@ class Job_seeker extends MY_Job_seekerController {
         $rsp = sajari_api("sajari_search", $params);
         
 
-        echo "<pre>"; print_r($rsp); echo "</pre>"; die;
+        echo "<pre>"; var_dump($rsp); echo "</pre>"; die;
 
         $data["jobs"] = "";
         
