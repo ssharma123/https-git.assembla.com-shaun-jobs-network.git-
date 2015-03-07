@@ -81,6 +81,9 @@ class Job_seeker extends MY_Job_seekerController {
         $params = array(
             'filters' => $filters
         );
+        
+        echo "<pre>"; print_r($params); echo "</pre>"; 
+        
         $rsp = sajari_api("sajari_search", $params);
         
 
