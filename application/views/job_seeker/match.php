@@ -36,7 +36,8 @@
             
             <?php
             
-//            echo "<pre>"; print_r($jobs); echo "</pre>"; die;
+            error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
             if($jobs){
                 
@@ -45,6 +46,8 @@
                     $row = $obj->meta;
                     $doc_id = $obj->docId;
                     
+                    echo "<pre>"; print_r($row); echo "</pre>"; die;
+
                     $percent = 0;
                     
                     $points_matched = 0;
