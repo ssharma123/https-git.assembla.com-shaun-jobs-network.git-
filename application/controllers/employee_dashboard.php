@@ -792,9 +792,7 @@ class Employee_dashboard extends MY_EmployerController {
             if($job['sajari_doc_id'] == ""){
                 // ADD to sajari
                 $params = array(
-                    'meta' => array(
-                        $job
-                    )
+                    'meta' => $job
                 );
                 $rsp = sajari_api("sajari_add", $params);
                 $sajari_doc_id = $rsp->result;
@@ -805,16 +803,12 @@ class Employee_dashboard extends MY_EmployerController {
             else{
                 // UPDATE to sajari 
                 $params = array(
-                    'meta' => array(
-                        $job
-                    ),
+                    'meta' => $job,
                     'id' => $job['sajari_doc_id']
                 );
                 $rsp = sajari_api("sajari_replace", $params);
-                echo "<pre>"; print_r($rsp); echo "</pre>";
             }
             
-            die;
         }
         
         
