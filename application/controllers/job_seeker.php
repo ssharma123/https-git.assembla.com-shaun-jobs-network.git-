@@ -76,8 +76,9 @@ class Job_seeker extends MY_Job_seekerController {
         
         
         
-        
-        
+        $filters = array(
+            array("~title" => "developer"),
+        );
         $params = array(
             'filters' => $filters
         );
