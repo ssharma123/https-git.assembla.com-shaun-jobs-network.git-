@@ -151,6 +151,10 @@
 
                 
                 foreach($jobs_sorted_array as $key => $row){ 
+                    $facility = get_facility_info_by_job($row['employer_id']);
+                    $row['city']= $facility['city'];
+                    $row['state']= $facility['state'];
+                    
                     ?>
                 <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $row['id']; ?>" data-percent="<?php echo $row['percent']; ?>" data-dashboard="no" >
                     <div class="<?php echo $row['percent_class']; ?>">

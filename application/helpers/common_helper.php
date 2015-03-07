@@ -150,6 +150,19 @@ if(!function_exists('get_specialties'))
         
     }
 }
+if(!function_exists('get_facility_info_by_job')) 
+{
+    function get_facility_info_by_job($employer_id){
+        $q = "SELECT city , state FROM employers_facilities WHERE employer_id = '$employer_id' ";
+        $r = $that->db->query($q);
+        if($r->num_rows()>0){
+            $row = $r->row_array();
+            return $row;
+        }
+        return FALSE;
+    }
+}
+
 
 if(!function_exists('get_match_class')) 
 {
