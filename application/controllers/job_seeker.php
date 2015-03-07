@@ -55,10 +55,10 @@ class Job_seeker extends MY_Job_seekerController {
         
         $filters = array();
         if(isset($data['specialty'])){
-            $filters["specialty"] = $data["specialty"];
+            $filters[]  = array( "specialty" => $data["specialty"]);
         }
         if(isset($data['sub_specialty'])){
-            $filters["sub_specialty"] = $data["sub_specialty"];
+            $filters[]  = array( "sub_specialty" => $data["sub_specialty"]);
         }
         
 //        if(isset($data['salary_range'])){
@@ -76,9 +76,9 @@ class Job_seeker extends MY_Job_seekerController {
         
         
         
-        $filters = array(
-            array("~title" => "developer"),
-        );
+//        $filters = array(
+//            array("~title" => "developer"),
+//        );
         $params = array(
             'filters' => $filters
         );
