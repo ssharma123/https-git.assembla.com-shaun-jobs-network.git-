@@ -10,22 +10,20 @@ fwrite($file, "\n");
 fclose($file);
 
 
-//$username = 'root';
-//$password = 'Purelogics@123';
-//$database = 'medmatch';
-//$host = "localhost";
-//
-//$con = mysqli_connect($host, $username, $password);
-//$db_select = mysqli_select_db($con, $database);
+$username = 'root';
+$password = 'Purelogics@123';
+$database = 'medmatch';
+$host = "localhost";
+
+$con = mysqli_connect($host, $username, $password);
+$db_select = mysqli_select_db($con, $database);
 
 
 //$data_array = json_decode($data,TRUE);
 //$data_save = ($data_array);
 //$data = (string) $data;
 // saving information
-//$query = "INSERT INTO webhook_logs (data ) VALUES ('$data') ";
-//mysqli_query($con,$query);
-//$result = mysqli_query($con, $query);
+
     
 if($data){
     
@@ -38,10 +36,19 @@ if($data){
                 if (is_array($data_array)) {
                     $post_data = http_build_query($data_array);
                 }
+                
+                
+                $query = "INSERT INTO webhook_logs (data ) VALUES ('$post_data') ";
+                mysqli_query($con,$query);
+                $result = mysqli_query($con, $query);
+                
+                
+                
+                
                 $url = "http://medmatchjobs.com/job_seeker_dashboard/offer_interview_webhook";
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_HEADER, 0);
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
