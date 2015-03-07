@@ -769,6 +769,9 @@ class Employee_dashboard extends MY_EmployerController {
     }
     
     public function job_post_step_7(){
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
         $this->layout = "blank";
         $this->load->helper("sajari");
         
