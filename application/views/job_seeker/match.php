@@ -36,11 +36,14 @@
             
             <?php
             
-            echo "<pre>"; print_r($jobs); echo "</pre>"; die;
+//            echo "<pre>"; print_r($jobs); echo "</pre>"; die;
 
             if($jobs){
                 
                 foreach($jobs as $key => $row){ 
+                    
+                    echo "<pre>"; print_r($row); echo "</pre>";
+                    
                     $percent = 0;
                     
                     $points_matched = 0;
