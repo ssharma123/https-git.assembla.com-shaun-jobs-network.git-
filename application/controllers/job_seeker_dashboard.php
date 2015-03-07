@@ -2096,6 +2096,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
     
     function offer_interview_webhook(){
         
+        $log["data"] = "curl working";
+        $this->db->insert("webhook_logs",$log);
+        
+        
         require_once APPPATH.'libraries/RIVS/class.rivs.php';
         $Rivs = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
         
@@ -2106,7 +2110,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         }
         
         $req_data["iInterview"] = $rvis_video_id;
-        $result = $Rivs->call("interviewautomatedvideo.create",$req_data);
+        $result = $Rivs->call("interviewautomatedvideo.get",$req_data);
 
         if( isset($result['aaOutput']) ){
             $rsp = $result['aaOutput'];
