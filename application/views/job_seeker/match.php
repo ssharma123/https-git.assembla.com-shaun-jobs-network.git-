@@ -43,7 +43,7 @@
                 foreach($jobs['results'] as $key => $obj){ 
                     
                     $row = $obj->meta;
-                    $doc_id = $row->docId;
+                    $doc_id = $obj->docId;
                     
                     $percent = 0;
                     
