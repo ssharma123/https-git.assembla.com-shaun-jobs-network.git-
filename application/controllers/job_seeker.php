@@ -61,18 +61,18 @@ class Job_seeker extends MY_Job_seekerController {
             $filters[]  = array( "sub_specialty" => $data["sub_specialty"]);
         }
         
-//        if(isset($data['salary_range'])){
-//            $salary_range_array = explode("-", $data['salary_range']);
-//            $min = $salary_range_array[0];
-//            $min = $min * 1000;
-//            $filters[">=salary_range_min"] = $min;
-//            
-//            if(isset($salary_range_array[1])){
-//                $max = $salary_range_array[1];
-//                $max = $max * 1000;
-//                $filters["<=salary_range_max"] = $max;
-//            }
-//        }
+        if(isset($data['salary_range'])){
+            $salary_range_array = explode("-", $data['salary_range']);
+            $min = $salary_range_array[0];
+            $min = $min * 1000;
+            $filters[]  = array( ">=salary_range_min" => $min );
+            
+            if(isset($salary_range_array[1])){
+                $max = $salary_range_array[1];
+                $max = $max * 1000;
+                $filters[]  = array( "<=salary_range_max" => $min );
+            }
+        }
         
         
         
