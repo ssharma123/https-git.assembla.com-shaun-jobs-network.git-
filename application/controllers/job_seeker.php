@@ -54,14 +54,14 @@ class Job_seeker extends MY_Job_seekerController {
         echo "<pre>"; print_r($data); echo "</pre>"; 
         
         $filters = array();
-        if(isset($data['specialty'])){
+        if(isset($data['specialty']) && $data['specialty'] != ""){
             $filters[]  = array( "specialty" => $data["specialty"]);
         }
-        if(isset($data['sub_specialty'])){
+        if(isset($data['sub_specialty']) && $data['sub_specialty'] != ""){
             $filters[]  = array( "sub_specialty" => $data["sub_specialty"]);
         }
         
-        if(isset($data['salary_range'])){
+        if(isset($data['salary_range']) && $data['salary_range'] != ""){
             $salary_range_array = explode("-", $data['salary_range']);
             $min = $salary_range_array[0];
             $min = $min * 1000;
