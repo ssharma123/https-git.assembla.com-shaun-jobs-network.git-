@@ -43,7 +43,7 @@ ini_set('display_errors', 1);
                 
                 foreach($jobs['results'] as $key => $obj){ 
                     
-                    $row = $obj->meta;
+                    $row = (array) $obj->meta;
                     $doc_id = $obj->docId;
                     
                     echo "<pre>"; print_r($row); echo "</pre>"; die;
