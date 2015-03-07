@@ -79,9 +79,9 @@ class Job_seeker extends MY_Job_seekerController {
         );
         $rsp = sajari_api("sajari_search", $params);
         
-        $data["jobs"] = FALSE;
+        $data["jobs_data"] = FALSE;
         if(isset($rsp->result)){
-            $data["jobs"] = (array) $rsp->result;
+            $data["jobs_data"] = (array) $rsp->result;
         }
         
 //        $data["jobs"] = $this->jobs->top_matches($data);

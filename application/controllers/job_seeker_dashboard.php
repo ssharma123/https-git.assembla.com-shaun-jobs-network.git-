@@ -2096,23 +2096,33 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
     
     function offer_interview_webhook(){
         
+        require_once APPPATH.'libraries/RIVS/class.rivs.php';
+        $Rivs = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
         
+                
         $data['data'] =  "test";
         $this->db->insert("webhook_logs",$data);
         
-        $data = @file_get_contents("php://input");
-        $data['data'] =  ($data) ? $data : "no input json";
-        $data['created_at'] =  "1111-11-11 11:11:11";
+//        $data = @file_get_contents("php://input");
+//        $data['data'] =  ($data) ? $data : "no input json";
+//        $data['created_at'] =  "1111-11-11 11:11:11";
+//        $this->db->insert("webhook_logs",$data);
+        
+        
+        
+        $data = count($_POST);
+        $data['data'] =  $data;
+        $data['created_at'] =  "333-33-33 33:33:33";
+        $this->db->insert("webhook_logs",$data);
+        
+        $data = $_POST;
+        $data['data'] =  $data;
+        $data['created_at'] =  "2222-22-22 22:22:22";
         $this->db->insert("webhook_logs",$data);
         
         $data = serialize($_POST);
         $data['data'] =  $data;
         $data['created_at'] =  "2222-22-22 22:22:22";
-        $this->db->insert("webhook_logs",$data);
-        
-        $data = count($_POST);
-        $data['data'] =  $data;
-        $data['created_at'] =  "333-33-33 33:33:33";
         $this->db->insert("webhook_logs",$data);
         
         

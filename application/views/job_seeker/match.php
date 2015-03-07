@@ -39,9 +39,9 @@
             error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-            if($jobs){
-                
-                foreach($jobs['results'] as $key => $obj){ 
+            if($jobs_data){
+                $jobs = $jobs_data['results'];
+                foreach($jobs as $key => $obj){ 
                     
                     $row = (array) $obj->meta;
                     $doc_id = $obj->docId;
@@ -136,7 +136,9 @@ ini_set('display_errors', 1);
                 
                 usort($jobs, "jobs_sort_by_percent" );
                 
-                foreach($jobs as $row){ 
+                foreach($jobs as $key => $obj){ 
+                    $row = (array) $obj->meta;
+                    $doc_id = $obj->docId;
                     ?>
                 <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $row['id']; ?>" data-percent="<?php echo $row['percent']; ?>" data-dashboard="no" >
                     <div class="<?php echo $row['percent_class']; ?>">
