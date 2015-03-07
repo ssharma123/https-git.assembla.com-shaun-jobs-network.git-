@@ -10,13 +10,13 @@ fwrite($file, "\n");
 fclose($file);
 
 
-$username = 'root';
-$password = 'Purelogics@123';
-$database = 'medmatch';
-$host = "localhost";
-
-$con = mysqli_connect($host, $username, $password);
-$db_select = mysqli_select_db($con, $database);
+//$username = 'root';
+//$password = 'Purelogics@123';
+//$database = 'medmatch';
+//$host = "localhost";
+//
+//$con = mysqli_connect($host, $username, $password);
+//$db_select = mysqli_select_db($con, $database);
 
 
 //$data_array = json_decode($data,TRUE);
@@ -38,9 +38,9 @@ if($data){
                 }
                 
                 
-                $query = "INSERT INTO webhook_logs (data ) VALUES ('$post_data') ";
-                mysqli_query($con,$query);
-                $result = mysqli_query($con, $query);
+//                $query = "INSERT INTO webhook_logs (data ) VALUES ('$post_data') ";
+//                mysqli_query($con,$query);
+//                $result = mysqli_query($con, $query);
                 
                 
                 
