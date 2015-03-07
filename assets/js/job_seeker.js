@@ -176,18 +176,15 @@ function connect_with_facebook_jobseeker(rsp){
                 window.location = BASE_URL+'job_seeker_dashboard';
             }
             else{
-                
+                $("#sigin_form_div").hide();
+                $("#signin_email_form_div").show();
+                $("#facebook_id").val(rsp.id);
+                $("#first_name").val(rsp.first_name);
+                $("#last_name").val(rsp.last_name);
             }
         }).always(function(){
             hide_busy();
         });
-        
-        $("#sigin_form_div").hide();
-        $("#signin_email_form_div").show();
-        
-        $("#facebook_id").val(rsp.id);
-        $("#first_name").val(rsp.first_name);
-        $("#last_name").val(rsp.last_name);
         
     }
     else{

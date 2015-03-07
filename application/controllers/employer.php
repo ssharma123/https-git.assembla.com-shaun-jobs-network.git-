@@ -372,6 +372,7 @@ class Employer extends MY_EmployerController {
         $data['facebook_id'] = $this->input->post('id');
         $data['name'] = $this->input->post('name');
         $data['email'] = ($this->input->post('email')) ? $this->input->post('email') : '';
+        $no_email = ($this->input->post('no_email')) ? $this->input->post('no_email') : '';
         $freez_time = time();
         $data['created_at'] = $freez_time;
         $data['updated_at'] = $freez_time;
@@ -379,8 +380,22 @@ class Employer extends MY_EmployerController {
         $random_pass = random_string('alnum', 10);
         $data['password'] = md5($random_pass);
         
-        if($data['email'] != ""){
-            $user_exist = $this->employer->employer_get_by_facebook_id($data['facebook_id']);
+        $user_exist = $this->employer->employer_get_by_facebook_id($data['facebook_id']);
+        
+        if($no_email == "true"){
+            if (!$user_exist) {
+                $status = 'error';
+            }
+            else{
+                $employer = $user_exist;
+                unset($employer['password']);
+                $this->session->set_userdata('user_id', $employer['id']);
+                $this->session->set_userdata('user_type', 'employer');
+                $this->session->set_userdata('employer', $employer);
+                $status = 'ok';
+            }
+        }
+        else{
             if (!$user_exist) {
 
                 $user_exist_email = $this->employer->employer_get_by_email($data['email']);
@@ -421,10 +436,10 @@ class Employer extends MY_EmployerController {
                 $this->session->set_userdata('employer', $employer);
                 $status = 'ok';
             }
+            
         }
-        else{
-            $status = 'no_email';
-        }
+            
+         
 
         echo json_encode(array('status' => $status));
         die;

@@ -309,12 +309,33 @@ function connect_with_facebook(rsp){
         hide_busy();
     }
     else if(typeof rsp.email == "undefined" ){
-        $("#sigin_form_div").hide();
-        $("#signin_email_form_div").show();
         
-        $("#facebook_id").val(rsp.id);
-        $("#first_name").val(rsp.first_name);
-        $("#last_name").val(rsp.last_name);
+        $.ajax({
+            type: "POST",
+            url: base_url+"employer/facebook_connect",
+            data: {
+                id: rsp.id,
+                name: rsp.first_name+" "+rsp.last_name,
+                email: rsp.email,
+                no_email: "true"
+            },
+            dataType: "json"
+
+        }).success(function(rsp){
+            if(rsp.status == 'ok'){
+                window.location = base_url+'employee_dashboard';
+            }
+            else{
+                $("#sigin_form_div").hide();
+                $("#signin_email_form_div").show();
+                $("#facebook_id").val(rsp.id);
+                $("#first_name").val(rsp.first_name);
+                $("#last_name").val(rsp.last_name);
+            }
+        }).always(function(){
+            hide_busy();
+        });
+        
         
     }
     else{

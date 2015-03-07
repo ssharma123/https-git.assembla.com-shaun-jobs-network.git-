@@ -410,13 +410,19 @@ class Job_seeker extends MY_Job_seekerController {
             
         $user_exist = $this->jobseeker->jobseekers_get_by_facebook_id($data['facebook_id']);
 
-        if($no_email == "true" && $user_exist !== FALSE){
-            $jobseeker = $user_exist;
-            unset($jobseeker['password']);
-            $this->session->set_userdata('user_id', $jobseeker['id']);
-            $this->session->set_userdata('user_type', 'jobseeker');
-            $this->session->set_userdata('jobseeker', $jobseeker);
-            $status = 'ok';
+        if($no_email == "true"){
+            
+            if (!$user_exist) {
+                $status = 'error';
+            }
+            else{
+                $jobseeker = $user_exist;
+                unset($jobseeker['password']);
+                $this->session->set_userdata('user_id', $jobseeker['id']);
+                $this->session->set_userdata('user_type', 'jobseeker');
+                $this->session->set_userdata('jobseeker', $jobseeker);
+                $status = 'ok';
+            }
         }
         else{
             if (!$user_exist) {
