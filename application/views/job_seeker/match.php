@@ -40,9 +40,12 @@
 
             if($jobs){
                 
+                echo "<pre>"; print_r($jobs); echo "</pre>"; 
+                echo "<pre>"; print_r($jobs[0]); echo "</pre>"; 
+                die;
                 foreach($jobs as $key => $row){ 
                     
-                    echo "<pre>"; print_r($row); echo "</pre>"; die;
+                    
                     
                     $percent = 0;
                     
