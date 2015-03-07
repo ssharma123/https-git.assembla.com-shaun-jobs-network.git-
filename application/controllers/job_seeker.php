@@ -81,7 +81,7 @@ class Job_seeker extends MY_Job_seekerController {
         
         $data["jobs"] = FALSE;
         if(isset($rsp->result)){
-            $data["jobs"] = $rsp->result;
+            $data["jobs"] = (array) $rsp->result;
         }
         
 //        $data["jobs"] = $this->jobs->top_matches($data);
