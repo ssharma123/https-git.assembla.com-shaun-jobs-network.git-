@@ -42,9 +42,10 @@
             if($jobs_data){
                 $jobs = $jobs_data['results'];
                 foreach($jobs as $key => $obj){ 
+                    $obj = (array) $obj;
                     
-                    $row = (array) $obj->meta;
-                    $doc_id = $obj->docId;
+                    $row = $obj['meta'];
+                    $doc_id = $obj['docId'];
                     
                     $percent = 0;
                     
@@ -133,6 +134,8 @@
                     $jobs[$key]->percent_class = $percent_class;
                     $jobs[$key]->percent_color = $percent_color;
                 }
+                
+                echo "<pre>"; print_r($jobs); echo "</pre>"; 
                 
                 usort($jobs, "jobs_sort_by_percent" );
                 
