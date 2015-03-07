@@ -19,10 +19,11 @@ $con = mysqli_connect($host, $username, $password);
 $db_select = mysqli_select_db($con, $database);
 
 
-$data_array = json_decode($data,TRUE);
-$data_save = serialize($data_array);
+//$data_array = json_decode($data,TRUE);
+//$data_save = ($data_array);
+$data = (string) $data;
 // saving information
-$query = "INSERT INTO webhook_logs (data ) VALUES ('$data_save') ";
+$query = "INSERT INTO webhook_logs (data ) VALUES ('$data') ";
 mysqli_query($con,$query);
 $result = mysqli_query($con, $query);
     
