@@ -797,7 +797,10 @@ class Employee_dashboard extends MY_EmployerController {
                     )
                 );
                 $rsp = sajari_api("sajari_add", $params);
-                
+                $sajari_doc_id = $rsp->result;
+                $save_data = array();
+                $save_data["sajari_doc_id"] = $sajari_doc_id;
+                $id = $this->jobs->jobs_update($id , $save_data);
             }
             else{
                 // UPDATE to sajari 
