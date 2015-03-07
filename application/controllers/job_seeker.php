@@ -51,7 +51,6 @@ class Job_seeker extends MY_Job_seekerController {
         
         $data = $this->input->post();
         
-        echo "<pre>"; print_r($data); echo "</pre>"; 
         
         $filters = array();
         if(isset($data['specialty']) && $data['specialty'] != ""){
@@ -75,24 +74,15 @@ class Job_seeker extends MY_Job_seekerController {
         }
         
         
-        
-//        $filters = array(
-//            array("~title" => "developer"),
-//        );
         $params = array(
             'filters' => $filters
         );
-        
-        echo "<pre>"; print_r($params); echo "</pre>"; 
-        
         $rsp = sajari_api("sajari_search", $params);
         
-
-        echo "<pre>"; var_dump($rsp); echo "</pre>"; 
-        $rsp = (array) $rsp;
-        echo "<pre>"; var_dump($rsp); echo "</pre>"; die;
-
-        $data["jobs"] = "";
+        $data["jobs"] = FALSE;
+        if(isset($rsp->result)){
+            $data["jobs"] = $rsp->result;
+        }
         
 //        $data["jobs"] = $this->jobs->top_matches($data);
         

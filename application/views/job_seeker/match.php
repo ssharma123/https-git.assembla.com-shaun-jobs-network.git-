@@ -36,7 +36,8 @@
             
             <?php
             
-            
+            echo "<pre>"; print_r($jobs); echo "</pre>"; die;
+
             if($jobs){
                 
                 foreach($jobs as $key => $row){ 
