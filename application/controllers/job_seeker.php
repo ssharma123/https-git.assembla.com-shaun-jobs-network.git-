@@ -414,6 +414,7 @@ class Job_seeker extends MY_Job_seekerController {
             
             if (!$user_exist) {
                 $status = 'error';
+                
             }
             else{
                 $jobseeker = $user_exist;

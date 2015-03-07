@@ -321,8 +321,8 @@ function connect_with_facebook(rsp){
             },
             dataType: "json"
 
-        }).success(function(rsp){
-            if(rsp.status == 'ok'){
+        }).success(function(response){
+            if(response.status == 'ok'){
                 window.location = base_url+'employee_dashboard';
             }
             else{

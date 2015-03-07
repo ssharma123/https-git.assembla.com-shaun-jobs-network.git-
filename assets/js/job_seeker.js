@@ -171,8 +171,8 @@ function connect_with_facebook_jobseeker(rsp){
             },
             dataType: "json"
 
-        }).success(function(rsp){
-            if(rsp.status == 'ok'){
+        }).success(function(response){
+            if(response.status == 'ok'){
                 window.location = BASE_URL+'job_seeker_dashboard';
             }
             else{
