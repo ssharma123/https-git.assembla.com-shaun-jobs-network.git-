@@ -37,7 +37,7 @@
             <?php
             
             error_reporting(E_ALL);
-ini_set('display_errors', 1);
+            ini_set('display_errors', 1);
 
             if($jobs_data){
                 $jobs = $jobs_data['results'];
@@ -129,12 +129,15 @@ ini_set('display_errors', 1);
                     $percent_class = get_match_class($percent);
                     $percent_color = get_match_color($percent);
                     
-                    $jobs[$key]['percent'] = $percent;
-                    $jobs[$key]['percent_class'] = $percent_class;
-                    $jobs[$key]['percent_color'] = $percent_color;
+                    $jobs[$key]->percent = $percent;
+                    $jobs[$key]->percent_class = $percent_class;
+                    $jobs[$key]->percent_color = $percent_color;
                 }
                 
                 usort($jobs, "jobs_sort_by_percent" );
+                
+                echo "<pre>"; print_r($jobs); echo "</pre>"; die;
+
                 
                 foreach($jobs as $key => $obj){ 
                     $row = (array) $obj->meta;
