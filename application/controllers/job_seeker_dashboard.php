@@ -2099,98 +2099,87 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         require_once APPPATH.'libraries/RIVS/class.rivs.php';
         $Rivs = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
         
+        $rvis_video_id = $this->input->post("iInterview");       
+        
+        if($rvis_video_id == FALSE || $rvis_video_id == ""){
+            return FALSE;
+        }
+        
+        $req_data["iInterview"] = $rvis_video_id;
+        $result = $Rivs->call("interviewautomatedvideo.create",$req_data);
+
+        if( isset($result['aaOutput']) ){
+            $rsp = $result['aaOutput'];
+
+            if( isset($rsp["sStatus"]) && $rsp["sStatus"] == "finished"){
                 
-        $data['data'] =  "test";
-        $this->db->insert("webhook_logs",$data);
-        
-//        $data = @file_get_contents("php://input");
-//        $data['data'] =  ($data) ? $data : "no input json";
-//        $data['created_at'] =  "1111-11-11 11:11:11";
-//        $this->db->insert("webhook_logs",$data);
-        
-        
-        
-        $data = count($_POST);
-        $data['data'] =  $data;
-        $data['created_at'] =  "333-33-33 33:33:33";
-        $this->db->insert("webhook_logs",$data);
-        
-        $data = $_POST;
-        $data['data'] =  $data;
-        $data['created_at'] =  "2222-22-22 22:22:22";
-        $this->db->insert("webhook_logs",$data);
-        
-        $data = serialize($_POST);
-        $data['data'] =  $data;
-        $data['created_at'] =  "2222-22-22 22:22:22";
-        $this->db->insert("webhook_logs",$data);
-        
-        
-        return true;
-        
-        // suppose video ID 
-        $rvis_video_id = 0;
-        
-        $this->db->where("rvis_video_id",$rvis_video_id);
-        $this->db->limit("1");
-        $r = $this->db->get("jobseekers_video_interview");
-        if($r->num_rows() > 0){
-            $row = $r->row_array();
-            
-            // mark interview link as read
-            $interview_data['is_complete'] = 1;
-            $this->db->where("id",$row['id']);
-            $this->db->update("",$interview_data);
-            
-            
-            if( isset($row['job_applied_id']) && $row['job_applied_id'] != "" ){
-                
-                $apply = $this->jobs->jobs_applied_get($row['job_applied_id'] );
-                if($apply){
-                    $update_data["interview"] = 1;
-                    $update_data["interview_complete"] = 1;
-                    $this->jobs->jobs_applied_update($apply['id'] , $update_data);
-                    $jobseeker_id = $apply["jobseeker_id"];
-                    $id = $apply["id"];
-                    
-                    $q = "SELECT jobs_applied.* FROM jobs_applied WHERE jobseeker_id = '$jobseeker_id' AND id != '$id' AND id IN ( SELECT job_applied_id FROM jobseekers_video_interview )  ";
-                    $r = $this->db->query($q);
-                    if($r->num_rows() > 0){
-                        $applies = $r->result_array();
-                        foreach($applies as $apply){
-                            $update_data = array();
-                            $update_data["matched"] = 1;
+                $this->db->where("rvis_video_id",$rvis_video_id);
+                $this->db->limit("1");
+                $r = $this->db->get("jobseekers_video_interview");
+                if($r->num_rows() > 0){
+                    $row = $r->row_array();
+
+                    // mark interview link as read
+                    $interview_data['is_complete'] = 1;
+                    $this->db->where("id",$row['id']);
+                    $this->db->update("",$interview_data);
+
+
+                    if( isset($row['job_applied_id']) && $row['job_applied_id'] != "" ){
+
+                        $apply = $this->jobs->jobs_applied_get($row['job_applied_id'] );
+                        if($apply){
                             $update_data["interview"] = 1;
                             $update_data["interview_complete"] = 1;
                             $this->jobs->jobs_applied_update($apply['id'] , $update_data);
-                            
-                            // get employer detail and mail him
-                            $this->load->model('employer_model', 'employer');
-                            $employer = $this->employer->employers_get($apply['employer_id']);
-                            $jobseeker = $this->employer->employers_get($apply['jobseeker_id']);
-                            if($employer && $jobseeker){
-                                // email employer
-                                
-                                $email_data['to'] = $employer['email'];
-                                $email_data['to'] = 'numan.hassan@purelogics.net';
-                                $email_data['subject'] = "Job Interview Complete";
-                                $email_data['link'] = $interview_data["rvis_link"];
-                                $job = $this->jobs->jobs_get($apply['job_id']);
+                            $jobseeker_id = $apply["jobseeker_id"];
+                            $id = $apply["id"];
 
-                                $patterns = array(
-                                    '{JOB_HEADING}' => $job['job_headline'],
-                                    '{JOB_INTERNAL_ID}' => $job['internal_id']
-                                );
-                                send_template_email("job/interview_complete",$email_data, $patterns);
-                                
+                            $q = "SELECT jobs_applied.* FROM jobs_applied WHERE jobseeker_id = '$jobseeker_id' AND id != '$id' AND id IN ( SELECT job_applied_id FROM jobseekers_video_interview )  ";
+                            $r = $this->db->query($q);
+                            if($r->num_rows() > 0){
+                                $applies = $r->result_array();
+                                foreach($applies as $apply){
+                                    $update_data = array();
+                                    $update_data["matched"] = 1;
+                                    $update_data["interview"] = 1;
+                                    $update_data["interview_complete"] = 1;
+                                    $this->jobs->jobs_applied_update($apply['id'] , $update_data);
+
+                                    // get employer detail and mail him
+                                    $this->load->model('employer_model', 'employer');
+                                    $employer = $this->employer->employers_get($apply['employer_id']);
+                                    $jobseeker = $this->employer->employers_get($apply['jobseeker_id']);
+                                    if($employer && $jobseeker){
+                                        // email employer
+
+                                        $email_data['to'] = $employer['email'];
+                                        $email_data['to'] = 'numan.hassan@purelogics.net';
+                                        $email_data['subject'] = "Job Interview Complete";
+                                        $email_data['link'] = $interview_data["rvis_link"];
+                                        $job = $this->jobs->jobs_get($apply['job_id']);
+
+                                        $patterns = array(
+                                            '{JOB_HEADING}' => $job['job_headline'],
+                                            '{JOB_INTERNAL_ID}' => $job['internal_id']
+                                        );
+                                        send_template_email("job/interview_complete",$email_data, $patterns);
+
+                                    }
+
+                                }
+
                             }
-                            
                         }
-                        
                     }
                 }
+
             }
         }
+                            
+        
+        
+        
         
         return true;
         
