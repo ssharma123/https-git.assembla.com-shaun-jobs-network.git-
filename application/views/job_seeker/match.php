@@ -130,8 +130,8 @@
                     if($percent > 100){
                         $percent = 100;
                     }
-                    $percent_class = get_match_class($percent);
-                    $percent_color = get_match_color($percent);
+//                    $percent_class = get_match_class($percent);
+//                    $percent_color = get_match_color($percent);
                     
                     $jobs[$key]->percent = $percent;
                     $jobs[$key]->percent_class = $percent_class;
@@ -141,8 +141,8 @@
                     $jobs_sorted_array[$key]['score'] = $score;
                     $jobs_sorted_array[$key]['rawscore'] = $rawscore;
                     $jobs_sorted_array[$key]['percent'] = $percent;
-                    $jobs_sorted_array[$key]['percent_class']= $percent_class;
-                    $jobs_sorted_array[$key]['percent_color']= $percent_color;
+//                    $jobs_sorted_array[$key]['percent_class']= $percent_class;
+//                    $jobs_sorted_array[$key]['percent_color']= $percent_color;
                 }
                 
                 
@@ -155,9 +155,15 @@
                     $row['city']= $facility['city'];
                     $row['state']= $facility['state'];
                     
+                    
+                    $percent = $row['rawscore'];
+                            
+                    $percent_class = get_match_class($percent);
+                    $percent_color = get_match_color($percent);
+                    
                     ?>
-                <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $row['id']; ?>" data-percent="<?php echo $row['percent']; ?>" data-dashboard="no" >
-                    <div class="<?php echo $row['percent_class']; ?>">
+                <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $row['id']; ?>" data-percent="<?php echo $percent; ?>" data-dashboard="no" >
+                    <div class="<?php echo $percent_class; ?>">
                         <div class="p-first-box">
                             <div class="p-first-box-main">
                                 <div class="p-first-box-main-inner">
@@ -185,7 +191,7 @@
                         <div class="p-third-box">
                             <div class="demo">
                                 <div style="display: inline; width: 80px; height: 80px;">
-                                    <input data-readOnly="true" data-fgColor="<?php echo $row['percent_color']; ?>" class="knob" data-width="100" data-displayInput="true" value="<?php echo $row['percent']; ?>" >
+                                    <input data-readOnly="true" data-fgColor="<?php echo $percent_color; ?>" class="knob" data-width="100" data-displayInput="true" value="<?php echo $percent; ?>" >
                                 </div>
                             </div>
                         </div>
