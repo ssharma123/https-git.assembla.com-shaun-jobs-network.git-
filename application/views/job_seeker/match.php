@@ -133,9 +133,7 @@
 //                    $percent_class = get_match_class($percent);
 //                    $percent_color = get_match_color($percent);
                     
-                    $jobs[$key]->percent = $percent;
-                    $jobs[$key]->percent_class = $percent_class;
-                    $jobs[$key]->percent_color = $percent_color;
+                     
                     
                     $jobs_sorted_array[$key] = (array)$obj_array['meta'];
                     $jobs_sorted_array[$key]['score'] = $score;
