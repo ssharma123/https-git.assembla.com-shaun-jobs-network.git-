@@ -2128,7 +2128,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     // mark interview link as read
                     $interview_data['is_complete'] = 1;
                     $this->db->where("id",$row['id']);
-                    $this->db->update("jobs_applied",$interview_data);
+                    $this->db->update("jobseekers_video_interview",$interview_data);
 
 
                     if( isset($row['job_applied_id']) && $row['job_applied_id'] != "" ){
