@@ -70,7 +70,7 @@ class Job_seeker extends MY_Job_seekerController {
             if(isset($salary_range_array[1])){
                 $max = $salary_range_array[1];
                 $max = $max * 1000;
-                $filters[]  = array( "<=salary_range_max" => $min );
+                $filters[]  = array( "<=salary_range_max" => $max );
             }
         }
         
