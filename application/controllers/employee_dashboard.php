@@ -790,18 +790,20 @@ class Employee_dashboard extends MY_EmployerController {
                 // ADD to sajari
                 $params = array(
                     'meta' => array(
-                        'title' => 'Game Developer',
-                        'lat' => '50.2345',
-                        'lng'  => '97.4567',
-                        'heading' => 'Game Developer',
-                        "specialty" => "1",
-                        "subspecialty" => "5"
+                        $job
                     )
                 );
-                $rsp = sajari_api("sajari_search", $params);
+                $rsp = sajari_api("sajari_add", $params);
             }
             else{
                 // UPDATE to sajari 
+                $params = array(
+                    'meta' => array(
+                        $job
+                    ),
+                    'id' => $job['sajari_doc_id']
+                );
+                $rsp = sajari_api("sajari_replace", $params);
                 
             }
             echo "<pre>"; print_r($job); echo "</pre>"; 

@@ -1952,12 +1952,50 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                 if($job_apply){
                     
+                    $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+                    
                     $already = $this->if_already_accepted_interview($job_applied_id);
                     if($already){
-                        redirect('job_seeker_dashboard');
+                        
+                        $this->db->where("job_applied_id",$job_apply['id']);
+                        $interview_data_r = $this->db->get("jobseekers_video_interview");
+                        if($interview_data_r->num_rows() > 0){
+                            $interview_data = $interview_data_r->row_array();
+                            $this->session->set_flashdata("select_date_status","ok");
+                            $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
+
+                            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+                            $email_data['to'] = $jobseeker['email'];
+                            $email_data['to'] = 'numan.hassan@purelogics.net';
+                            $email_data['subject'] = "Job Interview Details";
+                            $email_data['link'] = $interview_data["rvis_link"];
+                            $job = $this->jobs->jobs_get($job_apply['job_id']);
+
+                            $patterns = array(
+                                '{JOB_HEADING}' => $job['job_headline'],
+                                '{JOB_INTERNAL_ID}' => $job['internal_id']
+                            );
+                            send_template_email("job/video_link",$email_data, $patterns);
+
+                            // check already login
+                            $session = $this->session->all_userdata();
+                            if (isset($session['jobseeker'])) {
+                                redirect('job_seeker_dashboard');
+                            }
+                            if ($jobseeker) {
+                                unset($jobseeker['password']);
+
+                                $this->session->set_userdata('user_id', $jobseeker['id']);
+                                $this->session->set_userdata('user_type', 'jobseeker');
+                                $this->session->set_userdata('jobseeker', $jobseeker);
+                                redirect('job_seeker_dashboard');
+                            }
+                        }
+                        
+                        
                     }
                     
-                    $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+                    
                     
                     if($jobseeker){
                         
