@@ -154,7 +154,7 @@
                     $row['state']= $facility['state'];
                     
                     
-                    $percent = $row['rawscore'];
+                    $percent = $row['rawscore'] * 100;
                             
                     $percent_class = get_match_class($percent);
                     $percent_color = get_match_color($percent);
