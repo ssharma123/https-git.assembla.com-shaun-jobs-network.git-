@@ -40,11 +40,10 @@
 
             if($jobs){
                 
-                echo "<pre>"; print_r($jobs); echo "</pre>"; 
-                die;
-                foreach($jobs as $key => $row){ 
+                foreach($jobs['results'] as $key => $row){ 
                     
-                    
+                    echo $row->docId;
+                    die;
                     
                     $percent = 0;
                     
