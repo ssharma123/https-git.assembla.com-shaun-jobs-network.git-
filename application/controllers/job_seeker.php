@@ -46,12 +46,47 @@ class Job_seeker extends MY_Job_seekerController {
         if (isset($session['jobseeker'])) {
             redirect('job_seeker_dashboard');
         }
-        
+        $this->load->helper("sajari");
         $data = array();
         
         $data = $this->input->post();
         
-        $data["jobs"] = $this->jobs->top_matches($data);
+        $filters = array();
+        if(isset($data['specialty'])){
+            $filters["specialty"] = $data["specialty"];
+        }
+        if(isset($data['sub_specialty'])){
+            $filters["sub_specialty"] = $data["sub_specialty"];
+        }
+        
+//        if(isset($data['salary_range'])){
+//            $salary_range_array = explode("-", $data['salary_range']);
+//            $min = $salary_range_array[0];
+//            $min = $min * 1000;
+//            $filters[">=salary_range_min"] = $min;
+//            
+//            if(isset($salary_range_array[1])){
+//                $max = $salary_range_array[1];
+//                $max = $max * 1000;
+//                $filters["<=salary_range_max"] = $max;
+//            }
+//        }
+        
+        
+        
+        
+        
+        $params = array(
+            'filters' => $filters
+        );
+        $rsp = sajari_api("sajari_add", $params);
+        
+
+        echo "<pre>"; print_r($rsp); echo "</pre>"; die;
+
+        $data["jobs"] = "";
+        
+//        $data["jobs"] = $this->jobs->top_matches($data);
         
         $this->load->view('job_seeker/match', $data);
         

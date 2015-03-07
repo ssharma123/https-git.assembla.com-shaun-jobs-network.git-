@@ -22,12 +22,12 @@ try {
     
     $result = $c->search(array(
         
-        "filters"=>array(
-            array("~title" => "developer"),
-        ),
+//        "filters"=>array(
+//            array("~title" => "developer"),
+//        ),
         "scales" =>array(
             array(
-                'meta'=>'',
+                'meta'=>array("~title" => "developer"),
                 'center'=>'',
                 'radius'=>'',
                 'start'=>'',

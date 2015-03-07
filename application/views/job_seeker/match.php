@@ -100,6 +100,7 @@
                         }
                         
                     }
+                    
                     // availability
                     if( isset($availability) && $availability!="" ){
                         // which filed to match for jobs 
