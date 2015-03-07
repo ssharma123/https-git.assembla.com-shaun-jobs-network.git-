@@ -46,8 +46,6 @@ ini_set('display_errors', 1);
                     $row = (array) $obj->meta;
                     $doc_id = $obj->docId;
                     
-                    echo "<pre>"; print_r($row); echo "</pre>"; die;
-
                     $percent = 0;
                     
                     $points_matched = 0;
