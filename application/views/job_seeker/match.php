@@ -36,8 +36,6 @@
             
             <?php
             
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
             $jobs_sorted_array = array();
             if($jobs_data){
                 
