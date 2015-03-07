@@ -40,10 +40,10 @@
 
             if($jobs){
                 
-                foreach($jobs['results'] as $key => $row){ 
+                foreach($jobs['results'] as $key => $obj){ 
                     
-                    echo $row->docId;
-                    die;
+                    $row = $obj->meta;
+                    $doc_id = $row->docId;
                     
                     $percent = 0;
                     
