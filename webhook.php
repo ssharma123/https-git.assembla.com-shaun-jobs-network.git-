@@ -9,13 +9,6 @@ fwrite($file, $data);
 fwrite($file, "\n");
 fclose($file);
 
-$data = $_POST;
-
-$file = fopen("uploads/data_2.txt", "a");
-fwrite($file, $data);
-fwrite($file, "\n");
-fclose($file);
-
 
 $username = 'root';
 $password = 'Purelogics@123';
@@ -26,11 +19,21 @@ $con = mysqli_connect($host, $username, $password);
 $db_select = mysqli_select_db($con, $database);
 
 
-
+$data_array = json_decode($data,TRUE);
+$data_save = serialize($data_array);
 // saving information
-$query = "INSERT INTO webhook_logs (data ) VALUES ('$data') ";
+$query = "INSERT INTO webhook_logs (data ) VALUES ('$data_save') ";
 mysqli_query($con,$query);
 $result = mysqli_query($con, $query);
     
 ?>
 
+<!--
+{"sEvent":"application.updated","bTest":false,"iApplication":"294061"}
+{"sEvent":"application.updated","bTest":false,"iApplication":"294061"}
+{"sEvent":"interviewautomatedvideo.updated","bTest":false,"iInterview":"90138"}
+{"sEvent":"application.updated","bTest":false,"iApplication":"294061"}
+{"sEvent":"interviewautomatedvideo.updated","bTest":false,"iInterview":"90138"}
+{"sEvent":"interviewautomatedvideo.updated","bTest":false,"iInterview":"90138"}
+{"sEvent":"application.updated","bTest":false,"iApplication":"294061"}
+-->
