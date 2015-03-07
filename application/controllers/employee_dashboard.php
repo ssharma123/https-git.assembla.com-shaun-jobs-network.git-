@@ -705,6 +705,27 @@ class Employee_dashboard extends MY_EmployerController {
 
         if($id > 0){
             $status = "ok";
+            
+            $job = $this->jobs->jobs_get($id); 
+            if($job['sajari_doc_id'] == ""){
+                // ADD to sajari
+                $params = array(
+                    'meta' => $job
+                );
+                $rsp = sajari_api("sajari_add", $params);
+                $sajari_doc_id = $rsp->result;
+                $save_data = array();
+                $save_data["sajari_doc_id"] = $sajari_doc_id;
+                $id = $this->jobs->jobs_update($id , $save_data);
+            }
+            else{
+                // UPDATE to sajari 
+                $params = array(
+                    'meta' => $job,
+                    'id' => $job['sajari_doc_id']
+                );
+                $rsp = sajari_api("sajari_replace", $params);
+            }
         }
         else{
             $status = "error";
@@ -784,6 +805,7 @@ class Employee_dashboard extends MY_EmployerController {
         $html = $this->load->view('employer/job/post_step_7', $data, TRUE);
         
         if($id > 0){
+            
             $save_data['step'] = 7;
             $save_data['active'] = 1;
             $save_data['created_at'] = time();
