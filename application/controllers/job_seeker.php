@@ -51,7 +51,7 @@ class Job_seeker extends MY_Job_seekerController {
         
         $data = $this->input->post();
         
-        echo "<pre>"; var_dump($data); echo "</pre>";  
+        echo "<pre>"; print_r($data); echo "</pre>"; 
         
         $filters = array();
         if(isset($data['specialty'])){
