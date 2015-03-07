@@ -685,7 +685,7 @@ class Employee_dashboard extends MY_EmployerController {
         $msg = "";
         $status = "";
         $mode = "";                
-            
+        $this->load->helper("sajari");
              
         $save_data["citizen"] = ($this->input->post("citizen") == "true") ?  "yes" : "no" ;
         $save_data["green_card"] = ($this->input->post("green_card") == "true") ?  "yes" : "no" ;
@@ -790,8 +790,6 @@ class Employee_dashboard extends MY_EmployerController {
     }
     
     public function job_post_step_7(){
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
 
         $this->layout = "blank";
         $this->load->helper("sajari");
