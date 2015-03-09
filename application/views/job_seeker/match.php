@@ -150,9 +150,15 @@
 
                 
                 foreach($jobs_sorted_array as $key => $row){ 
-                    $facility = get_facility_info_by_job($row['employer_id']);
-                    $row['city']= $facility['city'];
-                    $row['state']= $facility['state'];
+                    if(isset($row['employer_id'])){
+                        $facility = get_facility_info_by_job($row['employer_id']);
+                        $row['city']= $facility['city'];
+                        $row['state']= $facility['state'];
+                    }
+                    else{
+                        $row['city']= "";
+                        $row['state']= "";
+                    }
                     
                     
                     $percent = $row['rawscore'] * 100;

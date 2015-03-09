@@ -350,27 +350,35 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run() === TRUE) {
             
-            
-            $save_data['experince_level'] = $this->input->post('experince_level');
-            $save_data['specialty'] = $this->input->post('specialty');
-            $save_data['sub_specialty'] = $this->input->post('sub_specialty');
-            $save_data['board_status'] = $this->input->post('board_status');
-            $save_data['degree'] = $this->input->post('degree');
-            $save_data['resident_status'] = $this->input->post('resident_status');
-            $save_data['npi_number'] = $this->input->post('npi_number');
-            
-            $save_data['step'] = 2;
-            $save_data['updated_at'] = time();
-            
-            $id = $jobseeker_id;
-            if($id){
-                $this->jobseeker->jobseekers_update($id , $save_data);
-                $status = "ok";
+            $this->load->library("bloomapi");
+            $npi_status = $this->bloomapi->validate_npi_number($this->input->post('npi_number'));
+            if($npi_status && $npi_status == "ok"){
+                $save_data['experince_level'] = $this->input->post('experince_level');
+                $save_data['specialty'] = $this->input->post('specialty');
+                $save_data['sub_specialty'] = $this->input->post('sub_specialty');
+                $save_data['board_status'] = $this->input->post('board_status');
+                $save_data['degree'] = $this->input->post('degree');
+                $save_data['resident_status'] = $this->input->post('resident_status');
+                $save_data['npi_number'] = $this->input->post('npi_number');
+
+                $save_data['step'] = 2;
+                $save_data['updated_at'] = time();
+
+                $id = $jobseeker_id;
+                if($id){
+                    $this->jobseeker->jobseekers_update($id , $save_data);
+                    $status = "ok";
+                }
+                else{
+                    $status = "error";
+                    $msg = "Oops something went wrong please try again";
+                }
             }
             else{
+                $msg = validation_errors();
                 $status = "error";
-                $msg = "Oops something went wrong please try again";
             }
+            
             
         } else {
             $msg = validation_errors();

@@ -678,6 +678,23 @@ class Employee_dashboard extends MY_EmployerController {
             $status = "ok";
             
             $job = $this->jobs->jobs_get($id); 
+            
+            $facility = $this->employer_facility->employers_facility_get_by_employer_id($job['employer_id']);
+            if($facility){
+                $city = ( isset($facility['city']) ) ? $facility['city'] : "";
+                $state = ( isset($facility['state']) ) ? $facility['state'] : ""; 
+                $this->load->library("Google/google_geolocation");
+                $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
+
+                if(isset($location['lat']) && isset($location['lng'])){
+                    $lat = $location['lat'];
+                    $lng = $location['lng'];
+                    $save_data_lat_lng['lat'] = $lat;
+                    $save_data_lat_lng['lng'] = $lng;
+                    $this->jobs->jobs_update($id , $save_data_lat_lng);
+                }
+            }
+            
             if($job['sajari_doc_id'] == ""){
                 // ADD to sajari
                 $params = array(
@@ -778,6 +795,22 @@ class Employee_dashboard extends MY_EmployerController {
             $save_data['step'] = 7;
             $save_data['active'] = 1;
             $save_data['created_at'] = time();
+            
+            $facility = $this->employer_facility->employers_facility_get_by_employer_id($data["employer"]['id']);
+            if($facility){
+                $city = ( isset($facility['city']) ) ? $facility['city'] : "";
+                $state = ( isset($facility['state']) ) ? $facility['state'] : ""; 
+                $this->load->library("Google/google_geolocation");
+                $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
+
+                if(isset($location['lat']) && isset($location['lng'])){
+                    $lat = $location['lat'];
+                    $lng = $location['lng'];
+                    $save_data['lat'] = $lat;
+                    $save_data['lng'] = $lng;
+                }
+            }
+            
             $id = $this->jobs->jobs_update($id , $save_data);
             
             if($job['sajari_doc_id'] == ""){
@@ -927,10 +960,10 @@ class Employee_dashboard extends MY_EmployerController {
                         $this->job_applied_status_interview($job_apply);
                     }
                     else if($type === "interview_complete"){
-                        $save_data['interview_complete'] = 1;
-                        $this->jobs->jobs_applied_update($id, $save_data);
-                        $status = "ok";
-                        $msg = "Saved successfully";
+//                        $save_data['interview_complete'] = 1;
+//                        $this->jobs->jobs_applied_update($id, $save_data);
+//                        $status = "ok";
+//                        $msg = "Saved successfully";
                     }
                     else if ($type === "face_2_face" || $type === "job_offer"){
                         $status = "ok";
@@ -988,14 +1021,16 @@ class Employee_dashboard extends MY_EmployerController {
     }
     
     function job_applied_status_face_2_face($job_apply){
-        
+        $this->load->model('jobseeker_model', 'jobseeker');
         $this->load->model('jobseeker_notifications_model', 'notification');
+        
         $noti_data["jobseeker_id"] = $job_apply["jobseeker_id"];
         $noti_data["employer_id"] = $job_apply["employer_id"];
         $noti_data["job_id"] = $job_apply["job_id"];
         $noti_data["job_applied_id"] = $job_apply["id"];
         $this->notification->jobseeker_notifications_add($noti_data);
         
+        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
         $email_data['to'] = $jobseeker['email'];
 //        $email_data['to'] = 'numan.hassan@purelogics.net';
         $email_data['subject'] = "Job - Face 2 Face";
