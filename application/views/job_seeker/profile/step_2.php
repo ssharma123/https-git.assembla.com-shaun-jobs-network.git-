@@ -128,7 +128,7 @@
                 <br>
                 <br>
                 <div class="left_col">
-                     <input type="text" class="ng-pristine ng-valid form-control" placeholder="NPI #" id="npi_number" name="npi_number" required value="<?php echo isset($jobseeker['npi_number']) ? $jobseeker['npi_number'] : "" ;  ?>">
+                    <input maxlength="10" type="text" class="ng-pristine ng-valid form-control" placeholder="NPI #" id="npi_number" name="npi_number" required value="<?php echo isset($jobseeker['npi_number']) ? $jobseeker['npi_number'] : "" ;  ?>">
                 </div>
                 <div class="right_col">
                     <span style="width: 40%; font-size: 11px; vertical-align: -10px; display: inline-block;">
