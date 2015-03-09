@@ -375,7 +375,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 }
             }
             else{
-                $msg = validation_errors();
+                $msg = "NPI number is not valid";
                 $status = "error";
             }
             
