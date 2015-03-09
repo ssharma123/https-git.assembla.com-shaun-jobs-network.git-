@@ -922,7 +922,7 @@ function save_profile_form_1(){
         }
         else{
             flag = false;
-            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").html(rsp.msg).show();
             $("#tabContent_rsp").addClass("error_rsp");
         }
     })
@@ -954,7 +954,7 @@ function save_profile_form_2(){
         }
         else{
             flag = false;
-            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").html(rsp.msg).show();
             $("#tabContent_rsp").addClass("error_rsp");
         }
     })
@@ -985,7 +985,7 @@ function save_profile_form_6(){
         }
         else{
             flag = false;
-            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").html(rsp.msg).show();
             $("#tabContent_rsp").addClass("error_rsp");
         }
     })
@@ -1017,7 +1017,7 @@ function save_profile_form_7(){
         }
         else{
             flag = false;
-            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").html(rsp.msg).show();
             $("#tabContent_rsp").addClass("error_rsp");
         }
     })
