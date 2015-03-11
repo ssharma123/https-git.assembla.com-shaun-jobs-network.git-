@@ -1929,34 +1929,43 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 
                 // if already complete intervew of same employer then 
                 
+                
+                
                 $job_apply = $this->jobs->jobs_applied_get($job_applied_id);
 
                 if($job_apply){
                     
-                    $save_data_pending_interview['job_applied_id'] = $job_applied_id;
-                    $save_data_pending_interview['interview_accept_date'] = time();
-                    $save_data_pending_interview['created_at'] = time();
-                    $this->db->insert("jobs_applied_pending_interviews",$save_data_pending_interview);
-                    
-                    $this->session->set_flashdata("select_date_status","ok");
-                    $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
+                    $employer_id = $job_apply['employer_id'];
+                    $jobseeker_id = $job_apply['jobseeker_id'];
+                    $already_exist_r = $this->db->query("SELECT id FROM jobs_applied WHERE jobseeker_id = '$jobseeker_id' AND employer_id = '$employer_id' AND interview_complete = '1' ");
+                            
+                    if($already_exist_r->num_rows()>0){
+                        
+                        $save_data_pending_interview['job_applied_id'] = $job_applied_id;
+                        $save_data_pending_interview['interview_accept_date'] = time();
+                        $save_data_pending_interview['created_at'] = time();
+                        $this->db->insert("jobs_applied_pending_interviews",$save_data_pending_interview);
 
-                    // check already login
-                    $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
-                    
-                    $session = $this->session->all_userdata();
-                    if (isset($session['jobseeker'])) {
-                        redirect('job_seeker_dashboard');
-                    }
-                    if ($jobseeker) {
-                        unset($jobseeker['password']);
+                        $this->session->set_flashdata("select_date_status","ok");
+                        $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
 
-                        $this->session->set_userdata('user_id', $jobseeker['id']);
-                        $this->session->set_userdata('user_type', 'jobseeker');
-                        $this->session->set_userdata('jobseeker', $jobseeker);
-                        redirect('job_seeker_dashboard');
+                        // check already login
+                        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+
+                        $session = $this->session->all_userdata();
+                        if (isset($session['jobseeker'])) {
+                            redirect('job_seeker_dashboard');
+                        }
+                        if ($jobseeker) {
+                            unset($jobseeker['password']);
+
+                            $this->session->set_userdata('user_id', $jobseeker['id']);
+                            $this->session->set_userdata('user_type', 'jobseeker');
+                            $this->session->set_userdata('jobseeker', $jobseeker);
+                            redirect('job_seeker_dashboard');
+                        }
+                        
                     }
-                    
                 }
                 
                         
