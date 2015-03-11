@@ -16,8 +16,8 @@
 if($_SERVER['HTTP_HOST'] == '104.236.98.239'){
     $config['base_url'] = 'http://104.236.98.239/';
 }
-if($_SERVER['HTTP_HOST'] == 'medmatchjobs.com'){
-    $config['base_url'] = 'http://medmatchjobs.com/';
+if($_SERVER['HTTP_HOST'] == 'medmatchjobs.com' || $_SERVER['HTTP_HOST'] == 'www.medmatchjobs.com'){
+    $config['base_url'] = 'http://www.medmatchjobs.com/';
 }
 
 

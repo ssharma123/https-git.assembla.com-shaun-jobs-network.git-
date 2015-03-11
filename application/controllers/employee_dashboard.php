@@ -50,6 +50,8 @@ class Employee_dashboard extends MY_EmployerController {
             redirect('employer/signin');
         }
         
+        $this->update_2_hours_pending_interview();
+        
         $data['employer'] = $session['employer'];
         
         $sub_data = $this->employers_subscription->subscription_get_by_user_id($data['employer']['id']);
@@ -203,6 +205,22 @@ class Employee_dashboard extends MY_EmployerController {
         echo json_encode($rsp); die;
     }
     
+    public function update_2_hours_pending_interview(){
+        $r = $this->db->query("SELECT id,job_applied_id,interview_accept_date FROM jobs_applied_pending_interviews ORDER BY id DESC ");
+        $now = time();
+        if($r->num_rows() > 0){
+            
+            $rows = $r->result_array();
+            foreach($rows as $row){
+                $check_date = $row['interview_accept_date'];
+                $check_date = strtotime('+2 hours', $check_date);
+                if($now > $check_date){
+                    
+                }
+            }
+            
+        }
+    }
     public function update_employer_emails(){
         $this->layout = "blank";
         
