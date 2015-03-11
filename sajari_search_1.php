@@ -22,19 +22,9 @@ try {
     
     $result = $c->search(array(
         
-//        "filters"=>array(
-//            array("~title" => "developer"),
-//        ),
-        "scales" =>array(
-            array(
-                'meta'=>array("~title" => "developer"),
-                'center'=>'',
-                'radius'=>'',
-                'start'=>'',
-                'end'=>'',
-                
-            )
-        ),
+            "filters"=>array(
+                array("~title" => "developer"),
+            ),
         'maxresults' => 40,
     ));
     $rsp['status'] = "ok";

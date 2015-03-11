@@ -683,7 +683,7 @@ class Employee_dashboard extends MY_EmployerController {
             if($facility){
                 $city = ( isset($facility['city']) ) ? $facility['city'] : "";
                 $state = ( isset($facility['state']) ) ? $facility['state'] : ""; 
-                $this->load->library("Google/google_geolocation");
+                $this->load->library("google/google_geolocation");
                 $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
 
                 if(isset($location['lat']) && isset($location['lng'])){
@@ -800,7 +800,7 @@ class Employee_dashboard extends MY_EmployerController {
             if($facility){
                 $city = ( isset($facility['city']) ) ? $facility['city'] : "";
                 $state = ( isset($facility['state']) ) ? $facility['state'] : ""; 
-                $this->load->library("Google/google_geolocation");
+                $this->load->library("google/google_geolocation");
                 $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
 
                 if(isset($location['lat']) && isset($location['lng'])){
