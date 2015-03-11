@@ -17,9 +17,7 @@
                     Job Internal ID : {JOB_INTERNAL_ID}<br>
                     Job Heading : {JOB_HEADING}<br>
                     <br><br>
-                    Please click the link below to start interview: <br>
-                    
-                    <a style="padding:10px; " href="<?php echo $link; ?>"><?php echo $link; ?></a>
+                    Interview have been completed for this job: <br>
                     
                 </td>
             </tr>

@@ -1927,6 +1927,42 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             // interview accept
             if($status == "accept"){
                 
+                // if already complete intervew of same employer then 
+                
+                $job_apply = $this->jobs->jobs_applied_get($job_applied_id);
+
+                if($job_apply){
+                    
+                    $save_data_pending_interview['job_applied_id'] = $job_applied_id;
+                    $save_data_pending_interview['interview_accept_date'] = time();
+                    $save_data_pending_interview['created_at'] = time();
+                    $this->db->insert("jobs_applied_pending_interviews",$save_data_pending_interview);
+                    
+                    $this->session->set_flashdata("select_date_status","ok");
+                    $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
+
+                    // check already login
+                    $session = $this->session->all_userdata();
+                    if (isset($session['jobseeker'])) {
+                        redirect('job_seeker_dashboard');
+                    }
+                    if ($jobseeker) {
+                        unset($jobseeker['password']);
+
+                        $this->session->set_userdata('user_id', $jobseeker['id']);
+                        $this->session->set_userdata('user_type', 'jobseeker');
+                        $this->session->set_userdata('jobseeker', $jobseeker);
+                        redirect('job_seeker_dashboard');
+                    }
+                    
+                }
+                
+                        
+                
+                // else 
+                
+                
+                
                 require_once APPPATH.'libraries/RIVS/class.rivs.php';
 	
                 $Rivs = new RIVS('o37w1r7suxll4aue3kcf3g179qdpf1v44206u8yo5j');
@@ -2145,9 +2181,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             $update_data["interview_complete"] = 1;
                             $this->jobs->jobs_applied_update($apply['id'] , $update_data);
                             $jobseeker_id = $apply["jobseeker_id"];
+                            $employer_id = $apply["employer_id"];
                             $id = $apply["id"];
 
-                            $q = "SELECT jobs_applied.* FROM jobs_applied WHERE jobseeker_id = '$jobseeker_id' AND id != '$id' AND id IN ( SELECT job_applied_id FROM jobseekers_video_interview )  ";
+                            $q = "SELECT jobs_applied.* FROM jobs_applied WHERE jobseeker_id = '$jobseeker_id' AND employer_id = '$employer_id' AND id != '$id' AND id IN ( SELECT job_applied_id FROM jobseekers_video_interview )  ";
                             $r = $this->db->query($q);
                             if($r->num_rows() > 0){
                                 $applies = $r->result_array();
@@ -2161,8 +2198,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                                     // get employer detail and mail him
                                     $this->load->model('employer_model', 'employer');
                                     $employer = $this->employer->employers_get($apply['employer_id']);
-                                    $jobseeker = $this->employer->employers_get($apply['jobseeker_id']);
-                                    if($employer && $jobseeker){
+                                    if($employer){
                                         // email employer
 
                                         $email_data['to'] = $employer['email'];
