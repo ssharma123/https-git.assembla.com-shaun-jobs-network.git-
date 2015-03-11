@@ -1942,6 +1942,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
 
                     // check already login
+                    $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+                    
                     $session = $this->session->all_userdata();
                     if (isset($session['jobseeker'])) {
                         redirect('job_seeker_dashboard');
