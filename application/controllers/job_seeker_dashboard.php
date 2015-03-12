@@ -2265,15 +2265,34 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
             $resume = $this->custom_image_lib->upload($_FILES['resume'], 'uploads/jobseeker/file_document/');
             
-            
             if($resume){
                 $status = "ok";
                 $msg = "success";
 
                 $save_data['resume'] = $resume[0];
                 
+                $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
+                
                 // add document to sajari
                 
+                if($jobseeker['resume_id'] == "0"){
+                // ADD to sajari
+                    $params = array(
+                        'inputfile' => base_url('uploads/jobseeker/file_document/'.$save_data['resume'])
+                    );
+                    $rsp = sajari_api("sajari_add", $params);
+                    $sajari_doc_id = $rsp->result;
+                    $save_data["resume_id"] = $sajari_doc_id;
+                }
+                else{
+                    // UPDATE to sajari 
+                    $params = array(
+                        'inputfile' => base_url('uploads/jobseeker/file_document/'.$save_data['resume']),
+                        'id' => $job['sajari_doc_id']
+                    );
+                    $rsp = sajari_api("sajari_replace", $params);
+                }
+                    
                 //
                 $this->jobseeker->jobseekers_update($jobseeker_id , $save_data);
             }
