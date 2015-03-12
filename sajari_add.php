@@ -29,7 +29,8 @@ try {
     if($file){
         $search_param['inputfile'] = $_FILES['file']['tmp_name'];
     }
-    
+    echo "<pre>"; print_r($search_param); echo "</pre>"; die;
+
     $result = $c->add($search_param);
     
     $rsp['status'] = "ok";
