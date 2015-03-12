@@ -20,11 +20,13 @@ class Sajari {
         }
         
         if( count($file_data) > 0 ){
-            $file_data = array(
-                'file' =>
-                    '@'. $file_data['tmp_name']
-                    .';filename='.$file_data['name']
-            );
+//            $file_data = array(
+//                'file' =>
+//                    '@'. $file_data['tmp_name']
+//                    .';filename='.$file_data['name']
+//            );
+            echo "<pre>"; print_r($file_data); echo "</pre>"; die;
+
         }
         $url = base_url($type.EXT);
         
@@ -37,7 +39,9 @@ class Sajari {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         
         if( count($file_data) > 0 ){
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $file_data);
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, $file_data);
+            $args['file'] = new CurlFile('file', 'image/png', $file_data['tmp_name']);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $args);
         }
 
         // Set the request as a POST FIELD for curl.
