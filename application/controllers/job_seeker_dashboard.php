@@ -2298,6 +2298,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         ),
                         'id' => $_FILES['resume']['tmp_name'][0]
                     );
+                    echo "<pre>"; print_r($_FILES['resume']); echo "</pre>"; die;
+
                     $rsp = sajari_api("sajari_replace", $params);
                 }
                     
