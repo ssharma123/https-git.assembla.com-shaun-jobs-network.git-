@@ -23,7 +23,9 @@ try {
     $result = $c->search(array(
         
             "filters"=>array(
-                array("~title" => "developer"),
+//                array("~title" => "developer"),
+                array(">=salary_range_min" => "35000"),
+                array("<=salary_range_max" => "50000"),
             ),
         'maxresults' => 40,
     ));
