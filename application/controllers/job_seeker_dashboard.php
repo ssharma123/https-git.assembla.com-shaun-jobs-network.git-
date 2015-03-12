@@ -2288,7 +2288,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     // UPDATE to sajari 
                     $params = array(
                         'inputfile' => base_url('uploads/jobseeker/file_document/'.$save_data['resume']),
-                        'id' => $job['sajari_doc_id']
+                        'id' => $jobseeker['resume_id']
                     );
                     $rsp = sajari_api("sajari_replace", $params);
                 }
