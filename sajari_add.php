@@ -18,8 +18,7 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
  
 $meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
 
-echo "<pre>"; print_r($_FILES); echo "</pre>"; die;
-
+$file = isset($_FILES['file']) ? $_FILES['file']: FALSE ;
 
 try {
     
@@ -27,7 +26,9 @@ try {
     if($meta){
         $search_param["meta"] = $meta;
     }
-     
+    if($file){
+        $search_param['inputfile'] = $_FILES['file']['tmp_name'];
+    }
     
     $result = $c->add($search_param);
     
