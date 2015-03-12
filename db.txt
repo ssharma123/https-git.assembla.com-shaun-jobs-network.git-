@@ -1,3 +1,1 @@
-ALTER TABLE `employers` ADD `facebook_id` INT NOT NULL DEFAULT '0' AFTER `id`, ADD `linkedin_id` INT NOT NULL DEFAULT '0' AFTER `facebook_id`;
-
-ALTER TABLE `jobs_applied` ADD `job_offer_letter` VARCHAR(225) NOT NULL AFTER `f2f_date_3`;
+ALTER TABLE `jobseekers` ADD `resume` VARCHAR(225) NOT NULL AFTER `profile_complete`, ADD `resume_id` VARCHAR(225) NOT NULL DEFAULT '0' AFTER `resume`;

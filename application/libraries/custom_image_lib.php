@@ -19,6 +19,7 @@ class Custom_image_lib {
     var $file_ext = '';
     var $full_path = ''; // for resizing 
     var $uploaded_image_name = array();
+    var $error_msg = '';
 
     public function __construct() {
         // do something before upload
@@ -129,7 +130,7 @@ class Custom_image_lib {
             $this->uploaded_image_name[] = $new_file_name;
             return true;
         } else {
-            // echo $that->upload->display_errors(); die;
+            $this->error_msg = $that->upload->display_errors('','');
             return false;
         }
     }

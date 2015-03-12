@@ -2244,6 +2244,55 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         
     }
 
+    function upload_resume_to_sajari(){
+        $this->layout = "blank";
+        
+        $jobseeker_id = ( $this->input->post("jobseeker_id") ) ? $this->input->post("jobseeker_id") : 0 ;
+        
+        $status = '';
+        $msg = '';
+        $this->load->library('custom_image_lib');
+        
+        if(isset($_FILES['resume']['name'][0]) && $_FILES['resume']['name'][0] != ""){
+            
+            $old_file = pathinfo($_FILES['resume']['name'][0], PATHINFO_FILENAME);
+            $old_ext = pathinfo($_FILES['resume']['name'][0], PATHINFO_EXTENSION);
+
+            $lib_config['new_file_name'] = $jobseeker_id."_resume_".$old_file.".".$old_ext;
+            $lib_config['allowed_types'] = 'pdf|doc|docx';
+            
+            $this->custom_image_lib->config($lib_config);
+
+            $resume = $this->custom_image_lib->upload($_FILES['resume'], 'uploads/jobseeker/file_document/');
+            
+            
+            if($resume){
+                $status = "ok";
+                $msg = "success";
+
+                $save_data['resume'] = $resume[0];
+                
+                // add document to sajari
+                
+                //
+                $this->jobseeker->jobseekers_update($jobseeker_id , $save_data);
+            }
+            else{
+                $status = "error";
+                $msg = $this->custom_image_lib->error_msg;
+            }
+        }
+        else{
+            $status = "ok";
+            $msg = "File not selected";
+        }
+        
+        $rsp = array(
+            "status" => $status,
+            "msg" => $msg
+        );
+        echo json_encode($rsp); die;
+    }
 }
 
 /* End of file welcome.php */

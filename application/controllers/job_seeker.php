@@ -663,7 +663,7 @@ class Job_seeker extends MY_Job_seekerController {
         // check already login
         $session = $this->session->all_userdata();
         if (isset($session['employer'])) {
-            redirect('employee_dashboard');
+            redirect('job_seeker_dashboard');
         }
         
         

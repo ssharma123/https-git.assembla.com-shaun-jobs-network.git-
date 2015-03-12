@@ -4,6 +4,13 @@
         <p>
             <?php echo load_img("first-step.png"); ?>
         </p>
+        
+        <h3 style="font-size: 22px;">Upload your Resume and Auto Fill your profile fields</h3>
+        <div id="rsp_resume" style="display: none;"></div>
+        <div style="height: 100px; text-align: center;" class="text-center">
+            <input style="display: inline; margin: 20px 0 0 0;" type="file" id="resume" name="resume[]" onchange="upload_resume();">
+        </div>
+        
         <h3>Let's create your Profile</h3>
         <div style="min-height: 300px;">
             <fieldset style="float: none; margin: 0 auto; padding: 0; width: 480px;">
@@ -84,3 +91,38 @@
         </div>
     </form>
 </div>
+<?php echo load_js("ajaxfileupload.js"); ?>
+<script>
+    
+    
+    
+    function upload_resume() {
+            $("#rsp_resume").html('').hide();
+            $("#rsp_resume").removeClass("error_rsp");
+                    
+            var file_name = "";
+            $.ajaxFileUpload({
+                url: SITE_URL + "job_seeker_dashboard/upload_resume_to_sajari",
+                secureuri: false,
+                fileElementId: 'resume',
+                dataType: 'JSON',
+                async: false,
+                data: { jobseeker_id : '<?php echo $jobseeker['id'] ?>' },
+                success: function(rsp)
+                {
+                    console.log(rsp);
+                    rsp_json = $.parseJSON(rsp);
+                    console.log(rsp_json);
+                    if (rsp_json.status === "ok") {
+                       // everything is ok   
+                    }
+                    else{
+                        $("#rsp_resume").html(rsp_json.msg).show();
+                        $("#rsp_resume").addClass("error_rsp");
+                    }
+                }
+            });
+        
+
+    }
+</script>
