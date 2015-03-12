@@ -12,7 +12,6 @@ if (!function_exists('sajari_api')) {
         $file_data = array();
         if(key_exists("inputfile", $params)){
             
-
             $file_data = array(
                 'tmp_name' => $params["inputfile"]['tmp_name'],
                 'name' => $params["inputfile"]['name']

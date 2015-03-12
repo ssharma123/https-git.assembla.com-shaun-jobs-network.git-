@@ -18,6 +18,9 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
  
 $meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
 
+echo "<pre>"; print_r($_FILES); echo "</pre>"; die;
+
+
 try {
     
     
