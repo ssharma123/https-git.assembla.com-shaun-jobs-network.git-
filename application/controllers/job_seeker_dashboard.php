@@ -2283,10 +2283,13 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             "name" => $_FILES['resume']['name'][0]
                         )
                     );
+                    
+                    echo "<pre>"; print_r($_FILES['resume']); echo "</pre>"; die;
+                    
                     $rsp = sajari_api("sajari_add", $params);
                     
                     $sajari_doc_id = $rsp->result;
-                    $save_data["resume_id"] = $sajari_doc_id;
+//                    $save_data["resume_id"] = $sajari_doc_id;
                 }
                 else{
                     // UPDATE to sajari 
@@ -2298,7 +2301,6 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         ),
                         'id' => $_FILES['resume']['tmp_name'][0]
                     );
-                    echo "<pre>"; print_r($_FILES['resume']); echo "</pre>"; die;
 
                     $rsp = sajari_api("sajari_replace", $params);
                 }
