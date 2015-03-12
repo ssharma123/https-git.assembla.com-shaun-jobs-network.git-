@@ -2278,7 +2278,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 if($jobseeker['resume_id'] == "0"){
                 // ADD to sajari
                     $params = array(
-                        'inputfile' => $_FILES['resume']['tmp_name'][0]
+                        'inputfile' => array(
+                            "tmp_name" => $_FILES['resume']['tmp_name'][0],
+                            "name" => $_FILES['resume']['name'][0]
+                        )
                     );
                     $rsp = sajari_api("sajari_add", $params);
                     $sajari_doc_id = $rsp->result;
