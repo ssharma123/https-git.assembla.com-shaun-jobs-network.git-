@@ -11,6 +11,9 @@ if (!function_exists('sajari_api')) {
         $that->load->library('Sajari/sajari');
         $file_data = array();
         if(key_exists("inputfile", $params)){
+            
+            echo "<pre>"; print_r($params); echo "</pre>"; die;
+
             $file_data = array(
                 'tmp_name' => $params["inputfile"]['tmp_name'],
                 'name' => $params["inputfile"]['name']
