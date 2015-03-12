@@ -2274,11 +2274,12 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
                 
                 // add document to sajari
-                
+                echo "<pre>"; print_r($_FILES['resume']); echo "</pre>"; die;
+
                 if($jobseeker['resume_id'] == "0"){
                 // ADD to sajari
                     $params = array(
-                        'inputfile' => base_url('uploads/jobseeker/file_document/'.$save_data['resume'])
+                        'inputfile' => $_FILES['resume']
                     );
                     $rsp = sajari_api("sajari_add", $params);
                     $sajari_doc_id = $rsp->result;
