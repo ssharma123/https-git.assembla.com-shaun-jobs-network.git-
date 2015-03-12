@@ -25,7 +25,7 @@ class Sajari {
 //                    '@'. $file_data['tmp_name']
 //                    .';filename='.$file_data['name']
 //            );
-            echo "<pre>"; print_r($file_data); echo "</pre>"; die;
+//            echo "<pre>"; print_r($file_data); echo "</pre>"; die;
 
         }
         $url = base_url($type.EXT);
@@ -40,7 +40,7 @@ class Sajari {
         
         if( count($file_data) > 0 ){
 //            curl_setopt($ch, CURLOPT_POSTFIELDS, $file_data);
-            $args['file'] = new CurlFile('file', 'image/png', $file_data['tmp_name']);
+            $args['file'] = new CurlFile($file_data['name'], $file_data['type'], $file_data['tmp_name']);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $args);
         }
 

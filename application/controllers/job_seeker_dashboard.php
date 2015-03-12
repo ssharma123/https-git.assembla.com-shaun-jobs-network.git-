@@ -2286,6 +2286,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     );
                     
                     $rsp = sajari_api("sajari_add", $params);
+                    echo "<pre>"; var_dump($rsp); echo "</pre>"; 
+                    echo "<pre>"; var_dump( json_decode($rsp) ); echo "</pre>"; die;
                     
                     $sajari_doc_id = $rsp->result;
 //                    $save_data["resume_id"] = $sajari_doc_id;
