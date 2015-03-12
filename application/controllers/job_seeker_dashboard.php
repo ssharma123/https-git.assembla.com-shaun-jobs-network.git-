@@ -2260,7 +2260,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             $old_ext = pathinfo($_FILES['resume']['name'][0], PATHINFO_EXTENSION);
 
             $lib_config['new_file_name'] = $jobseeker_id."_resume_".$old_file.".".$old_ext;
-            $lib_config['allowed_types'] = 'pdf|doc|docx';
+            $lib_config['allowed_types'] = 'pdf|doc|docx|txt';
             
             $this->custom_image_lib->config($lib_config);
 
@@ -2280,11 +2280,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     $params = array(
                         'inputfile' => array(
                             "tmp_name" => $_FILES['resume']['tmp_name'][0],
-                            "name" => $_FILES['resume']['name'][0]
+                            "name" => $_FILES['resume']['name'][0],
+                            "type" => $_FILES['resume']['type'][0]
                         )
                     );
-                    
-                    echo "<pre>"; print_r($_FILES['resume']); echo "</pre>"; die;
                     
                     $rsp = sajari_api("sajari_add", $params);
                     
