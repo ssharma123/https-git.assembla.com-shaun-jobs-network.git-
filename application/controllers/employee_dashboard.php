@@ -215,7 +215,19 @@ class Employee_dashboard extends MY_EmployerController {
                 $check_date = $row['interview_accept_date'];
                 $check_date = strtotime('+2 hours', $check_date);
                 if($now > $check_date){
-                    
+                    $applied_id = $row['job_applied_id'];
+                    $apply = $this->jobs->jobs_applied_get($applied_id);
+                    if($apply){
+                        $update_data["interview"] = 1;
+                        $update_data["interview_complete"] = 1;
+                        $this->jobs->jobs_applied_update($apply['id'] , $update_data);
+                        $jobseeker_id = $apply["jobseeker_id"];
+                        $employer_id = $apply["employer_id"];
+                        
+                        // delete from 
+                        $this->db->where("id",$row['id']);
+                        $this->db->delete("jobs_applied_pending_interviews");
+                    }
                 }
             }
             
