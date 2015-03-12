@@ -9,6 +9,7 @@
         <div id="rsp_resume" style="display: none;"></div>
         <div style="height: 100px; text-align: center;" class="text-center">
             <input style="display: inline; margin: 20px 0 0 0;" type="file" id="resume" name="resume[]" onchange="upload_resume();">
+            <div id="save_file_busy" style="display: none;"><?php echo load_img("busy.gif"); ?></div>
         </div>
         
         <h3>Let's create your Profile</h3>
@@ -97,6 +98,8 @@
     
     
     function upload_resume() {
+        $("#save_file_busy").show();
+        
             $("#rsp_resume").html('').hide();
             $("#rsp_resume").removeClass("error_rsp");
                     
@@ -120,6 +123,8 @@
                         $("#rsp_resume").html(rsp_json.msg).show();
                         $("#rsp_resume").addClass("error_rsp");
                     }
+                    
+                    $("#save_file_busy").hide();
                 }
             });
         
