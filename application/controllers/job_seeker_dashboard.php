@@ -2246,6 +2246,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
     function upload_resume_to_sajari(){
         $this->layout = "blank";
+        $this->load->helper("sajari");
         
         $jobseeker_id = ( $this->input->post("jobseeker_id") ) ? $this->input->post("jobseeker_id") : 0 ;
         
