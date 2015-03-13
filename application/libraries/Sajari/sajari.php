@@ -85,6 +85,7 @@ class Sajari {
         curl_setopt($ch, CURLOPT_USERPWD, "5SHyDCxwMCi0HXTt:AVHRfLskQEUjEfdw"); // Your credentials goes here
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,array('Expect:')); 
         curl_setopt($ch, CURLOPT_HEADER, TRUE);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
