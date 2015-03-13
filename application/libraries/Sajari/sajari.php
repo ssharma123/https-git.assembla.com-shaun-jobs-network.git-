@@ -72,6 +72,8 @@ class Sajari {
         $url = "https://www.sajari.com/api/search";
         
         $post_data = array();
+        $post_data['company'] = "medmatch";
+        $post_data['collection'] = "medmatchjobs";
         
         if (is_array($params)) {
             $post_data = http_build_query($params);
