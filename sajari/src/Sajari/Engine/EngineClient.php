@@ -362,7 +362,7 @@ class EngineClient
         }
 
         $uri = sprintf('%s/%s', $this->pathPrefix, implode('/', $uriParts));
-        if(!count($data)){
+        if(!0){
             echo "if";
         }
         else{
