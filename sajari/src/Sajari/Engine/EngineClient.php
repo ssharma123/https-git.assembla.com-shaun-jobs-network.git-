@@ -247,6 +247,9 @@ class EngineClient
      */
     public function add(array $opts, $filePath = null )
     {
+        var_dump($opts);
+        var_dump($filePath);
+        
         $response = $this->doRequest(array('add'), $opts, $filePath);
 
         if ($response && isset($response['docId'])) {
