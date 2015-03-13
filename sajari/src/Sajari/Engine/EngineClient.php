@@ -374,7 +374,11 @@ class EngineClient
 
             if (null !== $filePath) {
                 $mimeType = MimeTypeGuesser::getInstance()->guess($filePath);
-
+                
+                echo $filePath.PHP_EOL;
+                echo $mimeType.PHP_EOL;
+                die;
+                
                 $request->addPostFile('inputfile', $filePath, $mimeType);
             }
         }
