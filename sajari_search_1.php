@@ -19,17 +19,18 @@ $q = isset($_GET['q']) ? $_GET['q']: "" ;
 
 try {
     
-    
-    $result = $c->search(array(
+//        $result = $c->search(array(
 //        "filters"=>array(
 //            array("specialty" => "136"),
 //            array("sub_specialty" => "137")
 //        ),
-        'meta'=>array(
-            'specialty',
-            'sub_specialty'
-        ), 
-        'maxresults' => 40,
+//        'meta'=>array(
+//            'specialty',
+//            'sub_specialty'
+//        )
+//    ));
+    $result = $c->search(array(
+        'facet.fields'=> 'specialty'
     ));
     $rsp['status'] = "ok";
     $rsp['result'] = $result;
