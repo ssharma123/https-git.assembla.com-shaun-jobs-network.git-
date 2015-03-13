@@ -26,7 +26,7 @@ try {
         $search_param["meta"] = $meta;
     }
     if($file){
-        $filepath = $file['tmp_name'];
+        $filepath = $file;
     }
 
     $result = $c->add($search_param, $filepath);
