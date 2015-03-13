@@ -30,6 +30,7 @@ try {
 //        )
 //    ));
     $result = $c->search(array(
+        "~q" => 'developer',
         'facet.fields'=> 'specialty'
     ));
     $rsp['status'] = "ok";
