@@ -72,17 +72,17 @@ class Sajari {
         $url = "https://www.sajari.com/api/search";
         
         $post_data = array();
-        $post_data['company'] = "medmatch";
-        $post_data['collection'] = "medmatchjobs";
+        $params['company'] = "medmatch";
+        $params['collection'] = "medmatchjobs";
         
-        if (is_array($params)) {
-            $post_data = http_build_query($params);
-        }
+        $post_data = http_build_query($params);
          
+        $user = "5SHyDCxwMCi0HXTt";
+        $pass = "AVHRfLskQEUjEfdw";
         
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($ch, CURLOPT_USERPWD, "5SHyDCxwMCi0HXTt:AVHRfLskQEUjEfdw"); // Your credentials goes here
+        curl_setopt($ch, CURLOPT_USERPWD, "$user:$pass"); // Your credentials goes here
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, TRUE);
@@ -93,7 +93,6 @@ class Sajari {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 
-        echo "<pre>"; curl_error($ch); echo "</pre>"; 
 
         $response = curl_exec($ch);
         echo ($response);
