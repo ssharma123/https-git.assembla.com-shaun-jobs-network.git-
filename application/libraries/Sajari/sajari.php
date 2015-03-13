@@ -55,8 +55,9 @@ class Sajari {
 
         $response = curl_exec($ch);
         
-//        echo ($response);
-//        die;
+        
+        echo ($response);
+        die;
         
         curl_close($ch);
 
