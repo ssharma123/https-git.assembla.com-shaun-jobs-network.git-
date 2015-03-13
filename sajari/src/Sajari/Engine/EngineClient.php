@@ -396,8 +396,6 @@ class EngineClient
 
         $response = $request->send();
         
-        echo "<pre>"; print_r($response); echo "</pre>"; die;
-
 
         if (null !== $this->logger) {
             $this->logger->debug(sprintf('Received response from Sajari engine: %s', $response->getBody(true)));
