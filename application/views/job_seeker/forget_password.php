@@ -102,7 +102,7 @@
             ?>
             <div class="col col-sm-6 recover_opt_forms" id="forget_password_sms_form_div" style="<?php echo $display; ?>">
                 <h4>Get a Text</h4>
-                <form id="forget_password_sms_form" class="well well-lg text-center ng-valid ng-dirty validate_form" action="<?php echo site_url('employer/forget_password_process/sms'); ?>" method="post">
+                <form id="forget_password_sms_form" class="well well-lg text-center ng-valid ng-dirty validate_form" action="<?php echo site_url('job_seeker/forget_password_process/sms'); ?>" method="post">
                     <label style="float: left; clear: left;">Your Email:</label>
                     <input type="email" placeholder="Your Email" class="form-control ng-valid ng-dirty" required id="forgot_email" name="forgot_email" value="<?php echo isset($forgot_email) ? $forgot_email : '' ; ?>">
                     <label style="float: left; clear: left;">Your Phone Number:</label>
@@ -119,7 +119,7 @@
             ?>
             <div class="col col-sm-6 recover_opt_forms" id="forget_password_call_form_div" style="<?php echo $display; ?>">
                 <h4>Get a Call</h4>
-                <form id="forget_password_call_form" class="well well-lg text-center ng-valid ng-dirty validate_form" action="<?php echo site_url('employer/forget_password_process/call'); ?>" method="post">
+                <form id="forget_password_call_form" class="well well-lg text-center ng-valid ng-dirty validate_form" action="<?php echo site_url('job_seeker/forget_password_process/call'); ?>" method="post">
                     <label style="float: left; clear: left;">Your Email:</label>
                     <input type="email" placeholder="Your Email" class="form-control ng-valid ng-dirty" required id="forgot_email" name="forgot_email" value="<?php echo isset($forgot_email) ? $forgot_email : '' ; ?>">
                     <label style="float: left; clear: left;">Your Phone Number:</label>
