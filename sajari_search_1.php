@@ -13,25 +13,23 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'secret_key' => "AVHRfLskQEUjEfdw",
     'company'    => 'medmatch',
     'collection' => "medmatchjobs"
-));
+), true);
 
 $q = isset($_GET['q']) ? $_GET['q']: "" ;
 
 try {
     
-//        $result = $c->search(array(
-//        "filters"=>array(
-//            array("specialty" => "136"),
-//            array("sub_specialty" => "137")
-//        ),
-//        'meta'=>array(
-//            'specialty',
-//            'sub_specialty'
-//        )
-//    ));
+    
     $result = $c->search(array(
-        "~q" => 'developer',
-        'facet.fields'=> 'specialty'
+        "filters"=>array(
+            array("specialty" => "136"),
+            array("sub_specialty" => "137")
+        ),
+        'meta'=>array(
+            'specialty',
+            'sub_specialty'
+        ), 
+        'maxresults' => 40,
     ));
     $rsp['status'] = "ok";
     $rsp['result'] = $result;
