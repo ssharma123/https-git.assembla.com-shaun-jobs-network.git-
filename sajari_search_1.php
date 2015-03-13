@@ -13,7 +13,7 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
     'secret_key' => "AVHRfLskQEUjEfdw",
     'company'    => 'medmatch',
     'collection' => "medmatchjobs"
-), true);
+));
 
 $q = isset($_GET['q']) ? $_GET['q']: "" ;
 
