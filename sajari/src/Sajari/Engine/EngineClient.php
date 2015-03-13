@@ -377,9 +377,6 @@ class EngineClient
             if (null !== $filePath) {
 //                $mimeType = MimeTypeGuesser::getInstance()->guess($filePath);
                 
-                var_dump( $filePath['tmp_name'] );
-                var_dump( $filePath['type'] );
-                die;
                 
                 $request->addPostFile('inputfile', $filePath, $mimeType);
             }
@@ -396,6 +393,9 @@ class EngineClient
         }
 
         $response = $request->send();
+        
+        echo "<pre>"; print_r($response); echo "</pre>"; die;
+
 
         if (null !== $this->logger) {
             $this->logger->debug(sprintf('Received response from Sajari engine: %s', $response->getBody(true)));
