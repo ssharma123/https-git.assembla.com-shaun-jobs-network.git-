@@ -20,7 +20,6 @@ $meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
 $file = isset($_FILES['file']) ? $_FILES['file']: FALSE ;
 
 echo "<pre>"; print_r($_POST); echo "</pre>"; 
-echo "<pre>"; print_r($_FILES); echo "</pre>"; 
 
 try {
     
