@@ -95,12 +95,14 @@ class Sajari {
 
 
         $response = curl_exec($ch);
- 
+        echo ($response);
+        die;
+        
         curl_close($ch);
 
         
         if ($response) {
-            $rsp = json_decode($response);
+            $rsp = json_decode($response,TRUE);
             return $rsp;
         } else {
             return false;
