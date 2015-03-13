@@ -19,6 +19,10 @@ $c = new EngineClient(new Guzzle\Http\Client(), array(
 $meta = isset($_POST['meta']) ? $_POST['meta']: FALSE ;
 $file = isset($_FILES['file']) ? $_FILES['file']: FALSE ;
 
+echo "<pre>"; print_r($_POST); echo "</pre>"; 
+echo "<pre>"; print_r($_FILES); echo "</pre>"; die;
+
+
 try {
     
     $filepath = NULL;
@@ -26,9 +30,11 @@ try {
         $search_param["meta"] = $meta;
     }
     if($file){
-        $filepath = $_FILES['file']['tmp_name'];
+        $filepath = $file['tmp_name'];
     }
 
+    var_dump($search_param, $filepath);
+    
     $result = $c->add($search_param, $filepath);
     
     $rsp['status'] = "ok";
