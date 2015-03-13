@@ -29,8 +29,6 @@ try {
         $filepath = $file['tmp_name'];
     }
 
-    var_dump($search_param, $filepath); die;
-    
     $result = $c->add($search_param, $filepath);
     
     $rsp['status'] = "ok";
