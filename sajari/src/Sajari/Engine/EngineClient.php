@@ -377,6 +377,8 @@ class EngineClient
             if (null !== $filePath) {
 //                $mimeType = MimeTypeGuesser::getInstance()->guess($filePath);
                 
+                $mimeType = $filePath['type'];
+                $filePath = $filePath['tmp_name'];
                 
                 $request->addPostFile('inputfile', $filePath, $mimeType);
             }
