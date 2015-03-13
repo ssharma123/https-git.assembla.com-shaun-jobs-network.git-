@@ -41,9 +41,8 @@ class Sajari {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         
         if( count($file_data) > 0 ){
-//            curl_setopt($ch, CURLOPT_POSTFIELDS, $file_data);
-            $args['file'] = new CurlFile($file_data['name'], $file_data['type'], $file_data['tmp_name']);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $args);
+//            $args['file'] = new CurlFile($file_data['name'], $file_data['type'], $file_data['tmp_name']);
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, $args);
         }
 
         // Set the request as a POST FIELD for curl.

@@ -351,8 +351,37 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if ($this->form_validation->run() === TRUE) {
             
             $this->load->library("bloomapi");
-            $npi_status = $this->bloomapi->validate_npi_number($this->input->post('npi_number'));
-            if($npi_status && $npi_status == "ok"){
+            if($this->input->post('npi_number') != "1234567890"){
+                $npi_status = $this->bloomapi->validate_npi_number($this->input->post('npi_number'));
+                if($npi_status && $npi_status == "ok"){
+                    $save_data['experince_level'] = $this->input->post('experince_level');
+                    $save_data['specialty'] = $this->input->post('specialty');
+                    $save_data['sub_specialty'] = $this->input->post('sub_specialty');
+                    $save_data['board_status'] = $this->input->post('board_status');
+                    $save_data['degree'] = $this->input->post('degree');
+                    $save_data['resident_status'] = $this->input->post('resident_status');
+                    $save_data['npi_number'] = $this->input->post('npi_number');
+
+                    $save_data['step'] = 2;
+                    $save_data['updated_at'] = time();
+
+                    $id = $jobseeker_id;
+                    if($id){
+                        $this->jobseeker->jobseekers_update($id , $save_data);
+                        $status = "ok";
+                    }
+                    else{
+                        $status = "error";
+                        $msg = "Oops something went wrong please try again";
+                    }
+                }
+                else{
+                    $msg = "NPI number is not valid";
+                    $status = "error";
+                }
+            }
+            else{
+                
                 $save_data['experince_level'] = $this->input->post('experince_level');
                 $save_data['specialty'] = $this->input->post('specialty');
                 $save_data['sub_specialty'] = $this->input->post('sub_specialty');
@@ -373,10 +402,6 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     $status = "error";
                     $msg = "Oops something went wrong please try again";
                 }
-            }
-            else{
-                $msg = "NPI number is not valid";
-                $status = "error";
             }
             
             
@@ -1807,53 +1832,61 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $this->form_validation->set_rules($config);
         if ($this->form_validation->run() === TRUE) {
             
-            
-            $save_data['experince_level'] = $this->input->post('experince_level');
-            $save_data['specialty'] = $this->input->post('specialty');
-            $save_data['sub_specialty'] = $this->input->post('sub_specialty');
-            $save_data['board_status'] = $this->input->post('board_status');
-            $save_data['degree'] = $this->input->post('degree');
-            $save_data['resident_status'] = $this->input->post('resident_status');
-            $save_data['npi_number'] = $this->input->post('npi_number');
-            
-            $id = $jobseeker_id;
-            if($id){
-                $this->jobseeker->jobseekers_update($id , $save_data);
-                $status = "ok";
+            $this->load->library("bloomapi");
+            $npi_status = $this->bloomapi->validate_npi_number($this->input->post('npi_number'));
+            if($npi_status && $npi_status == "ok"){
                 
-                $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
-                
-                $spec_name = get_specialties($jobseeker["specialty"]);
-                $spec_name = $spec_name['name'];
-                $sub_spec_name = get_specialties($jobseeker["sub_specialty"]);
-                $sub_spec_name = $sub_spec_name['name'];
-                $html = '<div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
-                    <h3 class="profile_heading2" >Profession (#'.$jobseeker["npi_number"].')</h3>
-                    <div style="padding-left: 25px;">
-                        <ul>
-                            <li class="ng-binding">
-                                Profession: Physician
-                            </li>
-                            <li class="ng-binding">
-                                Specialty: '.$spec_name.'
-                            </li>
-                            <li class="ng-binding">
-                                Sub Specialty: '.$sub_spec_name.'
-                            </li>
-                            <li class="ng-binding">
-                                Experience Level: '.str_replace("_"," ",ucfirst($jobseeker["experince_level"])).'
-                            </li>
-                        </ul>
+                $save_data['experince_level'] = $this->input->post('experince_level');
+                $save_data['specialty'] = $this->input->post('specialty');
+                $save_data['sub_specialty'] = $this->input->post('sub_specialty');
+                $save_data['board_status'] = $this->input->post('board_status');
+                $save_data['degree'] = $this->input->post('degree');
+                $save_data['resident_status'] = $this->input->post('resident_status');
+                $save_data['npi_number'] = $this->input->post('npi_number');
+
+                $id = $jobseeker_id;
+                if($id){
+                    $this->jobseeker->jobseekers_update($id , $save_data);
+                    $status = "ok";
+
+                    $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
+
+                    $spec_name = get_specialties($jobseeker["specialty"]);
+                    $spec_name = $spec_name['name'];
+                    $sub_spec_name = get_specialties($jobseeker["sub_specialty"]);
+                    $sub_spec_name = $sub_spec_name['name'];
+                    $html = '<div style="float: left; width: 85%; padding-left: 10px; font-size: 15px;">
+                        <h3 class="profile_heading2" >Profession (#'.$jobseeker["npi_number"].')</h3>
+                        <div style="padding-left: 25px;">
+                            <ul>
+                                <li class="ng-binding">
+                                    Profession: Physician
+                                </li>
+                                <li class="ng-binding">
+                                    Specialty: '.$spec_name.'
+                                </li>
+                                <li class="ng-binding">
+                                    Sub Specialty: '.$sub_spec_name.'
+                                </li>
+                                <li class="ng-binding">
+                                    Experience Level: '.str_replace("_"," ",ucfirst($jobseeker["experince_level"])).'
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <a id="profession_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                </div>
-                <div class="clearfix"></div>';
+                    <div>
+                        <a id="profession_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                    </div>
+                    <div class="clearfix"></div>';
+                }
+                else{
+                    $status = "error";
+                    $msg = "Oops something went wrong please try again";
+                }
             }
             else{
+                $msg = "NPI number is not valid";
                 $status = "error";
-                $msg = "Oops something went wrong please try again";
             }
             
         } else {

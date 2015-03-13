@@ -22,11 +22,15 @@ try {
     
     $result = $c->search(array(
         
-            "filters"=>array(
+//            "filters"=>array(
 //                array("~title" => "developer"),
-                array(">=salary_range_min" => "35000"),
-                array("<=salary_range_max" => "50000"),
-            ),
+//                array(">=salary_range_min" => "35000"),
+//                array("<=salary_range_max" => "50000"),
+//            ),
+        'meta'=>array(
+            'specialty'=>'136',
+            'sub_specialty'=>'137'
+        ), 
         'maxresults' => 40,
     ));
     $rsp['status'] = "ok";

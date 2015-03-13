@@ -22,16 +22,16 @@ $file = isset($_FILES['file']) ? $_FILES['file']: FALSE ;
 
 try {
     
-    
+    $filepath = NULL;
     if($meta){
         $search_param["meta"] = $meta;
     }
     if($file){
-        $search_param['inputfile'] = $_FILES['file']['tmp_name'];
+        $filepath = $_FILES['file']['tmp_name'];
     }
 //    echo "<pre>"; print_r($search_param); echo "</pre>"; die;
 
-    $result = $c->add($search_param);
+    $result = $c->add($search_param, $filepath);
     
     $rsp['status'] = "ok";
     $rsp['result'] = $result;

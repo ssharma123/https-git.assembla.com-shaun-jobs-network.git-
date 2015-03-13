@@ -245,9 +245,9 @@ class EngineClient
      *
      * @return string|Boolean The ID of the newly added document, otherwise false if the add failed
      */
-    public function add(array $opts)
+    public function add(array $opts, $filePath = null )
     {
-        $response = $this->doRequest(array('add'), $opts);
+        $response = $this->doRequest(array('add'), $opts, $filePath);
 
         if ($response && isset($response['docId'])) {
             return $response['docId'];
