@@ -367,9 +367,6 @@ class EngineClient
             $request = $this->httpClient->get($uri);
         } else {
             $request = $this->httpClient->post($uri);
-            echo "<pre>"; print_r($request); echo "</pre>"; 
-
-            
             
             if (count($data)) {
                 $request->addPostFields($data);
