@@ -31,8 +31,8 @@ try {
     if($file){
         $filepath = $_FILES['file']['tmp_name'];
     }
-    echo "<pre>"; print_r($search_param); echo "</pre>"; 
-    echo "<pre>"; print_r($filepath); echo "</pre>"; 
+//    echo "<pre>"; print_r($search_param); echo "</pre>"; 
+//    echo "<pre>"; print_r($filepath); echo "</pre>"; 
     die;
 
     $result = $c->add($search_param, $filepath);
