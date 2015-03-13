@@ -100,7 +100,7 @@ class Sajari {
         echo PHP_EOL;
         print_r('Curl error: ' . curl_error($ch));
         
-        echo ($response);
+//        echo ($response);
         die;
         
         curl_close($ch);
