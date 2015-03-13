@@ -2318,7 +2318,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             "tmp_name" => $_FILES['resume']['tmp_name'][0],
                             "name" => $_FILES['resume']['name'][0],
                             "type" => $_FILES['resume']['type'][0]
-                        )
+                        ),
+                        'meta' => array('title' => $resume[0])
                     );
 //                    echo "<pre>"; print_r($params); echo "</pre>"; die;
 
