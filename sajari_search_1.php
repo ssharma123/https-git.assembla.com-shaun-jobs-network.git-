@@ -21,15 +21,14 @@ try {
     
     
     $result = $c->search(array(
-        
-            "filters"=>array(
-                array("specialty" => "136"),
-                array("sub_specialty" => "137")
-            ),
-            'meta'=>array(
-                'specialty'=>'136',
-                'sub_specialty'=>'137'
-            ), 
+//        "filters"=>array(
+//            array("specialty" => "136"),
+//            array("sub_specialty" => "137")
+//        ),
+        'meta'=>array(
+            'specialty'=>'136',
+            'sub_specialty'=>'137'
+        ), 
         'maxresults' => 40,
     ));
     $rsp['status'] = "ok";
