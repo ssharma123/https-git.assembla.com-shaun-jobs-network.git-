@@ -362,13 +362,7 @@ class EngineClient
         }
 
         $uri = sprintf('%s/%s', $this->pathPrefix, implode('/', $uriParts));
-        if(!0){
-            echo "if";
-        }
-        else{
-            echo "else";
-        }
-        die;
+         
         if (!count($data) && null === $filePath) {
             $request = $this->httpClient->get($uri);
         } else {
