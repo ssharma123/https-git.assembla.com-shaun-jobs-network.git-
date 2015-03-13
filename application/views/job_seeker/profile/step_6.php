@@ -15,7 +15,7 @@
 
 <div class="col-sm-10 col-sm-offset-1 text-center" >
         
-        <h3>Almost done, <?php echo $jobseeker['first_name']; ?></h3>
+        <h3>Almost done, Dr <?php echo $jobseeker['last_name']; ?></h3>
         <h2>What kind of job are you looking for</h2>
         <div style="min-height: 300px;">
             <fieldset style="float: none; margin: 0 auto; padding: 0; width: 480px;">
@@ -88,7 +88,7 @@
                         <input required min="1" type="number" name="patient_per_day" id="patient_per_day" value="<?php echo (isset($jobseeker['patient_per_day']) && $jobseeker['patient_per_day'] != 0) ? $jobseeker['patient_per_day'] : "" ; ?>" class="form-control" placeholder="Patient per day" >
                     </div>
                     <div class="left_col">
-                        <input required min="1" type="number" name="salary" id="salary" value="<?php echo (isset($jobseeker['salary']) && $jobseeker['salary'] != 0) ? $jobseeker['salary'] : "" ; ?>" class="form-control" placeholder="Salary" >
+                        <input required min="1" type="number" name="salary" id="salary" value="<?php echo (isset($jobseeker['salary']) && $jobseeker['salary'] != 0) ? $jobseeker['salary'] : "" ; ?>" class="form-control" placeholder="Ideal Salary" >
                     </div>
                      
                     <div class="right_col">

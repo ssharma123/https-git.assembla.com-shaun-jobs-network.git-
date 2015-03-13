@@ -41,17 +41,25 @@
                     <option value="550000" <?php echo $selected; ?> >$550k+</option>
                     <?php
                     $selected = (isset($job['salary_range']) && $job['salary_range'] == "custom" ) ? ' selected="selected" ' : "" ;
+                    $mode_type = $this->session->userdata("job_mode_type");
+                    if($mode_type == "add"){
+                        $selected = ' selected="selected" ';
+                    }
                     ?>
                     <option value="custom" <?php echo $selected; ?> >Custom</option>
                 </select>
                 
                 <?php
                 $style = (isset($job['salary_range']) && $job['salary_range'] == "custom" ) ? 'display: inline ;' : 'display: none;' ;
+                $mode_type = $this->session->userdata("job_mode_type");
+                if($mode_type == "add"){
+                    $style = 'display: inline ;';
+                }
                 ?>
                 <div id="custom_salary_range_div" style="<?php echo $style; ?>" class="ng-hide">
                     <label style="width: 5%">Min</label> 
-                    <input type="number" id="salary_range_min" name="salary_range_min" class="intMask ng-pristine ng-valid" style="width: 10%" value="<?php echo (isset($job['salary_range_min'])) ? $job['salary_range_min'] : "" ; ?>" >
-                    <label style="width: 5%">Max</label> 
+                    <input min="99999" max="999999" type="number" id="salary_range_min" name="salary_range_min" class="intMask ng-pristine ng-valid" style="width: 10%" value="<?php echo (isset($job['salary_range_min'])) ? $job['salary_range_min'] : "" ; ?>" >
+                    <label min="99999" max="999999" style="width: 5%">Max</label> 
                     <input type="number" id="salary_range_max" name="salary_range_max" class="intMask ng-pristine ng-valid" style="width: 10%" value="<?php echo (isset($job['salary_range_max'])) ? $job['salary_range_max'] : "" ; ?>" >
                 </div>
             </div>												
@@ -60,7 +68,7 @@
             </div>
             <div class="filter">
                 <label>Bonus / Commission</label> 
-                <input type="text" id="bonus" name="bonus" class="ng-pristine ng-valid" value="<?php echo (isset($job['bonus'])) ? $job['bonus'] : "" ; ?>" >
+                <input maxlength="80" type="text" id="bonus" name="bonus" class="ng-pristine ng-valid" value="<?php echo (isset($job['bonus'])) ? $job['bonus'] : "" ; ?>" >
             </div>
             <div class="filter">
                 <label>Pay Frequency<sup>*</sup></label> 

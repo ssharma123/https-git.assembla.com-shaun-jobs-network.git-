@@ -77,7 +77,7 @@
         </div>
         <hr>
         <div class="text-center">
-            <input type="submit" class="btn btn-primary btn-lg" style="width: 200px" value="Finish">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 200px" value="Continue">
             <br><br>
         </div>
     </form>

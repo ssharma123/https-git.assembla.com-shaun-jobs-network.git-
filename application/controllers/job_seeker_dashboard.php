@@ -204,6 +204,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             redirect('job_seeker/signin');
         }
         
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
+        
         $html = $this->load->view('job_seeker/dashboard/welcome', $data, TRUE);
 
         $array = array(

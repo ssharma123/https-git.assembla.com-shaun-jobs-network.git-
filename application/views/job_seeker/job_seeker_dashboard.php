@@ -60,7 +60,8 @@
                         
                         <?php if($jobseeker['profile_complete'] == 0) { ?>
                         <div style="margin-top: -17px; padding: 10px;" >
-                            <h2 style="margin-top: 5px;" class="text-left">Ready to get matched to your dream job?</h2>
+                            <h3>Dr <?php echo ucfirst($jobseeker['last_name']); ?></h3>
+                            <h2 style="margin-top: 5px; font-size: 30px; text-align: center;" class="text-left">Ready to get matched to your dream job?</h2>
                             <br><br> 
                             <div class="col-sm-10 col-sm-offset-1 text-center">
                                 <p style="font-size: 24px; font-weight: 200; color: #ff5500">

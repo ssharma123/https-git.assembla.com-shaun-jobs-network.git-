@@ -77,13 +77,13 @@
                             <option value="<?php echo $state["code"] ?>" <?php echo $selected; ?> ><?php echo $state["code"] ?></option>
                         <?php } ?>
                     </select>
-                    <input type="text" style="width: 35%; padding: 5px; margin: 0px 12px; float: left;" maxlength="50" placeholder="Zip" id="zip" name="zip" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['zip']) ? $jobseeker['zip'] : "" ;  ?>">
+                    <input maxlength="6" type="text" style="width: 35%; padding: 5px; margin: 0px 12px; float: left;" placeholder="Zip" id="zip" name="zip" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['zip']) ? $jobseeker['zip'] : "" ;  ?>">
                 </div>
                 <div class="left_col">
                     <input type="text" class="is_phone_number ng-pristine ng-valid form-control" placeholder="Phone Number" id="phone" name="phone" required value="<?php echo isset($jobseeker['phone']) ? $jobseeker['phone'] : "" ;  ?>">
                 </div>
                 <div class="right_col">
-                    <input type="text" class="is_phone_number ng-pristine ng-valid form-control" placeholder="Alt. Phone Number" id="alt_phone" name="alt_phone" required  value="<?php echo isset($jobseeker['alt_phone']) ? $jobseeker['alt_phone'] : "" ;  ?>">
+                    <input type="text" class="is_phone_number ng-pristine ng-valid form-control" placeholder="Alt. Phone Number" id="alt_phone" name="alt_phone" value="<?php echo isset($jobseeker['alt_phone']) ? $jobseeker['alt_phone'] : "" ;  ?>">
                 </div>
             </fieldset>
         </div>
