@@ -93,7 +93,7 @@ class Sajari {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 
-        echo "<pre>"; print_r($ch); echo "</pre>"; 
+        echo "<pre>"; curl_error($ch); echo "</pre>"; 
 
         $response = curl_exec($ch);
         echo ($response);
