@@ -56,6 +56,44 @@ class Sajari {
         $response = curl_exec($ch);
         
         
+        curl_close($ch);
+
+        
+        if ($response) {
+            $rsp = json_decode($response);
+            return $rsp;
+        } else {
+            return false;
+        }
+    }
+    
+    public function sajari_search(array $params , $file_data = array() ) {
+        
+        $url = "https://www.sajari.com/api/search";
+        
+        $post_data = array();
+        
+        if (is_array($params)) {
+            $post_data = http_build_query($params);
+        }
+         
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "5SHyDCxwMCi0HXTt:AVHRfLskQEUjEfdw"); //Your credentials goes here
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        
+        // Turn off the server and peer verification (TrustManager Concept).
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+
+
+        $response = curl_exec($ch);
+        
         echo ($response);
         die;
         
@@ -69,7 +107,6 @@ class Sajari {
             return false;
         }
     }
-    
     
 
 }
