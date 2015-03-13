@@ -90,9 +90,12 @@ class Sajari {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         
         // Turn off the server and peer verification (TrustManager Concept).
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 
+
+        $response = curl_exec($ch);
+ 
         curl_close($ch);
 
         
