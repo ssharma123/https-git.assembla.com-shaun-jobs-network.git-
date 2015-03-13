@@ -26,8 +26,8 @@ try {
 //            array("sub_specialty" => "137")
 //        ),
         'meta'=>array(
-            'specialty'=>'136',
-            'sub_specialty'=>'137'
+            'specialty',
+            'sub_specialty'
         ), 
         'maxresults' => 40,
     ));
