@@ -367,10 +367,18 @@ class EngineClient
             $request = $this->httpClient->get($uri);
         } else {
             $request = $this->httpClient->post($uri);
+            echo "<pre>"; print_r($request); echo "</pre>"; 
 
+            
+            
             if (count($data)) {
                 $request->addPostFields($data);
             }
+            echo "<pre>"; print_r($request); echo "</pre>"; 
+            
+            echo $filePath.PHP_EOL;
+            echo $mimeType.PHP_EOL;
+            die;
 
             if (null !== $filePath) {
                 $mimeType = MimeTypeGuesser::getInstance()->guess($filePath);
