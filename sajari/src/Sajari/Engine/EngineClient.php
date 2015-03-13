@@ -247,8 +247,6 @@ class EngineClient
      */
     public function add(array $opts, $filePath = null )
     {
-        var_dump($opts);
-        var_dump($filePath);
         
         $response = $this->doRequest(array('add'), $opts, $filePath);
 
@@ -374,10 +372,7 @@ class EngineClient
             if (count($data)) {
                 $request->addPostFields($data);
             }
-            echo "<pre>"; print_r($request); echo "</pre>"; 
             
-            var_dump( $filePath );
-            die;
 
             if (null !== $filePath) {
                 $mimeType = MimeTypeGuesser::getInstance()->guess($filePath);
