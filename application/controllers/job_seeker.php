@@ -106,6 +106,9 @@ class Job_seeker extends MY_Job_seekerController {
                 'meta' => $meta,
                 'scales' => $scales
             );
+            echo "<pre>"; print_r($params); echo "</pre>"; 
+            echo "<hr>";
+
             $rsp = $sajari->sajari_search($params);
 
             $data["jobs_data"] = FALSE;
