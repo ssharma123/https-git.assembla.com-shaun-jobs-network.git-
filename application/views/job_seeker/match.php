@@ -62,17 +62,24 @@
                 usort($jobs_sorted_array, "jobs_sort_by_percent" );
                 
                 
-                echo "<pre>"; print_r($jobs_sorted_array); echo "</pre>"; die;
                 
-                foreach($jobs_sorted_array as $key => $row){ 
-                    if(isset($row['employer_id'])){
-                        $facility = get_facility_info_by_job($row['employer_id']);
-                        $row['city']= $facility['city'];
-                        $row['state']= $facility['state'];
+                foreach($jobs_sorted_array as $key => $row){
+                    
+                    $doc_id = $row['docId'];
+                    $score = $row['score'];
+                    $rawscore = $row['rawscore'];
+                    $meta = $row['meta'];
+                    $calculation = $row['calculation'];
+                    
+                    
+                    if(isset($meta['employer_id'])){
+                        $facility = get_facility_info_by_job($meta['employer_id']);
+                        $meta['city']= $facility['city'];
+                        $meta['state']= $facility['state'];
                     }
                     else{
-                        $row['city']= "";
-                        $row['state']= "";
+                        $meta['city']= "";
+                        $meta['state']= "";
                     }
                     
                     
@@ -82,26 +89,26 @@
                     $percent_color = get_match_color($percent);
                     
                     ?>
-                <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $row['id']; ?>" data-percent="<?php echo $percent; ?>" data-dashboard="no" >
+                <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $meta['id']; ?>" data-percent="<?php echo $percent; ?>" data-dashboard="no" >
                     <div class="<?php echo $percent_class; ?>">
                         <div class="p-first-box">
                             <div class="p-first-box-main">
                                 <div class="p-first-box-main-inner">
-                                    <div class="p-main-text-div ng-binding"><?php echo $row['patients_per_day']; ?>+</div>
+                                    <div class="p-main-text-div ng-binding"><?php echo $meta['patients_per_day']; ?>+</div>
                                 </div>
                             </div>
                         </div>
                         <div class="p-second-box">
-                            <div class="p-title-bar ng-binding"><?php echo trim_str($row['job_headline'],60); ?> </div>
-                            <div class="p-title-bar-detail ng-binding"><?php echo $row['city'].",".$row['state']?><br>
+                            <div class="p-title-bar ng-binding"><?php echo trim_str($meta['job_headline'],60); ?> </div>
+                            <div class="p-title-bar-detail ng-binding"><?php echo $meta['city'].",".$meta['state']?><br>
                                 
-                                $<?php echo show_salary($row['salary_range_min']); ?> 
+                                $<?php echo show_salary($meta['salary_range_min']); ?> 
                                 <?php
-                                if($row['salary_range_max'] == 0){
+                                if($meta['salary_range_max'] == 0){
                                     echo "+";
                                 } 
                                 else { ?>
-                                - $<?php echo show_salary($row['salary_range_max']); ?>    
+                                - $<?php echo show_salary($meta['salary_range_max']); ?>    
                                 <?php 
                                 } ?>
                                 
