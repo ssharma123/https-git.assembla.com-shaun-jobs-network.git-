@@ -37,6 +37,7 @@
             <?php
             
             echo "<pre>"; print_r($jobs_data); echo "</pre>"; 
+            die;
 
             
             $jobs_sorted_array = array();
