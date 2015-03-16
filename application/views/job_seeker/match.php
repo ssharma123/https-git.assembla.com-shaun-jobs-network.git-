@@ -42,6 +42,9 @@
             if($jobs_data){
                 
                 $jobs = $jobs_data;
+                
+                echo "<pre>"; print_r($jobs); echo "</pre>"; 
+
                 foreach($jobs as $key => $row){ 
 
                     $row = $row['meta'];
