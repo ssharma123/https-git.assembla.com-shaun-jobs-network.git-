@@ -36,8 +36,8 @@
             
             <?php
             
-            ini_set('display_errors', 0);
-            
+            echo "<pre>"; print_r($jobs_data); echo "</pre>"; 
+
             
             $jobs_sorted_array = array();
             if($jobs_data){
