@@ -235,6 +235,39 @@ if(!function_exists('show_salary')){
         return $output;
     }
 }
+
+function manage_job_percentage($percent, $row, $kilometer){
+    
+    $percent = ($row['rawscore'] * $row['score']) * 100;
+    
+    if( isset($row['calculation']['geohit']) && $row['calculation']['geohit'] != "" ){
+        $geohit = $row['calculation']['geohit'];
+        if($geohit == "true"){
+            $percent = $percent + 15;
+        }
+        else if($geohit == "false"){
+            if($kilometer !== 0){
+                if(isset($row['calculation']['haversine']) && $row['calculation']['haversine'] > 0){
+                    $distance = $row['calculation']['haversine'];
+                    if($distance <= $kilometer){
+                        $percent = $percent + 15;
+                    }
+                }
+            }
+        }
+        else{
+            
+        }
+    }
+    
+    $percent = (int) ceil( $percent );
+    if($percent>100){
+        $percent = 100;
+    }
+    else if($percent<=0){
+        $percent = 0; 
+    }
+}
     
 
 /* GET data from countries , cites , states END */

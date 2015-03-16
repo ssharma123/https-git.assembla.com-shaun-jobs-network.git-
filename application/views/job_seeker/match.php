@@ -74,6 +74,7 @@
                     $calculation = $row['calculation'];
                     
                     
+                    
                     if(isset($meta['employer_id'])){
                         $facility = get_facility_info_by_job($meta['employer_id']);
                         $meta['city']= $facility['city'];
@@ -83,17 +84,11 @@
                         $meta['city']= "";
                         $meta['state']= "";
                     }
-                    echo "<pre>"; print_r($meta); echo "</pre>"; 
                     
-                    $percent = ($row['rawscore'] * $row['score']) * 100;
                     
-                    $percent = (int) ceil( $percent );
-                    if($percent>100){
-                        $percent = 100;
-                    }
-                    else if($percent<=0){
-                        $percent = 0; 
-                    }
+                    
+                    
+                    $percent = manage_job_percentage($percent, $row , $kilometer);
                             
                     $percent_class = get_match_class($percent);
                     $percent_color = get_match_color($percent);

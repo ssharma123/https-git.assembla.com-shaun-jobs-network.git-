@@ -56,6 +56,8 @@ class Job_seeker extends MY_Job_seekerController {
 
             $meta = array();
             $scales = "";
+            $data['kilometer'] = 0;
+            
             if(isset($data['specialty']) && $data['specialty'] != ""){
                 $meta["specialty"]  = $data["specialty"];
             }
@@ -89,6 +91,7 @@ class Job_seeker extends MY_Job_seekerController {
             if( (isset($data['state']) && $data['state'] != "") && (isset($data['miles']) && $data['miles'] != "") ){
                 // miles to kilometer
                 $kilometer = $data['miles'] * 1.60934;
+                $data['kilometer'] = $kilometer;
                 $city = $data['state'];
                 $this->load->library("google/google_geolocation");
                 $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+US" ) );
@@ -106,8 +109,6 @@ class Job_seeker extends MY_Job_seekerController {
                 'meta' => $meta,
                 'scales' => $scales
             );
-            echo "<pre>"; print_r($params); echo "</pre>"; 
-            echo "<hr>";
 
             $rsp = $sajari->sajari_search($params);
 
