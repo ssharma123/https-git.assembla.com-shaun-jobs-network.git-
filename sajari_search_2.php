@@ -15,7 +15,6 @@ $params['meta']['sub_specialty'] = '137';
 $params['meta']['lat'] = '50.2345';
 $params['meta']['lng'] = '98.4567';
 
-$params['scales'] = 'lat,50.2345,100,1,1|lng,98.4567,100,1,1';
 
 
 $params['maxresults'] = 20;
