@@ -236,7 +236,7 @@ if(!function_exists('show_salary')){
     }
 }
 
-function manage_job_percentage($percent, $row, $kilometer){
+function manage_job_percentage( $row, $kilometer){
     
     $percent = ($row['rawscore'] * $row['score']) * 100;
     
