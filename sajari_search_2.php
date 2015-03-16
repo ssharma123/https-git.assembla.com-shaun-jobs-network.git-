@@ -11,6 +11,7 @@ $sajari = new Sajari();
 
 $params['meta']['specialty'] = '136';
 $params['meta']['sub_specialty'] = '137';
+$params['maxresults'] = 40;
 
 $rsp = $sajari->sajari_search($params);
 
