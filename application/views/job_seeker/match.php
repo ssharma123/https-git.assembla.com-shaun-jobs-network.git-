@@ -42,14 +42,13 @@
             $jobs_sorted_array = array();
             if($jobs_data){
                 
-                $jobs = $jobs_data['results'];
-                foreach($jobs as $key => $obj){ 
-                    $obj_array = (array) $obj;
+                $jobs = $jobs_data;
+                foreach($jobs as $key => $row){ 
 
-                    $row = (array)$obj_array['meta'];
-                    $doc_id = $obj_array['docId'];
-                    $score = $obj_array['score'];
-                    $rawscore = $obj_array['rawscore'];
+                    $row = $row['meta'];
+                    $doc_id = $row['docId'];
+                    $score = $row['score'];
+                    $rawscore = $row['rawscore'];
                     
                     $percent = 0;
                     
