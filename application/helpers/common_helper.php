@@ -267,6 +267,8 @@ function manage_job_percentage( $row, $kilometer){
     else if($percent<=0){
         $percent = 0; 
     }
+    
+    return $percent;
 }
     
 
