@@ -190,7 +190,6 @@ class Jobs_model extends CI_Model {
             JOIN employers_facilities ef ON j.employer_id = ef.employer_id
             WHERE 1 AND ".$where."
             ORDER BY j.id DESC ";
-        echo $q; die;
         $r = $this->db->query($q);
         if ($r->num_rows() > 0) {
             return $r->result_array();
