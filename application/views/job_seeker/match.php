@@ -64,7 +64,7 @@
                 
                 
                 foreach($jobs_sorted_array as $key => $row){
-                    echo "<pre>"; print_r($row); echo "</pre>"; 
+                    
 
                     
                     $doc_id = $row['docId'];
@@ -83,7 +83,7 @@
                         $meta['city']= "";
                         $meta['state']= "";
                     }
-                    
+                    echo "<pre>"; print_r($meta); echo "</pre>"; 
                     
                     $percent = ($row['rawscore'] * $row['score']) * 100;
                     
