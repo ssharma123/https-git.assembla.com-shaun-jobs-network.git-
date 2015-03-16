@@ -52,69 +52,75 @@ class Job_seeker extends MY_Job_seekerController {
         
         $data = $this->input->post();
         
-        
-        $meta = array();
-        $scales = "";
-        if(isset($data['specialty']) && $data['specialty'] != ""){
-            $meta["specialty"]  = $data["specialty"];
-        }
-        if(isset($data['sub_specialty']) && $data['sub_specialty'] != ""){
-            $meta["sub_specialty"]  = $data["sub_specialty"];
-        }
-        
-        if(isset($data['salary_range']) && $data['salary_range'] != ""){
-            $salary_range_array = explode("-", $data['salary_range']);
-            $min = $salary_range_array[0];
-            $min = $min * 1000;
-            $meta["salary_range_min"]  = $min;
-            
-            $scales = 'salary_range_min,'.$min.',26000,1,0';
-            
-            if(isset($salary_range_array[1])){
-                $max = $salary_range_array[1];
-                $max = $max * 1000;
-                $meta["salary_range_max"]  = $max;
-                
-                
-                $scales .= '|salary_range_max,'.$max.',26000,1,0';
-            }
-        }
-        
-        if( isset($data['departmant_size']) && $data['departmant_size']!="" ){
-            $meta["departmant_size"]  = $data["departmant_size"];
-        }
-        
-        
-        if( (isset($data['state']) && $data['state'] != "") && (isset($data['miles']) && $data['miles'] != "") ){
-            // miles to kilometer
-            $kilometer = $data['miles'] * 1.60934;
-            $city = $data['state'];
-            $this->load->library("google/google_geolocation");
-            $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+US" ) );
+        if($this->input->post()){
 
-            if(isset($location['lat']) && isset($location['lng'])){
-                $lat = $location['lat'];
-                $lng = $location['lng'];
-                
-                $meta['lat'] = $lat;
-                $meta['lng'] = $lng;
+            $meta = array();
+            $scales = "";
+            if(isset($data['specialty']) && $data['specialty'] != ""){
+                $meta["specialty"]  = $data["specialty"];
             }
+            if(isset($data['sub_specialty']) && $data['sub_specialty'] != ""){
+                $meta["sub_specialty"]  = $data["sub_specialty"];
+            }
+
+            if(isset($data['salary_range']) && $data['salary_range'] != ""){
+                $salary_range_array = explode("-", $data['salary_range']);
+                $min = $salary_range_array[0];
+                $min = $min * 1000;
+                $meta["salary_range_min"]  = $min;
+
+                $scales = 'salary_range_min,'.$min.',26000,1,0';
+
+                if(isset($salary_range_array[1])){
+                    $max = $salary_range_array[1];
+                    $max = $max * 1000;
+                    $meta["salary_range_max"]  = $max;
+
+
+                    $scales .= '|salary_range_max,'.$max.',26000,1,0';
+                }
+            }
+
+            if( isset($data['departmant_size']) && $data['departmant_size']!="" ){
+                $meta["departmant_size"]  = $data["departmant_size"];
+            }
+
+
+            if( (isset($data['state']) && $data['state'] != "") && (isset($data['miles']) && $data['miles'] != "") ){
+                // miles to kilometer
+                $kilometer = $data['miles'] * 1.60934;
+                $city = $data['state'];
+                $this->load->library("google/google_geolocation");
+                $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+US" ) );
+
+                if(isset($location['lat']) && isset($location['lng'])){
+                    $lat = $location['lat'];
+                    $lng = $location['lng'];
+
+                    $meta['lat'] = $lat;
+                    $meta['lng'] = $lng;
+                }
+            }
+
+            $params = array(
+                'meta' => $meta,
+                'scales' => $scales
+            );
+            $rsp = $sajari->sajari_search($params);
+
+            $data["jobs_data"] = FALSE;
+            if( isset($rsp["response"]["results"]) ){
+                $data["jobs_data"] = $rsp["response"]["results"];
+            }
+
+    //        $data["jobs"] = $this->jobs->top_matches($data);
+
+            $this->load->view('job_seeker/match', $data);
+
         }
-        
-        $params = array(
-            'meta' => $meta,
-            'scales' => $scales
-        );
-        $rsp = $sajari->sajari_search($params);
-        
-        $data["jobs_data"] = FALSE;
-        if( isset($rsp["response"]["results"]) ){
-            $data["jobs_data"] = $rsp["response"]["results"];
+        else{
+            redirect("job_seeker");
         }
-        
-//        $data["jobs"] = $this->jobs->top_matches($data);
-        
-        $this->load->view('job_seeker/match', $data);
         
     }
     public function get_top_match_job_details(){
