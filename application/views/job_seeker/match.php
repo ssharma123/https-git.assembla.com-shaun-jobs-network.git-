@@ -53,7 +53,6 @@
                     $meta = $row['meta'];
                     $calculation = $row['calculation'];
                     
-                    echo "<pre>"; print_r($row); echo "</pre>"; die;
 
                     $jobs_sorted_array[$key] = $row;
                     $jobs_sorted_array[$key]["percent"] = $row['rawscore'] * $row['score'];
