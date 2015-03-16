@@ -241,12 +241,16 @@ function manage_job_percentage( $row, $kilometer){
     $percent = ($row['rawscore'] * $row['score']) * 100;
     
     if( isset($row['calculation']['geohit']) && $row['calculation']['geohit'] != "" ){
+        var_dump("****");
         $geohit = $row['calculation']['geohit'];
+        var_dump($geohit);
         if($geohit == "true"){
             $percent = $percent + 15;
         }
         else if($geohit == "false"){
+            var_dump($kilometer);
             if($kilometer !== 0){
+                var_dump($row['calculation']['haversine']);
                 if(isset($row['calculation']['haversine']) && $row['calculation']['haversine'] > 0){
                     $distance = $row['calculation']['haversine'];
                     if($distance <= $kilometer){
@@ -258,6 +262,7 @@ function manage_job_percentage( $row, $kilometer){
         else{
             
         }
+        var_dump("****");
     }
     
     $percent = (int) ceil( $percent );
