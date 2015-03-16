@@ -15,6 +15,9 @@ $params['meta']['sub_specialty'] = '137';
 $params['meta']['lat'] = '42.7175688';
 $params['meta']['lng'] = '-77.0435795';
 
+$params['scales'] = 'lat,42.7175688,100,1,1|lng,-77.0435795,100,1,1';
+
+
 $params['maxresults'] = 40;
 
 $rsp = $sajari->sajari_search($params);
