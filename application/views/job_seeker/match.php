@@ -36,8 +36,6 @@
             
             <?php
             
-            echo "<pre>"; print_r($jobs_data); echo "</pre>"; 
-            die;
 
             
             $jobs_sorted_array = array();
@@ -51,101 +49,13 @@
                     $score = $row['score'];
                     $rawscore = $row['rawscore'];
                     
-                    $percent = 0;
+                    echo "<pre>"; print_r($row); echo "</pre>"; die;
+
                     
-                    $points_matched = 0;
-                    $total_points = 7;
-                    
-                    // check salary range
-                    if ( isset($salary_range) && $salary_range != "" ){
-                        $salary_range_array = explode("-", $salary_range);
-                        $min = $salary_range_array[0];
-                        
-                        if(isset($salary_range_array[1])){
-                            $max = $salary_range_array[1];
-                            if( $min >= $row['salary_range_min'] && $max <= $row['salary_range_max']){
-                                $points_matched++;
-                            }
-                        }
-                        else{
-                            if( $min >= $row['salary_range_min'] && $min <= $row['salary_range_max']){
-                                $points_matched++;
-                            }
-                        }
-                        
-                    }
-                    
-                    
-                    // check Speciality
-                    if( isset($specialty) && $specialty!="" ){
-                        if($specialty == $row["specialty"]){
-                            $points_matched++;
-                        }
-                    }
-                    // check sub speciality
-                    if( isset($sub_specialty) && $sub_specialty!="" ){
-                        if($sub_specialty == $row["sub_specialty"]){
-                            $points_matched++;
-                        }
-                    }
-                    // department size
-                    if( isset($departmant_size) && $departmant_size!="" ){
-                        if( $departmant_size == "small" && $row["department_size"] == "0-5" ){
-                            $points_matched++;
-                        }
-                        else if( $departmant_size == "medium" && ( $row["department_size"] == "5-10" || $row["department_size"] == "10-20" ) ){
-                            $points_matched++;
-                        }
-                        else if( $departmant_size == "large" && ( $row["department_size"] == "20-40" || $row["department_size"] == "40+" ) ){
-                            $points_matched++;
-                        }
-                    }
-                    
-                    // check location & miles 
-                    if( (isset($state) && $state!="") && (isset($miles) && $miles!="") ){
-                        // which filed to match for jobs
-                        // get two points lat lng and calculate distance between two lat lng
-                        $points_matched++;
-                        if( (strcasecmp($row["state"],$state) == 0 ) || (strcasecmp($row["city"],$state) == 0 ) ){
-                            $points_matched++;
-                        }
-                        
-                    }
-                    
-                    // availability
-                    if( isset($availability) && $availability!="" ){
-                        // which filed to match for jobs 
-                        $points_matched++;
-                    }
-                    // current_employed
-                    if( isset($current_employed) && $current_employed!="" ){
-                        // which filed to match for jobs
-                        $points_matched++;
-                    }
-                    
-                    $percent = ($points_matched / $total_points ) * 100;
-                    $percent = ceil($percent);
-                    if($percent < 0){
-                        $percent = 0;
-                    }
-                    if($percent > 100){
-                        $percent = 100;
-                    }
-//                    $percent_class = get_match_class($percent);
-//                    $percent_color = get_match_color($percent);
-                    
-                     
-                    
-                    $jobs_sorted_array[$key] = (array)$obj_array['meta'];
-                    $jobs_sorted_array[$key]['score'] = $score;
-                    $jobs_sorted_array[$key]['rawscore'] = $rawscore;
-                    $jobs_sorted_array[$key]['percent'] = $percent;
-//                    $jobs_sorted_array[$key]['percent_class']= $percent_class;
-//                    $jobs_sorted_array[$key]['percent_color']= $percent_color;
                 }
                 
                 
-                usort($jobs_sorted_array, "jobs_sort_by_percent" );
+//                usort($jobs_sorted_array, "jobs_sort_by_percent" );
                 
 
                 
