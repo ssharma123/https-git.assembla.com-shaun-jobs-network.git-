@@ -43,24 +43,27 @@
                 
                 $jobs = $jobs_data;
                 
-                echo "<pre>"; print_r($jobs); echo "</pre>"; 
+                
 
                 foreach($jobs as $key => $row){ 
 
-                    $row = $row['meta'];
                     $doc_id = $row['docId'];
                     $score = $row['score'];
                     $rawscore = $row['rawscore'];
+                    $meta = $row['meta'];
+                    $calculation = $row['calculation'];
                     
                     echo "<pre>"; print_r($row); echo "</pre>"; die;
 
-                    
+                    $jobs_sorted_array[$key] = $row;
+                    $jobs_sorted_array[$key]["percent"] = $row['rawscore'] * $row['score'];
                 }
                 
                 
-//                usort($jobs_sorted_array, "jobs_sort_by_percent" );
+                usort($jobs_sorted_array, "jobs_sort_by_percent" );
                 
-
+                
+                echo "<pre>"; print_r($jobs_sorted_array); echo "</pre>"; die;
                 
                 foreach($jobs_sorted_array as $key => $row){ 
                     if(isset($row['employer_id'])){
@@ -74,7 +77,7 @@
                     }
                     
                     
-                    $percent = $row['rawscore'] * 100;
+                    $percent = ($row['rawscore'] * $row['score']) * 100;
                             
                     $percent_class = get_match_class($percent);
                     $percent_color = get_match_color($percent);
