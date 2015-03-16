@@ -65,6 +65,7 @@
                 
                 foreach($jobs_sorted_array as $key => $row){
                     
+                    echo "<pre>"; print_r($row); echo "</pre>"; 
 
                     
                     $doc_id = $row['docId'];
