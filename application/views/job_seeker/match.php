@@ -84,6 +84,14 @@
                     
                     
                     $percent = ($row['rawscore'] * $row['score']) * 100;
+                    
+                    $percent = (int) ceil( $percent );
+                    if($percent>100){
+                        $percent = 100;
+                    }
+                    else if($percent<=0){
+                        $percent = 0; 
+                    }
                             
                     $percent_class = get_match_class($percent);
                     $percent_color = get_match_color($percent);
