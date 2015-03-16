@@ -115,9 +115,14 @@
                     <label class="col-sm-4 control-label">Ideal Culture</label>
                     <div class="col-sm-8">
                         <select  id="departmant_size" name="departmant_size" class="ng-pristine ng-valid form-control" >
-                            <option value="small" selected="selected">Small and Intimate</option>
+<!--                            <option value="small" selected="selected">Small and Intimate</option>
                             <option value="medium" >Medium sized Hospital</option>
-                            <option value="large"  >Large / Teaching Institution</option>
+                            <option value="large"  >Large / Teaching Institution</option>-->
+                            <option value="0-5" >0-5</option>
+                            <option value="5-10" >5-10</option>
+                            <option value="10-20" >10-20</option>
+                            <option value="20-40" >20-40</option>
+                            <option value="40+" >40+</option>
                         </select>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ $params['meta']['department_size'] = '20-40';
 $params['scales'] = 'salary_range_min,35000,26000,1,0|salary_range_max,50000,26000,1,0';
 
 
-$params['maxresults'] = 20;
+$params['maxresults'] = 2;
 
 $rsp = $sajari->sajari_search($params);
 
