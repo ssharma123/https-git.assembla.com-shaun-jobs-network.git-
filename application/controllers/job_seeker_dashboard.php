@@ -132,14 +132,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
         if(isset($jobseeker['salary']) && $jobseeker['salary'] != ""){
             $min = $jobseeker['salary'];
-            $meta["salary_range_min"]  = $min;
-
             $scales = 'salary_range_min,'.$min.',26000,1,0';
 
             $max = $jobseeker['salary'];
-            $meta["salary_range_max"]  = $max;
-
-
             $scales .= '|salary_range_max,'.$max.',26000,1,0';
         }
 
