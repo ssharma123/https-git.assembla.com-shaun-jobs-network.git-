@@ -203,7 +203,10 @@ class Jobs_model extends CI_Model {
         $r = $this->db->query($q);
         if ($r->num_rows() > 0) {
             $rows = $r->result_array();
-            $ids = array_column($rows,'job_id');
+            $ids = array();
+            foreach($rows['job_id'] as $id){
+                $ids[] = $id;
+            }
             return $ids;
         }
         return FALSE;
