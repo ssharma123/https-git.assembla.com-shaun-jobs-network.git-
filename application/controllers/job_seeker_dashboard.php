@@ -155,7 +155,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             else if( $jobseeker['institution_type'] == "hospital"  ){
                 $departmant_size = "40+";
             }
-            $meta["departmant_size"]  = $departmant_size;
+            $meta["department_size"]  = $departmant_size;
         }
 
 
