@@ -710,8 +710,6 @@ class Employee_dashboard extends MY_EmployerController {
             $job = $this->jobs->jobs_get($id); 
             
             $facility = $this->employer_facility->employers_facility_get_by_employer_id($job['employer_id']);
-            echo "<pre>"; print_r($facility); echo "</pre>"; die;
-
             if($facility){
                 $city = ( isset($facility['city']) ) ? $facility['city'] : "";
                 $state = ( isset($facility['state']) ) ? $facility['state'] : ""; 
