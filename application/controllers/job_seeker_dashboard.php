@@ -148,16 +148,16 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             if( $jobseeker['institution_type'] == "academic_institution" ){
                 $departmant_size = "0-5";
             }
-            else if( ($departmant_size == "clinic" )  ){
+            else if( ($jobseeker['institution_type'] == "clinic" )  ){
                 $departmant_size = "5-10";
             }
-            else if( ($departmant_size == "private_practice" )  ){
+            else if( ($jobseeker['institution_type'] == "private_practice" )  ){
                 $departmant_size = "10-20";
             }
-            else if( ($departmant_size == "group_practice" ) ){
+            else if( ($jobseeker['institution_type'] == "group_practice" ) ){
                 $departmant_size = "20-40"; 
             }
-            else if( $departmant_size == "hospital"  ){
+            else if( $jobseeker['institution_type'] == "hospital"  ){
                 $departmant_size = "40+";
             }
             $meta["departmant_size"]  = $departmant_size;
