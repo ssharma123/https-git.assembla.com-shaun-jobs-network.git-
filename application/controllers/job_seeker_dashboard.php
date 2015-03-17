@@ -131,11 +131,12 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         }
 
         if(isset($jobseeker['salary']) && $jobseeker['salary'] != ""){
-            $min = $jobseeker['salary'];
-            $scales = 'salary_range_min,'.$min.',26000,1,0';
-
+//            $min = $jobseeker['salary'];
+//            $scales = 'salary_range_min,'.$min.',26000,1,0';
+//            $scales .= "|";
+            
             $max = $jobseeker['salary'];
-            $scales .= '|salary_range_max,'.$max.',26000,1,0';
+            $scales .= 'salary_range_max,'.$max.',30000,1,0';
         }
 
         if( isset($jobseeker['institution_type']) && $jobseeker['institution_type']!="" ){
