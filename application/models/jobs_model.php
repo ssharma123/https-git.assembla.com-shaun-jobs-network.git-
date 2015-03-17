@@ -201,12 +201,11 @@ class Jobs_model extends CI_Model {
     public function get_jobs_applied_not_interested_ids($jobseeker_id){
         $q = "SELECT job_id FROM jobseekers_jobs_status WHERE jobseeker_id = '$jobseeker_id' AND ( not_interested = 1 OR applied = 1 )";
         $r = $this->db->query($q);
-        echo $this->db->last_query(); die;
         if ($r->num_rows() > 0) {
             $rows = $r->result_array();
             $ids = array();
-            foreach($rows['job_id'] as $id){
-                $ids[] = $id;
+            foreach($rows as $row){
+                $ids[] = $row['job_id'];
             }
             return $ids;
         }
