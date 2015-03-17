@@ -249,9 +249,11 @@ function manage_job_percentage( $row, $kilometer){
             if($kilometer !== 0){
                 if(isset($row['calculation']['haversine']) && $row['calculation']['haversine'] > 0){
                     $distance = $row['calculation']['haversine'];
+                    var_dump($percent);
                     if($distance <= $kilometer){
                         $percent = $percent + 15;
                     }
+                    var_dump($percent);
                 }
             }
         }
