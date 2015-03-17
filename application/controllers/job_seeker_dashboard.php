@@ -116,49 +116,58 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
         $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
         
-        echo "<pre>"; print_r($data['jobseeker']); echo "</pre>"; die;
-
+        $jobseeker = $data["jobseeker"];
         
         $meta = array();
         $scales = "";
 
-        if(isset($data["jobseeker"]['specialty']) && $data["jobseeker"]['specialty'] != ""){
-            $meta["specialty"]  = $data["jobseeker"]["specialty"];
+        if(isset($jobseeker['specialty']) && $jobseeker['specialty'] != ""){
+            $meta["specialty"]  = $jobseeker["specialty"];
         }
         if(isset($data['sub_specialty']) && $data['sub_specialty'] != ""){
-            $meta["sub_specialty"]  = $data["sub_specialty"];
+            $meta["sub_specialty"]  = $jobseeker["sub_specialty"];
         }
 
-        if(isset($data['salary_range']) && $data['salary_range'] != ""){
-            $salary_range_array = explode("-", $data['salary_range']);
-            $min = $salary_range_array[0];
-            $min = $min * 1000;
+        if(isset($jobseeker['salary']) && $jobseeker['salary'] != ""){
+            $min = $jobseeker['salary'];
             $meta["salary_range_min"]  = $min;
 
             $scales = 'salary_range_min,'.$min.',26000,1,0';
 
-            if(isset($salary_range_array[1])){
-                $max = $salary_range_array[1];
-                $max = $max * 1000;
-                $meta["salary_range_max"]  = $max;
+            $max = $jobseeker['salary'];
+            $meta["salary_range_max"]  = $max;
 
 
-                $scales .= '|salary_range_max,'.$max.',26000,1,0';
+            $scales .= '|salary_range_max,'.$max.',26000,1,0';
+        }
+
+        if( isset($jobseeker['institution_type']) && $jobseeker['institution_type']!="" ){
+            $departmant_size = "0-5";
+            if( $data['institution_type'] == "academic_institution" ){
+                $departmant_size = "0-5";
             }
+            else if( ($departmant_size == "clinic" )  ){
+                $departmant_size = "5-10";
+            }
+            else if( ($departmant_size == "private_practice" )  ){
+                $departmant_size = "10-20";
+            }
+            else if( ($departmant_size == "group_practice" ) ){
+                $departmant_size = "20-40"; 
+            }
+            else if( $departmant_size == "hospital"  ){
+                $departmant_size = "40+";
+            }
+            $meta["departmant_size"]  = $departmant_size;
         }
 
-        if( isset($data['departmant_size']) && $data['departmant_size']!="" ){
-            $meta["departmant_size"]  = $data["departmant_size"];
-        }
 
-
-        if( (isset($data['state']) && $data['state'] != "") && (isset($data['miles']) && $data['miles'] != "") ){
+        if( (isset($jobseeker['state']) && $jobseeker['state'] != "") && (isset($jobseeker['city']) && $jobseeker['city'] != "") ){
             // miles to kilometer
-            $kilometer = $data['miles'] * 1.60934;
-            $data['kilometer'] = $kilometer;
-            $city = $data['state'];
+            $city = $jobseeker['city'];
+            $state = $jobseeker['state'];
             $this->load->library("google/google_geolocation");
-            $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+US" ) );
+            $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
 
             if(isset($location['lat']) && isset($location['lng'])){
                 $lat = $location['lat'];
