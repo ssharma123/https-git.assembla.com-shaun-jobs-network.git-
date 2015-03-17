@@ -124,7 +124,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if(isset($jobseeker['specialty']) && $jobseeker['specialty'] != ""){
             $meta["specialty"]  = $jobseeker["specialty"];
         }
-        if(isset($data['sub_specialty']) && $data['sub_specialty'] != ""){
+        if(isset($jobseeker['sub_specialty']) && $jobseeker['sub_specialty'] != ""){
             $meta["sub_specialty"]  = $jobseeker["sub_specialty"];
         }
 
@@ -143,7 +143,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
         if( isset($jobseeker['institution_type']) && $jobseeker['institution_type']!="" ){
             $departmant_size = "0-5";
-            if( $data['institution_type'] == "academic_institution" ){
+            if( $jobseeker['institution_type'] == "academic_institution" ){
                 $departmant_size = "0-5";
             }
             else if( ($departmant_size == "clinic" )  ){
