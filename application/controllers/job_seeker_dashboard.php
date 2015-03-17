@@ -160,7 +160,13 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         }
 
 
-        if( (isset($jobseeker['state']) && $jobseeker['state'] != "") && (isset($jobseeker['city']) && $jobseeker['city'] != "") ){
+        if( (isset($jobseeker['latitude']) && $jobseeker['latitude'] != "0") && (isset($jobseeker['longitude']) && $jobseeker['longitude'] != "0") ){
+            
+            $meta['lat'] = $jobseeker['latitude'];
+            $meta['lng'] = $jobseeker['longitude']; 
+            
+        }
+        else{
             // miles to kilometer
             $city = $jobseeker['city'];
             $state = $jobseeker['state'];
@@ -170,6 +176,11 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             if(isset($location['lat']) && isset($location['lng'])){
                 $lat = $location['lat'];
                 $lng = $location['lng'];
+                
+                $save_data = array();
+                $save_data['latitude'] = $lat;
+                $save_data['longitude'] = $lng;
+                $this->jobseeker->jobseekers_update($jobseeker_id , $save_data);
 
                 $meta['lat'] = $lat;
                 $meta['lng'] = $lng;
