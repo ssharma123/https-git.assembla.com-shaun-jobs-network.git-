@@ -34,7 +34,7 @@
                     
 
                     $jobs_sorted_array[$key] = $row;
-                    $jobs_sorted_array[$key]["percent"] = $row['rawscore'] * $row['score'];
+                    $jobs_sorted_array[$key]["percent"] = manage_job_percentage( $row , 500);
                 }
                 
                 
