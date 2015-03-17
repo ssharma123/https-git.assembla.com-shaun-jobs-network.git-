@@ -28,7 +28,7 @@ class Google_geolocation {
         
         $url = $this->geocoding.$urlParam . "sensor=" . $this->sensor;
         
-
+        echo $url; die;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
 
