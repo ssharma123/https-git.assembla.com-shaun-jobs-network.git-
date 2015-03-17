@@ -192,8 +192,6 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             $data["jobs"] = $rsp["response"]["results"];
             
             $ids = $this->jobs->get_jobs_applied_not_interested_ids($jobseeker_id);
-            echo "<pre>"; print_r($ids); echo "</pre>"; die;
-
             if($ids){
                 foreach($data['jobs'] as $key => $row){
                     $job_id = 0;
