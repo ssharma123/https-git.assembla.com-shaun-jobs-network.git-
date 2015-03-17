@@ -762,7 +762,7 @@ function contact_info_save(){
         }
         else{
             flag = false;
-            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").html(rsp.msg).show();
             $("#tabContent_rsp").addClass("error_rsp");
         }
     })
@@ -795,7 +795,7 @@ function profession_save(){
         }
         else{
             flag = false;
-            $("#tabContent_rsp").html(rsp).show();
+            $("#tabContent_rsp").html(rsp.msg).show();
             $("#tabContent_rsp").addClass("error_rsp");
         }
     })
