@@ -69,7 +69,7 @@
                     $percent_color = get_match_color($percent);
                     
                     ?>
-                    <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $meta['id']; ?>" data-percent="<?php echo $percent; ?>" data-dashboard="no" >
+                    <div class="p-container-inner-box job_match_div" style="cursor: pointer; " data-id="<?php echo $meta['id']; ?>" data-percent="<?php echo $percent; ?>" data-dashboard="yes" >
                         <div class="<?php echo $percent_class; ?>">
                             <div class="p-first-box">
                                 <div class="p-first-box-main">
