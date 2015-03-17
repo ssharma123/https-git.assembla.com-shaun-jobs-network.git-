@@ -202,7 +202,9 @@ class Jobs_model extends CI_Model {
         $q = "SELECT job_id FROM jobseekers_jobs_status WHERE jobseeker_id = '$jobseeker_id' AND ( not_interested = 1 OR applied = 1 )";
         $r = $this->db->query($q);
         if ($r->num_rows() > 0) {
-            return $r->result_array();
+            $rows = $r->result_array();
+            $ids = array_column($rows,'job_id');
+            return $ids;
         }
         return FALSE;
     }
