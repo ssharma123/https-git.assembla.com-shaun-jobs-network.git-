@@ -184,7 +184,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             'meta' => $meta,
             'scales' => $scales
         );
-
+        
+        $data['params'] = $params;
+        
         $rsp = $sajari->sajari_search($params);
 
         $data["jobs"] = FALSE;

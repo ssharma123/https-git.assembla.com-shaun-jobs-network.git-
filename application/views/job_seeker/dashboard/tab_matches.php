@@ -18,6 +18,9 @@
             
             <?php
             
+            echo "<pre>"; print_r($params); echo "</pre>"; 
+
+            
             $jobs_sorted_array = array();
             if($jobs){
                 
