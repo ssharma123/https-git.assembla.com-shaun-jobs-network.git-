@@ -118,6 +118,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         
         $jobseeker = $data["jobseeker"];
         
+        require 'application/libraries/Sajari/sajari.php';
+        $sajari = new Sajari();
         $meta = array();
         $scales = "";
 
