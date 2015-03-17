@@ -190,6 +190,19 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $data["jobs"] = FALSE;
         if( isset($rsp["response"]["results"]) ){
             $data["jobs"] = $rsp["response"]["results"];
+            
+            $ids = $this->jobs->get_jobs_applied_not_interested_ids($jobseeker_id);
+            if($ids){
+                foreach($data['jobs'] as $key => $row){
+                    $job_id = 0;
+                    if(isset($row['meta']) && $row['meta'] != ""){
+                        $job_id = isset($row['meta']['id']) ? $row['meta']['id'] : 0;
+                    }
+                    if( $job_id != 0 && in_array($job_id, $ids) ){
+                        unset($data['jobs'][$key]);
+                    }
+                }
+            }
         }
         
         $html = $this->load->view('job_seeker/dashboard/tab_matches', $data, TRUE);

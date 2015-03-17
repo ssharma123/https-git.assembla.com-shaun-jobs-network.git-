@@ -198,6 +198,14 @@ class Jobs_model extends CI_Model {
         
     }
     
+    public function get_jobs_applied_not_interested_ids($jobseeker_id){
+        $q = "SELECT job_id FROM jobseekers_jobs_status WHERE jobseeker_id = '$jobseeker_id' AND ( not_interested = 1 OR applied = 1 )";
+        $r = $this->db->query($q);
+        if ($r->num_rows() > 0) {
+            return $r->result_array();
+        }
+        return FALSE;
+    }
     function jobs_get_details($id){
         $q = "SELECT j.*,
             ef.state,ef.city
