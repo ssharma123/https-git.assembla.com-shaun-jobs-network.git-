@@ -243,7 +243,7 @@ function manage_job_percentage( $row, $kilometer){
     if( isset($row['calculation']['geohit']) && $row['calculation']['geohit'] != "" ){
         $geohit = $row['calculation']['geohit'];
         if($geohit == "true"){
-            $percent = $percent + 15;
+            $percent = $percent + 20;
         }
         else if($geohit == "false"){
             if($kilometer !== 0){
