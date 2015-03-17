@@ -377,6 +377,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             if($id){
                 $this->jobseeker->jobseekers_update($id , $save_data);
                 $status = "ok";
+                
+                
+                
             }
             else{
                 $status = "error";

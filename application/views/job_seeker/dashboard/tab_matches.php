@@ -18,8 +18,6 @@
             
             <?php
             
-            echo "<pre>"; print_r($params); echo "</pre>"; 
-
             
             $jobs_sorted_array = array();
             if($jobs){
@@ -42,7 +40,6 @@
                 
                 foreach($jobs_sorted_array as $key => $row){
                     
-                    echo "<pre>"; print_r($row); echo "</pre>"; 
 
                     
                     $doc_id = $row['docId'];
