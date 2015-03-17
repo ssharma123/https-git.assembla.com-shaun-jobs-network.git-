@@ -378,7 +378,19 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 $this->jobseeker->jobseekers_update($id , $save_data);
                 $status = "ok";
                 
-                
+                $city = $save_data['city'];
+                $state = $save_data['state'];
+                $this->load->library("google/google_geolocation");
+                $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
+
+                if(isset($location['lat']) && isset($location['lng'])){
+                    $lat = $location['lat'];
+                    $lng = $location['lng'];
+                    $save_data = array();
+                    $save_data['latitude'] = $lat;
+                    $save_data['longitude'] = $lng;
+                    $this->jobseeker->jobseekers_update($id , $save_data);
+                }
                 
             }
             else{
@@ -1880,6 +1892,20 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     <a id="contact_info_edit_link" class="edit_link"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                 </div>
                 <div class="clearfix"></div>';
+                
+                $city = $save_data['city'];
+                $state = $save_data['state'];
+                $this->load->library("google/google_geolocation");
+                $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
+
+                if(isset($location['lat']) && isset($location['lng'])){
+                    $lat = $location['lat'];
+                    $lng = $location['lng'];
+                    $save_data = array();
+                    $save_data['latitude'] = $lat;
+                    $save_data['longitude'] = $lng;
+                    $this->jobseeker->jobseekers_update($id , $save_data);
+                }
             }
             else{
                 $status = "error";

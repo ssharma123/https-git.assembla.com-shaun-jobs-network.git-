@@ -1020,6 +1020,9 @@ class Employee_dashboard extends MY_EmployerController {
     function job_applied_status_matched($job_apply){
         $this->load->model('jobseeker_model', 'jobseeker');
         
+        // if job seeker setting is yes or default
+        
+        
         $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
         $email_data['to'] = $jobseeker['email'];
         $email_data['subject'] = "Job Matched";
