@@ -156,6 +156,14 @@ class Employer extends MY_EmployerController {
                     $this->form_validation->set_error_delimiters('', '');
                     $this->form_validation->set_rules($config);
                     if ($this->form_validation->run() === TRUE) {
+                        
+                        
+                        if($this->input->post("facebook_id") && $this->input->post("facebook_id") != ""){
+                            $save_data['facebook_id'] = $this->input->post("facebook_id");
+                        }
+                        if($this->input->post("linkedin_id") && $this->input->post("linkedin_id") != ""){
+                            $save_data['linkedin_id'] = $this->input->post("linkedin_id");
+                        }
 
                         $save_data['name'] = $this->db->escape_str($this->input->post("signup_name"));
                         $save_data['email'] = $this->db->escape_str($this->input->post('signup_email'));
@@ -172,6 +180,7 @@ class Employer extends MY_EmployerController {
                         $save_data['created_at'] = time();
                         $save_data['updated_at'] = time();
 
+                        echo "<pre>"; print_r($save_data); echo "</pre>";  
                         $employer_id = $this->employer->employers_add($save_data);
                         
                         // Send Register email Here
@@ -233,8 +242,10 @@ class Employer extends MY_EmployerController {
                         $save_data_fac['state'] = $this->db->escape_str($this->input->post('facility_state'));
                         $save_data_fac['num_of_employee'] = $this->db->escape_str($this->input->post('facility_num_of_employee'));
                         $save_data_fac['num_of_bed'] = $this->db->escape_str($this->input->post('facility_num_of_bed'));
+                        
+                        echo "<pre>"; print_r($save_data_fac); echo "</pre>"; die;
 
-                        $this->employer_facility->employers_facility_add($save_data_fac);
+//                        $this->employer_facility->employers_facility_add($save_data_fac);
 
                         if ($employer_id > 0) {
 

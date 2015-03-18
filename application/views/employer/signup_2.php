@@ -23,6 +23,10 @@ var facilities = <?php echo $facilities; ?>;
         
         <input type="hidden" name="signup_facility" id="signup_facility" value="<?php echo $signup1_facility; ?>">
         <input type="hidden" name="signup_facility_id" id="signup_facility_id" value="<?php echo $signup1_facility_id; ?>">
+        
+        <input type="hidden" name="facebook_id" id="facebook_id" value="<?php echo ($facebook_id) ? $facebook_id : ""; ?>" >
+        <input type="hidden" name="linkedin_id" id="linkedin_id" value="<?php echo ($linkedin_id) ? $linkedin_id : ""; ?>" >
+        
         <?php 
         if(isset($no_password) && $no_password == "yes") { ?>
         <input type="hidden" name="no_password" value="yes">
