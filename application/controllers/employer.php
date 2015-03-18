@@ -69,6 +69,8 @@ class Employer extends MY_EmployerController {
         if (isset($session['employer'])) {
             redirect('employee_dashboard');
         }
+        
+        $data["facilities"] = $this->get_facilities_name();
 
         $this->layout = "employer";
         $data = array();
