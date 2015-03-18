@@ -426,18 +426,19 @@ class Employer extends MY_EmployerController {
                      
                      
                 }
-
-                if ($r) {
-                    $id = $r;
-                    $employer = $this->employer->employers_get($id);
-                    unset($employer['password']);
-                    $this->session->set_userdata('user_id', $employer['id']);
-                    $this->session->set_userdata('user_type', 'employer');
-                    $this->session->set_userdata('employer', $employer);
-                    $status = 'ok';
-                    // send email Create account  
-                } else {
-                    $status = 'error';
+                if($redirect == ""){
+                    if ($r) {
+                        $id = $r;
+                        $employer = $this->employer->employers_get($id);
+                        unset($employer['password']);
+                        $this->session->set_userdata('user_id', $employer['id']);
+                        $this->session->set_userdata('user_type', 'employer');
+                        $this->session->set_userdata('employer', $employer);
+                        $status = 'ok';
+                        // send email Create account  
+                    } else {
+                        $status = 'error';
+                    }
                 }
             } else {
                 $employer = $user_exist;
