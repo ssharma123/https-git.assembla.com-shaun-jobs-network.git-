@@ -183,9 +183,19 @@ class Employer extends MY_EmployerController {
 
                         $save_data_fac['employer_id'] = $employer_id;
 
-                        $facility_id = $this->db->escape_str($this->input->post('signup_facility_id'));
+                        if($this->input->post('social_connect') && $this->input->post('social_connect') == "true"){
+                            $facility_id = $this->db->escape_str($this->input->post('signup1-facility_id_3'));
+                        }
+                        else{
+                            $facility_id = $this->db->escape_str($this->input->post('signup_facility_id'));
+                        }
                         if ($facility_id == 0) {
-                            $facility_data['name'] = $this->db->escape_str($this->input->post('signup_facility'));
+                            if($this->input->post('social_connect') && $this->input->post('social_connect') == "true"){
+                                $facility_data['name'] = $this->db->escape_str($this->input->post('facility_name'));
+                            }
+                            else{
+                                $facility_data['name'] = $this->db->escape_str($this->input->post('signup_facility'));
+                            }
                             $facility_data['city'] = 'none';
                             $facility_data['object_id'] = '';
                             $facility_data['created_at'] = time();
@@ -201,7 +211,13 @@ class Employer extends MY_EmployerController {
                         }
 
                         $save_data_fac['facility_id'] = $facility_id;
-                        $save_data_fac['name'] = $this->db->escape_str($this->input->post('signup_facility'));
+                        if($this->input->post('social_connect') && $this->input->post('social_connect') == "true"){
+                            $facility_data['name'] = $this->db->escape_str($this->input->post('facility_name'));
+                        }
+                        else{
+                            $save_data_fac['name'] = $this->db->escape_str($this->input->post('signup_facility'));
+                        }
+                        
                         $save_data_fac['address'] = $this->db->escape_str($this->input->post('facility_address'));
                         $save_data_fac['zipCode'] = $this->db->escape_str($this->input->post('facility_zipCode'));
                         $save_data_fac['city'] = $this->db->escape_str($this->input->post('facility_city'));

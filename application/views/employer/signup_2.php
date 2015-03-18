@@ -50,6 +50,7 @@ var facilities = <?php echo $facilities; ?>;
               <?php if(isset($social_connect) && $social_connect != ""){ ?>
                     <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid facilities-auto3" name="facility_name" id="facility_name" value="">
                     <input type="hidden" name="signup1-facility_id_3" id="signup1-facility_id_3" value="">
+                    <input type="hidden" name="social_connect" id="social_connect" value="true">
               <?php } 
               else{ ?>
                     <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid" name="facility_name" id="facility_name" readonly="true" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
