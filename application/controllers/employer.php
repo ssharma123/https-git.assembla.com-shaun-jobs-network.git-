@@ -149,7 +149,11 @@ class Employer extends MY_EmployerController {
                     );
                     $this->form_validation->set_error_delimiters('', '');
                     $this->form_validation->set_rules($config);
-                    echo "<pre>"; print_r($this->input->post()); echo "</pre>"; die;
+                    echo "<pre>"; print_r($this->input->post()); echo "</pre>"; 
+                    $this->form_validation->run();
+                    $msg = validation_errors();
+                    var_dump($msg);
+                    die;
                     if ($this->form_validation->run() === TRUE) {
                         echo "<pre>"; print_r($post); echo "</pre>"; die;
 
