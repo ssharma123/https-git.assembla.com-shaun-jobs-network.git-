@@ -84,7 +84,7 @@ class Employer extends MY_EmployerController {
 
             if ($step == 2) {
 
-                if (!$this->input->post()) {
+                if (!$this->input->get_post()) {
                     redirect('employer');
                 }
 
@@ -410,7 +410,7 @@ class Employer extends MY_EmployerController {
                 } else {
                     
                     $status = 'ok';
-                    $redirect = site_url( '?'.http_build_query($data) );
+                    $redirect = site_url( 'employer/signup/2?'.http_build_query($data) );
                     
 //                    $r = $this->employer->employers_add($data);
 //                    // Send Register email Here
