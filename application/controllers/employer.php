@@ -180,7 +180,6 @@ class Employer extends MY_EmployerController {
                         $save_data['created_at'] = time();
                         $save_data['updated_at'] = time();
 
-                        echo "<pre>"; print_r($save_data); echo "</pre>";  
                         $employer_id = $this->employer->employers_add($save_data);
                         
                         // Send Register email Here
@@ -229,9 +228,8 @@ class Employer extends MY_EmployerController {
                         }
 
                         $save_data_fac['facility_id'] = $facility_id;
-                        var_dump( $this->input->post());  
                         if($this->input->post('social_connect') && $this->input->post('social_connect') == "true"){
-                            $facility_data['name'] = $this->db->escape_str($this->input->post('facility_name'));
+                            $save_data_fac['name'] = $this->db->escape_str($this->input->post('facility_name'));
                         }
                         else{
                             $save_data_fac['name'] = $this->db->escape_str($this->input->post('signup_facility'));
@@ -244,9 +242,7 @@ class Employer extends MY_EmployerController {
                         $save_data_fac['num_of_employee'] = $this->db->escape_str($this->input->post('facility_num_of_employee'));
                         $save_data_fac['num_of_bed'] = $this->db->escape_str($this->input->post('facility_num_of_bed'));
                         
-                        echo "<pre>"; print_r($save_data_fac); echo "</pre>"; die;
-
-//                        $this->employer_facility->employers_facility_add($save_data_fac);
+                        $this->employer_facility->employers_facility_add($save_data_fac);
 
                         if ($employer_id > 0) {
 
