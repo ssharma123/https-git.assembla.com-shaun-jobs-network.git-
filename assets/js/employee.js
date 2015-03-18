@@ -66,7 +66,7 @@ $(document).ready(function(){
         display: 'name',
         val: 'id',
         itemSelected:function(data,value,text){
-            $("#signup1-facility_id_2").val(value);
+            $("#signup1-facility_id_3").val(value);
         }
     });
     $(".facilities-auto3").keyup(function(){
