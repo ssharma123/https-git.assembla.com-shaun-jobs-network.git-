@@ -225,6 +225,8 @@ class Employer extends MY_EmployerController {
             }
             $data['status'] = $status;
             $data['msg'] = $msg;
+            echo "<pre>"; print_r($data); echo "</pre>"; 
+
             $this->load->view('employer/signup_' . $step, $data);
         } else {
             redirect('employer');
