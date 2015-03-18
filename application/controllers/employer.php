@@ -409,6 +409,9 @@ class Employer extends MY_EmployerController {
                     $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
                 } else {
                     
+                    $data['signup_name'] = $data['name'];
+                    unset($data['name']);
+                    
                     $status = 'ok';
                     $redirect = site_url( 'employer/signup/2?'.http_build_query($data) );
                     
