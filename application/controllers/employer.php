@@ -225,8 +225,7 @@ class Employer extends MY_EmployerController {
             }
             $data['status'] = $status;
             $data['msg'] = $msg;
-            var_dump($this->input->get_post('signup_name'));
-            echo "<pre>"; print_r($data); echo "</pre>"; 
+            
 
             $this->load->view('employer/signup_' . $step, $data);
         } else {
@@ -412,11 +411,12 @@ class Employer extends MY_EmployerController {
                     $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
                 } else {
                     
-                    $data['signup_name'] = $data['name'];
-                    unset($data['name']);
-                    
+                    $query['signup_name'] = $data['name'];
+                    $query['signup_email'] = $data['email'];
+                    $query['facebook_id'] = $data['facebook_id'];
+                    $query['social_connect'] = "true";
                     $status = 'ok';
-                    $redirect = site_url( 'employer/signup/2?'.http_build_query($data) );
+                    $redirect = site_url( 'employer/signup/2?'.http_build_query($query) );
                     
 //                    $r = $this->employer->employers_add($data);
 //                    // Send Register email Here
