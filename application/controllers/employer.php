@@ -94,6 +94,9 @@ class Employer extends MY_EmployerController {
                 $data['signup1_facility_id'] = '';
 
                 $no_password = $this->input->get_post('no_password');
+                $social_connect = ($this->input->get('social_connect')) ? $this->input->get('social_connect') : "";
+                $data['social_connect'] = $social_connect;
+                
                 $data['no_password'] = $no_password;
                 if ($this->input->post('signup1-name')) {
                     $data['signup1_name'] = $this->input->post('signup1-name');
@@ -414,6 +417,7 @@ class Employer extends MY_EmployerController {
                     $query['signup_name'] = $data['name'];
                     $query['signup_email'] = $data['email'];
                     $query['facebook_id'] = $data['facebook_id'];
+                    $query['no_password'] = "yes";
                     $query['social_connect'] = "true";
                     $status = 'ok';
                     $redirect = site_url( 'employer/signup/2?'.http_build_query($query) );

@@ -44,7 +44,12 @@
         <div class="form-group">
           <label class="col-sm-4 control-label" for="name">Name</label>
           <div class="col-sm-8">
-              <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid" name="facility_name" id="facility_name" readonly="true" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
+              <?php if(isset($social_connect) && $social_connect != ""){ ?>
+                    <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid facilities-auto" name="facility_name" id="facility_name" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
+              <?php } 
+              else{ ?>
+                    <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid" name="facility_name" id="facility_name" readonly="true" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
+              <?php } ?>
           </div>
         </div>
         <div class="form-group">
@@ -68,12 +73,11 @@
         <div class="form-group">
           <label class="col-sm-4 control-label" for="city">State</label>
           <div class="col-sm-8">
-              <select id="facility_state" name="facility_state" class="form-control ng-pristine ng-valid" required >
+                <select id="facility_state" name="facility_state" class="form-control ng-pristine ng-valid" required >
                     <option value="">State</option>
                     <?php 
                     $states = get_states( array("country"=>"US") ); 
-                    foreach($states as $state){ 
-                        ?>
+                    foreach($states as $state){ ?>
                         <option value="<?php echo $state["code"] ?>" ><?php echo $state["name"]; ?></option>
                     <?php } ?>
                 </select>
