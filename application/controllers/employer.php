@@ -229,7 +229,7 @@ class Employer extends MY_EmployerController {
                         }
 
                         $save_data_fac['facility_id'] = $facility_id;
-                        echo $this->input->post('social_connect'); echo PHP_EOL;
+                        var_dump( $this->input->post('social_connect') ); echo PHP_EOL;
                         if($this->input->post('social_connect') && $this->input->post('social_connect') == "true"){
                             $facility_data['name'] = $this->db->escape_str($this->input->post('facility_name'));
                         }
