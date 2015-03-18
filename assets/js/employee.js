@@ -351,7 +351,13 @@ function connect_with_facebook(rsp){
 
         }).success(function(rsp){
             if(rsp.status == 'ok'){
-                window.location = base_url+'employee_dashboard';
+                
+                if(rsp.redirect != ""){
+                    window.location = rsp.redirect;
+                }
+                else{
+                    window.location = base_url+'employee_dashboard';
+                }
             }
             else{
                 $("#fb_error_msg").html('Oops something went wrong. Please try again').addClass('error_rsp');

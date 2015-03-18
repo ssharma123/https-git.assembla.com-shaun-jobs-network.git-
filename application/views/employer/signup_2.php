@@ -17,6 +17,7 @@
         <input type="hidden" id="form_process" name="form_process" value="yes">
         <input type="hidden" name="signup_name" id="signup_name" value="<?php echo $signup1_name; ?>">
         <input type="hidden" name="signup_email" id="signup_email" value="<?php echo $signup1_email; ?>">
+        
         <input type="hidden" name="signup_facility" id="signup_facility" value="<?php echo $signup1_facility; ?>">
         <input type="hidden" name="signup_facility_id" id="signup_facility_id" value="<?php echo $signup1_facility_id; ?>">
         <?php 

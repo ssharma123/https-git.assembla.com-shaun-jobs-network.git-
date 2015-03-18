@@ -93,18 +93,22 @@ class Employer extends MY_EmployerController {
                 $data['signup1_facility'] = '';
                 $data['signup1_facility_id'] = '';
 
-                $no_password = $this->input->post('no_password');
+                $no_password = $this->input->get_post('no_password');
                 $data['no_password'] = $no_password;
                 if ($this->input->post('signup1-name')) {
                     $data['signup1_name'] = $this->input->post('signup1-name');
                     $data['signup1_email'] = $this->input->post('signup1-email');
                     $data['signup1_facility'] = $this->input->post('signup1-facility');
                     $data['signup1_facility_id'] = $this->input->post('signup1-facility_id');
-                } else if ($this->input->post('signup_name')) {
-                    $data['signup1_name'] = $this->input->post('signup_name');
-                    $data['signup1_email'] = $this->input->post('signup_email');
-                    $data['signup1_facility'] = $this->input->post('signup_facility');
-                    $data['signup1_facility_id'] = $this->input->post('signup_facility_id');
+                } 
+                else if ($this->input->get_post('signup_name')) {
+                    $data['signup1_name'] = $this->input->get_post('signup_name');
+                    $data['signup1_email'] = $this->input->get_post('signup_email');
+                    $data['signup1_facility'] = $this->input->get_post('signup_facility');
+                    $data['signup1_facility_id'] = $this->input->get_post('signup_facility_id');
+                    
+                    $data['facebook_id'] = $this->input->get_post('facebook_id');
+                    $data['linkedin_id'] = $this->input->get_post('linkedin_id');
                 }
                 $data['signup_phone'] = ($this->input->post('signup_phone')) ? $this->input->post('signup_phone') : '';
 
@@ -369,6 +373,7 @@ class Employer extends MY_EmployerController {
     public function facebook_connect() {
         $this->layout = 'blank';
         $status = '';
+        $redirect = '';
         $data['facebook_id'] = $this->input->post('id');
         $data['name'] = $this->input->post('name');
         $data['email'] = ($this->input->post('email')) ? $this->input->post('email') : '';
@@ -403,17 +408,23 @@ class Employer extends MY_EmployerController {
                     $update_data['facebook_id'] = $data['facebook_id'];
                     $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
                 } else {
-                    $r = $this->employer->employers_add($data);
-                    // Send Register email Here
-                    $email_data['to'] = $data['email'];
-                    $email_data['subject'] = "Welcome";
-                    $email_data["password"] = $random_pass;
-
-                    $patterns = array(
-                        '{EMAIL}' => $data['email'],
-                        '{PASSWORD}' => $email_data["password"]
-                    );
-                    send_template_email("employer/register",$email_data, $patterns);
+                    
+                    $status = 'ok';
+                    $redirect = site_url( '?'.http_build_query($data) );
+                    
+//                    $r = $this->employer->employers_add($data);
+//                    // Send Register email Here
+//                    $email_data['to'] = $data['email'];
+//                    $email_data['subject'] = "Welcome";
+//                    $email_data["password"] = $random_pass;
+//
+//                    $patterns = array(
+//                        '{EMAIL}' => $data['email'],
+//                        '{PASSWORD}' => $email_data["password"]
+//                    );
+//                    send_template_email("employer/register",$email_data, $patterns);
+                     
+                     
                 }
 
                 if ($r) {
@@ -441,7 +452,7 @@ class Employer extends MY_EmployerController {
             
          
 
-        echo json_encode(array('status' => $status));
+        echo json_encode(array('status' => $status, 'redirect'=>$redirect));
         die;
     }
 
