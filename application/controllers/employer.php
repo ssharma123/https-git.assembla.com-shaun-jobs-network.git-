@@ -84,7 +84,7 @@ class Employer extends MY_EmployerController {
 
             if ($step == 2) {
                 var_dump($this->input->post());
-                var_dump($this->input->get_post());
+                var_dump($this->input->get());
                 var_dump($_GET);
                 die;
                 
