@@ -139,7 +139,6 @@ class Employer extends MY_EmployerController {
                         array('field' => 'billing_name', 'label' => 'Billing Name', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'billing_phone', 'label' => 'Billing Phone', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'billing_email', 'label' => 'Billing Email', 'rules' => 'trim|required|xss_clean'),
-                        array('field' => 'signup_facility', 'label' => 'Billing Email', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_address', 'label' => 'Address', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_zipCode', 'label' => 'Zip Code', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_city', 'label' => 'City', 'rules' => 'trim|required|xss_clean'),
@@ -147,15 +146,16 @@ class Employer extends MY_EmployerController {
                         array('field' => 'facility_num_of_employee', 'label' => 'Number of employer', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_num_of_bed', 'label' => 'Number of bed', 'rules' => 'trim|required|xss_clean'),
                     );
+                    
+                    if($this->input->post('social_connect') && $this->input->post('social_connect') == "true"){
+                        // do social connect rules
+                    }
+                    else{
+                        $config[] = array('field' => 'signup_facility', 'label' => 'Signup Facility', 'rules' => 'trim|required|xss_clean');
+                    }
                     $this->form_validation->set_error_delimiters('', '');
                     $this->form_validation->set_rules($config);
-                    echo "<pre>"; print_r($this->input->post()); echo "</pre>"; 
-                    $this->form_validation->run();
-                    $msg = validation_errors();
-                    var_dump($msg);
-                    die;
                     if ($this->form_validation->run() === TRUE) {
-                        echo "<pre>"; print_r($post); echo "</pre>"; die;
 
                         $save_data['name'] = $this->db->escape_str($this->input->post("signup_name"));
                         $save_data['email'] = $this->db->escape_str($this->input->post('signup_email'));
