@@ -48,7 +48,8 @@ var facilities = <?php echo $facilities; ?>;
           <label class="col-sm-4 control-label" for="name">Name</label>
           <div class="col-sm-8">
               <?php if(isset($social_connect) && $social_connect != ""){ ?>
-                    <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid facilities-auto" name="facility_name" id="facility_name" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
+                    <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid facilities-auto3" name="facility_name" id="facility_name" value="">
+                    <input type="hidden" name="signup1-facility_id_3" id="signup1-facility_id_3" value="">
               <?php } 
               else{ ?>
                     <input style="color:#57718b" type="text" class="form-control ng-pristine ng-valid" name="facility_name" id="facility_name" readonly="true" value="<?php echo (isset($signup1_facility)) ? $signup1_facility : ''; ?>">
