@@ -61,6 +61,17 @@ $(document).ready(function(){
         $("#signup1-facility_id_2").val('0');
     });
     
+    $(".facilities-auto3").typeahead({
+        source: facilities,
+        display: 'name',
+        val: 'id',
+        itemSelected:function(data,value,text){
+            $("#signup1-facility_id_2").val(value);
+        }
+    });
+    $(".facilities-auto3").keyup(function(){
+        $("#signup1-facility_id_3").val('0');
+    });
         
     
     $("#signupForm2").validate({
