@@ -127,7 +127,7 @@ class Employer extends MY_EmployerController {
                 $form_process = $this->input->post("form_process");
                 $post = $this->input->post();
                 
-                echo "<pre>"; print_r($post); echo "</pre>"; die;
+                
 
                 if (isset($form_process) && $form_process == "yes") {
 
@@ -149,7 +149,9 @@ class Employer extends MY_EmployerController {
                     );
                     $this->form_validation->set_error_delimiters('', '');
                     $this->form_validation->set_rules($config);
+                    echo "<pre>"; print_r($this->input->post()); echo "</pre>"; die;
                     if ($this->form_validation->run() === TRUE) {
+                        echo "<pre>"; print_r($post); echo "</pre>"; die;
 
                         $save_data['name'] = $this->db->escape_str($this->input->post("signup_name"));
                         $save_data['email'] = $this->db->escape_str($this->input->post('signup_email'));
