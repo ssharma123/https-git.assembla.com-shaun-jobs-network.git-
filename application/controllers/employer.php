@@ -74,6 +74,7 @@ class Employer extends MY_EmployerController {
         $data = array();
         $status = "";
         $msg = "";
+        var_dump($step); die;
         if ($step >= 1 && $step <= 2) {
 
             if ($step == 1) {
