@@ -126,6 +126,9 @@ class Employer extends MY_EmployerController {
 
                 $form_process = $this->input->post("form_process");
                 $post = $this->input->post();
+                
+                echo "<pre>"; print_r($post); echo "</pre>"; die;
+
                 if (isset($form_process) && $form_process == "yes") {
 
                     $this->load->library('form_validation');
