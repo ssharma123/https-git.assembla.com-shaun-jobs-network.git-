@@ -1034,10 +1034,6 @@ class Employee_dashboard extends MY_EmployerController {
         else{
             $send_email = FALSE;
         }
-        var_dump($setting); 
-        var_dump($job_apply['jobseeker_id']); 
-        var_dump($send_email); 
-        die;
         if($send_email){
             $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
             $email_data['to'] = $jobseeker['email'];
@@ -1053,7 +1049,7 @@ class Employee_dashboard extends MY_EmployerController {
         
         // send text to jobseeker
         $send_text = TRUE;
-        if( isset($setting['when_match_phone']) && $setting['when_match_phone'] == 1 ){
+        if( (isset($setting['when_match_phone']) && $setting['when_match_phone'] == 1 ) || $setting == FALSE ){
             $send_text = TRUE;
         }
         else{
@@ -1084,7 +1080,7 @@ class Employee_dashboard extends MY_EmployerController {
         // if job seeker setting is yes or default
         $setting = $this->jobseeker_settings->jobseekers_setttings_get_by_jobseeker($job_apply['jobseeker_id']);
         $send_email = TRUE;
-        if( isset($setting['when_interview_offer_email']) && $setting['when_interview_offer_email'] == 1 ){
+        if( (isset($setting['when_interview_offer_email']) && $setting['when_interview_offer_email'] == 1 ) || $setting == FALSE ){
             $send_email = TRUE;
         }
         else{
@@ -1107,7 +1103,7 @@ class Employee_dashboard extends MY_EmployerController {
         
         // send text to jobseeker
         $send_text = TRUE;
-        if( isset($setting['when_interview_offer_phone']) && $setting['when_interview_offer_phone'] == 1 ){
+        if( ( isset($setting['when_interview_offer_phone']) && $setting['when_interview_offer_phone'] == 1) || $setting == FALSE ){
             $send_text = TRUE;
         }
         else{
@@ -1145,7 +1141,7 @@ class Employee_dashboard extends MY_EmployerController {
         // if job seeker setting is yes or default
         $setting = $this->jobseeker_settings->jobseekers_setttings_get_by_jobseeker($job_apply['jobseeker_id']);
         $send_email = TRUE;
-        if( isset($setting['when_face_2_face_offer_email']) && $setting['when_face_2_face_offer_email'] == 1 ){
+        if( (isset($setting['when_face_2_face_offer_email']) && $setting['when_face_2_face_offer_email'] == 1) || $setting == FALSE ){
             $send_email = TRUE;
         }
         else{
@@ -1172,7 +1168,7 @@ class Employee_dashboard extends MY_EmployerController {
         
         // send text to jobseeker
         $send_text = TRUE;
-        if( isset($setting['when_face_2_face_offer_phone']) && $setting['when_face_2_face_offer_phone'] == 1 ){
+        if( (isset($setting['when_face_2_face_offer_phone']) && $setting['when_face_2_face_offer_phone'] == 1) || $setting == FALSE ){
             $send_text = TRUE;
         }
         else{
