@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <td>
-                    Face To Face <br><br>
+                    You're on a roll.  You have been offered a face to face. <br><br>
                     Job Internal ID : {JOB_INTERNAL_ID}<br>
                     Job Heading : {JOB_HEADING}<br>
                     <br><br>

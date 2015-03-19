@@ -41,7 +41,7 @@
     <div>
         <br><br>
         <div class="ng-binding">
-            <strong>Email:</strong> <span id="changed_email_txt">numan@test.com </span> <a href="javascript:void(0);" id="change_email_link">Change Email</a>
+            <strong>Email:</strong> <span id="changed_email_txt"><?php echo ( isset($jobseeker['email']) ) ? $jobseeker['email'] : "" ; ?> </span> <a href="javascript:void(0);" id="change_email_link">Change Email</a>
             <br>
             <div id="change_email_div" style="display: none;">
                 <form id="change_email_form" method="post" action="">

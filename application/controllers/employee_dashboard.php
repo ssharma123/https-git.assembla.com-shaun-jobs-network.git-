@@ -1128,32 +1128,70 @@ class Employee_dashboard extends MY_EmployerController {
     }
     
     function job_applied_status_face_2_face($job_apply){
+        
         $this->load->model('jobseeker_model', 'jobseeker');
         $this->load->model('jobseeker_notifications_model', 'notification');
         
+        // You're on a roll.  You have been offered a face to face.
         $noti_data["jobseeker_id"] = $job_apply["jobseeker_id"];
         $noti_data["employer_id"] = $job_apply["employer_id"];
         $noti_data["job_id"] = $job_apply["job_id"];
         $noti_data["job_applied_id"] = $job_apply["id"];
         $this->notification->jobseeker_notifications_add($noti_data);
         
-        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
-        $email_data['to'] = $jobseeker['email'];
-//        $email_data['to'] = 'numan.hassan@purelogics.net';
-        $email_data['subject'] = "Job - Face 2 Face";
-        $email_data['job_applied_id'] = $job_apply['id'];
+        // if job seeker setting is yes or default
+        $setting = $this->jobseeker_settings->jobseekers_setttings_get_by_jobseeker($job_apply['jobseeker_id']);
+        $send_email = TRUE;
+        if( isset($setting['when_face_2_face_offer_email']) && $setting['when_face_2_face_offer_email'] == 1 ){
+            $send_email = TRUE;
+        }
+        else{
+            $send_email = FALSE;
+        }
         
-        $job = $this->jobs->jobs_get($job_apply['job_id']);
-        $job_apply = $this->jobs->jobs_applied_get($job_apply['id']);
-        $patterns = array(
-            '{JOB_HEADING}' => $job['job_headline'],
-            '{JOB_INTERNAL_ID}' => $job['internal_id'],
-            '{DATE_1}' => formate_date($job_apply['f2f_date_1']),
-            '{DATE_2}' => formate_date($job_apply['f2f_date_2']),
-            '{DATE_3}' => formate_date($job_apply['f2f_date_3'])
-        );
-        send_template_email("job/face_2_face",$email_data, $patterns);
+        if($send_email){
+            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            $email_data['to'] = $jobseeker['email'];
+            $email_data['subject'] = "Job - Face 2 Face";
+            $email_data['job_applied_id'] = $job_apply['id'];
+
+            $job = $this->jobs->jobs_get($job_apply['job_id']);
+            $job_apply = $this->jobs->jobs_applied_get($job_apply['id']);
+            $patterns = array(
+                '{JOB_HEADING}' => $job['job_headline'],
+                '{JOB_INTERNAL_ID}' => $job['internal_id'],
+                '{DATE_1}' => formate_date($job_apply['f2f_date_1']),
+                '{DATE_2}' => formate_date($job_apply['f2f_date_2']),
+                '{DATE_3}' => formate_date($job_apply['f2f_date_3'])
+            );
+            send_template_email("job/face_2_face",$email_data, $patterns);
+        }
         
+        // send text to jobseeker
+        $send_text = TRUE;
+        if( isset($setting['when_face_2_face_offer_phone']) && $setting['when_face_2_face_offer_phone'] == 1 ){
+            $send_text = TRUE;
+        }
+        else{
+            $send_text = FALSE;
+        }
+        if($send_text){
+            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            $job = $this->jobs->jobs_get($job_apply['job_id']);
+            $job_apply = $this->jobs->jobs_applied_get($job_apply['id']);
+            
+            $this->load->library('twilio');
+            $from = '+13126354633';
+            $to = $jobseeker['phone'];
+            
+            $message = "You're on a roll.  You have been offered a face to face. "."\n";
+            $message .= "Job Heading : ".$job['job_headline']."\n";
+            $message .= "Job Internal ID : ".$job['internal_id']."\n";
+            $message .= "Date 1 : ".$job_apply['f2f_date_1']."\n";
+            $message .= "Date 2 : ".$job_apply['f2f_date_2']."\n";
+            $message .= "Date 3 : ".$job_apply['f2f_date_3']."\n";
+            $response = $this->twilio->sms($from, $to, $message);
+        }
     }
     
     public function popup_face_2_face(){

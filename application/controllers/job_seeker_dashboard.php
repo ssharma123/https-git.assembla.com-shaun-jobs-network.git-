@@ -231,6 +231,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             redirect('job_seeker/signin');
         }
         $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
         
         $data["setting"] = $this->settings->jobseekers_setttings_get_by_jobseeker( $jobseeker_id );
         $data['is_default'] = TRUE;
