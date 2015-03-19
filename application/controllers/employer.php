@@ -600,6 +600,7 @@ class Employer extends MY_EmployerController {
     public function linkedin_connect_save(){
         $this->layout = 'blank';
         $status = '';
+        $redirect = '';
         $data['linkedin_id'] = $this->input->post('id');
         $data['name'] = $this->input->post('name');
         $data['email'] = $this->input->post('email');
@@ -618,31 +619,40 @@ class Employer extends MY_EmployerController {
                 $update_data['linkedin_id'] = $data['linkedin_id'];
                 $r = $this->employer->employers_update($user_exist_email['id'], $update_data);
             } else {
-                $r = $this->employer->employers_add($data);
                 
+                    $query['signup_name'] = $data['name'];
+                    $query['signup_email'] = $data['email'];
+                    $query['linkedin_id'] = $data['linkedin_id'];
+                    $query['no_password'] = "yes";
+                    $query['social_connect'] = "true";
+                    $status = 'ok';
+                    $redirect = site_url( 'employer/signup/2?'.http_build_query($query) );
+                    
+//                $r = $this->employer->employers_add($data);
                 // Send Register email Here
-                $email_data['to'] = $data['email'];
-                $email_data['subject'] = "Welcome";
-                $email_data["password"] = $random_pass;
-
-                $patterns = array(
-                    '{EMAIL}' => $data['email'],
-                    '{PASSWORD}' => $email_data["password"]
-                );
-                send_template_email("employer/register",$email_data, $patterns);
+//                $email_data['to'] = $data['email'];
+//                $email_data['subject'] = "Welcome";
+//                $email_data["password"] = $random_pass;
+//
+//                $patterns = array(
+//                    '{EMAIL}' => $data['email'],
+//                    '{PASSWORD}' => $email_data["password"]
+//                );
+//                send_template_email("employer/register",$email_data, $patterns);
             }
-
-            if ($r) {
-                $id = $r;
-                $employer = $this->employer->employers_get($id);
-                unset($employer['password']);
-                $this->session->set_userdata('user_id', $employer['id']);
-                $this->session->set_userdata('user_type', 'employer');
-                $this->session->set_userdata('employer', $employer);
-                $status = 'ok';
-                // send email Create account  
-            } else {
-                $status = 'error';
+            if($redirect == ""){
+                if ($r) {
+                    $id = $r;
+                    $employer = $this->employer->employers_get($id);
+                    unset($employer['password']);
+                    $this->session->set_userdata('user_id', $employer['id']);
+                    $this->session->set_userdata('user_type', 'employer');
+                    $this->session->set_userdata('employer', $employer);
+                    $status = 'ok';
+                    // send email Create account  
+                } else {
+                    $status = 'error';
+                }
             }
         } else {
             $employer = $user_exist;
