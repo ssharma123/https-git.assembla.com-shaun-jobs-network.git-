@@ -233,6 +233,11 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
         
         $data["setting"] = $this->settings->jobseekers_setttings_get_by_jobseeker( $jobseeker_id );
+        $data['is_default'] = TRUE;
+        if($data["setting"]){
+            $data['is_default'] = FALSE;
+        }
+        
         $html = $this->load->view('job_seeker/dashboard/tab_settings', $data, TRUE);
 
         $array = array(

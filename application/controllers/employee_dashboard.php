@@ -99,6 +99,10 @@ class Employee_dashboard extends MY_EmployerController {
         $data['sub_data'] = $sub_data;
         
         $data["setting"] = $this->settings->employers_setttings_get_by_employer($data['employer']['id']);
+        $data['is_default'] = TRUE;
+        if($data["setting"]){
+            $data['is_default'] = FALSE;
+        }
         
         $html = $this->load->view('employer/dashboard/settings', $data, TRUE);
 

@@ -12,32 +12,32 @@
         </div>
         <div class="sec_row">
             <div class="sec1">When there is a match</div>
-            <div class="sec2"><input type="checkbox" id="when_match_email" name="when_match_email" <?php echo (isset($setting['when_match_email']) && $setting['when_match_email'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
-            <div class="sec3"><input type="checkbox" id="when_match_phone" name="when_match_phone" <?php echo (isset($setting['when_match_phone']) && $setting['when_match_phone'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec2"><input type="checkbox" id="when_match_email" name="when_match_email" <?php echo ( (isset($setting['when_match_email']) && $setting['when_match_email'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec3"><input type="checkbox" id="when_match_phone" name="when_match_phone" <?php echo ( (isset($setting['when_match_phone']) && $setting['when_match_phone'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
             <div class="clearfix"></div>
         </div>
         <div class="sec_row">
             <div class="sec1">When I have an interview offer</div>
-            <div class="sec2"><input type="checkbox" id="when_interview_offer_email" name="when_interview_offer_email" <?php echo (isset($setting['when_interview_offer_email']) && $setting['when_interview_offer_email'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
-            <div class="sec3"><input type="checkbox" id="when_interview_offer_phone" name="when_interview_offer_phone" <?php echo (isset($setting['when_interview_offer_phone']) && $setting['when_interview_offer_phone'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec2"><input type="checkbox" id="when_interview_offer_email" name="when_interview_offer_email" <?php echo ( (isset($setting['when_interview_offer_email']) && $setting['when_interview_offer_email'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec3"><input type="checkbox" id="when_interview_offer_phone" name="when_interview_offer_phone" <?php echo ( (isset($setting['when_interview_offer_phone']) && $setting['when_interview_offer_phone'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
             <div class="clearfix"></div>
         </div>
         <div class="sec_row">
             <div class="sec1">When I am offered a face to face interview</div>
-            <div class="sec2"><input type="checkbox" id="when_face_2_face_offer_email" name="when_face_2_face_offer_email" <?php echo (isset($setting['when_face_2_face_offer_email']) && $setting['when_face_2_face_offer_email'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
-            <div class="sec3"><input type="checkbox" id="when_face_2_face_offer_phone" name="when_face_2_face_offer_phone" <?php echo (isset($setting['when_face_2_face_offer_phone']) && $setting['when_face_2_face_offer_phone'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec2"><input type="checkbox" id="when_face_2_face_offer_email" name="when_face_2_face_offer_email" <?php echo ( (isset($setting['when_face_2_face_offer_email']) && $setting['when_face_2_face_offer_email'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec3"><input type="checkbox" id="when_face_2_face_offer_phone" name="when_face_2_face_offer_phone" <?php echo ( (isset($setting['when_face_2_face_offer_phone']) && $setting['when_face_2_face_offer_phone'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
             <div class="clearfix"></div>
         </div>
         <div class="sec_row">
             <div class="sec1">When a job offer is made</div>
-            <div class="sec2"><input type="checkbox" id="when_job_offer_email" name="when_job_offer_email" <?php echo (isset($setting['when_job_offer_email']) && $setting['when_job_offer_email'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
-            <div class="sec3"><input type="checkbox" id="when_job_offer_phone" name="when_job_offer_phone" <?php echo (isset($setting['when_job_offer_phone']) && $setting['when_job_offer_phone'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec2"><input type="checkbox" id="when_job_offer_email" name="when_job_offer_email" <?php echo ( (isset($setting['when_job_offer_email']) && $setting['when_job_offer_email'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec3"><input type="checkbox" id="when_job_offer_phone" name="when_job_offer_phone" <?php echo ( (isset($setting['when_job_offer_phone']) && $setting['when_job_offer_phone'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
             <div class="clearfix"></div>
         </div>
         <div class="sec_row">
             <div class="sec1">All other status updates</div>
-            <div class="sec2"><input type="checkbox" id="when_status_update_email" name="when_status_update_email" <?php echo (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
-            <div class="sec3"><input type="checkbox" id="when_status_update_phone" name="when_status_update_phone" <?php echo (isset($setting['when_status_update_phone']) && $setting['when_status_update_phone'] == 1) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec2"><input type="checkbox" id="when_status_update_email" name="when_status_update_email" <?php echo ( (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
+            <div class="sec3"><input type="checkbox" id="when_status_update_phone" name="when_status_update_phone" <?php echo ( (isset($setting['when_status_update_phone']) && $setting['when_status_update_phone'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
             <div class="clearfix"></div>
         </div>
         </form>
