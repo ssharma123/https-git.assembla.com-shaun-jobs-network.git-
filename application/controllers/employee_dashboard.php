@@ -1034,7 +1034,10 @@ class Employee_dashboard extends MY_EmployerController {
         else{
             $send_email = FALSE;
         }
-        
+        var_dump($setting); 
+        var_dump($job_apply['jobseeker_id']); 
+        var_dump($send_email); 
+        die;
         if($send_email){
             $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
             $email_data['to'] = $jobseeker['email'];
