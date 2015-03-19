@@ -10,6 +10,9 @@
             <div class="sec3"><i class="fa fa-mobile-phone"></i> <strong>Phone</strong></div>
             <div class="clearfix"></div>
         </div>
+        <?php 
+        /*
+         * 
         <div class="sec_row">
             <div class="sec1">When there is a match</div>
             <div class="sec2"><input type="checkbox" id="when_match_email" name="when_match_email" <?php echo ( (isset($setting['when_match_email']) && $setting['when_match_email'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
@@ -34,6 +37,9 @@
             <div class="sec3"><input type="checkbox" id="when_job_offer_phone" name="when_job_offer_phone" <?php echo ( (isset($setting['when_job_offer_phone']) && $setting['when_job_offer_phone'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
             <div class="clearfix"></div>
         </div>
+        * 
+        */
+        ?>
         <div class="sec_row">
             <div class="sec1">All other status updates</div>
             <div class="sec2"><input type="checkbox" id="when_status_update_email" name="when_status_update_email" <?php echo ( (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) || ($is_default == TRUE) ) ? ' checked="checked" ' : ""; ?> ></div>
