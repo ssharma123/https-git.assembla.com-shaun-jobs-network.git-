@@ -14,6 +14,7 @@ class Employee_dashboard extends MY_EmployerController {
         $this->load->model('employers_settings_model', 'settings');
         $this->load->model('employers_subscription_model', 'employers_subscription');
         $this->load->model('specialty_model', 'specialty');
+        $this->load->model('jobseeker_settings_model', 'jobseeker_settings');
     }
     
     public function index() {
@@ -1021,18 +1022,53 @@ class Employee_dashboard extends MY_EmployerController {
         $this->load->model('jobseeker_model', 'jobseeker');
         
         // if job seeker setting is yes or default
+        $setting = $this->jobseeker_settings->jobseekers_setttings_get_by_jobseeker($jobseeker_id);
+        $send_email = TRUE;
+        if( isset($setting['when_match_email']) && $setting['when_match_email'] == 1 ){
+            $send_email = TRUE;
+        }
+        else{
+            $send_email = FALSE;
+        }
         
-        
-        $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
-        $email_data['to'] = $jobseeker['email'];
-        $email_data['subject'] = "Job Matched";
+        if($send_email){
+            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            $email_data['to'] = $jobseeker['email'];
+            $email_data['subject'] = "Job Matched";
 
-        $job = $this->jobs->jobs_get($job_apply['job_id']);
-        $patterns = array(
-            '{JOB_HEADING}' => $job['job_headline'],
-            '{JOB_INTERNAL_ID}' => $job['internal_id']
-        );
-        send_template_email("job/matched",$email_data, $patterns);
+            $job = $this->jobs->jobs_get($job_apply['job_id']);
+            $patterns = array(
+                '{JOB_HEADING}' => $job['job_headline'],
+                '{JOB_INTERNAL_ID}' => $job['internal_id']
+            );
+            send_template_email("job/matched",$email_data, $patterns);
+        }
+        
+        // send text to jobseeker
+        $send_text = TRUE;
+        if( isset($setting['when_match_phone']) && $setting['when_match_phone'] == 1 ){
+            $send_text = TRUE;
+        }
+        else{
+            $send_text = FALSE;
+        }
+        
+        if($send_text){
+            
+            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            $job = $this->jobs->jobs_get($job_apply['job_id']);
+            
+            $this->load->library('twilio');
+            $from = '+13126354633';
+            $to = $jobseeker['phone'];
+            
+            $message = "Job was Matched "."\n";
+            $message .= "Job Heading : ".$job['job_headline']."\n";
+            $message .= "Job Internal ID : ".$job['internal_id']."\n";
+            $response = $this->twilio->sms($from, $to, $message);
+            
+        }
+        
         
     }
     function job_applied_status_interview($job_apply){
