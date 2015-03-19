@@ -663,7 +663,7 @@ class Employer extends MY_EmployerController {
             $status = 'ok';
         }
 
-        echo json_encode(array('status' => $status));
+        echo json_encode(array('status' => $status, 'redirect'=>$redirect));
         die;
     }
     
