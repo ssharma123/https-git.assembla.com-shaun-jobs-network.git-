@@ -1127,7 +1127,9 @@ class Employee_dashboard extends MY_EmployerController {
     }
     
     function job_applied_status_face_2_face($job_apply){
-        
+        error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
         $this->load->model('jobseeker_model', 'jobseeker');
         $this->load->model('jobseeker_notifications_model', 'notification');
         
