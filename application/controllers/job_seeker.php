@@ -320,7 +320,7 @@ class Job_seeker extends MY_Job_seekerController {
                     $send_email = FALSE;
                 }
                 if($send_email){
-                    $employer = $this->employer->employers_get($apply['employer_id']);
+                    $employer = $this->employer->employers_get($job_applied_data['employer_id']);
                     $jobseeker = $this->jobseeker->jobseekers_get($job_applied_data['jobseeker_id']);
                     $email_data['to'] = $employer['email'];
                     $email_data['subject'] = "Job Applied";
@@ -341,7 +341,7 @@ class Job_seeker extends MY_Job_seekerController {
                     $send_text = FALSE;
                 }
                 if($send_text){
-                    $employer = $this->employer->employers_get($apply['employer_id']);
+                    $employer = $this->employer->employers_get($job_applied_data['employer_id']);
                     $jobseeker = $this->jobseeker->jobseekers_get($job_applied_data['jobseeker_id']);
                     $job = $this->jobs->jobs_get($job_applied_data['job_id']);
 
