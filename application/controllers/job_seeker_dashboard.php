@@ -2474,6 +2474,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             $jobseeker_id = $apply["jobseeker_id"];
                             $employer_id = $apply["employer_id"];
                             $id = $apply["id"];
+                            
+                            $this->email_employer_interview_completed($apply);
 
                             $q = "SELECT jobs_applied.* FROM jobs_applied WHERE jobseeker_id = '$jobseeker_id' AND employer_id = '$employer_id' AND id != '$id' AND id IN ( SELECT job_applied_id FROM jobseekers_video_interview )  ";
                             $r = $this->db->query($q);
@@ -2486,25 +2488,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                                     $update_data["interview_complete"] = 1;
                                     $this->jobs->jobs_applied_update($apply['id'] , $update_data);
 
-                                    // get employer detail and mail him
-                                    $this->load->model('employer_model', 'employer');
-                                    $employer = $this->employer->employers_get($apply['employer_id']);
-                                    if($employer){
-                                        // email employer
-
-                                        $email_data['to'] = $employer['email'];
-//                                        $email_data['to'] = 'numan.hassan@purelogics.net';
-                                        $email_data['subject'] = "Job Interview Complete";
-                                        $email_data['link'] = $interview_data["rvis_link"];
-                                        $job = $this->jobs->jobs_get($apply['job_id']);
-
-                                        $patterns = array(
-                                            '{JOB_HEADING}' => $job['job_headline'],
-                                            '{JOB_INTERNAL_ID}' => $job['internal_id']
-                                        );
-                                        send_template_email("job/interview_complete",$email_data, $patterns);
-
-                                    }
+                                    $this->email_employer_interview_completed($apply);
 
                                 }
 
@@ -2522,6 +2506,27 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         
         return true;
         
+    }
+    function email_employer_interview_completed($apply){
+        // get employer detail and mail him
+        $this->load->model('employer_model', 'employer');
+        $employer = $this->employer->employers_get($apply['employer_id']);
+        if($employer){
+            // email employer
+
+            $email_data['to'] = $employer['email'];
+//                                        $email_data['to'] = 'numan.hassan@purelogics.net';
+            $email_data['subject'] = "Job Interview Complete";
+            $email_data['link'] = $interview_data["rvis_link"];
+            $job = $this->jobs->jobs_get($apply['job_id']);
+
+            $patterns = array(
+                '{JOB_HEADING}' => $job['job_headline'],
+                '{JOB_INTERNAL_ID}' => $job['internal_id']
+            );
+            send_template_email("job/interview_complete",$email_data, $patterns);
+
+        }
     }
 
     function upload_resume_to_sajari(){
