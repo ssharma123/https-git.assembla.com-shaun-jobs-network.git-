@@ -1305,8 +1305,6 @@ class Employee_dashboard extends MY_EmployerController {
         
     }
     function send_email_to_jobseeker_job_offer($id){
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
 
         $this->load->model('jobseeker_model', 'jobseeker');
         $job_apply = $this->jobs->jobs_applied_get($id);
@@ -1332,7 +1330,7 @@ class Employee_dashboard extends MY_EmployerController {
                 '{JOB_HEADING}' => $job['job_headline'],
                 '{JOB_INTERNAL_ID}' => $job['internal_id']
             );
-            send_template_email("job/matched",$email_data, $patterns);
+            send_template_email("job/job_offer",$email_data, $patterns);
         }
         
         // send text to jobseeker
