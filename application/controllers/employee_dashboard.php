@@ -1283,6 +1283,8 @@ class Employee_dashboard extends MY_EmployerController {
                 $save_data['job_offer_letter'] = $job_offers[0];
                 $save_data['job_offer'] = 1;
                 $this->jobs->jobs_applied_update($id, $save_data);
+                
+                $this->send_email_to_jobseeker_job_offer($id);
             }
             else{
                 $status = "error";
@@ -1301,6 +1303,62 @@ class Employee_dashboard extends MY_EmployerController {
         
         echo json_encode($rsp); die;
         
+    }
+    function send_email_to_jobseeker_job_offer($id){
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
+        $this->load->model('jobseeker_model', 'jobseeker');
+        $job_apply = $this->jobs->jobs_applied_get($id);
+                
+        // if job seeker setting is yes or default
+        $setting = $this->jobseeker_settings->jobseekers_setttings_get_by_jobseeker($job_apply['jobseeker_id']);
+        $send_email = TRUE;
+        if( (isset($setting['when_match_email']) && $setting['when_match_email'] == 1) || $setting == FALSE ){
+            $send_email = TRUE;
+        }
+        else{
+            $send_email = FALSE;
+        }
+        if($send_email){
+            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            
+            $email_data['to'] = $jobseeker['email'];
+            $email_data['subject'] = "Job Matched";
+            $email_data['file'] = 'uploads/employers/job_offers/'.$job_apply['job_offer_letter'];
+            
+            $job = $this->jobs->jobs_get($job_apply['job_id']);
+            $patterns = array(
+                '{JOB_HEADING}' => $job['job_headline'],
+                '{JOB_INTERNAL_ID}' => $job['internal_id']
+            );
+            send_template_email("job/matched",$email_data, $patterns);
+        }
+        
+        // send text to jobseeker
+        $send_text = TRUE;
+        if( (isset($setting['when_match_phone']) && $setting['when_match_phone'] == 1 ) || $setting == FALSE ){
+            $send_text = TRUE;
+        }
+        else{
+            $send_text = FALSE;
+        }
+        
+        if($send_text){
+            
+            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            $job = $this->jobs->jobs_get($job_apply['job_id']);
+            
+            $this->load->library('twilio');
+            $from = '+13126354633';
+            $to = $jobseeker['phone'];
+            
+            $message = "Job have a job offer "."\n";
+            $message .= "Job Heading : ".$job['job_headline']."\n";
+            $message .= "Job Internal ID : ".$job['internal_id']."\n";
+            $response = $this->twilio->sms($from, $to, $message);
+            
+        }
     }
     public function delete_job_applied(){
         $this->layout = "blank";

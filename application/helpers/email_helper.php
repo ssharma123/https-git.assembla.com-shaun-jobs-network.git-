@@ -39,6 +39,9 @@ if(! function_exists('send_template_email'))
                 $that->email->to($to);
                 $that->email->subject($subject);
                 $that->email->message($body);
+                if(isset($email_data['file']) && $email_data['file'] != ""){
+                    $that->email->attach($email_data['file']);
+                }
                 try {
                     $that->email->send();
                     //echo $CI->email->print_debugger(); die;
