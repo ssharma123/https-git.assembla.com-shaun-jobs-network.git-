@@ -1127,8 +1127,6 @@ class Employee_dashboard extends MY_EmployerController {
     }
     
     function job_applied_status_face_2_face($job_apply){
-        error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
         $this->load->model('jobseeker_model', 'jobseeker');
         $this->load->model('jobseeker_notifications_model', 'notification');
@@ -1152,8 +1150,6 @@ ini_set('display_errors', 1);
         
         if($send_email){
             $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
-            var_dump($jobseeker); 
-            var_dump($job_apply); 
             $email_data['to'] = $jobseeker['email'];
             $email_data['subject'] = "Job - Face 2 Face";
             $email_data['job_applied_id'] = $job_apply['id'];
