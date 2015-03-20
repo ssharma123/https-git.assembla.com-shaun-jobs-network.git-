@@ -20,6 +20,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $this->load->model('specialty_model', 'specialty');
         $this->load->model('jobseeker_settings_model', 'settings');
         $this->load->model('jobseeker_notifications_model', 'notification');
+        $this->load->model('employers_settings_model', 'employer_settings');
     }
     
     public function index() {
@@ -2063,6 +2064,57 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             $this->notification->jobseeker_notifications_update($notification[0]['id'] , $save);
                         }
                         
+                        // send email to employer for face 2 face
+                        $this->load->model('employer_model', 'employer');
+                        $employer = $this->employer->employers_get($apply['employer_id']);
+                        if($employer){
+                            
+                            $setting = $this->employer_settings->jobseekers_setttings_get_by_jobseeker($apply['employer_id']);
+                            $send_email = TRUE;
+                            if( (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) || $setting == FALSE ){
+                                $send_email = TRUE;
+                            }
+                            else{
+                                $send_email = FALSE;
+                            }
+                            if($send_email){
+                                $jobseeker = $this->jobseeker->jobseekers_get($apply['jobseeker_id']);
+                                $email_data['to'] = $employer['email'];
+                                $email_data['subject'] = "Face 2 Face Date Selected";
+
+                                $job = $this->jobs->jobs_get($apply['job_id']);
+                                $patterns = array(
+                                    '{JOBSEEKER_NAME}' => $jobseeker['first_name'].' '.$jobseeker['last_name'],
+                                    '{SELECTED_DATE}' => date('Y-m-d' ,$date),
+                                    '{JOB_HEADING}' => $job['job_headline'],
+                                    '{JOB_INTERNAL_ID}' => $job['internal_id']
+                                );
+                                send_template_email("job/face_2_face_employer",$email_data, $patterns);
+                            }
+                            $send_text = TRUE;
+                            if( (isset($setting['when_status_update_phone']) && $setting['when_status_update_phone'] == 1) || $setting == FALSE ){
+                                $send_text = TRUE;
+                            }
+                            else{
+                                $send_text = FALSE;
+                            }
+                            if($send_text){
+                                $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+                                $job = $this->jobs->jobs_get($job_apply['job_id']);
+
+                                $this->load->library('twilio');
+                                $from = '+13126354633';
+                                $to = $employer['billing_phone'];
+
+                                $message = $jobseeker['first_name'].' '.$jobseeker['last_name']."have accepted the following date "."\n";
+                                $message .= "Date Selected : ".date('Y-m-d' ,$date)."\n";
+                                $message .= "Job Heading : ".$job['job_headline']."\n";
+                                $message .= "Job Internal ID : ".$job['internal_id']."\n";
+                                $response = $this->twilio->sms($from, $to, $message);
+                            }
+                            
+                        }
+                        
                         $this->session->set_flashdata("select_date_status","ok");
                         $this->session->set_flashdata("select_date_msg","You have successfully selected the date ");
                         
@@ -2120,6 +2172,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         $this->session->set_flashdata("select_date_status","ok");
                         $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
 
+                        // email employer interview accept
+                        $this->send_job_accept_interview_email_text_to_employer($job_apply);
+                        
                         // check already login
                         $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
 
@@ -2138,9 +2193,6 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         
                     }
                 }
-                
-                        
-                
                 // else 
                 
                 
@@ -2188,6 +2240,11 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                             $this->session->set_flashdata("select_date_status","ok");
                             $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
 
+                            // email employer interview accept
+                            $this->send_job_accept_interview_email_text_to_employer($job_apply);
+                            
+                            // check already login
+                            
                             $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
                             $email_data['to'] = $jobseeker['email'];
 //                            $email_data['to'] = 'numan.hassan@purelogics.net';
@@ -2285,6 +2342,11 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         $this->session->set_flashdata("select_date_status","ok");
                         $this->session->set_flashdata("select_date_msg","You have successfully accepted the interview ");
                         
+                        // email employer interview accept
+                        $this->send_job_accept_interview_email_text_to_employer($job_apply);
+                        
+                        // check already login
+                        
                         // check already login
                         $session = $this->session->all_userdata();
                         if (isset($session['jobseeker'])) {
@@ -2316,6 +2378,50 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             return TRUE;
         }
         return FALSE;
+    }
+    
+    function send_job_accept_interview_email_text_to_employer($job_apply){
+        $setting = $this->employer_settings->jobseekers_setttings_get_by_jobseeker($apply['employer_id']);
+        $send_email = TRUE;
+        if( (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) || $setting == FALSE ){
+            $send_email = TRUE;
+        }
+        else{
+            $send_email = FALSE;
+        }
+        if($send_email){
+            $jobseeker = $this->jobseeker->jobseekers_get($apply['jobseeker_id']);
+            $email_data['to'] = $employer['email'];
+            $email_data['subject'] = "Interview Accepted";
+
+            $job = $this->jobs->jobs_get($apply['job_id']);
+            $patterns = array(
+                '{JOBSEEKER_NAME}' => $jobseeker['first_name'].' '.$jobseeker['last_name'],
+                '{JOB_HEADING}' => $job['job_headline'],
+                '{JOB_INTERNAL_ID}' => $job['internal_id']
+            );
+            send_template_email("job/interview_accept",$email_data, $patterns);
+        }
+        $send_text = TRUE;
+        if( (isset($setting['when_status_update_phone']) && $setting['when_status_update_phone'] == 1) || $setting == FALSE ){
+            $send_text = TRUE;
+        }
+        else{
+            $send_text = FALSE;
+        }
+        if($send_text){
+            $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            $job = $this->jobs->jobs_get($job_apply['job_id']);
+
+            $this->load->library('twilio');
+            $from = '+13126354633';
+            $to = $employer['billing_phone'];
+
+            $message = $jobseeker['first_name'].' '.$jobseeker['last_name']."have accepted the interview"."\n";
+            $message .= "Job Heading : ".$job['job_headline']."\n";
+            $message .= "Job Internal ID : ".$job['internal_id']."\n";
+            $response = $this->twilio->sms($from, $to, $message);
+        }
     }
     
     function offer_interview_webhook(){

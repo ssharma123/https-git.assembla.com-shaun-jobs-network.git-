@@ -1207,7 +1207,6 @@ class Employee_dashboard extends MY_EmployerController {
         echo json_encode($array);
         die;
     }
-    
     function save_face_2_face_dates(){
         $this->layout = "blank";
         
@@ -1241,7 +1240,6 @@ class Employee_dashboard extends MY_EmployerController {
         );
         echo json_encode($rsp); die;
     }
-    
     public function popup_job_offer(){
         $this->layout = "blank";
         
