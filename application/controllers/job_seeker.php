@@ -246,8 +246,6 @@ class Job_seeker extends MY_Job_seekerController {
         die;
     }
     public function do_apply_job_btn(){
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
         
         $this->layout = "blank";
         $data = array();
