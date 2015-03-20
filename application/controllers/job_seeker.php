@@ -303,6 +303,51 @@ class Job_seeker extends MY_Job_seekerController {
                 else{
                     $this->jobs->jobs_applied_add($job_applied_data);
                 }
+                
+                // send email to employer for job apply
+                
+                $setting = $this->employer_settings->employers_setttings_get_by_employer($job_applied_data['employer_id']);
+                $send_email = TRUE;
+                if( (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) || $setting == FALSE ){
+                    $send_email = TRUE;
+                }
+                else{
+                    $send_email = FALSE;
+                }
+                if($send_email){
+                    $jobseeker = $this->jobseeker->jobseekers_get($job_applied_data['jobseeker_id']);
+                    $email_data['to'] = $employer['email'];
+                    $email_data['subject'] = "Job Applied";
+
+                    $job = $this->jobs->jobs_get($job_applied_data['job_id']);
+                    $patterns = array(
+                        '{JOBSEEKER_NAME}' => $jobseeker['first_name'].' '.$jobseeker['last_name'],
+                        '{JOB_HEADING}' => $job['job_headline'],
+                        '{JOB_INTERNAL_ID}' => $job['internal_id']
+                    );
+                    send_template_email("job/interview_accept",$email_data, $patterns);
+                }
+                $send_text = TRUE;
+                if( (isset($setting['when_status_update_phone']) && $setting['when_status_update_phone'] == 1) || $setting == FALSE ){
+                    $send_text = TRUE;
+                }
+                else{
+                    $send_text = FALSE;
+                }
+                if($send_text){
+                    $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+                    $job = $this->jobs->jobs_get($job_apply['job_id']);
+
+                    $this->load->library('twilio');
+                    $from = '+13126354633';
+                    $to = $employer['billing_phone'];
+
+                    $message = $jobseeker['first_name'].' '.$jobseeker['last_name']."have applied for the job"."\n";
+                    $message .= "Job Heading : ".$job['job_headline']."\n";
+                    $message .= "Job Internal ID : ".$job['internal_id']."\n";
+                    $response = $this->twilio->sms($from, $to, $message);
+                }
+                
             }
             
         }
