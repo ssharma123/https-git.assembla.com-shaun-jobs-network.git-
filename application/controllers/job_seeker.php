@@ -305,7 +305,7 @@ class Job_seeker extends MY_Job_seekerController {
                 }
                 
                 // send email to employer for job apply
-                
+                $this->load->model('employers_settings_model', 'employer_settings');
                 $setting = $this->employer_settings->employers_setttings_get_by_employer($job_applied_data['employer_id']);
                 $send_email = TRUE;
                 if( (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) || $setting == FALSE ){
