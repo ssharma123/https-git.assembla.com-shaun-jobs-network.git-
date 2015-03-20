@@ -309,6 +309,8 @@ class Job_seeker extends MY_Job_seekerController {
                 
                 // send email to employer for job apply
                 $this->load->model('employers_settings_model', 'employer_settings');
+                $this->load->model('employer_model', 'employer');
+                        
                 $setting = $this->employer_settings->employers_setttings_get_by_employer($job_applied_data['employer_id']);
                 $send_email = TRUE;
                 if( (isset($setting['when_status_update_email']) && $setting['when_status_update_email'] == 1) || $setting == FALSE ){
@@ -318,6 +320,7 @@ class Job_seeker extends MY_Job_seekerController {
                     $send_email = FALSE;
                 }
                 if($send_email){
+                    $employer = $this->employer->employers_get($apply['employer_id']);
                     $jobseeker = $this->jobseeker->jobseekers_get($job_applied_data['jobseeker_id']);
                     $email_data['to'] = $employer['email'];
                     $email_data['subject'] = "Job Applied";
@@ -338,8 +341,9 @@ class Job_seeker extends MY_Job_seekerController {
                     $send_text = FALSE;
                 }
                 if($send_text){
-                    $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
-                    $job = $this->jobs->jobs_get($job_apply['job_id']);
+                    $employer = $this->employer->employers_get($apply['employer_id']);
+                    $jobseeker = $this->jobseeker->jobseekers_get($job_applied_data['jobseeker_id']);
+                    $job = $this->jobs->jobs_get($job_applied_data['job_id']);
 
                     $this->load->library('twilio');
                     $from = '+13126354633';
