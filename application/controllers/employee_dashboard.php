@@ -1149,10 +1149,11 @@ ini_set('display_errors', 1);
         else{
             $send_email = FALSE;
         }
-        var_dump($setting); 
-        var_dump($send_email); die;
+        
         if($send_email){
             $jobseeker = $this->jobseeker->jobseekers_get($job_apply['jobseeker_id']);
+            var_dump($jobseeker); 
+            var_dump($job_apply); 
             $email_data['to'] = $jobseeker['email'];
             $email_data['subject'] = "Job - Face 2 Face";
             $email_data['job_applied_id'] = $job_apply['id'];
