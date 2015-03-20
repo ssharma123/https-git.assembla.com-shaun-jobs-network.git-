@@ -13,11 +13,10 @@
             </tr>
             <tr>
                 <td>
-                    Job Completed <br><br>
+                    Interview have been completed for this job <br><br>
                     Job Internal ID : {JOB_INTERNAL_ID}<br>
                     Job Heading : {JOB_HEADING}<br>
                     <br><br>
-                    Interview have been completed for this job: <br>
                     
                 </td>
             </tr>
