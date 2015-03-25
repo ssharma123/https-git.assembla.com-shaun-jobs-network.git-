@@ -2559,18 +2559,21 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 
                 $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
                 
-
-                if($jobseeker['resume_id'] == "0"){
-                    // ADD to sajari
-                    $file_data = array(
+                $file_data = array(
                         "tmp_name" => $_FILES['resume']['tmp_name'][0],
                         "name" => $_FILES['resume']['name'][0],
                         "type" => $_FILES['resume']['type'][0]
                     );
+                
+                $rsp = $this->sajari->sajari_pharse_resume(array(), $file_data);
+                echo $rsp;
+                die;
 
-                    $rsp = $this->sajari->sajari_pharse_resume($params, $file_data);
-                    echo $rsp;
-                    die;
+                if($jobseeker['resume_id'] == "0"){
+                    // ADD to sajari
+                    
+
+                    
 //                    $save_data["resume_id"] = $sajari_doc_id;
                 }
                 else{
