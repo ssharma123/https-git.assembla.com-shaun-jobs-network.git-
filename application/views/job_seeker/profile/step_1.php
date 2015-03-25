@@ -118,7 +118,7 @@
                     
                     if (rsp_json.status === "ok") {
                        // everything is ok   
-                       console.log(rsp_json.data);
+//                       console.log(rsp_json.data);
                        
                         if(typeof rsp_json.data.exPhone !== "undefined"){
                             $("#phone").val(rsp_json.data.exPhone);
