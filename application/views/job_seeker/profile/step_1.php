@@ -120,16 +120,16 @@
                        // everything is ok   
                        console.log(rsp_json.data);
                        
-                        if(typeof rsp_json.exPhone !== "undefined"){
+                        if(typeof rsp_json.data.exPhone !== "undefined"){
                             $("#phone").val(rsp_json.exPhone);
                             $(".is_phone_number").keyup();
                         }
                         
-                        if(typeof rsp_json.firstname !== "undefined"){
+                        if(typeof rsp_json.data.firstname !== "undefined"){
                             $("#first_name").val(rsp_json.firstname);
                         }
                         
-                        if(typeof rsp_json.lastname !== "undefined"){
+                        if(typeof rsp_json.data.lastname !== "undefined"){
                             $("#last_name").val(rsp_json.lastname);
                         }
                             
