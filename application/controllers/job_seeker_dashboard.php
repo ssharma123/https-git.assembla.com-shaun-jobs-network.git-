@@ -2570,7 +2570,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                     $rsp = $this->sajari->sajari_pharse_resume($params, $file_data);
                     echo $rsp;
-                    
+                    die;
 //                    $save_data["resume_id"] = $sajari_doc_id;
                 }
                 else{
