@@ -2569,7 +2569,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                 $rsp = $sajari->sajari_pharse_resume(array(), $file_data);
                 
-                echo "<pre>"; print_r($rsp); echo "</pre>"; die;
+                echo "<pre>"; print_r($rsp['response']['redactedMeta']); echo "</pre>"; die;
                 
 
                 if($jobseeker['resume_id'] == "0"){
