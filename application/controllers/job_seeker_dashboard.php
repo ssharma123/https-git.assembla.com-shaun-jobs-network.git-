@@ -2567,8 +2567,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     );
                 
                 $rsp = $sajari->sajari_pharse_resume(array(), $file_data);
-                echo $rsp;
-                die;
+                
+                $rsp_data = json_decode($rsp,TRUE);
+                echo "<pre>"; print_r($rsp_data); echo "</pre>"; die;
+                
 
                 if($jobseeker['resume_id'] == "0"){
                     // ADD to sajari
