@@ -2566,6 +2566,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         "type" => $_FILES['resume']['type'][0]
                     );
                 
+                echo "<pre>"; print_r($file_data); echo "</pre>"; die;
+
                 $rsp = $sajari->sajari_pharse_resume(array(), $file_data);
                 
                 $rsp_data = json_decode($rsp,TRUE);
