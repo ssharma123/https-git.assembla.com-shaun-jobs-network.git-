@@ -2587,7 +2587,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             }
         }
         else{
-            $status = "ok";
+            $status = "error";
             $msg = "File not selected";
         }
         
