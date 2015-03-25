@@ -2531,7 +2531,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
     function upload_resume_to_sajari(){
         $this->layout = "blank";
-        $this->load->helper("sajari");
+        require 'application/libraries/Sajari/sajari.php';
+        $sajari = new Sajari();
         
         $jobseeker_id = ( $this->input->post("jobseeker_id") ) ? $this->input->post("jobseeker_id") : 0 ;
         
@@ -2565,7 +2566,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                         "type" => $_FILES['resume']['type'][0]
                     );
                 
-                $rsp = $this->sajari->sajari_pharse_resume(array(), $file_data);
+                $rsp = $sajari->sajari_pharse_resume(array(), $file_data);
                 echo $rsp;
                 die;
 
