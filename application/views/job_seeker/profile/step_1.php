@@ -121,16 +121,16 @@
                        console.log(rsp_json.data);
                        
                         if(typeof rsp_json.data.exPhone !== "undefined"){
-                            $("#phone").val(rsp_json.exPhone);
+                            $("#phone").val(rsp_json.data.exPhone);
                             $(".is_phone_number").keyup();
                         }
                         
                         if(typeof rsp_json.data.firstname !== "undefined"){
-                            $("#first_name").val(rsp_json.firstname);
+                            $("#first_name").val(rsp_json.data.firstname);
                         }
                         
                         if(typeof rsp_json.data.lastname !== "undefined"){
-                            $("#last_name").val(rsp_json.lastname);
+                            $("#last_name").val(rsp_json.data.lastname);
                         }
                             
                     }
