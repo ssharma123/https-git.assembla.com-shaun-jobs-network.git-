@@ -115,7 +115,7 @@ class Sajari {
         $params['collection'] = "medmatchjobs";
         $params['decoded'] = "1";
         
-        $post_data = http_build_query($params);
+        $post_data = $params;
          
         $post_data['inputfile'] = '@'.$file_data['tmp_name'].';filename='.$file_data['name'].';type='.$file_data['type'];
         
@@ -129,6 +129,7 @@ class Sajari {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_SAFE_UPLOAD, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         
         // Turn off the server and peer verification (TrustManager Concept).
