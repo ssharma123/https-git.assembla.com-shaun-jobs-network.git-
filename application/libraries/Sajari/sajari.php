@@ -106,6 +106,48 @@ class Sajari {
         }
     }
     
+    public function sajari_pharse_resume(array $params , $file_data = array() ) {
+        
+        $url = "https://www.sajari.com/api/fingerprint";
+        
+        $post_data = array();
+        $params['company'] = "medmatch";
+        $params['collection'] = "medmatchjobs";
+        $params['decoded'] = "1";
+        
+        $params['inputfile'] = '@'.$file_data['tmp_name'].';filename='.$file_data['name'].';type='.$file_data['type'];
+         
+        $post_data = http_build_query($params);
+        
+        $user = "5SHyDCxwMCi0HXTt";
+        $pass = "AVHRfLskQEUjEfdw";
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "$user:$pass"); // Your credentials goes here
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        
+        // Turn off the server and peer verification (TrustManager Concept).
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+
+
+        $response = curl_exec($ch);
+        
+        curl_close($ch);
+        
+        if ($response) {
+            $rsp = json_decode($response,TRUE);
+            return $rsp;
+        } else {
+            return false;
+        }
+    }
+    
 
 }
 

@@ -37,20 +37,20 @@ class Bloomapi {
 
         $status = "";
         if ($response) {
-            $rsp = json_decode($response,TRUE);
-            if(isset($rsp['result'])){
-                $result = $rsp['result'];
-                if( isset($result["type"]) ){
-                    $npi_type = $result["type"];
-                    if($npi_type == "individual"){
-                        $status = "invalid";
-                    }
-                    else{
+            if($response == "item not found"){
+                $status = "";
+            }
+            else{
+                $rsp = @json_decode($response,TRUE);
+                if(isset($rsp['result'])){
+                    $result = $rsp['result'];
+                    if( isset($result["type"]) ){
+                        $npi_type = $result["type"];
                         $status = "ok";
                     }
                 }
+                return $status;
             }
-            return $status;
         } else {
             return false;
         }

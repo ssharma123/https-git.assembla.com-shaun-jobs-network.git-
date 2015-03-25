@@ -2561,36 +2561,21 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 
 
                 if($jobseeker['resume_id'] == "0"){
-                // ADD to sajari
-                    $params = array(
-                        'inputfile' => array(
-                            "tmp_name" => $_FILES['resume']['tmp_name'][0],
-                            "name" => $_FILES['resume']['name'][0],
-                            "type" => $_FILES['resume']['type'][0]
-                        ),
-                        'decoded'=>'1',
-                        'meta' => array('title' => $resume[0])
+                    // ADD to sajari
+                    $file_data = array(
+                        "tmp_name" => $_FILES['resume']['tmp_name'][0],
+                        "name" => $_FILES['resume']['name'][0],
+                        "type" => $_FILES['resume']['type'][0]
                     );
-//                    echo "<pre>"; print_r($params); echo "</pre>"; die;
 
-                    $rsp = sajari_api("sajari_add", $params);
+                    $rsp = $this->sajari->sajari_pharse_resume($params, $file_data);
+                    echo $rsp;
                     
-                    $sajari_doc_id = $rsp->result;
-                    
-                    $save_data["resume_id"] = $sajari_doc_id;
+//                    $save_data["resume_id"] = $sajari_doc_id;
                 }
                 else{
                     // UPDATE to sajari 
-                    $params = array(
-                        'inputfile' => array(
-                            "tmp_name" => $_FILES['resume']['tmp_name'][0],
-                            "name" => $_FILES['resume']['name'][0],
-                            "type" => $_FILES['resume']['type'][0]
-                        ),
-                        'id' => $_FILES['resume']['tmp_name'][0]
-                    );
-
-                    $rsp = sajari_api("sajari_replace", $params);
+                     
                 }
                     
                 //
