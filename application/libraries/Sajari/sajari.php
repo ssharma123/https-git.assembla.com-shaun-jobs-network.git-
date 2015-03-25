@@ -115,7 +115,7 @@ class Sajari {
         $params['collection'] = "medmatchjobs";
         $params['decoded'] = "1";
         
-        $params['inputfile'] = '@'.$file_data['tmp_name'].';filename='.$file_data['name'].';type='.$file_data['type'];
+        //$params['inputfile'] = '@'.$file_data['tmp_name'].';filename='.$file_data['name'].';type='.$file_data['type'];
          
         $post_data = http_build_query($params);
         
