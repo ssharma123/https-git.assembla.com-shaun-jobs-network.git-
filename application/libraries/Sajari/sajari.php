@@ -108,7 +108,7 @@ class Sajari {
     
     public function sajari_pharse_resume(array $params , $file_data = array() ) {
         
-        $url = "https://www.sajari.com/api/fingerprint";
+        $url = "https://www.sajari.com/api/redact";
         
         $post_data = array();
         $params['company'] = "medmatch";
