@@ -118,6 +118,7 @@
                     console.log(rsp_json);
                     if (rsp_json.status === "ok") {
                        // everything is ok   
+                       
                     }
                     else{
                         $("#rsp_resume").html(rsp_json.msg).show();

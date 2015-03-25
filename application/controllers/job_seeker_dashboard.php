@@ -2533,6 +2533,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $this->layout = "blank";
         require 'application/libraries/Sajari/sajari.php';
         $sajari = new Sajari();
+        $resume_data = array();
         
         $jobseeker_id = ( $this->input->post("jobseeker_id") ) ? $this->input->post("jobseeker_id") : 0 ;
         
@@ -2553,10 +2554,9 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             $resume = $this->custom_image_lib->upload($_FILES['resume'], 'uploads/jobseeker/file_document/');
             
             if($resume){
-                $status = "ok";
-                $msg = "success";
 
                 $save_data['resume'] = $resume[0];
+                
                 
                 $jobseeker = $this->jobseeker->jobseekers_get($jobseeker_id);
                 
@@ -2569,22 +2569,12 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                 $rsp = $sajari->sajari_pharse_resume(array(), $file_data);
                 
-                echo "<pre>"; print_r($rsp['response']['redactedMeta']); echo "</pre>"; die;
+                if( isset($rsp['response']['redactedMeta']) && is_array($rsp['response']['redactedMeta']) && (count($rsp['response']['redactedMeta'])> 0) ){
+                    $resume_data = $rsp['response']['redactedMeta'];
+                    $status = "ok";
+                    $msg = "success";
+                }
                 
-
-                if($jobseeker['resume_id'] == "0"){
-                    // ADD to sajari
-                    
-
-                    
-//                    $save_data["resume_id"] = $sajari_doc_id;
-                }
-                else{
-                    // UPDATE to sajari 
-                     
-                }
-                    
-                //
                 $this->jobseeker->jobseekers_update($jobseeker_id , $save_data);
             }
             else{
@@ -2599,7 +2589,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         
         $rsp = array(
             "status" => $status,
-            "msg" => $msg
+            "msg" => $msg,
+            "data" => $resume_data
         );
         echo json_encode($rsp); die;
     }
