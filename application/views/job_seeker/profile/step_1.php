@@ -113,12 +113,26 @@
                 data: { jobseeker_id : '<?php echo $jobseeker['id'] ?>' },
                 success: function(rsp)
                 {
-                    console.log(rsp);
-                    rsp_json = $.parseJSON(rsp);
-                    console.log(rsp_json);
+                    
+                    var rsp_json = $.parseJSON(rsp);
+                    
                     if (rsp_json.status === "ok") {
                        // everything is ok   
+                       console.log(rsp_json.data);
                        
+                        if(typeof rsp_json.exPhone !== "undefined"){
+                            $("#phone").val(rsp_json.exPhone);
+                            $(".is_phone_number").keyup();
+                        }
+                        
+                        if(typeof rsp_json.firstname !== "undefined"){
+                            $("#first_name").val(rsp_json.firstname);
+                        }
+                        
+                        if(typeof rsp_json.lastname !== "undefined"){
+                            $("#last_name").val(rsp_json.lastname);
+                        }
+                            
                     }
                     else{
                         $("#rsp_resume").html(rsp_json.msg).show();
