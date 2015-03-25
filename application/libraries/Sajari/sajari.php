@@ -129,7 +129,6 @@ class Sajari {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_SAFE_UPLOAD, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         
         // Turn off the server and peer verification (TrustManager Concept).
