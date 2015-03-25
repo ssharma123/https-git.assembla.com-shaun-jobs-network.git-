@@ -137,7 +137,6 @@ class Sajari {
 
 
         $response = curl_exec($ch);
-        echo $response; die;
         curl_close($ch);
         
         if ($response) {
