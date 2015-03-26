@@ -63,7 +63,7 @@
                     
                     
                     
-                    $percent = manage_job_percentage( $row , 500);
+                    $percent = $row["percent"];
                             
                     $percent_class = get_match_class($percent);
                     $percent_color = get_match_color($percent);

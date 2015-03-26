@@ -123,6 +123,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $sajari = new Sajari();
         $meta = array();
         $scales = "";
+        $filters = "";
 
         if(isset($jobseeker['specialty']) && $jobseeker['specialty'] != ""){
             $meta["specialty"]  = $jobseeker["specialty"];
@@ -136,8 +137,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 //            $scales = 'salary_range_min,'.$min.',26000,1,0';
 //            $scales .= "|";
             
-            $max = $jobseeker['salary'];
-            $scales .= 'salary_range_max,'.$max.',30000,1,0';
+            $salary = $jobseeker['salary'];
+            $filters .= '>=salary_range_max,'.$salary;
         }
 
         if( isset($jobseeker['institution_type']) && $jobseeker['institution_type']!="" ){
@@ -164,7 +165,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if( (isset($jobseeker['latitude']) && $jobseeker['latitude'] != "0") && (isset($jobseeker['longitude']) && $jobseeker['longitude'] != "0") ){
             
             $meta['lat'] = $jobseeker['latitude'];
-            $meta['lng'] = $jobseeker['longitude']; 
+            $meta['lng'] = $jobseeker['longitude'];
             
         }
         else{
@@ -190,7 +191,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
         $params = array(
             'meta' => $meta,
-            'scales' => $scales
+            'filters' => $filters
         );
         
         $data['params'] = $params;

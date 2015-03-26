@@ -86,10 +86,7 @@
                         $meta['state']= "";
                     }
                     
-                    
-                    
-                    
-                    $percent = manage_job_percentage( $row , $kilometer);
+                    $percent = $row["percent"];
                             
                     $percent_class = get_match_class($percent);
                     $percent_color = get_match_color($percent);

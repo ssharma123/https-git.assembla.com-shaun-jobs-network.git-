@@ -236,7 +236,7 @@ if(!function_exists('show_salary')){
     }
 }
 
-function manage_job_percentage( $row, $kilometer){
+function manage_job_percentage( $row, $kilometer, $salary = 0){
     
     $percent = ($row['rawscore'] * $row['score']) * 100;
     
@@ -255,8 +255,13 @@ function manage_job_percentage( $row, $kilometer){
                 }
             }
         }
-        else{
-            
+    }
+    if( isset($row['salary_range_min']) && isset($row['salary_range_max']) ){
+        if($row['salary_range_min'] >= $salary && $row['salary_range_max'] <= $salary){
+            $percent = $percent + 20;
+        }
+        else if($row['salary_range_max'] > $salary){
+            $percent = $percent + 15;
         }
     }
     

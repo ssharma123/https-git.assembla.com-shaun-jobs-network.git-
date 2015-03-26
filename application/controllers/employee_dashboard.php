@@ -730,13 +730,6 @@ class Employee_dashboard extends MY_EmployerController {
                 }
             }
             
-            $numeric_vals = array("salary_range_min","salary_range_max","employer_id");
-            foreach($job as $k=>$v){
-                if( in_array($k, $numeric_vals) ){
-                    $job[$k] = (int) $v;
-                }
-            }
-            
             if($job['sajari_doc_id'] == ""){
                 // ADD to sajari
                 $params = array(
