@@ -112,7 +112,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if(!isset($session['jobseeker'])){
             redirect('job_seeker/signin');
         }
-        $page = ($this->input->post('page')) ? $this->input->post('page') : 1 ;
+        $page = ( $this->input->post('page') ) ? $this->input->post('page') : "1" ;
         
         $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
         $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
@@ -193,7 +193,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             'meta' => $meta,
             'filters' => $filters,
             'maxresults' => '20',
-            'page' => '1'
+            'page' => $page
         );
         
         $data['params'] = $params;
@@ -218,6 +218,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
             }
         }
         
+        $data['next_page'] = $page+1;
         $html = $this->load->view('job_seeker/dashboard/tab_matches', $data, TRUE);
 
         $array = array(

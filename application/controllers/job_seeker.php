@@ -56,6 +56,7 @@ class Job_seeker extends MY_Job_seekerController {
 
             $meta = array();
             $scales = "";
+            $filters = "";
             $data['kilometer'] = 0;
             
             if(isset($data['specialty']) && $data['specialty'] != ""){
@@ -69,18 +70,8 @@ class Job_seeker extends MY_Job_seekerController {
                 $salary_range_array = explode("-", $data['salary_range']);
                 $min = $salary_range_array[0];
                 $min = $min * 1000;
-                $meta["salary_range_min"]  = $min;
 
-                $scales = 'salary_range_min,'.$min.',26000,1,0';
-
-                if(isset($salary_range_array[1])){
-                    $max = $salary_range_array[1];
-                    $max = $max * 1000;
-                    $meta["salary_range_max"]  = $max;
-
-
-                    $scales .= '|salary_range_max,'.$max.',26000,1,0';
-                }
+                $filters .= '>=salary_range_max,'.$min;
             }
 
             if( isset($data['departmant_size']) && $data['departmant_size']!="" ){
@@ -107,7 +98,8 @@ class Job_seeker extends MY_Job_seekerController {
 
             $params = array(
                 'meta' => $meta,
-                'scales' => $scales
+                'filters' => $filters,
+                'maxresults' => '20'
             );
 
             $rsp = $sajari->sajari_search($params);
@@ -116,9 +108,7 @@ class Job_seeker extends MY_Job_seekerController {
             if( isset($rsp["response"]["results"]) ){
                 $data["jobs_data"] = $rsp["response"]["results"];
             }
-
-    //        $data["jobs"] = $this->jobs->top_matches($data);
-
+            
             $this->load->view('job_seeker/match', $data);
 
         }

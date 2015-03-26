@@ -623,6 +623,23 @@ $(document).ready(function(){
         }); 
     });
     
+    
+    $("#import_export_btn").click(function(){
+        
+        FBox.fancybox.showLoading();
+        $.ajax({
+            type: "GET",
+            url: SITE_URL+"employee_dashboard/import_export_page",
+            dataType: "json"
+        }).success(function(rsp){
+            $("#post-job-container").html(rsp.html);
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        }); 
+        $("#post-job-container").fadeIn();
+        
+    });
 });
 
 function update_job_status(element , id, type){

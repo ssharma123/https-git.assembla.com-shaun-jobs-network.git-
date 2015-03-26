@@ -1394,6 +1394,27 @@ class Employee_dashboard extends MY_EmployerController {
         
 
     } 
+    
+    function import_export_page(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            redirect('employer/signin');
+        }
+        $data['employer'] = $session['employer'];
+        
+        
+        $html = $this->load->view('employer/dashboard/import_export', $data, TRUE);
+
+        $array = array(
+            "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    
 
 }
 

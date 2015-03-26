@@ -26,6 +26,8 @@
                     }
                     ?>
                     <a class="btn btn-lg btn-primary" ng-click="" id="new-job-post-btn">New Job Post</a>
+                    <br><br>
+                    <a class="btn btn-lg btn-purple" ng-click="" id="import_export_btn">Import/Export Jobs</a>
                     
                     <input type="hidden" id="selectedApplicant" value="">
                 </div>
