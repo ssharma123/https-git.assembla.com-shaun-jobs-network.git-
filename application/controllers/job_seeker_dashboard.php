@@ -2574,6 +2574,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                 $rsp = $sajari->sajari_pharse_resume(array(), $file_data);
                 
+                echo "<pre>"; print_r($rsp); echo "</pre>"; die;
+
                 if( isset($rsp['response']['redactedMeta']) && is_array($rsp['response']['redactedMeta']) && (count($rsp['response']['redactedMeta'])> 0) ){
                     $resume_data = $rsp['response']['redactedMeta'];
                     $status = "ok";
