@@ -737,6 +737,7 @@ function popupContactUsEmail(){
 }
 
 function contact_info_save(){
+    $("#tabContent_rsp").hide().html('').removeClass();
     var flag = true;
     FBox.fancybox.showLoading();
     $.ajax({
@@ -772,6 +773,7 @@ function contact_info_save(){
     return flag;
 }
 function profession_save(){
+    $("#tabContent_rsp").hide().html('').removeClass();
     var flag = true;
     FBox.fancybox.showLoading();
     $.ajax({
