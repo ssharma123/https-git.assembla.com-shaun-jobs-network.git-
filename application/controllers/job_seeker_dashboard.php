@@ -2578,6 +2578,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
                 if( isset($rsp['response']['redactedMeta']) && is_array($rsp['response']['redactedMeta']) && (count($rsp['response']['redactedMeta'])> 0) ){
                     $resume_data = $rsp['response']['redactedMeta'];
+                    $resume_data['address'] = ( isset($rsp['response']['addresses'][0]['street']) ) ? $rsp['response']['addresses'][0]['street'] : '';
+                    $resume_data['state'] = ( isset($rsp['response']['addresses'][0]['state']) ) ? $rsp['response']['addresses'][0]['state'] : '';
+                    $resume_data['city'] = ( isset($rsp['response']['addresses'][0]['city']) ) ? $rsp['response']['addresses'][0]['city'] : '';
+                    $resume_data['zip_code'] = ( isset($rsp['response']['addresses'][0]['zip_code']) ) ? $rsp['response']['addresses'][0]['zip_code'] : '';
                     $status = "ok";
                     $msg = "success";
                 }
