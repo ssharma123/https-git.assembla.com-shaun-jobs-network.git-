@@ -784,7 +784,8 @@ function profession_save(){
             board_status : $.trim($("#board_status").val()),
             degree : $.trim($("#degree").val()),
             resident_status : $.trim($("#resident_status").val()),
-            npi_number : $.trim($("#npi_number").val())
+            npi_number : $.trim($("#npi_number").val()),
+            salary : $.trim($("#salary").val())
         },
         dataType: "json",
         async: false

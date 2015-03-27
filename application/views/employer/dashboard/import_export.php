@@ -12,6 +12,9 @@
         margin-left: 10px;
         display: inline-block;
     }
+    #import_job_rsp span{
+        color:#ff0000 !important;
+    }
 </style>
 <div id="setting_tab_item">
     
@@ -61,7 +64,12 @@
             success: function(rsp, status)
             {
                 if (rsp.status === "ok") {
-                     
+                    $("#import_job_rsp").addClass('success_rsp');
+                    var rsp_html = rsp.msg+"<br>"+ 
+                        rsp.valid_rows+" Jobs added<br>"+ 
+                        '<span>'+rsp.invalid_rows+" Jobs rejected </span>";
+                    
+                    $("#import_job_rsp").html(rsp_html).show();
                 }
                 else{
                     $("#import_job_rsp").addClass('error_rsp');

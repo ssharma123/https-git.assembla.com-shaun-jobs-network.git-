@@ -1986,6 +1986,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 $save_data['degree'] = $this->input->post('degree');
                 $save_data['resident_status'] = $this->input->post('resident_status');
                 $save_data['npi_number'] = $this->input->post('npi_number');
+                $save_data['salary'] = $this->input->post('salary');
 
                 $id = $jobseeker_id;
                 if($id){

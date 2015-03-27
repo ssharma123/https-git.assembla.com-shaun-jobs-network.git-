@@ -293,10 +293,13 @@
                             </select>
                         </div>
                         <div class="right_col">
-                            <input type="text" class="ng-pristine ng-valid form-control" placeholder="NPI #" id="npi_number" name="npi_number" required value="<?php echo isset($jobseeker['npi_number']) ? $jobseeker['npi_number'] : "" ;  ?>">
+                            <input maxlength="10" type="text" class="ng-pristine ng-valid form-control" placeholder="NPI #" id="npi_number" name="npi_number" required value="<?php echo isset($jobseeker['npi_number']) ? $jobseeker['npi_number'] : "" ;  ?>">
                         </div>
                         
-
+                        <div class="left_col">
+                            <input type="text" class="ng-pristine ng-valid form-control" placeholder="Desire Salary" id="salary" name="salary" required value="<?php echo isset($jobseeker['salary']) ? $jobseeker['salary'] : "" ;  ?>">
+                        </div>
+                        <div class="right_col"></div>
                     </fieldset>
                     </form>
                 </div>
