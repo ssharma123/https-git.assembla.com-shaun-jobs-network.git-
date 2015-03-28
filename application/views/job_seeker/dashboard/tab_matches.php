@@ -122,7 +122,8 @@
         </div>
         
         <input type="hidden" id="next_page" value="<?php echo $next_page; ?>">
-        <div id="loadMoreMatch" class="btn btn-primary " style="display: block; margin: 50px 50px 10px;">Load More</div>
+        <?php $display = ($next_page > 1) ? " display: block; " : " display: hidden; " ; ?>
+        <div id="loadMoreMatch" class="btn btn-primary " style="<?php echo $display; ?> margin: 50px 50px 10px;">Load More</div>
             
         </div>
 
@@ -151,7 +152,7 @@
         
     });
     
-    $("#tabContent").on("click","#loadMoreMatch",function(){
+    $("#tabContent").on("click","#loadMoreMatch",function(e){
         e.stopImmediatePropagation();
         $.ajax({
             type: "POST",
@@ -163,7 +164,14 @@
         }).success(function(rsp){
             if(rsp.status === "ok"){
                 // continue then
-                
+                $("#job_match_list_id").append(rsp.html);
+                if(rsp.next_page == 0){
+                    $("#loadMoreMatch").hide();
+                }
+                else{
+                    $("#next_page").val(rsp.next_page);
+                    $("#loadMoreMatch").show();
+                }
             }
         })
         .always(function(){
