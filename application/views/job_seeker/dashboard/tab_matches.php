@@ -122,7 +122,7 @@
         </div>
         
         <input type="hidden" id="next_page" value="<?php echo $next_page; ?>">
-        <?php $display = ($next_page > 1) ? " display: block; " : " display: hidden; " ; ?>
+        <?php $display = ($next_page > 1) ? " display: block; " : " display: none; " ; ?>
         <div id="loadMoreMatch" class="btn btn-primary " style="<?php echo $display; ?> margin: 50px 50px 10px;">Load More</div>
             
         </div>
