@@ -11,6 +11,45 @@ class Php_excel extends CI_Controller {
         $this->load->model('jobs_model', 'jobs');
         $this->load->helper("sajari");
     }
+    var $column_names = array(
+            'A'=> 'employer_id',
+            'B'=> 'internal_id',
+            'C'=> 'specialty',
+            'D'=> 'sub_specialty',
+            'E'=> 'job_headline',
+            'F'=> 'title',
+            'G'=> 'fill_by',
+            'H'=> 'position_type',
+            'I'=> 'employment_length',
+            'J'=> 'prefered_designation',
+            'K'=> 'active_license_requires_certification',
+            'L'=> 'requires_bls_certification',
+            'M'=> 'accept_ji_certification',
+            'N'=> 'department_size',
+            'O'=> 'patients_per_day',
+            'P'=> 'in_patient',
+            'Q'=> 'out_patient',
+            'R'=> 'work_schedule',
+            'S'=> 'call_schedule',
+            'T'=> 'salary_range_min',
+            'U'=> 'salary_range_max',
+            'V'=> 'bonus',
+            'W'=> 'pay_frequency',
+            'X'=> 'benifits_401k',
+            'Y'=> 'benifits_cme_allowance',
+            'Z'=> 'benifits_loan',
+            'AA'=> 'vacation_days',
+            'AB'=> 'employment_term',
+            'AC'=> 'citizen',
+            'AD'=> 'green_card',
+            'AE'=> 'visa',
+            'AF'=> 'description',
+            'AG'=> 'auth_first_name',
+            'AH'=> 'auth_last_name',
+            'AI'=> 'agree_to_term',
+            'AJ'=> 'lat',
+            'AK'=> 'lng'
+        );
 
     function import() {
         
@@ -45,7 +84,7 @@ class Php_excel extends CI_Controller {
         $data['header'] = $header;
         $data['values'] = $values;
         
-        
+
         $column_name = $header[1];
         $column_value = $values;
         
@@ -58,9 +97,9 @@ class Php_excel extends CI_Controller {
         
         $column_values = array();
         $i = 0;
-        foreach($column_value as $val){
-            foreach ($val as $val2){
-                $column_values[$i][] = $this->decode_column_value($val2);
+        foreach($column_value as $key => $val){
+            foreach ($val as $key2=> $val2){
+                $column_values[$i][$key2] = $this->decode_column_value($val2);
             }
             $i++;
         }
@@ -109,7 +148,6 @@ class Php_excel extends CI_Controller {
         }
         
         
-//        $msg = 'Jobs imported successfully <br>'.$valid_rows.' Jobs added  <br><span style="color:#FF0000 !important;">'.$invalid_rows.' Jobs rejected , values not valid</span>';
         $msg = 'Jobs imported successfully';
         $rsp = array(
             "valid_rows" => $valid_rows,
@@ -406,55 +444,17 @@ class Php_excel extends CI_Controller {
         $msg = '';
         
         $valid = TRUE;
-        $column_names = array(
-            'employer_id'
-            , 'internal_id'
-            , 'specialty'
-            , 'sub_specialty'
-            , 'job_headline'
-            , 'title'
-            , 'fill_by'
-            , 'position_type'
-            , 'employment_length'
-            , 'prefered_designation'
-            , 'active_license_requires_certification'
-            , 'requires_bls_certification'
-            , 'accept_ji_certification'
-            , 'department_size'
-            , 'patients_per_day'
-            , 'in_patient'
-            , 'out_patient'
-            , 'work_schedule'
-            , 'call_schedule'
-            , 'salary_range_min'
-            , 'salary_range_max'
-            , 'bonus'
-            , 'pay_frequency'
-            , 'benifits_401k'
-            , 'benifits_cme_allowance'
-            , 'benifits_loan'
-            , 'vacation_days'
-            , 'employment_term'
-            , 'citizen'
-            , 'green_card'
-            , 'visa'
-            , 'description'
-            , 'auth_first_name'
-            , 'auth_last_name'
-            , 'agree_to_term'
-            , 'lat'
-            , 'lng'
-        );
+        $column_names = $this->column_names; 
         $checkbox_column = array("active_license_requires_certification","requires_bls_certification","accept_ji_certification","in_patient","out_patient","benifits_401k","benifits_cme_allowance","benifits_loan","citizen","green_card","visa","agree_to_term");
-        $required_column = array("employer_id","internal_id","specialty","sub_specialty","job_headline","title","fill_by","position_type","employment_length","prefered_designation","department_size","patients_per_day","work_schedule","call_schedule","salary_range","salary_range_min","salary_range_max","bonus","pay_frequency","vacation_days","employment_term","description","auth_first_name","auth_last_name","lat","lng");
+        $required_column = array("employer_id","internal_id","specialty","sub_specialty","job_headline","title","fill_by","position_type","employment_length","prefered_designation","department_size","patients_per_day","work_schedule","call_schedule","salary_range","salary_range_min","salary_range_max","pay_frequency","lat","lng");
         $new_values = array();
         
         
         foreach($column_values as $key=>$val){
-            $i=0;
-            foreach($val as $row){
-                $new_values[$key][$column_names[$i]] = $row;
-                $i++;
+
+            foreach($val as $key2=>$row2){
+                $new_values[$key][$column_names[$key2]] = $row2;
+                
             }
         }
         
@@ -464,7 +464,7 @@ class Php_excel extends CI_Controller {
         foreach($new_values as $key=>$val){
             
             $is_invalid_row = FALSE;
-            if( is_array($val) && count($val) == count($column_names) ){
+            if( is_array($val) && count($val) >0 ){
                 foreach($val as $key2=>$val2){
                     if($is_invalid_row == FALSE){
                         if(in_array($key2, $checkbox_column)){
