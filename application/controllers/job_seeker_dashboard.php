@@ -204,9 +204,10 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
         $data["jobs"] = FALSE;
         $removed_item = 0;
+        $sajari_total_items = 0;
         if( isset($rsp["response"]["results"]) ){
             $data["jobs"] = $rsp["response"]["results"];
-            
+            $sajari_total_items = count($data["jobs"]);
             $ids = $this->jobs->get_jobs_applied_not_interested_ids($jobseeker_id);
             if($ids){
                 foreach($data['jobs'] as $key => $row){
@@ -221,6 +222,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 }
             }
             $data["removed_item"] = $removed_item;
+            $data["sajari_total_items"] = $removed_item;
         }
         
         $html = $this->load->view('job_seeker/dashboard/tab_matches', $data, TRUE);

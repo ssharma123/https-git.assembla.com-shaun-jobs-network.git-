@@ -36,8 +36,8 @@
                     
                 }
                 
-                $total_show = 20 - $removed_item;
-                if( count($jobs) >= $total_show ){
+                
+                if( $sajari_total_items >= $total_show ){
                     $next_page++;
                 }
                         
