@@ -37,7 +37,7 @@
                 }
                 
                 
-                if( $sajari_total_items >= $total_show ){
+                if( $sajari_total_items >= 20 ){
                     $next_page++;
                 }
                         
