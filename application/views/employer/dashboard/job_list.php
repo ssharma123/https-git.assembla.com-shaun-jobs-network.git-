@@ -32,7 +32,7 @@
 
                 <div class="job-list-item" id="job-list-item_<?php echo $row["id"]; ?>">
                     <div class="col col-sm-2 text-center ng-binding">
-                        <?php echo $row["internal_id"]; ?>
+                        <?php echo stripslashes($row["internal_id"]); ?>
                         <div class="ng-hide" style="text-align: left; padding-left: 16px; ">
                             <a href="javascript:void(0)" class="matches_link" style="color: #FFF">
                                 <?php 
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="col col-sm-4 ng-binding">
-                        <?php echo $row["job_headline"]; ?>
+                        <?php echo stripslashes($row["job_headline"]); ?>
                     </div>
                     <div class="col col-sm-2 ng-binding">
                         <?php echo $row["specialties_name"]; ?>
