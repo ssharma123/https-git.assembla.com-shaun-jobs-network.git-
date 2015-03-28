@@ -47,6 +47,7 @@ if (defined('ENVIRONMENT'))
 		case 'testing':
 		case 'production':
 			ini_set('display_errors', 0);
+                        date_default_timezone_set('UTC');
 		break;
 
 		default:
