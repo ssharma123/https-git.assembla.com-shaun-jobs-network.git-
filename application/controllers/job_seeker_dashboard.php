@@ -112,7 +112,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         if(!isset($session['jobseeker'])){
             redirect('job_seeker/signin');
         }
-        $page = ( $this->input->post('page') ) ? $this->input->post('page') : "1" ;
+        $page = "1";
         
         $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
         $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
@@ -188,6 +188,8 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                 $meta['lng'] = $lng;
             }
         }
+        
+        $data['next_page'] = $page;
 
         $params = array(
             'meta' => $meta,
@@ -201,6 +203,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $rsp = $sajari->sajari_search($params);
 
         $data["jobs"] = FALSE;
+        $removed_item = 0;
         if( isset($rsp["response"]["results"]) ){
             $data["jobs"] = $rsp["response"]["results"];
             
@@ -213,12 +216,13 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     }
                     if( $job_id != 0 && in_array($job_id, $ids) ){
                         unset($data['jobs'][$key]);
+                        $removed_item++;
                     }
                 }
             }
+            $data["removed_item"] = $removed_item;
         }
         
-        $data['next_page'] = $page+1;
         $html = $this->load->view('job_seeker/dashboard/tab_matches', $data, TRUE);
 
         $array = array(
@@ -248,6 +252,135 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
 
         $array = array(
             "html" => $html
+        );
+        echo json_encode($array);
+        die;
+    }
+    
+    public function load_more_matches(){
+        $this->layout = "blank";
+        $data = array();
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['jobseeker'])){
+            redirect('job_seeker/signin');
+        }
+        $page = ( $this->input->post('page') ) ? $this->input->post('page') : "1" ;
+        
+        $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
+        $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
+        
+        $jobseeker = $data["jobseeker"];
+        
+        require 'application/libraries/Sajari/sajari.php';
+        $sajari = new Sajari();
+        $meta = array();
+        $scales = "";
+        $filters = "";
+
+        if(isset($jobseeker['specialty']) && $jobseeker['specialty'] != ""){
+            $meta["specialty"]  = $jobseeker["specialty"];
+        }
+        if(isset($jobseeker['sub_specialty']) && $jobseeker['sub_specialty'] != ""){
+            $meta["sub_specialty"]  = $jobseeker["sub_specialty"];
+        }
+
+        if(isset($jobseeker['salary']) && $jobseeker['salary'] != ""){
+            $salary = $jobseeker['salary'];
+            $filters .= '>=salary_range_max,'.$salary;
+        }
+
+        if( isset($jobseeker['institution_type']) && $jobseeker['institution_type']!="" ){
+            $departmant_size = "0-5";
+            if( $jobseeker['institution_type'] == "academic_institution" ){
+                $departmant_size = "0-5";
+            }
+            else if( ($jobseeker['institution_type'] == "clinic" )  ){
+                $departmant_size = "5-10";
+            }
+            else if( ($jobseeker['institution_type'] == "private_practice" )  ){
+                $departmant_size = "10-20";
+            }
+            else if( ($jobseeker['institution_type'] == "group_practice" ) ){
+                $departmant_size = "20-40"; 
+            }
+            else if( $jobseeker['institution_type'] == "hospital"  ){
+                $departmant_size = "40+";
+            }
+            $meta["department_size"]  = $departmant_size;
+        }
+
+
+        if( (isset($jobseeker['latitude']) && $jobseeker['latitude'] != "0") && (isset($jobseeker['longitude']) && $jobseeker['longitude'] != "0") ){
+            $meta['lat'] = $jobseeker['latitude'];
+            $meta['lng'] = $jobseeker['longitude'];
+        }
+        else{
+            // miles to kilometer
+            $city = $jobseeker['city'];
+            $state = $jobseeker['state'];
+            $this->load->library("google/google_geolocation");
+            $location = $this->google_geolocation->get_logitute_latitude( array( "address"=> $city."+".$state."+US" ) );
+
+            if(isset($location['lat']) && isset($location['lng'])){
+                $lat = $location['lat'];
+                $lng = $location['lng'];
+                $save_data = array();
+                $save_data['latitude'] = $lat;
+                $save_data['longitude'] = $lng;
+                $this->jobseeker->jobseekers_update($jobseeker_id , $save_data);
+
+                $meta['lat'] = $lat;
+                $meta['lng'] = $lng;
+            }
+        }
+
+        $params = array(
+            'meta' => $meta,
+            'filters' => $filters,
+            'maxresults' => '20',
+            'page' => $page
+        );
+        
+        $data['params'] = $params;
+        
+        $rsp = $sajari->sajari_search($params);
+
+        $data["jobs"] = FALSE;
+        $removed_item = 0;
+        $next_page = $page;
+        if( isset($rsp["response"]["results"]) ){
+            $data["jobs"] = $rsp["response"]["results"];
+            
+            $ids = $this->jobs->get_jobs_applied_not_interested_ids($jobseeker_id);
+            if($ids){
+                foreach($data['jobs'] as $key => $row){
+                    $job_id = 0;
+                    if(isset($row['meta']) && $row['meta'] != ""){
+                        $job_id = isset($row['meta']['id']) ? $row['meta']['id'] : 0;
+                    }
+                    if( $job_id != 0 && in_array($job_id, $ids) ){
+                        unset($data['jobs'][$key]);
+                        $removed_item++;
+                    }
+                }
+            }
+            
+            $total_show = 20 - $removed_item;
+            if( count($data["jobs"]) >= $total_show ){
+                $next_page++;
+            }
+            else{
+                $next_page = 0;
+            }
+        }
+        
+        $data['next_page'] = $next_page;
+        $html = $this->load->view('job_seeker/dashboard/load_more_matches', $data, TRUE);
+
+        $array = array(
+            "html" => $html,
+            "next_page" => $next_page
         );
         echo json_encode($array);
         die;

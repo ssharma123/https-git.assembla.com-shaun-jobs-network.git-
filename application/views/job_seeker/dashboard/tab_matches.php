@@ -18,7 +18,6 @@
             
             <?php
             
-            
             $jobs_sorted_array = array();
             if($jobs){
                 
@@ -33,9 +32,15 @@
 
                     $jobs_sorted_array[$key] = $row;
                     $jobs_sorted_array[$key]["percent"] = manage_job_percentage( $row , 500);
+                    
+                    
                 }
                 
-                
+                $total_show = 20 - $removed_item;
+                if( count($jobs) >= $total_show ){
+                    $next_page++;
+                }
+                        
                 usort($jobs_sorted_array, "jobs_sort_by_percent" );
                 
                 foreach($jobs_sorted_array as $key => $row){
@@ -116,8 +121,8 @@
             				
         </div>
         
-        
-        <div class="p-container-slider" id="job_match_detail_block" style="display: none;" >
+        <input type="hidden" id="next_page" value="<?php echo $next_page; ?>">
+        <div id="loadMoreMatch" class="btn btn-primary " style="display: block; margin: 50px 50px 10px;">Load More</div>
             
         </div>
 
@@ -145,4 +150,25 @@
         // show detail data
         
     });
+    
+    $("#tabContent").on("click","#loadMoreMatch",function(){
+        e.stopImmediatePropagation();
+        $.ajax({
+            type: "POST",
+            url: SITE_URL+"job_seeker_dashboard/load_more_matches",
+            dataType: "json",
+            data: {
+                page : $.trim($("#next_page").val())
+            },
+        }).success(function(rsp){
+            if(rsp.status === "ok"){
+                // continue then
+                
+            }
+        })
+        .always(function(){
+            FBox.fancybox.hideLoading();
+        });
+    });
+    
 </script>
