@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-sm-10 col-sm-offset-1 text-center round_border">
                                 <p class="text-left b-note">
-                                    <b>Note</b> We care about your privacy.  We only use the information provided for the purposes of finding you the best job matches, and only connect to facilities you want.  Check out our <a>Privacy Policy</a> for details on what &amp; when we share your data.  We’ve got you covered!
+                                    <b>Note</b> We care about your privacy.  We only use the information provided for the purposes of finding you the best job matches, and only connect to facilities you want.  Check out our Privacy Policyfor details on what &amp; when we share your data.  We’ve got you covered!
                                 </p>
                             </div>
                             <div style="margin-top: 25px;" class="col-sm-9 col-sm-offset-4 text-left">
@@ -103,8 +103,7 @@
                             </div>
 
                             <div class="clearfix"></div>
-
-                        </div>
+                   
                         <?php
                     } else {
                         ?>
