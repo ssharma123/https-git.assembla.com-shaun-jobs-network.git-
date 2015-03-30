@@ -1845,3 +1845,51 @@ Content-36 Contact-Us Form
 .b-street a{
     color: #8ba2c0;
 }
+.imageContainer {
+    padding-bottom: 100% !important;
+}
+
+/*profile page bill css 30 march*/
+.b-doctor > h3 {
+    float: left;
+     color: #1b2c3e;
+}
+.b-doctor > span {
+    color: #1b2c3e;
+    font-size: 23px;
+    line-height: 54px;
+    margin-left: 10px;
+}
+.col-md-2.option {
+    color: #1b2c3e;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 29px;
+    text-align: right;
+}
+.col-md-8.b-NPI {
+    border-bottom: 1px solid;
+    padding-bottom: 16px;
+}
+.col-md-8.b-NPI > p {
+   border-bottom: 5px solid #ececec;
+ color: #2f3e4e;
+    font-size: 15px;
+}
+.col-sm-12.b-bax-1 {
+    margin-bottom: 28px;
+}
+.b-NPI .btn.btn-lg.btn-primary {
+    float: right;
+    margin-top: 9px;
+}
+.col-md-8.b-NPI.b-NPI2 > p {
+    border-bottom: medium none #000080;
+}
+.col-md-8.b-NPI.b-NPI2 {
+   border-bottom: medium none #000080;
+}
+.b-note b {
+    color: #797979;
+    font-size: 16px;
+}
