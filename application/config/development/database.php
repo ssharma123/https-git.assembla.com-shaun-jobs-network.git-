@@ -50,7 +50,7 @@ $active_group = 'default';
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '';
+$db['default']['password'] = '1234';
 $db['default']['database'] = 'medmatch';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

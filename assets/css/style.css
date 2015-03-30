@@ -1812,3 +1812,36 @@ Content-36 Contact-Us Form
 .footer-4 .brand.active {
   color: #1abc9c;
 }
+
+
+/*new bill style 30-march*/
+.b-form label {
+    text-align: left !important;
+}
+.b-street .col-sm-8 *:last-child {
+    margin-top: 10px;
+}
+.b-btn .glyphicon {
+    display: inline-block;
+    font-family: "Glyphicons Halflings";
+    font-style: normal;
+    font-weight: normal;
+     line-height: 1.42;
+    position: relative;
+    top: 0px;
+}
+.form-group.b-form.b-last {
+    border-bottom: 2px solid #111111;
+    padding-bottom: 10px;
+}
+.b-btn .btn-primary {
+    background-color: #479ad8;
+    color: #ffffff;
+    font-weight:bold;
+}
+.text-center.btn-group.b-btn.col-sm-8 {
+    margin-top: 15px;
+}
+.b-street a{
+    color: #8ba2c0;
+}
