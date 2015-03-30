@@ -126,6 +126,8 @@
         <div id="loadMoreMatch" class="btn btn-primary " style="<?php echo $display; ?> margin: 50px 50px 10px;">Load More</div>
             
         </div>
+     
+     <div class="p-container-slider" id="job_match_detail_block" style="display: none;" ></div>
 
     </div>
     
