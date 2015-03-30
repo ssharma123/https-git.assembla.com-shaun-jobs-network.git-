@@ -2717,6 +2717,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     $resume_data['city'] = ( isset($rsp['response']['addresses'][0]['city']) ) ? $rsp['response']['addresses'][0]['city'] : '';
                     $resume_data['zip_code'] = ( isset($rsp['response']['addresses'][0]['zip_code']) ) ? $rsp['response']['addresses'][0]['zip_code'] : '';
                     $status = "ok";
+                    $this->session->set_userdata('resume', $resume_data);
                     $msg = "success";
                 }
                 

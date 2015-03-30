@@ -54,7 +54,7 @@
         var BASE_URL = '<?php echo base_url();?>';
         </script>
         
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
         <?php echo load_js("jquery-1.10.2.min.js"); ?>
         
         <?php 

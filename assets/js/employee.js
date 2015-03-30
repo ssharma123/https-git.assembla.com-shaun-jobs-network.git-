@@ -86,11 +86,14 @@ $(document).ready(function(){
             'billing_phone': {
                 minlength: 10,
                 required: true
-            }
+            },
+            signup_email_verify: {
+                equalTo: "#signup_email"
+            },
         },
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        },
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        },
         submitHandler: function(form) {
             // do other things for a valid form
             $("#signupForm2_rsp").hide();

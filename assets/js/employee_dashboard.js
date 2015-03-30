@@ -625,7 +625,7 @@ $(document).ready(function(){
     
     
     $("#import_export_btn").click(function(){
-        
+        $(".employerdashbordTabs-items").hide();
         FBox.fancybox.showLoading();
         $.ajax({
             type: "GET",
@@ -633,6 +633,7 @@ $(document).ready(function(){
             dataType: "json"
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);
+            $("#new-job-post-btn-item").show();
         })
         .always(function(){
             FBox.fancybox.hideLoading();

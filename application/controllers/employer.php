@@ -136,7 +136,8 @@ class Employer extends MY_EmployerController {
                         array('field' => 'signup_name', 'label' => 'Name', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'signup_email', 'label' => 'Email', 'rules' => 'trim|required|xss_clean|callback_employer_email_exist'),
                         array('field' => 'password', 'label' => 'password', 'rules' => 'trim|required|xss_clean'),
-                        array('field' => 'billing_name', 'label' => 'Billing Name', 'rules' => 'trim|required|xss_clean'),
+                        array('field' => 'billing_name_first', 'label' => 'Billing First Name', 'rules' => 'trim|required|xss_clean'),
+                        array('field' => 'billing_name_last', 'label' => 'Billing Last Name', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'billing_phone', 'label' => 'Billing Phone', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'billing_email', 'label' => 'Billing Email', 'rules' => 'trim|required|xss_clean'),
                         array('field' => 'facility_address', 'label' => 'Address', 'rules' => 'trim|required|xss_clean'),
@@ -174,7 +175,7 @@ class Employer extends MY_EmployerController {
                             $save_data['password'] = md5(base64_decode($this->input->post("password")));
                         }
 
-                        $save_data['billing_name'] = $this->db->escape_str($this->input->post('billing_name'));
+                        $save_data['billing_name'] = $this->db->escape_str($this->input->post('billing_name_first')." ".$this->input->post('billing_name_last'));
                         $save_data['billing_phone'] = $this->db->escape_str($this->input->post('billing_phone'));
                         $save_data['billing_email'] = $this->db->escape_str($this->input->post('billing_email'));
                         $save_data['created_at'] = time();
