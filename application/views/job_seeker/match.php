@@ -102,7 +102,7 @@
                             </div>
                         </div>
                         <div class="p-second-box">
-                            <div class="p-title-bar ng-binding"><?php echo trim_str($meta['job_headline'],60); ?> </div>
+                            <div class="p-title-bar ng-binding"><?php echo trim_str(stripslashes($meta['job_headline']),60); ?> </div>
                             <div class="p-title-bar-detail ng-binding"><?php echo $meta['city'].",".$meta['state']?><br>
                                 
                                 $<?php echo show_salary($meta['salary_range_min']); ?> 

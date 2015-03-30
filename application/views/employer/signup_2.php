@@ -68,9 +68,9 @@ var facilities = <?php echo $facilities; ?>;
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-4 control-label" for="zipCode">Zip Code</label>
+          <label class="col-sm-4 control-label" for="facility_zipCode">Zip Code</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control ng-pristine ng-valid" name="facility_zipCode" id="facility_zipCode" required placeholder="">
+              <input type="number" class="form-control ng-pristine ng-valid" name="facility_zipCode" id="facility_zipCode" required min="1" max="99999"  placeholder="">
           </div>
         </div>
         <div class="form-group">
@@ -132,3 +132,12 @@ var facilities = <?php echo $facilities; ?>;
       </form>
   </div>
 </div>
+<script>
+    $("#facility_zipCode").keyup(function(){
+        var val = $("#facility_zipCode").val();
+        var length = $("#facility_zipCode").val().length;
+        if(length > 5){
+            $("#facility_zipCode").val(val.substring(0, 5));
+        }
+    });
+</script>
