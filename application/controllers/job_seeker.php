@@ -126,12 +126,17 @@ class Job_seeker extends MY_Job_seekerController {
         $data = $this->input->post();
         $data["row"] = $this->jobs->jobs_get_details($data['id']);
         
+        
         $data["saved"] = false;
         if($jobseeker_id != 0){
             $where["jobseeker_id"] = $jobseeker_id;
             $where["job_id"] = $data['id'];
             $where["saved"] = 1;
             $data["saved"] = $this->jobs->jobseekers_jobs_status_get(0 , $where);
+        }
+        if($data['id'] == 27){
+            echo "<pre>"; print_r($data); echo "</pre>"; die;
+
         }
         
         $html = $this->load->view('job_seeker/job_details', $data, TRUE);
