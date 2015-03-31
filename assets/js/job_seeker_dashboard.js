@@ -553,6 +553,10 @@ $(document).ready(function(){
             FBox.fancybox.hideLoading();
         });
     });
+    
+    $("#tabContent").on("click","#resume_button",function(){
+        $("#resume_file_block").toggle();
+    });
 });
 
 function notification_select_date(btn, busy_gif, selected_date, id){

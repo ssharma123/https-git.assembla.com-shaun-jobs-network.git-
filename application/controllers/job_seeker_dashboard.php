@@ -481,6 +481,11 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
         $jobseeker_id = (isset($session['jobseeker']['id'])) ? $session['jobseeker']['id'] : 0;
         
         $data["jobseeker"] = $this->jobseeker->jobseekers_get($jobseeker_id);
+        $data['resume'] = array();
+        if(isset($session['resume'])){
+            $data['resume'] = $session['resume'];
+        }
+        $this->session->unset_userdata('resume');
         
         $html = $this->load->view('job_seeker/profile/step_1', $data, TRUE);
 
@@ -2715,7 +2720,7 @@ class Job_seeker_dashboard extends MY_Job_seekerController {
                     $resume_data['address'] = ( isset($rsp['response']['addresses'][0]['street']) ) ? $rsp['response']['addresses'][0]['street'] : '';
                     $resume_data['state'] = ( isset($rsp['response']['addresses'][0]['state']) ) ? $rsp['response']['addresses'][0]['state'] : '';
                     $resume_data['city'] = ( isset($rsp['response']['addresses'][0]['city']) ) ? $rsp['response']['addresses'][0]['city'] : '';
-                    $resume_data['zip_code'] = ( isset($rsp['response']['addresses'][0]['zip_code']) ) ? $rsp['response']['addresses'][0]['zip_code'] : '';
+                    $resume_data['zip_code'] = ( isset($rsp['response']['addresses'][0]['postcode']) ) ? $rsp['response']['addresses'][0]['postcode'] : '';
                     $status = "ok";
                     $this->session->set_userdata('resume', $resume_data);
                     $msg = "success";

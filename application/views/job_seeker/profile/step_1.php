@@ -4,24 +4,46 @@
         <p>
             <?php echo load_img("first-step.png"); ?>
         </p>
-        
+        <?php /*
         <h3 style="font-size: 22px;">Upload your Resume and Auto Fill your profile fields</h3>
         <div id="rsp_resume" style="display: none;"></div>
         <div style="height: 100px; text-align: center;" class="text-center">
             <input style="display: inline; margin: 20px 0 0 0;" type="file" id="resume" name="resume[]" onchange="upload_resume();">
             <div id="save_file_busy" style="display: none;"><?php echo load_img("busy.gif"); ?></div>
         </div>
-        
+        */ ?>
         <h3>Let's create your Profile</h3>
         <div style="min-height: 300px;">
             <fieldset style="float: none; margin: 0 auto; padding: 0; width: 480px;">
 
                 <div class="left_col">
-                    <input type="text" maxlength="50" placeholder="First Name" id="first_name" name="first_name" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['first_name']) ? $jobseeker['first_name'] : "" ;  ?>" >
+                    <?php
+                    
+                    $first_name_val = "" ;
+                    if(isset($resume['firstname']) && $resume['firstname'] != ""){
+                        $first_name_val = $resume['firstname'];
+                    }
+                    else if(isset($jobseeker['first_name']) && $jobseeker['first_name'] != "" ){
+                        $first_name_val = $jobseeker['first_name'];
+                    }
+                    
+                    ?>
+                    <input type="text" maxlength="50" placeholder="First Name" id="first_name" name="first_name" class="ng-pristine ng-valid form-control" required value="<?php echo $first_name_val;  ?>" >
                 </div>
 
                 <div class="right_col">
-                    <input type="text" maxlength="50" placeholder="Last Name" id="last_name" name="last_name" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['last_name']) ? $jobseeker['last_name'] : "" ;  ?>" >
+                    <?php
+                    
+                    $last_name_val = "" ;
+                    if(isset($resume['lastname']) && $resume['lastname'] != ""){
+                        $last_name_val = $resume['lastname'];
+                    }
+                    else if(isset($jobseeker['first_name']) && $jobseeker['first_name'] != "" ){
+                        $last_name_val = $jobseeker['first_name'];
+                    }
+                    
+                    ?>
+                    <input type="text" maxlength="50" placeholder="Last Name" id="last_name" name="last_name" class="ng-pristine ng-valid form-control" required value="<?php echo $last_name_val;  ?>" >
                 </div>
 
                 <div class="left_col">
@@ -57,14 +79,32 @@
                 </div>
 
                 <div class="left_col">
-                    <input type="text" maxlength="50" placeholder="Address" id="address" name="address" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['address']) ? $jobseeker['address'] : "" ;  ?>" >
+                    <?php
+                    $address_val = "" ;
+                    if(isset($resume['address']) && $resume['address'] != ""){
+                        $address_val = $resume['address'];
+                    }
+                    else if(isset($jobseeker['address']) && $jobseeker['address'] != "" ){
+                        $address_val = $jobseeker['address'];
+                    }
+                    ?>
+                    <input type="text" maxlength="50" placeholder="Address" id="address" name="address" class="ng-pristine ng-valid form-control" required value="<?php echo $address_val;  ?>" >
                 </div>
                 <div class="right_col">
                     <input type="text" placeholder="Apt / Suite #" style="" id="apt" name="apt" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['apt']) ? $jobseeker['apt'] : "" ;  ?>" >
                 </div>
 
                 <div class="left_col">
-                    <input type="text" maxlength="50" placeholder="City" id="city" name="city" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['city']) ? $jobseeker['city'] : "" ;  ?>">
+                    <?php
+                    $city_val = "" ;
+                    if(isset($resume['city']) && $resume['city'] != ""){
+                        $city_val = $resume['city'];
+                    }
+                    else if(isset($jobseeker['city']) && $jobseeker['city'] != "" ){
+                        $city_val = $jobseeker['city'];
+                    }
+                    ?>
+                    <input type="text" maxlength="50" placeholder="City" id="city" name="city" class="ng-pristine ng-valid form-control" required value="<?php echo $city_val;  ?>">
                 </div>
                 <div class="right_col">
                     <select style="width: 50%; float: left;" type="text" id="state" name="state" class="ng-pristine ng-valid form-control" required >
@@ -72,12 +112,29 @@
                         <?php 
                         $states = get_states( array("country"=>"US") ); 
                         foreach($states as $state){ 
-                            $selected = (isset($state["code"]) && $state["code"] == $jobseeker['state'] ) ? ' selected="selected" ' : "" ;
+                            
+                            $state_val = "" ;
+                            if(isset($resume['state']) && $resume['state'] != ""){
+                                $state_val = $resume['state'];
+                            }
+                            else if(isset($jobseeker['state']) && $jobseeker['state'] != "" ){
+                                $state_val = $jobseeker['state'];
+                            }
+                            $selected = (isset($state["code"]) && $state["code"] == $state_val ) ? ' selected="selected" ' : "" ;
                             ?>
                             <option value="<?php echo $state["code"] ?>" <?php echo $selected; ?> ><?php echo $state["code"] ?></option>
                         <?php } ?>
                     </select>
-                    <input maxlength="6" type="text" style="width: 35%; padding: 5px; margin: 0px 12px; float: left;" placeholder="Zip" id="zip" name="zip" class="ng-pristine ng-valid form-control" required value="<?php echo isset($jobseeker['zip']) ? $jobseeker['zip'] : "" ;  ?>">
+                    <?php
+                    $zip_val = "" ;
+                    if(isset($resume['zip_code']) && $resume['zip_code'] != ""){
+                        $zip_val = $resume['zip_code'];
+                    }
+                    else if(isset($jobseeker['zip']) && $jobseeker['zip'] != "" ){
+                        $zip_val = $jobseeker['zip'];
+                    }
+                    ?>
+                    <input maxlength="6" type="text" style="width: 35%; padding: 5px; margin: 0px 12px; float: left;" placeholder="Zip" id="zip" name="zip" class="ng-pristine ng-valid form-control" required value="<?php echo $zip_val;  ?>">
                 </div>
                 <div class="left_col">
                     <input type="text" class="is_phone_number ng-pristine ng-valid form-control" placeholder="Phone Number" id="phone" name="phone" required value="<?php echo isset($jobseeker['phone']) ? $jobseeker['phone'] : "" ;  ?>">
@@ -92,71 +149,3 @@
         </div>
     </form>
 </div>
-<?php echo load_js("ajaxfileupload.js"); ?>
-<script>
-    
-    
-    
-    function upload_resume() {
-        $("#save_file_busy").show();
-        
-            $("#rsp_resume").html('').hide();
-            $("#rsp_resume").removeClass("error_rsp");
-                    
-            var file_name = "";
-            $.ajaxFileUpload({
-                url: SITE_URL + "job_seeker_dashboard/upload_resume_to_sajari",
-                secureuri: false,
-                fileElementId: 'resume',
-                dataType: 'JSON',
-                async: false,
-                data: { jobseeker_id : '<?php echo $jobseeker['id'] ?>' },
-                success: function(rsp)
-                {
-                    
-                    var rsp_json = $.parseJSON(rsp);
-                    
-                    if (rsp_json.status === "ok") {
-                       // everything is ok   
-//                       console.log(rsp_json.data);
-                       
-                        if(typeof rsp_json.data.exPhone !== "undefined"){
-                            $("#phone").val(rsp_json.data.exPhone);
-                            $(".is_phone_number").keyup();
-                        }
-                        
-                        if(typeof rsp_json.data.firstname !== "undefined"){
-                            $("#first_name").val(rsp_json.data.firstname);
-                        }
-                        
-                        if(typeof rsp_json.data.lastname !== "undefined"){
-                            $("#last_name").val(rsp_json.data.lastname);
-                        }
-                        if(typeof rsp_json.data.address !== "undefined"){
-                            $("#address").val(rsp_json.data.address);
-                        }
-                        if(typeof rsp_json.data.city !== "undefined"){
-                            $("#city").val(rsp_json.data.city);
-                        }
-                        if(typeof rsp_json.data.state !== "undefined"){
-                            if($("#state option[value='"+rsp_json.data.state+"']").length > 0){
-                                $("#state").val(rsp_json.data.state);
-                            }
-                        }
-                        if(typeof rsp_json.data.zip_code !== "undefined"){
-                            $("#zip").val(rsp_json.data.zip_code);
-                        }
-                            
-                    }
-                    else{
-                        $("#rsp_resume").html(rsp_json.msg).show();
-                        $("#rsp_resume").addClass("error_rsp");
-                    }
-                    
-                    $("#save_file_busy").hide();
-                }
-            });
-        
-
-    }
-</script>
