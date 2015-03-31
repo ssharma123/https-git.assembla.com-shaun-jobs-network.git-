@@ -137,7 +137,16 @@
                     <input maxlength="6" type="text" style="width: 35%; padding: 5px; margin: 0px 12px; float: left;" placeholder="Zip" id="zip" name="zip" class="ng-pristine ng-valid form-control" required value="<?php echo $zip_val;  ?>">
                 </div>
                 <div class="left_col">
-                    <input type="text" class="is_phone_number ng-pristine ng-valid form-control" placeholder="Phone Number" id="phone" name="phone" required value="<?php echo isset($jobseeker['phone']) ? $jobseeker['phone'] : "" ;  ?>">
+                    <?php
+                    $phone_val = "" ;
+                    if(isset($resume['exPhone']) && $resume['exPhone'] != ""){
+                        $phone_val = $resume['exPhone'];
+                    }
+                    else if(isset($jobseeker['phone']) && $jobseeker['phone'] != "" ){
+                        $phone_val = $jobseeker['phone'];
+                    }
+                    ?>
+                    <input type="text" class="is_phone_number ng-pristine ng-valid form-control" placeholder="Phone Number" id="phone" name="phone" required value="<?php echo $phone_val;  ?>">
                 </div>
                 <div class="right_col">
                     <input type="text" class="is_phone_number ng-pristine ng-valid form-control" placeholder="Alt. Phone Number" id="alt_phone" name="alt_phone" value="<?php echo isset($jobseeker['alt_phone']) ? $jobseeker['alt_phone'] : "" ;  ?>">
@@ -149,3 +158,6 @@
         </div>
     </form>
 </div>
+<script>
+    $(".is_phone_number").keyup();
+</script>

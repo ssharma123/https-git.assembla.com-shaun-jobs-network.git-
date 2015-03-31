@@ -61,7 +61,7 @@
 
                         <?php if ($jobseeker['profile_complete'] == 0) { ?>
 
-                        <div class="col-md-1"></div>
+                            <div class="col-md-1"></div>
                             <div class="b-doctor col-md-10"><h3>Dr <?php echo ucfirst($jobseeker['last_name']); ?>,</h3>
                                 <span> Ready to get matched to your dream job?</span>
                             </div>
