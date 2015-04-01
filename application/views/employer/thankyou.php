@@ -23,7 +23,7 @@
                 <p>Your order have been placed</p>
                 <p>A confirmation email will be sent to : info@medmatchjobs.com once the order has been processed </p>
                 
-                <a class="btn btn-primary btn-lg" href="<?php echo site_url("employee_dashboard"); ?>"></a>
+                <a class="btn btn-primary btn-lg" href="<?php echo site_url("employee_dashboard"); ?>">Continue</a>
                 <?php } ?>
             </div>
             
