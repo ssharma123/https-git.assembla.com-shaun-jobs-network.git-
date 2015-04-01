@@ -201,6 +201,11 @@
     border: 1px solid !important;
     border-color: #ff0000 !important;
 }
+label.error{
+    border: none !important;
+    color: #ff0000;
+    margin: 5px 0 5px 0;
+}
 /* Response message */
 .success_rsp, .error_rsp{
     border: 1px solid;
