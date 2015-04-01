@@ -137,8 +137,8 @@
     
      
     $("#add_practice_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });

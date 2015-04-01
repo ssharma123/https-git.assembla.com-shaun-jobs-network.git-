@@ -159,14 +159,14 @@
     $("#licenseIssued").datepicker( {"dateFormat":"yy-mm-dd" } );
     
     $("#add_certification_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#add_license_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });

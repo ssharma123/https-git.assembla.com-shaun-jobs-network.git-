@@ -42,6 +42,12 @@ class Employer extends MY_EmployerController {
                 $this->session->set_userdata('user_id', $employer['id']);
                 $this->session->set_userdata('user_type', 'employer');
                 $this->session->set_userdata('employer', $employer);
+                
+                $session = $this->session->all_userdata();
+                if( isset($session['member_page_redirect']) && $session['member_page_redirect'] == "yes"){
+                    redirect('employer/membership');
+                }
+                            
                 redirect('employee_dashboard');
             } else {
                 $msg = 'Wrong email or password';
@@ -255,6 +261,11 @@ class Employer extends MY_EmployerController {
                             unset($employer['password']);
                             
                             $this->session->set_userdata('employer', $employer);
+                            
+                            $session = $this->session->all_userdata();
+                            if( isset($session['member_page_redirect']) && $session['member_page_redirect'] == "yes"){
+                                redirect('employer/membership');
+                            }
                             redirect('employee_dashboard');
                         }
                     } else {
@@ -958,6 +969,18 @@ class Employer extends MY_EmployerController {
         echo json_encode($rsp);
         die;
          
+    }
+    
+    function membership(){
+        $this->layout = "employer_dashboard";
+        
+        $session = $this->session->all_userdata();
+        if(!isset($session['employer'])){
+            $this->session->set_userdata("member_page_redirect","yes");
+            redirect('employer/signin');
+        }
+        
+        $this->load->view('employer/membership');
     }
 
 }

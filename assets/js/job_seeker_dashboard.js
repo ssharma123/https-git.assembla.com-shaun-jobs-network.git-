@@ -44,9 +44,9 @@ $(document).ready(function(){
                 $("#tabContent").html(rsp.html);
 
                 $("#form_profileStep1").validate({
-                    errorPlacement: function(error, element) {
-//                        element.attr("placeholder",error.text());
-                    },
+//                    errorPlacement: function(error, element) {
+////                        element.attr("placeholder",error.text());
+//                    },
                     submitHandler: function(form) {
                     }
                 });
@@ -72,9 +72,9 @@ $(document).ready(function(){
                         $("#tabContent").html(rsp.html);
 
                         $("#form_profileStep2").validate({
-                            errorPlacement: function(error, element) {
-//                                element.attr("placeholder",error.text());
-                            },
+//                            errorPlacement: function(error, element) {
+////                                element.attr("placeholder",error.text());
+//                            },
                             submitHandler: function(form) {
                             }
                         });
@@ -514,18 +514,18 @@ $(document).ready(function(){
             
             if(back_to == 1 ){
                 $("#form_profileStep1").validate({
-                    errorPlacement: function(error, element) {
-//                                element.attr("placeholder",error.text());
-                    },
+//                    errorPlacement: function(error, element) {
+////                                element.attr("placeholder",error.text());
+//                    },
                     submitHandler: function(form) {
                     }
                 });
             }
             else if(back_to == 2){
                 $("#form_profileStep2").validate({
-                    errorPlacement: function(error, element) {
-//                                element.attr("placeholder",error.text());
-                    },
+//                    errorPlacement: function(error, element) {
+////                                element.attr("placeholder",error.text());
+//                    },
                     submitHandler: function(form) {
                     }
                 });
@@ -813,50 +813,50 @@ function profession_save(){
 }
 function init_all_profiles_forms(){
     $("#contact_info_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#profession_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#add_license_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#add_certification_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#add_degree_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#add_residency_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#add_fellowship_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
     $("#add_practice_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });

@@ -88,9 +88,9 @@
 <script>
     
     $("#change_email_form").validate({
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        }
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        }
     });
     $("#change_password_form").validate({
         rules: {
@@ -102,9 +102,9 @@
                 required: true
             }
         },
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        }
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        }
     });
     
     $("#update_settings").click(function(){

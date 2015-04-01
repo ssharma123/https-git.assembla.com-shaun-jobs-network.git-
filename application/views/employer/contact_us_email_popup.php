@@ -53,9 +53,9 @@
                 required: true
             }
         },
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        },
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        },
         submitHandler: function(form) {
             
             $.ajax({

@@ -27,7 +27,20 @@ $(document).ready(function(){
                 padding: 0,
                 closeBtn: false,
                 type: 'inline',
+                afterShow: function () {
+                    initialize();
+                },
             });
+            
+//            var address = /** @type {HTMLInputElement} */(
+//                    document.getElementById('state'));
+//            console.log(address)
+//            var my_address = new google.maps.places.Autocomplete(address);
+//
+//            google.maps.event.addListener(my_address, 'place_changed', function() {
+//                var place = my_address.getPlace();
+//                console.log('place_changed');
+//             });
         })
         .always(function(){
             FBox.fancybox.hideLoading();
@@ -69,9 +82,9 @@ $(document).ready(function(){
                 required: true
             }
         },
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        },
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        },
         submitHandler: function(form) {
             // do other things for a valid form
             $("#jobseeker_signup_rsp").hide();
@@ -301,3 +314,18 @@ function parent_speciality_change(){
         });
     }
 }
+ function initialize(){
+        var address = /** @type {HTMLInputElement} */(
+                document.getElementById('state'));
+        var my_address = new google.maps.places.Autocomplete(address);
+        
+        google.maps.event.addListener(my_address, 'place_changed', function() {
+            var place = my_address.getPlace();
+            
+            // if no location is found
+            if (!place.geometry) {
+                return;
+            }
+        
+         });
+    }

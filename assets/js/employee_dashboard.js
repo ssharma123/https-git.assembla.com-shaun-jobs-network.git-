@@ -134,9 +134,9 @@ $(document).ready(function(){
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);
             $("#form_jobStep1").validate({
-                errorPlacement: function(error, element) {
-                    element.attr("placeholder",error.text());
-                },
+//                errorPlacement: function(error, element) {
+//                    element.attr("placeholder",error.text());
+//                },
                 submitHandler: function(form) {
                     
                 }
@@ -169,9 +169,9 @@ $(document).ready(function(){
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);
             $("#form_jobStep1").validate({
-                errorPlacement: function(error, element) {
-                    element.attr("placeholder",error.text());
-                },
+//                errorPlacement: function(error, element) {
+//                    element.attr("placeholder",error.text());
+//                },
                 submitHandler: function(form) {
                     
                 }
@@ -210,9 +210,9 @@ $(document).ready(function(){
                         $("#post-job-container").html(rsp.html);
 
                         $("#form_jobStep2").validate({
-                            errorPlacement: function(error, element) {
-                                element.attr("placeholder",error.text());
-                            },
+//                            errorPlacement: function(error, element) {
+//                                element.attr("placeholder",error.text());
+//                            },
                             submitHandler: function(form) {
                             }
                         });
@@ -240,9 +240,9 @@ $(document).ready(function(){
                         $("#post-job-container").html(rsp.html);
 
                         $("#form_jobStep3").validate({
-                            errorPlacement: function(error, element) {
-                                element.attr("placeholder",error.text());
-                            },
+//                            errorPlacement: function(error, element) {
+//                                element.attr("placeholder",error.text());
+//                            },
                             submitHandler: function(form) {
                             }
                         });
@@ -269,9 +269,9 @@ $(document).ready(function(){
                         $("#post-job-container").html(rsp.html);
 
                         $("#form_jobStep4").validate({
-                            errorPlacement: function(error, element) {
-                                element.attr("placeholder",error.text());
-                            },
+//                            errorPlacement: function(error, element) {
+//                                element.attr("placeholder",error.text());
+//                            },
                             submitHandler: function(form) {
                             }
                         });
@@ -299,9 +299,9 @@ $(document).ready(function(){
                         
                         
                         $("#form_jobStep5").validate({
-                            errorPlacement: function(error, element) {
-                                element.attr("placeholder",error.text());
-                            },
+//                            errorPlacement: function(error, element) {
+//                                element.attr("placeholder",error.text());
+//                            },
                             submitHandler: function(form) {
                             }
                         });
@@ -339,7 +339,10 @@ $(document).ready(function(){
                                     if(element.attr("id") == "agree_to_term"){
                                         $("#agree_to_term").parent().css("color","#FF0000");
                                     }
-                                    element.attr("placeholder",error.text());
+                                    else{
+                                        error.insertAfter(element);
+                                    }
+//                                    element.attr("placeholder",error.text());
                                 },
                                 submitHandler: function(form) {
                                     $("#agree_to_term").parent().css("color","");
@@ -443,9 +446,9 @@ $(document).ready(function(){
                     required: true
                 }
             },
-            errorPlacement: function(error, element) {
-                element.attr("placeholder",error.text());
-            },
+//            errorPlacement: function(error, element) {
+//                element.attr("placeholder",error.text());
+//            },
             submitHandler: function(form) {
                 $("#signup_signin_form_rsp").hide();
                 $("#signup_signin_form_rsp").removeClass("error_rsp");
@@ -546,9 +549,9 @@ $(document).ready(function(){
         }).success(function(rsp){
             $("#post-job-container").html(rsp.html);
             $("#form_jobStep1").validate({
-                errorPlacement: function(error, element) {
-                    element.attr("placeholder",error.text());
-                },
+//                errorPlacement: function(error, element) {
+//                    element.attr("placeholder",error.text());
+//                },
                 submitHandler: function(form) {
                     
                 }

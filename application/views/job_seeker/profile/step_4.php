@@ -318,8 +318,8 @@
     
      
     $("#add_degree_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
@@ -416,8 +416,8 @@
     
     
     $("#add_residency_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });
@@ -540,8 +540,8 @@
     
     
     $("#add_fellowship_form").validate({
-        errorPlacement: function(error, element) {
-        },
+//        errorPlacement: function(error, element) {
+//        },
         submitHandler: function(form) {
         }
     });

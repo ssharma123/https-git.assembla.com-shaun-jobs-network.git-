@@ -31,9 +31,9 @@ $(document).ready(function(){
     
     $(".is_phone_number").mask('000-000-0000');
     $(".validate_form").validate({
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        }
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        }
     });
     
     $(".facilities-auto").typeahead({
@@ -144,7 +144,12 @@ $(document).ready(function(){
                 }
             },
             errorPlacement: function(error, element) {
-                element.attr("placeholder",error.text());
+                if(element.attr('name') == "agreed"){
+                    error.insertAfter( $("#agreed").next().next() );
+                }
+                else{
+                    error.insertAfter(element);
+                }
             },
             submitHandler: function(form) {
                  
@@ -166,9 +171,9 @@ $(document).ready(function(){
     if( $("#forget_password_email_form").length > 0){
         $("#forget_password_email_form").validate({
              
-            errorPlacement: function(error, element) {
-                element.attr("placeholder",error.text());
-            },
+//            errorPlacement: function(error, element) {
+//                element.attr("placeholder",error.text());
+//            },
             submitHandler: function(form) {
                  
                 form.submit();    
@@ -180,9 +185,9 @@ $(document).ready(function(){
     if( $("#forget_password_sms_form").length > 0){
         $("#forget_password_sms_form").validate({
              
-            errorPlacement: function(error, element) {
-                element.attr("placeholder",error.text());
-            },
+//            errorPlacement: function(error, element) {
+//                element.attr("placeholder",error.text());
+//            },
             submitHandler: function(form) {
                  
                 form.submit();    
@@ -199,9 +204,9 @@ $(document).ready(function(){
                     required: true
                 }
             },
-            errorPlacement: function(error, element) {
-                element.attr("placeholder",error.text());
-            },
+//            errorPlacement: function(error, element) {
+//                element.attr("placeholder",error.text());
+//            },
             submitHandler: function(form) {
                  
                 form.submit();    
@@ -220,9 +225,9 @@ $(document).ready(function(){
     });
     
     $("#save_email_siginin_form").validate({
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        }
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        }
     });
     
     $("#complete_sigin_facebook").click(function(e){

@@ -2,6 +2,11 @@
     .typeahead{
         z-index: 999999 !important;
     }
+    
+    .pac-container {
+        z-index: 10000;
+    }
+    
 </style>
 <div style="padding: 50px; min-height: 400px; background-color: #f7f7f7; width: 500px;" class="container ng-scope">
     <form class="form-horizontal ng-pristine ng-valid" id="signup_popup_form" method="post" action="<?php echo site_url('job_seeker/match/'); ?>">
@@ -46,7 +51,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Location</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control ng-pristine ng-valid sates_auto" placeholder="" id="state" name="state" autocomplete="off" >
+                        <input type="text" class="form-control ng-pristine ng-valid " placeholder="" id="state" name="state" autocomplete="off" >
                         <input type="hidden" id="sates_auto_val">
                     </div>
                 </div>
@@ -150,21 +155,21 @@
     </form>
 </div>
 <script>
-    $(".sates_auto").typeahead({
-        source: states,
-        display: 'name',
-        val: 'id',
-        itemSelected: function (data, value, text) {
-            $("#sates_auto_val").val(value);
-        }
-    });
-
-    $(".sates_auto").keyup(function (event) {
-        var key = event.keyCode || event.which;
-        if (key !== 13) {
-            $("#sates_auto_val").val('');
-        }
-    });
+//    $(".sates_auto").typeahead({
+//        source: states,
+//        display: 'name',
+//        val: 'id',
+//        itemSelected: function (data, value, text) {
+//            $("#sates_auto_val").val(value);
+//        }
+//    });
+//
+//    $(".sates_auto").keyup(function (event) {
+//        var key = event.keyCode || event.which;
+//        if (key !== 13) {
+//            $("#sates_auto_val").val('');
+//        }
+//    });
     
     $("#lets_get_started_next").click(function(e){
         e.preventDefault();
@@ -173,4 +178,7 @@
         
         return false;
     });
+    
+   
+    
 </script>

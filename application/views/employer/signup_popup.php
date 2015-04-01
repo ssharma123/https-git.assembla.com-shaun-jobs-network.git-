@@ -91,9 +91,9 @@
                 required: true
             }
         },
-        errorPlacement: function(error, element) {
-            element.attr("placeholder",error.text());
-        },
+//        errorPlacement: function(error, element) {
+//            element.attr("placeholder",error.text());
+//        },
         submitHandler: function(form) {
             $("#signup_popup_form_rsp").hide();
             $("#signup_popup_form_rsp").removeClass("error_rsp");

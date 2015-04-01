@@ -97,7 +97,7 @@
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
                                         
-                                        <a href="javascript:void(0);" class="btn btn-wide paynow_temp top-link">Membership</a>
+                                        <a href="<?php echo site_url("employer/membership/"); ?>" class="btn btn-wide top-link">Membership</a>
                                         <a href="javascript:void(0);" class="btn btn-wide top-link">Blog</a>
                                         <a href="<?php echo site_url('employer/faq'); ?>" class="btn btn-wide top-link">FAQ</a>
                                          

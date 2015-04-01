@@ -191,12 +191,12 @@
 <script>
     
     $("#form_profileStep6").validate({
-        errorPlacement: function(error, element) {
-        } 
+//        errorPlacement: function(error, element) {
+//        } 
     });
     $("#add_location_form").validate({
-        errorPlacement: function(error, element) {
-        }
+//        errorPlacement: function(error, element) {
+//        }
     });
     
     $("#add_location").click(function(){

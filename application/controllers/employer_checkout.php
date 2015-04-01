@@ -20,13 +20,25 @@ class Employer_checkout extends MY_EmployerController {
             redirect('employer/signin');
         }
         
-        $data['employer'] = $session['employer'];
-        $employer = $session['employer'];
-        $user_id = isset($employer['id']) ?  $employer['id'] : 0;
-        $sub_data = $this->employers_subscription->subscription_get_by_user_id($user_id);
-        $data['sub_data'] = $sub_data;
+        $post = $this->input->post();
+        if( isset($post['step']) && $post['step'] == "2"){
+            $data['employer'] = $session['employer'];
+            $employer = $session['employer'];
+            $user_id = isset($employer['id']) ?  $employer['id'] : 0;
+            $sub_data = $this->employers_subscription->subscription_get_by_user_id($user_id);
+            $data['sub_data'] = $sub_data;
+            $this->load->view('employer/checkout_2', $data);
+        }
+        else{
+            $data['employer'] = $session['employer'];
+            $employer = $session['employer'];
+            $user_id = isset($employer['id']) ?  $employer['id'] : 0;
+            $sub_data = $this->employers_subscription->subscription_get_by_user_id($user_id);
+            $data['sub_data'] = $sub_data;
+            $this->load->view('employer/checkout', $data);
+        }
         
-        $this->load->view('employer/checkout', $data);
+        
     }
     public function checkout_process(){
         $this->layout = 'blank';
