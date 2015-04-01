@@ -9,7 +9,7 @@
                     <form id="payment_popup_form" method="post" action="<?php echo site_url("employer_checkout"); ?>">
                         <div>
                             <label> Options Payment Button</label>    
-                            <select id="payment_type" name="payment_type" required="">
+                            <select id="payment_type" name="payment_type" required>
                                 <option value="">Choose...</option>
                                 <option value="paypal">Paypal</option>
                             </select>
@@ -25,5 +25,8 @@
     </div>
 </div>
 <script>
+    $(document).ready(function(){
+        
+    });
     $('#payment_popup_form').validate();
 </script>

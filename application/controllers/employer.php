@@ -975,7 +975,7 @@ class Employer extends MY_EmployerController {
     }
     
     function membership(){
-        $this->layout = "employer_dashboard";
+        $this->layout = "employer";
         
         $session = $this->session->all_userdata();
         if(!isset($session['employer'])){
