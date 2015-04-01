@@ -97,6 +97,8 @@
                                 </ul>
                                 <div class="form-group">
                                     <form class="navbar-form pull-left">
+                                        <a href="<?php echo site_url("employer/membership/"); ?>" class="btn btn-wide top-link">Membership</a>
+                                        
                                         <span style="margin:5px;"><a class="btn btn-embossed btn-wide btn-inverse" href="<?php echo site_url("job_seeker"); ?>">Job seekers</a></span> 
                                         <?php
                                         $session = $this->session->all_userdata();
