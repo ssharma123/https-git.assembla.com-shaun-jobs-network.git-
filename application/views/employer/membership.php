@@ -26,7 +26,7 @@
 </div>
 <script>
     $(document).ready(function(){
-        
+        $('#payment_popup_form').validate();
     });
-    $('#payment_popup_form').validate();
+    
 </script>
