@@ -6,7 +6,7 @@
         $heading = '';
         if($status == "ok"){
             $class == 'success_rsp';
-            $heading = "Thankyou for subscribing";
+            $heading = "Thank you ";
         }
         else if($status == "error"){
             $class = 'error_rsp';
@@ -18,7 +18,13 @@
             
             
             <div class="col col-sm-12 <?php echo $class; ?>" > 
-                <p><?php echo $msg; ?></p>
+                <?php 
+                if( isset($status) && $status == "ok"){ ?>
+                <p>Your order have been placed</p>
+                <p>A confirmation email will be sent to : info@medmatchjobs.com once the order has been processed </p>
+                
+                <a class="btn btn-primary btn-lg" href="<?php echo site_url("employee_dashboard"); ?>"></a>
+                <?php } ?>
             </div>
             
         </div>
