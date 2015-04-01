@@ -45,6 +45,7 @@ class Employer extends MY_EmployerController {
                 
                 $session = $this->session->all_userdata();
                 if( isset($session['member_page_redirect']) && $session['member_page_redirect'] == "yes"){
+                    $this->session->unset_userdata('member_page_redirect');
                     redirect('employer/membership');
                 }
                             
@@ -66,6 +67,7 @@ class Employer extends MY_EmployerController {
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('user_type');
         $this->session->unset_userdata('employer');
+        $this->session->unset_userdata('member_page_redirect');
         redirect('');
     }
 
@@ -264,6 +266,7 @@ class Employer extends MY_EmployerController {
                             
                             $session = $this->session->all_userdata();
                             if( isset($session['member_page_redirect']) && $session['member_page_redirect'] == "yes"){
+                                $this->session->unset_userdata('member_page_redirect');
                                 redirect('employer/membership');
                             }
                             redirect('employee_dashboard');
